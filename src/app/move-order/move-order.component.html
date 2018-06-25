@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <p></p>
+  <form>
+    
+      <label for="WorkOrder">WorkOrder</label>
+      <input type="text" class="form-control" id="txtWorkOrder">
+      <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO</button>
+<br>
+
+      <label for="ProductCode">ProductCode</label>
+      <input type="text" class="form-control" id="txtProductCode">
+      
+      <label for="OperationNumber">Operation Number</label>
+      <input type="text" class="form-control" id="txtOperationNumber">
+
+      <label for="QtyProduced">Qty Produced</label>
+      <input type="text" class="form-control" id="txtQtyProduced">
+
+      <label for="StartDateTime">Start Date Time</label>
+      <div class='input-group date' id='dtStartDateTime'>
+        <input type='text' class="form-control" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+    
+
+    <label for="EndDateTime">End Date Time</label>
+      <div class='input-group date' id='dtEndDateTime'>
+        <input type='text' class="form-control" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+
+    <br>
+    <br>
+    
+    <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
+  </form>
+</div>
+
+</body>
+</html>
