@@ -1,0 +1,232 @@
+body{
+    // CSS on Input
+    input[type="text"], input[type="email"], input[type="password"]{
+      color: #333 !important;
+    }
+  
+    // css on dropdown
+    .k-dropdown .k-dropdown-wrap{
+      background-color: $white !important;
+    }
+  
+    kendo-popup{
+      kendo-list{
+        ul{
+          li{
+            font-size: 12px !important;
+          }
+          li.k-state-focused{
+            box-shadow: none !important;
+            background-color: #c7c7c7 !important;
+          }
+        }
+      }
+    }
+  
+    kendo-dropdownlist{
+        width: 100% !important;
+    }
+  
+    // css on form
+    .k-form, .k-form-inline {
+      padding: 20px;
+    }
+  
+    // remove red error from input field on first time load 
+    .ng-untouched.ng-invalid{
+      border-color: $input-border-color;
+    }
+  
+    // bottom space of label 
+    .k-form .k-form-field, .k-form .k-form-field:last-child, .k-form-inline .k-form-field, .k-form-inline .k-form-field:last-child {
+      margin-bottom: 8px !important;
+    }
+  
+    // font size of input
+    .k-textbox, .k-input.k-textbox, .k-textarea, .k-dropdown-wrap > .k-input{
+      font-size: 12px ;
+    }
+  
+    // form label
+    .k-radio-label, .k-checkbox-label{
+      font-size: 12px;
+      margin-bottom: 0 !important;
+    }
+  
+    // button
+    button.k-button{
+      border-radius: 5px ;
+      box-shadow: none;
+      border: 1px solid;
+      cursor: pointer ;
+      padding: 5px 10px ;
+      font-size: 12px ;
+      border: none;
+      &:focus {
+          outline: none;
+      }
+    }
+  
+    button.k-button:first-child{
+      margin: 0 5px 0 0;
+    }
+    button.k-button:last-child{
+        margin: 0 0 0 5px;    
+    }
+
+    // css for grid
+    kendo-grid{
+      .k-grid-toolbar{
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+      border-radius: 5px;
+      border: none;
+      .k-grid-header{
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+      .k-grid-header .k-header > .k-link {
+          // padding: 5px;
+          font-size: 12px;
+      }
+
+      .k-grid-header th.k-header {
+        padding: 5px;
+        font-size: 12px;
+      }
+
+      .k-grid-table{
+        font-size: 12px;
+      }
+      
+      .k-pager-wrap .k-link, .k-pager-wrap .k-state-selected {
+        padding: 0;
+      }
+      .k-pager-wrap .k-pager-info {
+        font-size: 12px;
+      }
+      .k-grid-pager {
+        padding: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      .k-grouping-header {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
+
+    .k-grid td{
+      padding: 3px;
+    }
+
+    // make header text bold
+    .k-grid-header{
+      thead{
+        tr{
+          th{
+            a.k-link{
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+
+    // top section of grid
+    .k-indicator-container {
+      font-size: 14px;
+    }
+
+    // filter of grid
+    kendo-grid-filter-cell-operators{
+      kendo-dropdownlist.k-dropdown-operator{
+        width: 32px !important;
+        .k-select {
+          height: 30px;
+          width: 100%;
+        }
+      }
+      
+    }
+
+    // handpointer for checkbox of grid
+    .k-grid .k-checkbox-label{
+      cursor: pointer;
+    }
+    
+    // column filter 3 dots
+    .k-grid-header .k-grid-filter {
+        padding: 0;
+        width: auto;
+        height: auto;
+    }
+
+    .k-grid-header .k-grid-filter:focus {
+        box-shadow: none;
+    }
+
+    // column chooser
+    kendo-grid-column-chooser{
+      button.k-button.k-bare{
+        // box-shadow: 0 0 0 3px !important;
+        margin-left: 0 !important;
+        width: auto;
+        max-height: 32px;
+        padding: 0;
+        color: $light-black !important;
+      }
+      // button.k-button.k-bare{
+      //   color: $light-black;
+      // }
+      .k-button:hover::before{
+        opacity: 0;
+      }
+    }
+
+    // kendo global font size
+    .opti_form-label,
+    kendo-grid .k-grid-table,
+    .k-dateinput-wrap .k-input{
+      font-size: 12px;
+    }
+
+    // textarea
+    .k-textarea{
+      width: 100%;
+    }
+
+    // datepicker
+    kendo-datepicker.k-widget.k-datepicker.k-header {
+      width: 100%;
+    }
+
+    // request upload
+    #attachement{
+      ul.k-upload-files{
+          max-height: calc(100vh - 205px) !important;
+          overflow-y: auto;
+      }
+    }
+
+    // text color for input
+    .k-dateinput-wrap .k-input, 
+    .k-dropdown-wrap .k-input, 
+    .k-picker-wrap .k-input, 
+    .k-multiselect-wrap .k-input, 
+    .k-numeric-wrap .k-input {
+      color: $light-black;
+    }
+
+    // field border color on focus
+    .k-input:focus, .k-input.k-state-focused, .k-textbox:focus, .k-textbox.k-state-focused, .k-textarea:focus, .k-textarea.k-state-focused, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focused {
+      border-color: $input-border-color;
+    }
+
+    // 3 dots
+    .k-state-active .k-icon.k-i-more-vertical {
+        background: white;
+    }
+
+  }

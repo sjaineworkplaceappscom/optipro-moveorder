@@ -1,0 +1,219 @@
+body{
+
+    //
+    .opti_margin-zero{
+        margin: 0;
+    }
+
+    .opti_padding-zero{
+        padding: 0;
+    }
+
+    .opti_border-none{
+        border: none;
+    }
+
+    .opti_fullwidth{
+        width: 100%;
+    }
+
+    // css for form label
+    .opti_form-label{
+      font-size: 12px;
+      margin-bottom: 0 !important;
+    }
+  
+    // Loader
+    .opti_loader {
+      position: absolute;
+      background: rgba(255,255,255,0.8);
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      z-index: 99;
+  
+        @extend .opti_vertical-align;
+        .opti_spinner {
+            border: 3px solid #c7c7c7;
+            border-radius: 50%;
+            border-top: 3px solid;
+            border-top-color: #3498db;
+            width: 25px;
+            height: 25px;
+            -webkit-animation: spinloader 0.5s linear infinite; /* Safari */
+            animation: spinloader 0.5s linear infinite;
+            margin: 0 auto;
+        }
+        
+        /* Safari */
+        @-webkit-keyframes spinloader {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spinloader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    }
+    
+    // password indicator
+    .opti_password-indicator-stripped{
+      height: 4px;
+      overflow: hidden;
+      background-color: #c7c7c7;
+      border-radius: 5px;
+      -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+      margin-top: 8px !important;
+      .opti_weak-pass{
+          @include password-mg-indicator(40%, #d9534f)
+      }
+      .opti_medium-pass{
+          @include password-mg-indicator(60%, #f0ad4e)
+      }
+      .opti_strong-pass{
+          @include password-mg-indicator(80%, #5cb85c)
+      }
+      .opti_strong-pass-full{
+          @include password-mg-indicator(100%, #5cb85c)
+      }
+    }
+  
+    // Remove button css
+    button.opti_remove-button-css{
+      border: none;
+      background: none;
+    }
+  
+    // Error css
+    .opti_error-msg{
+      color: $error !important;
+      font-size: 12px;
+    }
+  
+    //Default Styling For List
+    ul{
+      padding: 0;
+      margin: 0;
+      li.opti_list{
+          padding: 10px 15px;
+          border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+          cursor: pointer;
+      }
+    }
+  
+    ul{
+      li{
+          list-style: none;
+      }
+    }
+  
+    // Content Padding
+    .opt_content-padding{
+      padding-top: 15px;
+      padding-bottom:15px;
+    }
+    
+    // Icon spacing
+    .opti_icon-spacing{
+      padding: 0 10px;
+    }
+    .opti_icon-spacing:first-child{
+      padding: 0 10px 0 0;
+    }
+    .opti_icon-spacing:last-child{
+      padding: 0 0 0 10px;
+    }
+  
+    // Position Relative
+    .opti_position-relative{
+      position: relative;
+    }
+  
+    // Display Inline
+    .opti_display-inline{
+      display: inline;
+    }
+  
+    // Display Inline Block
+    .opti_display-inline-block{
+      display: inline-block;
+    }
+  
+    // Display Inline Flex
+    .opti_display-inline-flex{
+      display: inline-flex;
+    }
+  
+    // Anchor Pointer
+    .opti_mouse-pointer{
+      cursor: pointer;
+    }
+  
+    // prevent to increase size of scrollbar
+    .ps__rail-y{
+      width: 6px !important;
+      .ps__thumb-y{
+        width: 6px !important;
+      }
+    }
+
+    .ps__rail-x{
+        height: 6px !important;
+        .ps__thumb-x{
+            height: 6px !important;
+        }
+    }
+
+
+    // grid toolabr
+    kendo-grid-toolbar.k-header.k-grid-toolbar {
+        .k-form.opti_show-hide-grid-column-filter{
+            padding: 7px 0 0 20px;
+            .k-form-field{
+                margin-bottom: 0 !important;
+                .k-checkbox-label{
+                    margin-right: 15px;
+                }
+            }
+        }
+        
+        .opti_grid-toolbar-excelbutton{
+            background: transparent !important;
+            margin-top: 2px !important;
+            .k-i-file-excel {
+                display: none;
+            }
+        }
+
+        .opti_grid-toolbar-excelbutton.k-button:focus{
+            box-shadow: none;
+        }
+    }
+
+      
+
+    // Common Search
+    .opti_common-search-form {
+        .k-form-field.opti_common-search-label{
+            float: left;
+            margin: 0 !important;
+            margin-bottom: 0 !important;
+            border: 1px solid $input-border-color;
+            border-radius: 5px;
+            padding-right: 10px;
+            input{
+                width: 150px;
+                float: left;
+                border: none;
+            }
+            span{
+                float: left;
+                height: 32px;
+                margin: 0 !important;
+            }
+        }
+    }
+        
+}
