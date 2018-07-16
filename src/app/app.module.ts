@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -11,9 +12,24 @@ import { QtyWithFGAndRMScanComponent } from './qty-with-fgand-rmscan/qty-with-fg
 import { QtyWithFGScanComponent } from './qty-with-fgscan/qty-with-fgscan.component';
 import { FGScanDetailComponent } from './fgscan-detail/fgscan-detail.component';
 import { RouterModule, Routes } from '@angular/router';
-//import { AppRoutingModule } from './app-routing.module';
-import { FormsModule }   from '@angular/forms';
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
+import { StorageServiceModule } from 'angular-webstorage-service';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GridModule } from '@progress/kendo-angular-grid';
+import { DemoKendoGridComponent } from './demo-kendo-grid/demo-kendo-grid.component';
+
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+//import { DialogModule } from '@progress/kendo-angular-dialog';
+
+import { EditService } from './services/edit.service';
+import { QtyWithFGScanDetailComponent } from './qty-with-fgscan-detail/qty-with-fgscan-detail.component';
+import { UploadModule } from '@progress/kendo-angular-upload';
+import { FgrmscanparentComponent } from './fgrmscanparent/fgrmscanparent.component';
+import { FgrmscanparentinputformComponent } from './fgrmscanparentinputform/fgrmscanparentinputform.component';
+import { FgrmscanchildinputformComponent } from './fgrmscanchildinputform/fgrmscanchildinputform.component';
+
 
 
 const myRoots: Routes = [  
@@ -21,10 +37,15 @@ const myRoots: Routes = [
   { path: 'moveorder', component: MoveOrderComponent } ,   
   { path: 'operationaldetail', component: OperationalDetailComponent } ,
   { path: 'workorderdetail', component: WorkOrderDetailComponent } ,
-  { path: 'QtyWithoutFGScan', component: QtyWithoutFGScanComponent },
-  { path: 'QtyWithFGAndRMScan', component: QtyWithFGAndRMScanComponent },
-  { path: 'QtyWithFGScan', component: QtyWithFGScanComponent }, 
-  { path: 'FGScanDetail', component: FGScanDetailComponent }, 
+  { path: 'qtywithoutfgscan', component: QtyWithoutFGScanComponent },
+  { path: 'qtywithfgandrmscan', component: QtyWithFGAndRMScanComponent },
+  { path: 'qtywithfgscan', component: QtyWithFGScanComponent }, 
+  { path: 'fgscandetail', component: FGScanDetailComponent },
+  { path: 'demoKendo', component: DemoKendoGridComponent },
+  { path: 'fgrmscanparent', component: FgrmscanparentComponent },
+  { path: 'fgrmscanparentinputform', component: FgrmscanparentinputformComponent },
+  { path: 'fgrmscanchildinputform', component: FgrmscanchildinputformComponent }
+   
 ];
 
 @NgModule({
@@ -37,15 +58,30 @@ const myRoots: Routes = [
     QtyWithoutFGScanComponent,
     QtyWithFGAndRMScanComponent,
     QtyWithFGScanComponent,
-    FGScanDetailComponent
+    FGScanDetailComponent,
+    DemoKendoGridComponent,
+    QtyWithFGScanDetailComponent,
+    FgrmscanparentComponent,
+    FgrmscanparentinputformComponent,
+    FgrmscanchildinputformComponent
+    
   ],
   imports: [
     HttpClientModule,
     FormsModule,
     BrowserModule,
-    RouterModule.forRoot(myRoots)
+    RouterModule.forRoot(myRoots),
+    StorageServiceModule,
+    ModalModule.forRoot(),
+    InputsModule,
+    BrowserAnimationsModule,
+    GridModule,
+    DropDownsModule,
+    ReactiveFormsModule,
+    HttpClientJsonpModule,
+    UploadModule
   ],
-  providers: [],
+  providers: [FGScanDetailComponent,EditService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,56 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
 
 <div class="container">
   <p></p>
   <form>
-    
       <label for="WorkOrder">WorkOrder</label>
-      <input type="text" class="form-control" id="txtWorkOrder">
-      <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO</button>
+      <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
+      <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO#</button>
+      <button  type="button" align="middle" class="btn btn-primary">Scan WO#</button>
+      <button  type="button"  (click)="onWorkOrderDetail(woDetailtemplate)" align="middle" class="btn btn-primary">Work Order Detail</button>
+      <!--Modal Body for Work Order Details-->
+      <ng-template #woDetailtemplate>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Modal</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Work Order Details
+          <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
+        </div>
+      </ng-template>
 <br>
-
       <label for="ProductCode">ProductCode</label>
-      <input type="text" class="form-control" id="txtProductCode">
+      <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode">
       
       <label for="OperationNumber">Operation Number</label>
-      <input type="text" class="form-control" id="txtOperationNumber">
+      <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
 
+      <button  type="button"  (click)="onOperationPress()" align="middle" class="btn btn-primary">OP#</button>
+      <button  type="button" align="middle" class="btn btn-primary">Scan OP#</button>
+      <button  type="button"  (click)="onOperDtlPress(woOperDetailtemplate)" align="middle" class="btn btn-primary">Operation Details</button>
+      <!--Modal Body for Operation Details-->
+      <ng-template #woOperDetailtemplate>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Modal</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Operation Details
+          <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
+        </div>
+      </ng-template>
+      <br>
       <label for="QtyProduced">Qty Produced</label>
       <input type="text" class="form-control" id="txtQtyProduced">
-
+      <button  type="button"  (click)="onQtyProdBtnPress(itemLinkingScreen)" align="middle" class="btn btn-primary">Link</button>
+      <!--Modal Body for Dynamic Screens on setting basis-->
+    <ng-template #itemLinkingScreen>
+    <div class="modal-header">
+      <h4 class="modal-title center-block">{{ScreenName}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+     <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
+     <!-- <app-qty-with-fgand-rmscan *ngIf="showQtyWithFGRMScanScreen"></app-qty-with-fgand-rmscan> -->
+     <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+    </div>
+  </ng-template>
       <label for="StartDateTime">Start Date Time</label>
       <div class='input-group date' id='dtStartDateTime'>
-        <input type='text' class="form-control" />
+        <!-- <input type='text' class="form-control" />
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+        </span> -->
+        <input type="datetime-local" class="form-control" >
+        
     </div>
-    
 
     <label for="EndDateTime">End Date Time</label>
       <div class='input-group date' id='dtEndDateTime'>
-        <input type='text' class="form-control" />
+        <!-- <input type='text' class="form-control" />
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+        </span> -->
+        <input type="datetime-local" class="form-control" >
     </div>
-
     <br>
     <br>
-    
     <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
   </form>
 </div>
 
-</body>
-</html>
+

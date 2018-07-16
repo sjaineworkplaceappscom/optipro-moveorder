@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-work-order-detail',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./work-order-detail.component.css']
 })
 export class WorkOrderDetailComponent implements OnInit {
-
+  @Input() workOrderDetail: any;
+  oWODetails:any;
   constructor() { }
 
   ngOnInit() {
+    this.oWODetails=this.workOrderDetail[0];
+    console.log(this.oWODetails);
   }
-
+  onOKPress(){
+  }
 }

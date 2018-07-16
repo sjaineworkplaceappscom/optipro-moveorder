@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
 <div class="container">
   <p></p>
   <form>
@@ -21,17 +9,17 @@
       <label for="pwd">Password:</label>
       <input name="pwd" [(ngModel)]="password" type="password" class="form-control" id="pwd">
     </div>
-    <div class="form-group">
-    <select class="selectpicker">
-      <option>Company1</option>
-      <option>Company 2</option>
-      <option>Company 3</option>
-    </select>
-  </div>
+
+    <button (click)="onConnectClick()" align="center" type="button" class="btn btn-primary">{{connentLbl}}</button>
     
-    <button (click)="onLoginClick()" align="center" type="button" class="btn btn-primary">Login</button>
+    <div class="form-group" >
+    <select class="selectpicker"  (change)="onCompanyChange($event)" *ngIf="showCompCombo">
+      <option selected="" value=""></option>  
+      <option [ngValue]="i.OPTM_COMPID" *ngFor="let i of companies;" >{{i.OPTM_COMPID}}</option>  
+    </select>
+    </div>
+    
+    <button (click)="onLoginClick()" align="center" type="button" class="btn btn-primary" *ngIf="showLoginBtn" >{{loginLbl}}</button>
+   
   </form>
 </div>
-
-</body>
-</html>

@@ -1,0 +1,61 @@
+
+<div>
+  <div class="text-center">
+        <input type="text" [(ngModel)]="txtFGValue" (blur)="onFGTextValueChange()">
+    <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button> </div>
+    <p></p>
+    <button  type="button"  (click)="onInsertFGBatSerRowPress()" align="middle" class="btn btn-primary">+</button>
+    <kendo-grid [data]="FGScanGridData" [height]="410"
+    (remove)="removeHandler($event)"
+    (edit)="editHandler($event)">
+      <kendo-grid-column field="OPTM_SEQ" title="#"  width="20">
+      </kendo-grid-column>
+      <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120">
+      </kendo-grid-column>
+      <kendo-grid-column field="OPTM_QUANTITY" title="Quatity"  width="60">
+      </kendo-grid-column>
+      <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
+          <ng-template kendoGridCellTemplate let-dataItem>
+              <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
+          </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="OPTM_NC" title="NC"  width="80">
+          <ng-template kendoGridCellTemplate let-dataItem>
+              <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
+          </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Actions">
+          <ng-template kendoGridCellTemplate>
+            <button kendoGridEditCommand class="k-primary" *ngIf="showEditBtn">Edit</button>
+            <button kendoGridRemoveCommand class="k-primary">Delete</button>
+          </ng-template>
+        </kendo-grid-command-column>
+  </kendo-grid>
+
+  
+      <br>
+      <br>
+      <br>
+      <table class="table table-bordered">
+            <tr>
+                <th scope="row">Balance Qty</th>
+                <th scope="row">Accepted Qty</th>
+                <th scope="row">Rejected Qty</th>
+                <th scope="row">NC Qty</th>
+             </tr>
+            <tbody>
+                <tr>
+                    <td>{{lblBalQty}}</td>
+                    <td>{{lblAcceptedQty}}</td> 
+                    <td>{{lblRejectedQty}}</td>
+                    <td>{{lblNCQty}}</td>
+                  </tr>
+            </tbody>
+          </table>
+
+
+</div>
+
+<app-fgrmscanparentinputform [basicFGInputForm]="basicDetailsToFGParentInput" *ngIf=showFGRMScanParentInsertPopup></app-fgrmscanparentinputform>
+
+
