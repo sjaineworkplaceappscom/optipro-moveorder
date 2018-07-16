@@ -1,0 +1,15 @@
+<div class="">
+  <p></p>
+      <label>Item Code</label>
+      <input type="text" class="form-control" value = "9998" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()">
+      
+      <label>RM Batch Serial</label>
+      <input type="text" class="form-control" value = "abn" [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()">
+     
+      <label>Qty</label>
+      <input type="text" class="form-control" value = "10" [(ngModel)]="iQty">
+      <br>
+      <br>
+
+      <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onRMAddRowPress()">Save RM Data</button>
+</div>

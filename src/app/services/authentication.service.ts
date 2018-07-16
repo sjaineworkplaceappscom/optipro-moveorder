@@ -1,54 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpRequest } from 'selenium-webdriver/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  
   constructor(private httpclient:HttpClient) { }
-
-  login(loginId:string,loginPassword:string):Observable<any>{
-    let model:any={
-      "LoginId":loginId,
-      "LogreqinPassword":loginPassword
-    }
-debugger;
-const httpOptions = {
-  headers: new HttpHeaders({
+  
+  //defining properties for the call 
+  httpOptions = {
+    headers: new HttpHeaders({
     'Content-Type':  'application/json',
     'Accept':'application/json'
-  })
-};
-   
-    
-     //let options = new RequestOptions({ headers: header });
-   return this.httpclient.post("http://localhost:57962/api/login/AdminLogin",model,httpOptions);
-  //  return this.httpclient.get("http://localhost:57962/api/login/AdminLogin");
+      })
+    };
+
+  //Login function to hit login API
+  login(loginId:string,loginPassword:string,psURL:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ Login: JSON.stringify([{ User: loginId, Password: loginPassword, IsAdmin: false }]) };
+  //Return the response form the API  
+  return this.httpclient.post(psURL+"/login/ValidateUserLogin",jObject,this.httpOptions);
   }
 
-  GetCompany(loginId:string){
-let oLogin:any ={
-  "LoginId":loginId,
-  "Product":"SFDC"
-}
-let header:HttpHeaders=new HttpHeaders();
-    header.set("accept","application/json");
-    header.set("content-type","application/json");
+  //This function will get Company acc. to User
+  getCompany(loginId:string,psURL:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ Username: JSON.stringify([{ Username: loginId ,Product: "SWB"}]) };
+    //Return the response form the API  
+    return this.httpclient.post(psURL+"/login/GetCompaniesAndLanguages",jObject,this.httpOptions)
+  }
 
-    return this.httpclient.get("http://localhost:57962/api/login/GetCompaniesAndLanguages")
-
-
-
-}
-
-
-
-
-  
-
+  //Get psURL
+  getPSURL(CompanyDBID:string,optiProMoveOrderAPIURL:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID }]) };
+  //Return the response form the API  
+  return this.httpclient.post(optiProMoveOrderAPIURL+"/MoveOrder/GetPSURL",jObject,this.httpOptions);
+  }
 
 };
 

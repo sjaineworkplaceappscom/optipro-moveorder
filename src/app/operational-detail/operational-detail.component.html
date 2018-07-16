@@ -1,3 +1,48 @@
-<p>
-  operational-detail works!
-</p>
+<div class="">
+    <p></p>
+    <form>
+        <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th scope="row">Sc# Start Date</th>
+                <td>{{oOperDetails.U_OPTM_OPSDATE | date: 'MM/dd/yyyy' }}</td>
+                
+              </tr>
+              <tr>
+                <th scope="row">Sch# End Date</th>
+                <td>{{oOperDetails.U_OPTM_OPEDATE | date: 'MM/dd/yyyy' }}</td>
+                
+              </tr>
+              <tr>
+                <th scope="row">Qty Bal</th>
+                <td>{{oOperDetails.U_O_BALQTY}}</td>
+              </tr>
+  
+              <tr>
+                  <th scope="row">WC</th>
+                  <td>{{oOperDetails.U_OPTM_WC_ID}}</td>
+                </tr>
+  
+                <tr>
+                    <th scope="row">Previous Operation</th>
+                    <td>{{oOperDetails.PrevOperNo}}</td>
+                  </tr>
+  
+                  <tr>
+                      <th scope="row">Previous Operation Bal. Qty</th>
+                      <td>{{oOperDetails.PrevBalQty}}</td>
+                    </tr>
+  
+                    <tr>
+                        <th scope="row">Next Operation </th>
+                        <td>{{oOperDetails.NextOperNo}}</td>
+                      </tr>
+  
+                      <tr>
+                          <th scope="row">Next Operation Bal. Qty</th>
+                          <td>{{oOperDetails.NextBalQty}}</td>
+                        </tr>
+            </tbody>
+          </table>
+        </form>
+  </div>

@@ -1,3 +1,34 @@
-<p>
-  work-order-detail works!
-</p>
+<div class="">
+  <p></p>
+  <form>
+      <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Sch# Start Date</th>
+              <td>{{oWODetails.U_O_STARTDATE | date: 'MM/dd/yyyy' }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Sch# End Date</th>
+              <td>{{oWODetails.U_O_ENDDATE | date: 'MM/dd/yyyy' }}</td>
+              
+            </tr>
+            <tr>
+              <th scope="row">SO#</th>
+              <td>{{oWODetails.U_O_SONO }}</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Customer</th>
+                <td>{{oWODetails.U_O_CUSTCODE }}</td>
+              </tr>
+
+              <tr>
+                  <th scope="row">Product</th>
+                  <td>{{oWODetails.U_O_PRODID }}</td>
+                </tr>
+          </tbody>
+        </table>
+
+        <!-- <button type="button" (click)="onOKPress()"  class="btn btn-primary">OK</button> -->
+      </form>
+</div>

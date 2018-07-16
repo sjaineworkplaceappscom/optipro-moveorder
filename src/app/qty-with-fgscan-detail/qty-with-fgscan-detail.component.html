@@ -1,0 +1,15 @@
+<div class="">
+  <p></p>
+      <label>FG Batch Serial</label>
+      <input type="text" class="form-control" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()">
+     
+      <label>Qty</label>
+      <input type="text" class="form-control" [(ngModel)]="iQty"  >
+      <br>
+      <label><input type="checkbox" [(ngModel)]="bIsRejected" >Rejected</label>
+      <br>
+      <label><input type="checkbox" [(ngModel)]="bIsNC">NC Qty</label>
+      <br>
+      <br>
+      <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onAddPress()" >Save</button>
+</div>

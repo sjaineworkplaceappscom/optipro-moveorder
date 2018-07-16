@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-fgscan-detail',
@@ -6,10 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fgscan-detail.component.css']
 })
 export class FGScanDetailComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit(){}
 }
