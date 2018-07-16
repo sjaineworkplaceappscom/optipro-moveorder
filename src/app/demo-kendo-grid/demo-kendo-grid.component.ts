@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators/map';
 @Component({
   selector: 'my-app',
   templateUrl: './demo-kendo-grid.component.html',
+  styleUrls: ['./demo-kendo-grid.component.scss']
 })
 export class DemoKendoGridComponent implements OnInit {
     public view: Observable<GridDataResult>;

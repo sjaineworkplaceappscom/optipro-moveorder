@@ -8,7 +8,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 @Component({
   selector: 'app-move-order',
   templateUrl: './move-order.component.html',
-  styleUrls: ['./move-order.component.css']
+  styleUrls: ['./move-order.component.scss']
 })
 
 export class MoveOrderComponent implements OnInit {
