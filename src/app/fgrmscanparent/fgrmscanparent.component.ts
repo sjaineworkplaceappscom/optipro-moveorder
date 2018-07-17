@@ -34,7 +34,6 @@ export class FgrmscanparentComponent implements OnInit {
     this.showFGRMScanParentInsertPopup = true;
   }
 
-
   //Core Functions
   //This func. will fill data into the grid
   fillFGData(){
@@ -53,7 +52,6 @@ export class FgrmscanparentComponent implements OnInit {
             // refresh the qtys in the lower table
             this.refreshQtys();
         }
-            
       }
     )
 

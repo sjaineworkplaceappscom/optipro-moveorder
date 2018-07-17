@@ -19,9 +19,10 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   loggedInUser:string='';
   iSeqNo:number;
   isQtyDisabled:boolean = false;
-  bIsInEditMode = true;
+  bIsInEditMode = false;
   psItemManagedBy:string = '';
   bEnableSaveBtn:boolean = false;
+  
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService) { }
 
   message: string = ""
@@ -161,14 +162,13 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   disableEnableControls(){
-    // if(this.bIsEdit == true){
-    //   // if(this.basicDetailsFrmFGWithScan[0].itemType == "Serial"){
-    //   //   this.isQtyDisabled = true;
-    //   // }
-    // }
-    // else{
-    //       this.bIsInEditMode = false;
-    // }
+   if(this.psItemManagedBy == "Serial"){
+    this.isQtyDisabled = true; 
+    this.iQty = 1;
+   }
+   else{
+    this.isQtyDisabled = false; 
+   }
   }
 
   //this will chk if the data we are adding is duplicate

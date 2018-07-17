@@ -33,7 +33,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup:boolean = false;
   showItemLinkingScreen:boolean = false;
   ScreenName:string = '';
-  settingOnSAP:string="3";
+  settingOnSAP:string="2";
   showQtyWithFGScanScreen:boolean=false;
   showQtyNoScanScreen:boolean=false;
   showQtyWithFGRMScanScreen:boolean = false;
@@ -67,7 +67,7 @@ export class MoveOrderComponent implements OnInit {
         data=> {
          this.allWOOpDetails = data;
          if(this.allWOOpDetails.length > 0){
-          this.psOperNO = this.allWOOpDetails[0].U_O_OPERNO
+          this.psOperNO = this.allWOOpDetails[1].U_O_OPERNO
          }
         }
       )

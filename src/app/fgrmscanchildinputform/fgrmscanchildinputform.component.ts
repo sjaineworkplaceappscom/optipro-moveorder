@@ -21,7 +21,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   sChildManagedBy:string;
   childCompItemCodeDetls:any;
   loggedInUser:string;
-  
+  iSysNum:number;  
   constructor(private FGRMinput:FgrmscanchildinputformService) { }
   
   @Output() messageEvent = new EventEmitter<string>();
@@ -30,7 +30,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     console.log(this.basicDetailFrmParentInput)
-    console.log("THAT COMP OVER");
+    //console.log("THAT COMP OVER");
     console.log(this.detailsOfParentinputFrm);
 
   }
@@ -64,8 +64,18 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   onChildCompBatchSerBlur(){
     if(this.psChildCompBatchSer != null){
-      
-
+      this.FGRMinput.CheckIfValidBatchSerialComponentEntered(this.CompanyDBId,this.sChildWhse,this.sChildBin,this.psChildCompBatchSer,this.psChildCompItemCode).subscribe(
+        data=> {
+          if(data != null){
+            if(data.length > 0){
+              this.iSysNum = data[0].SYSNUMBER;
+            }
+            else{
+              alert("It does'nt belong to this item or it is consumed")            
+            }
+          }
+        }
+      )
     }
   }
 
@@ -77,14 +87,15 @@ export class FgrmscanchildinputformComponent implements OnInit {
       OPTM_ITEMCODE: this.psChildCompItemCode,
       OPTM_BTCHSERNO: this.psChildCompBatchSer,
       OPTM_QUANTITY:this.iQty,
-      OPTM_BINNO:this.sChildBin,
-      OPTM_WHSCODE:this.sChildWhse,
-      ManagedBy:this.sChildManagedBy,
+      OPTM_BINNO: this.sChildBin,
+      OPTM_WHSCODE: this.sChildWhse,
+      ManagedBy: this.sChildManagedBy,
       CompanyDBId :this.CompanyDBId,
       WorkOrder : this.basicDetailFrmParentInput[0].WorkOrderNo,
       ParentBatchSerial: this.detailsOfParentinputFrm.ParentBatchSer,
-      User:this.loggedInUser,
-      OperNo: this.detailsOfParentinputFrm.OperNo
+      User: this.loggedInUser,
+      OperNo: this.detailsOfParentinputFrm.OperNo,
+      SysNumber: this.iSysNum
     };
     this.messageEvent.emit(sendRMRowToParent);
   }
