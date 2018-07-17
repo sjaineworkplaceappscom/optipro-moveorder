@@ -30,7 +30,8 @@
               {
                 "input": "node_modules/@progress/kendo-theme-default/scss/all.scss"
               },
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/css/custom-style.scss"
             ],
             "scripts": []
           },

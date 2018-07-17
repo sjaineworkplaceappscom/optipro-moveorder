@@ -7,3 +7,36 @@
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////Start Account CSS///////////////////////
 /////////////////////////////////////////////////////////////////////
+
+// can not move this css in specific component and and account css becuase here we are useing css on the basis of body and if we will call  in specific component than it will not work
+
+  // set password
+  // login
+  // signup
+  body.opti_account-module
+  {
+    // background-image: url('/assets/images/account/account-process.jpg');
+    // background-position: center center;
+    // background-size: cover;
+    // padding: 75px;
+
+    
+    background-image: url('/assets/images/signup/nouse/shutter/body-bg-new-5.jpg');
+    background-position: center center;
+    background-size: cover;
+    padding: 50px;
+    background-repeat: no-repeat;
+    float: left;
+    width: 100%;
+
+    // .ps__thumb-y,
+    // .ps__rail-y:hover > .ps__thumb-y, 
+    // .ps__rail-y:focus > .ps__thumb-y
+    // {
+    //   background-color: $white;
+    // }
+  }
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////End Account CSS/////////////////////////
+/////////////////////////////////////////////////////////////////////  
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { BaseClass } from "src/app/classes/BaseClass";
@@ -25,9 +25,24 @@ export class LoginComponent implements OnInit {
   constructor(private auth:AuthenticationService,private router:Router,private httpClientSer: HttpClient) { }
   private baseClassObj = new BaseClass();
   public arrConfigData: any [];
+
+  randomstring = '';
+  capchaText: string;
+  invalidCapcha:boolean=false;
+
+  @ViewChild('myCanvas') myCanvas;
   
   
   ngOnInit() {
+
+    this. getRandomStringForCaptcha();
+    this.customCaptcha(this.randomstring);
+
+    const element = document.getElementsByTagName("body")[0];
+    element.className = "";
+    element.classList.add("opti_body-login");
+    element.classList.add("opti_account-module");
+
     //This will get all config 
     this.httpClientSer.get('./assets/configuration.json').subscribe(
       data => {
@@ -97,4 +112,30 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('selectedComp',event.target.value)
         sessionStorage.setItem('loggedInUser',this.loginId)
   }
+
+
+  customCaptcha(string){
+    let c = this.myCanvas.nativeElement;
+    let ctx = c.getContext("2d");
+    ctx.font = "15px Arial";
+    ctx.clearRect(0, 0, 252, 144);
+    ctx.fillStyle = "black";
+    ctx.fillText(string, 15, 21);
+  }
+
+  getRandomStringForCaptcha(){
+      let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+      let string_length = 4;
+      for (var i=0; i<string_length; i++) {
+        let rnum = Math.floor(Math.random() * chars.length);
+        this.randomstring += chars.substring(rnum,rnum+1);
+      }
+  }
+
+  changeCaptcha(){
+    this.randomstring = '';
+    this.getRandomStringForCaptcha();
+    this.customCaptcha(this.randomstring);
+  }
+
 }

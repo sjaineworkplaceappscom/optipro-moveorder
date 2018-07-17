@@ -29,6 +29,10 @@ import { UploadModule } from '@progress/kendo-angular-upload';
 import { FgrmscanparentComponent } from './fgrmscanparent/fgrmscanparent.component';
 import { FgrmscanparentinputformComponent } from './fgrmscanparentinputform/fgrmscanparentinputform.component';
 import { FgrmscanchildinputformComponent } from './fgrmscanchildinputform/fgrmscanchildinputform.component';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
 
 const myRoots: Routes = [  
   { path: 'login', component: LoginComponent }  ,
@@ -76,7 +80,9 @@ const myRoots: Routes = [
     DropDownsModule,
     ReactiveFormsModule,
     HttpClientJsonpModule,
-    UploadModule
+    UploadModule,
+    ButtonsModule,
+    PerfectScrollbarModule
   ],
   providers: [FGScanDetailComponent,EditService],
   bootstrap: [AppComponent]

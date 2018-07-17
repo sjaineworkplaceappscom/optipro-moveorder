@@ -5,15 +5,67 @@
 
     @media screen and (min-width: 480px) and (max-width: 767px){
         @import 'device/mobile/_mobile';
+        
+            //////////////////////////////////////////////
+            // SignUp, SignIn, SetPassword, resetpassword
+            //////////////////////////////////////////////
+            .opti_account-module .opti_account-submodule-wrapper
+            {
+                @media screen and (orientation:landscape) {
+                    .opti_account-submodule-container
+                    {
+                        width: 100%;
+                        margin-left: 0;
+                        padding: 0 12%;
+                    }   
+                }
+            }
+
+            //left panel
+            #opti_LeftPanelFooterLogo{
+                max-height: 100px;
+                img{
+                    width: 200px !important;
+                }
+            }
+
+            #opti_WrapperID .opti_left-navigation{
+                max-height: calc(100% - 125px);
+            }
+
+            .k-column-list{
+                max-height: 130px !important;
+            }
+
+            /////////////////////////////
+            // CSS Related To signin Page
+            /////////////////////////////
+            .opti_body-login #opti_signinID{
+                // @media screen and (orientation:landscape) {
+                //     .opti_login-brandlogo img{
+                //         max-width: 87%;
+                //         margin-left: 4%;
+                //         margin-right: 4%;
+                //         width: 100%;
+                //     }
+                // }
+            }
+        
     }
 
     @media only screen and (min-width: 768px) and (max-width: 959px) {
         @import 'device/ipad/_ipad';
+        @import 'device/ipad/account_module/_ipad_account_portrait';
+        
     }
 
     @media only screen and (min-width: 960px) and (max-width: 1024px) {
         @import 'device/ipad/_ipad';   
+        @import 'device/ipad/account_module/_ipad_account_landscape';
     }
+    
+    
+    
     
     
     /* Smartphones (portrait and landscape) ----------- */
