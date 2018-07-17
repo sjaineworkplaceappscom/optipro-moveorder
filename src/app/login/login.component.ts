@@ -11,31 +11,36 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginId:string = 'shashank';
-  password:string = 'sha@123';
-  selectedComp:string;
-  modelSource:any;
-  data:any;
-  companies:any[];
-  showCompCombo:boolean =false;
-  connentLbl:string = "Connect";
-  loginLbl:string = "Login";
-  showLoginBtn:boolean = false;
-  psURL:string= '';
-  constructor(private auth:AuthenticationService,private router:Router,private httpClientSer: HttpClient) { }
+  loginId: string = 'shashank';
+  password: string = 'sha@123';
+  selectedComp: string;
+  modelSource: any;
+  data: any;
+  companies: any[];
+  showCompCombo: boolean = false;
+  connentLbl: string = "Connect";
+  loginLbl: string = "Login";
+  disableLoginBtn: boolean = false;
+  psURL: string = '';
+  constructor(private auth: AuthenticationService, private router: Router, private httpClientSer: HttpClient) { }
   private baseClassObj = new BaseClass();
-  public arrConfigData: any [];
+  public arrConfigData: any[];
 
   randomstring = '';
   capchaText: string;
-  invalidCapcha:boolean=false;
+  invalidCapcha: boolean = false;
+  hasCompaneyData: any = false;
+
+  listItems: Array<string> = ["Select Company"];
+  selectedValue: string ;
+  
 
   @ViewChild('myCanvas') myCanvas;
-  
-  
+
+
   ngOnInit() {
 
-    this. getRandomStringForCaptcha();
+    this.getRandomStringForCaptcha();
     this.customCaptcha(this.randomstring);
 
     const element = document.getElementsByTagName("body")[0];
@@ -46,75 +51,87 @@ export class LoginComponent implements OnInit {
     //This will get all config 
     this.httpClientSer.get('./assets/configuration.json').subscribe(
       data => {
-        this.arrConfigData = data as string [];
-        localStorage.setItem('arrConfigData',JSON.stringify(this.arrConfigData[0]));
+        this.arrConfigData = data as string[];
+        localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
         //This will get the psURL
-        this.auth.getPSURL(this.baseClassObj.adminDBName,this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
-          data=> {
-          if(data !=null )
-          {
+        this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
+          data => {
+            if (data != null) {
               this.psURL = data;
               //For code analysis
               this.psURL = "http://localhost:57966/api";
-          }
+            }
           }
         )
       },
       (err: HttpErrorResponse) => {
-        console.log (err.message);
+        console.log(err.message);
       }
     );
 
-   
+
   }
 
-  onConnectClick(){
-    this.auth.login(this.loginId,this.password,this.psURL).subscribe(
-     data=> {
-     this.modelSource = data;
-     if(this.modelSource.Table.length > 0){
-      if(this.modelSource.Table[0].OPTM_ACTIVE == 1){
-       //If everything is ok then we will navigate the user to main home page
-        //this.router.navigateByUrl('/moveorder');
+  onPasswordBlur() {
+    this.auth.login(this.loginId, this.password, this.psURL).subscribe(
+      data => {
+        this.modelSource = data;
+        if (this.modelSource.Table.length > 0) {
+          if (this.modelSource.Table[0].OPTM_ACTIVE == 1) {
+            //If everything is ok then we will navigate the user to main home page
+            //this.router.navigateByUrl('/moveorder');
 
-        this.auth.getCompany(this.loginId,this.psURL).subscribe(
-          data=> {
-          this.modelSource = data
-          if(this.modelSource.Table.length > 0){
-            //Show the Company Combo box
-            this.showCompCombo = true;
-            this.connentLbl = "Connected"
-            this.companies = data.Table;
-            this.showLoginBtn = true;
-           }
-           else{
-             alert("You are Not an Active User");
-           }
-           }
-         )
-      }
-      else{
-          alert("Invalid User Name or Password");
+            this.auth.getCompany(this.loginId, this.psURL).subscribe(
+              data => {
+
+                this.modelSource = data
+
+                if (this.modelSource!=undefined && this.modelSource!=null &&this.modelSource.Table.length > 0) {
+
+                  //Show the Company Combo box
+                  this.listItems = data.Table;
+                  this.selectedValue = this.listItems[0]; 
+                  this.disableLoginBtn=false;                 
+                  this.hasCompaneyData = true;
+                    console.log(this.selectedValue);
+
+                }
+                else {
+                  this.disableLoginBtn=true;
+                  this.hasCompaneyData = false;
+                  alert("You are Not an Active User");
+
+                }
+              }
+            )
+          }
+          else {
+            this.hasCompaneyData = false;
+            this.disableLoginBtn=true;
+            alert("Invalid User Name or Password");
+
+          }
         }
-      }
-      else{
-        alert("You are Not an Active User");
-      }
+        else {
+          this.hasCompaneyData = false;
+          this.disableLoginBtn=true;
+          alert("You are Not an Active User");
+        }
       }
     )
   }
 
-  onLoginClick(){
-       this.router.navigateByUrl('/moveorder');
+  onLoginClick() {
+    this.router.navigateByUrl('/moveorder');
   }
 
-  onCompanyChange(event: any){
-        sessionStorage.setItem('selectedComp',event.target.value)
-        sessionStorage.setItem('loggedInUser',this.loginId)
+  onCompanyChange(event: any) {
+    sessionStorage.setItem('selectedComp', event.target.value)
+    sessionStorage.setItem('loggedInUser', this.loginId)
   }
 
 
-  customCaptcha(string){
+  customCaptcha(string) {
     let c = this.myCanvas.nativeElement;
     let ctx = c.getContext("2d");
     ctx.font = "15px Arial";
@@ -123,24 +140,22 @@ export class LoginComponent implements OnInit {
     ctx.fillText(string, 15, 21);
   }
 
-  getRandomStringForCaptcha(){
-      let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-      let string_length = 4;
-      for (var i=0; i<string_length; i++) {
-        let rnum = Math.floor(Math.random() * chars.length);
-        this.randomstring += chars.substring(rnum,rnum+1);
-      }
+  getRandomStringForCaptcha() {
+    let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    let string_length = 4;
+    for (var i = 0; i < string_length; i++) {
+      let rnum = Math.floor(Math.random() * chars.length);
+      this.randomstring += chars.substring(rnum, rnum + 1);
+    }
   }
 
-  changeCaptcha(){
+  changeCaptcha() {
     this.randomstring = '';
     this.getRandomStringForCaptcha();
     this.customCaptcha(this.randomstring);
   }
 
-  
-  listItems: Array<string> = [ "Small", "Medium", "Large" ];
-  selectedValue: string = "Medium";
-  
+
+
 
 }

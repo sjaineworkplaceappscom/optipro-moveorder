@@ -73,7 +73,7 @@
                             <span  *ngIf="this.userNotExist==true &&  (pwd.dirty || pwd.touched) && (emailId.dirty || emailId.touched) && !pwd.errors?.required" class="float-right opti_error-msg">User does not exists.</span> -->
                         </span>
                         <!-- <input name = "password" required [(ngModel)]="password" #pwd = ngModel type="password" class="k-textbox" value="" placeholder="Your password" /> -->
-                        <input name="pwd" [(ngModel)]="password" type="password" class="k-textbox" id="pwd" placeholder="Your password">
+                        <input name="pwd" [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()"  placeholder="Your password">
                         <span class="opti_mouse-pointer float-right opti_form-label">Forgot your password?</span>
                     </label>
 
@@ -92,7 +92,8 @@
                         <span class="opti_form-label">
                             Company *
                         </span>
-                        <kendo-dropdownlist [data]="listItems" name="listname" [(ngModel)]="selectedValue"></kendo-dropdownlist>
+                        <kendo-dropdownlist [disabled]="hasCompaneyData==false"   [textField]="'OPTM_COMPID'"
+                        [valueField]="'OPTM_COMPID'" [data]="listItems" name="listname" [(ngModel)]="selectedValue"></kendo-dropdownlist>
                     </label> 
 
                     <label class="k-form-field opti_display-inline-flex opti_signin-captcha">
@@ -123,7 +124,7 @@
                     <div class="text-right">
                     <!-- <button type="button" class="opti_fullwidth" (click)="login()" [disabled] = "!signInForm.form.valid">Login</button> -->
                     <!-- <button (click)="onLoginClick()" align="center" type="button" class="opti_fullwidth" *ngIf="showLoginBtn" >{{loginLbl}}</button> -->
-                    <button (click)="onLoginClick()" align="center" type="button" class="opti_fullwidth" >{{loginLbl}}</button>
+                    <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth" >{{loginLbl}}</button>
                     </div> 
             </form>
             
