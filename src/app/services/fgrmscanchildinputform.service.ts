@@ -27,5 +27,11 @@ export class FgrmscanchildinputformService {
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/CheckIfChildCompBatchSerExists",jObject,this.httpOptions);
   }
 
-  
+  //This will fetch sysnumber
+  CheckIfValidBatchSerialComponentEntered(CompanyDBID:string,WareHouse:string,Bin:string,ChildBtchSerNo:string,ItemCode:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,WareHouse: WareHouse,Bin:Bin,ChildBtchSerNo:ChildBtchSerNo,ItemCode:ItemCode}]) };
+  //Return the response form the API  
+  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/CheckIfValidBatchSerialComponentEntered",jObject,this.httpOptions);
+  }
 }

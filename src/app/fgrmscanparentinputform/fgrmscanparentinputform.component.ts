@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import {FgrmscanparentinputformService } from '../services/fgrmscanparentinputform.service';
 import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrmscanchildinputform.component";
-import { single } from 'rxjs/operators';
 
 @Component({
   selector: 'app-fgrmscanparentinputform',
@@ -10,7 +9,6 @@ import { single } from 'rxjs/operators';
   styleUrls: ['./fgrmscanparentinputform.component.css']
 })
 export class FgrmscanparentinputformComponent implements OnInit {
-  //@Input() basicDetailsFrmFGWithScan: any;
   @Input() rowDataFrmFGWithScan: any;
   @Input() FGWithScanGridFrmMaster: any;
   @Input() basicFGInputForm:any;
@@ -45,12 +43,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
       if(this.basicFGInputForm.length > 0){
         this.psItemManagedBy = this.basicFGInputForm[0].ManagedBy;
       }
-     //this.fillRMGridData();
     }
 
     //Disable/enalbe controls
     this.disableEnableControls();
-
     
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
@@ -135,11 +131,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
    this.oModalData.ParentDataToSave = this.ParentGridData
    console.log("OMODAL ADTA")
    console.log(this.oModalData)
-
-    
-
       this.fgrmParentForm.SubmitDataforFGandRM(this.oModalData).subscribe(
         data=> {
+              if(data !=null){
+                if(data == true){
+                  alert("Data saved sucessfully");
+                }
+                
+              }
             }
     )
   }
@@ -179,7 +178,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           if(data[0].ItemCheck =="ItemExists")
           {
             //If entered bat ser is wright then will fetch its child 
-            //this.GetAllChildByParentId();
+            this.GetAllChildByParentId();
           }
           else if(data[0].ItemCheck =="ItemNotExists"){
             alert("FG Bat/Ser you are entering is not valid");
@@ -187,36 +186,19 @@ export class FgrmscanparentinputformComponent implements OnInit {
           }
           else{
             alert("some error occured");
-            
           }
-         
       }
     )
   }
 
-  //This will fill the RM Child Components
-  fillRMGridData(){
-      //   this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
-      //     data=> {
-      //     if(data[0].ItemCheck =="ItemNotExists"){
-      //       alert("FG Bat/Ser you are entering is not valid");
-      //       this.psBatchSer = '';
-      //     }
-      // }
-      // )
-
-  }
-
+  //This will get all childs of the parent batchserial enterd
   GetAllChildByParentId(){
-    this.fgrmParentForm.GetAllChildByParentId(this.CompanyDBId,this.detailsOfParentToChild[0].ParentBatchSer).subscribe(
+    this.fgrmParentForm.GetAllChildByParentId(this.CompanyDBId,this.psBatchSer).subscribe(
       data=> {
         if(data != null){
           this.ChildCompGridData = data;
-
-       
         }
       }
     )
-
-
-  }}
+  }
+}
