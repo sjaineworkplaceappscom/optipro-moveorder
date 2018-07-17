@@ -138,4 +138,9 @@ export class LoginComponent implements OnInit {
     this.customCaptcha(this.randomstring);
   }
 
+  
+  listItems: Array<string> = [ "Small", "Medium", "Large" ];
+  selectedValue: string = "Medium";
+  
+
 }

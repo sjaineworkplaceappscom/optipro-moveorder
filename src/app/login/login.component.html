@@ -77,20 +77,23 @@
                         <span class="opti_mouse-pointer float-right opti_form-label">Forgot your password?</span>
                     </label>
 
-                    <label class="k-form-field">
+                    <!-- <label class="k-form-field">
                         <button (click)="onConnectClick()" align="center" type="button" class="btn btn-primary">{{connentLbl}}</button> 
                     </label>
 
                     <label class="k-form-field">
-                        <!-- <span class="opti_form-label">
-                            Password *
-                        </span> -->
-                        
                         <select class="selectpicker"  (change)="onCompanyChange($event)" *ngIf="showCompCombo">
                             <option selected="" value=""></option>  
                             <option [ngValue]="i.OPTM_COMPID" *ngFor="let i of companies;" >{{i.OPTM_COMPID}}</option>  
                         </select>
-                    </label>
+                    </label> -->
+
+                    <label class="k-form-field">
+                        <span class="opti_form-label">
+                            Company *
+                        </span>
+                        <kendo-dropdownlist [data]="listItems" name="listname" [(ngModel)]="selectedValue"></kendo-dropdownlist>
+                    </label> 
 
                     <label class="k-form-field opti_display-inline-flex opti_signin-captcha">
                         <!-- <div class="opti_captcha-box"> -->
