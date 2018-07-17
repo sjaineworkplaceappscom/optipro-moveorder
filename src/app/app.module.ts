@@ -30,8 +30,6 @@ import { FgrmscanparentComponent } from './fgrmscanparent/fgrmscanparent.compone
 import { FgrmscanparentinputformComponent } from './fgrmscanparentinputform/fgrmscanparentinputform.component';
 import { FgrmscanchildinputformComponent } from './fgrmscanchildinputform/fgrmscanchildinputform.component';
 
-
-
 const myRoots: Routes = [  
   { path: 'login', component: LoginComponent }  ,
   { path: 'moveorder', component: MoveOrderComponent } ,   
@@ -64,7 +62,6 @@ const myRoots: Routes = [
     FgrmscanparentComponent,
     FgrmscanparentinputformComponent,
     FgrmscanchildinputformComponent
-    
   ],
   imports: [
     HttpClientModule,

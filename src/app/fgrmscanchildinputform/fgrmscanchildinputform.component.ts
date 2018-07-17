@@ -4,7 +4,7 @@ import { FgrmscanchildinputformService } from "src/app/services/fgrmscanchildinp
 @Component({
   selector: 'app-fgrmscanchildinputform',
   templateUrl: './fgrmscanchildinputform.component.html',
-  styleUrls: ['./fgrmscanchildinputform.component.css']
+  styleUrls: ['./fgrmscanchildinputform.component.scss']
 })
 export class FgrmscanchildinputformComponent implements OnInit {
   @Input() basicDetailFrmParentInput:any;

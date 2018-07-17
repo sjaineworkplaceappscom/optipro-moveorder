@@ -4,7 +4,7 @@ import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 @Component({
   selector: 'app-fgrmscanparent',
   templateUrl: './fgrmscanparent.component.html',
-  styleUrls: ['./fgrmscanparent.component.css']
+  styleUrls: ['./fgrmscanparent.component.scss']
 })
 export class FgrmscanparentComponent implements OnInit {
   @Input() basicDetailsFrmMO: any;

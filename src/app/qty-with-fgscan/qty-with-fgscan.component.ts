@@ -8,7 +8,7 @@ import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with
 @Component({
   selector: 'app-qty-with-fgscan',
   templateUrl: './qty-with-fgscan.component.html',
-  styleUrls: ['./qty-with-fgscan.component.css']
+  styleUrls: ['./qty-with-fgscan.component.scss']
 })
 export class QtyWithFGScanComponent implements OnInit {
   @Input() basicDetailsFrmMO: any;

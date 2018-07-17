@@ -4,7 +4,7 @@ import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 @Component({
   selector: 'app-qty-with-fgscan-detail',
   templateUrl: './qty-with-fgscan-detail.component.html',
-  styleUrls: ['./qty-with-fgscan-detail.component.css']
+  styleUrls: ['./qty-with-fgscan-detail.component.scss']
 })
 export class QtyWithFGScanDetailComponent implements OnInit {
   @Input() basicDetailsFrmFGWithScan: any;

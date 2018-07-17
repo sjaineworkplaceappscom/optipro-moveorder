@@ -6,7 +6,7 @@ import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrms
 @Component({
   selector: 'app-fgrmscanparentinputform',
   templateUrl: './fgrmscanparentinputform.component.html',
-  styleUrls: ['./fgrmscanparentinputform.component.css']
+  styleUrls: ['./fgrmscanparentinputform.component.scss']
 })
 export class FgrmscanparentinputformComponent implements OnInit {
   @Input() rowDataFrmFGWithScan: any;
