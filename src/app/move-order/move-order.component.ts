@@ -29,8 +29,8 @@ export class MoveOrderComponent implements OnInit {
   psOperName:string='';
   psProductCode:string = '';
   docEntry:number;
-  
-  
+  showWODtPopup:boolean = false;
+  showOperDtPopup:boolean = false;
   showItemLinkingScreen:boolean = false;
   ScreenName:string = '';
   settingOnSAP:string="2";
@@ -79,6 +79,7 @@ export class MoveOrderComponent implements OnInit {
 
   isWorkOrderRightSection:boolean = false;
   onWorkOrderDetail(status){
+    this.showWODtPopup = true;
     this.isWorkOrderRightSection = status;
     this.openRightSection(status);
     this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
@@ -89,12 +90,11 @@ export class MoveOrderComponent implements OnInit {
   onOperDtlPress(status){
     this.isOperationRightSection = status
     this.openRightSection(status)
+    this.showOperDtPopup = true;
   //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
     this.mo.getOperDetailByDocEntry(this.CompanyDBId,this.docEntry,this.psOperNO).subscribe(
       data=> {
        this.selectedWOOperDetail = data;
-       //this.modalRef = this.modalService.show(woOperDetailtemplate);
-       
       }
     )
   }
