@@ -170,33 +170,36 @@
 
             <!-- right sidebar section -->
             <div #optirightfixedsection class="opti_right-fix-section" [ngStyle]="{'display':isFixedRightSection == true ? 'block' : 'none' }">
-                <img src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
+                <div class="container-fluid"> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
 
-                <!-- Quantity Screen start -->
-                <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
-                    <h4 class="modal-title center-block">{{ScreenName}}</h4>
-                    <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
-                    <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
-                    <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+                            <!-- Quantity Screen start -->
+                            <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
+                                <h4 class="modal-title center-block">{{ScreenName}}</h4>
+                                <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+                                <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
+                                <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+                            </div>    
+                            <!-- Quantity Screen end -->
+
+                            <!-- Operation screen start -->
+                            <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
+                                <h4 class="modal-title pull-left">Operation Details</h4>
+                                <app-operational-detail [woOperDetail]="selectedWOOperDetail"></app-operational-detail>
+                            </div>
+                            <!-- Operation screen end -->
+
+                            <!-- Work order start -->
+                            <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
+                                <h4 class="modal-title pull-left">Work Order Details</h4>
+                                <app-work-order-detail [workOrderDetail]="selectedWODetail"></app-work-order-detail>
+                            </div>
+                            <!-- work order end -->
+                        </div>    
+                    </div>    
                 </div>    
-                <!-- Quantity Screen end -->
-
-                <!-- Operation screen start -->
-                <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
-                    <h4 class="modal-title pull-left">Operation Details</h4>
-                    <app-operational-detail [woOperDetail]="selectedWOOperDetail"></app-operational-detail>
-                </div>
-                <!-- Operation screen end -->
-
-                <!-- Work order start -->
-                <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
-                    <h4 class="modal-title pull-left">Work Order Details</h4>
-                    <app-work-order-detail [workOrderDetail]="selectedWODetail"></app-work-order-detail>
-                </div>
-                <!-- work order end -->
-                
-
-
             </div>
 
         </section>

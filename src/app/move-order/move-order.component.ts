@@ -147,7 +147,8 @@ export class MoveOrderComponent implements OnInit {
     this.isFixedRightSection = status;
 
     this.isQuantityRightSection = status;
-    this.isOperationRightSection = status
+    this.isOperationRightSection = status;
+    this.isWorkOrderRightSection = status;
   }
 
 
