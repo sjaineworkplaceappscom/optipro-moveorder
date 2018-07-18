@@ -11,9 +11,6 @@ export class OperationalDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
-    console.log(this.woOperDetail);
     this.oOperDetails = this.woOperDetail[0];
   }
-
 }

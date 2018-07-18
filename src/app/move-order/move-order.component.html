@@ -180,16 +180,16 @@
                             <!-- Operation screen start -->
                             <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
                                 <h4 class="modal-title pull-left">Operation Details</h4>
-                                <app-operational-detail [woOperDetail]="selectedWOOperDetail"></app-operational-detail>
+                                <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
                             </div>
                             <!-- Operation screen end -->
 
-                            <!-- Work order start -->
+                            <!-- Work order detail start -->
                             <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
                                 <h4 class="modal-title pull-left">Work Order Details</h4>
-                                <app-work-order-detail [workOrderDetail]="selectedWODetail"></app-work-order-detail>
+                                <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
                             </div>
-                            <!-- work order end -->
+                            <!-- work order detail end -->
                         </div>    
                     </div>    
                 </div>    
