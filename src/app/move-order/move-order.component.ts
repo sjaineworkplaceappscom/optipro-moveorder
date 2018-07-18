@@ -33,7 +33,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup:boolean = false;
   showItemLinkingScreen:boolean = false;
   ScreenName:string = '';
-  settingOnSAP:string="2";
+  settingOnSAP:string="3";
   showQtyWithFGScanScreen:boolean=false;
   showQtyNoScanScreen:boolean=false;
   showQtyWithFGRMScanScreen:boolean = false;
@@ -83,24 +83,35 @@ export class MoveOrderComponent implements OnInit {
 
   isWorkOrderRightSection:boolean = false;
   onWorkOrderDetail(status){
-    this.showWODtPopup = true;
-    this.isWorkOrderRightSection = status;
-    this.openRightSection(status);
-    this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
+    if(this.psWONO !=null && this.psWONO){
+      this.showWODtPopup = true;
+      this.isWorkOrderRightSection = status;
+      this.openRightSection(status);
+      this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
+    }
+    else{
+      alert("Select workorder no. first");
+    }
     
   }
 
   isOperationRightSection:boolean = false;
   onOperDtlPress(status){
+    if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
     this.openRightSection(status)
-    this.showOperDtPopup = true;
-  //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
+    
+    //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
     this.mo.getOperDetailByDocEntry(this.CompanyDBId,this.docEntry,this.psOperNO).subscribe(
       data=> {
        this.selectedWOOperDetail = data;
+       this.showOperDtPopup = true;
       }
     )
+  }
+  else{
+    alert("Select operation no. first");
+  }
   }
 
   isQuantityRightSection:boolean = false;
