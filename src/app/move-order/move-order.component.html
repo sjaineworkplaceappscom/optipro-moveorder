@@ -13,12 +13,18 @@
                     <div class="opti_vertcal-align-outer-box">
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
                             
+                            
+
                             <form class="k-form">
+
+                                <div class="text-center">
+                                    <h5>Move Order</h5>
+                                </div>
 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left"><input type="text" class="k-textbox" id="txtWorkOrder"  [value]="psWONO"></span> 
-                                    <span>
+                                    <span class="float-left opti_work-order"><input type="text" class="k-textbox" id="txtWorkOrder"  [value]="psWONO"></span> 
+                                    <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" width="27px" height="27px" />
@@ -68,7 +74,7 @@
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
-                                    <span class="float-left"><input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode"></span>
+                                    <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode">
                                 </label>
 <!-- 
                                 <label for="ProductCode">ProductCode</label>
@@ -77,8 +83,8 @@
 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Operation Number</span>
-                                    <span class="float-left"><input type="text" class="k-textbox" id="txtOperationNumber" [value]="psOperNO"></span>
-                                    <span>
+                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [value]="psOperNO"></span>
+                                    <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" width="27px" height="27px" />
@@ -109,8 +115,8 @@
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced</span>
-                                    <span class="float-left"><input type="text" class="k-textbox" id="txtQtyProduced"></span>
-                                    <span>
+                                    <span class="float-left opti_qty-produced"><input type="text" class="k-textbox" id="txtQtyProduced"></span>
+                                    <span class="opti_qty-operation-icon">
                                         <img src="assets/images/common/list.svg" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
                                     </span>
 
@@ -147,7 +153,7 @@
                                     <kendo-datepicker [value]="enddate"></kendo-datepicker>
                                 </label>
 
-                                <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
+                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth">Submit</button>
                             </form>
                             
                         </div>    

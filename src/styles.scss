@@ -78,12 +78,15 @@ p, span, strong, div{
       border-color: $accent;
   }
   
-  .k-grid-header thead tr th a.k-link,
+  body{
+    .k-grid-header thead tr th a.k-link,
     .k-indicator-container,
     a, h1, h2, h3, h4, h5, h6,
     .k-grid-header .k-header{
         color: $accent;
     }
+  }
+  
   
   a:hover{
       color: $secondary;

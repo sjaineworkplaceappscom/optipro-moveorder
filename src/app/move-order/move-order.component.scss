@@ -3,3 +3,29 @@ label.k-form-field {
     clear: both;
 }
 
+
+.opti_workorder-icon,
+.opti_operation-icon{
+    width: 90px;
+    float: left;
+}
+.opti_work-order, .opti_operation{
+    width: calc(100% - 90px);
+    input{
+        width: 100%;
+    }
+}
+
+.opti_qty-operation-icon{
+    width: 27px;
+    float: left;
+}
+.opti_qty-produced{
+    width: calc(100% - 27px);
+    input{
+        width: 100%;
+    }
+}
+
+
+
