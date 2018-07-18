@@ -70,7 +70,7 @@ export class MoveOrderComponent implements OnInit {
   onOperationPress(){
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     if(this.psWONO.length > 0){
-      this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry).subscribe(
+      this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
         data=> {
          this.allWOOpDetails = data;
          if(this.allWOOpDetails.length > 0){
