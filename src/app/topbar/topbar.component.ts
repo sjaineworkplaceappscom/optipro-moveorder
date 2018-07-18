@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
-
+  public userName:string;
+  public selectedCompany:string;
   constructor() { }
 
   ngOnInit() {
+    this.selectedCompany = sessionStorage.getItem('selectedComp');
+    this.userName = sessionStorage.getItem('loggedInUser');
   }
 
 }

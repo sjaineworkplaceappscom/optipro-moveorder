@@ -42,13 +42,16 @@ export class MoveOrderComponent implements OnInit {
   psItemManagedBy:string;
 
   public startdate: Date;
-  public enddate: Date;
+  public enddate: Date;  
+  
 
   ngOnInit() {
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-move-order");
     element.classList.add("opti_account-module");
+   
+
   }
 
   //This will get all WO

@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
   listItems: Array<string> = ["Select Company"];
   selectedValue: string;
   
+  userName:string="";
+  CompanyName:string="";
   @ViewChild('myCanvas') myCanvas;
 
   ngOnInit() {
@@ -113,6 +115,8 @@ export class LoginComponent implements OnInit {
 
   onLoginClick() {
     if(this.disableLoginBtn == false){
+      sessionStorage.setItem('selectedComp',this.CompanyName);
+    sessionStorage.setItem('loggedInUser', this.userName);
       this.router.navigateByUrl('/moveorder');
     }
     else{
@@ -122,8 +126,11 @@ export class LoginComponent implements OnInit {
 
   //On Comapany selection the selected comp will be set into session
   onCompanyChange(event: any) {
-    sessionStorage.setItem('selectedComp', event.OPTM_COMPID)
-    sessionStorage.setItem('loggedInUser', this.loginId)
+    // sessionStorage.setItem('selectedComp', event.OPTM_COMPID)
+    // sessionStorage.setItem('loggedInUser', this.loginId)
+
+    this.userName=this.loginId;
+    this.CompanyName= event.OPTM_COMPID;
   }
 
 
