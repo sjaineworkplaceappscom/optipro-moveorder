@@ -13,10 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   loginId: string = 'shashank';
   password: string = 'sha@123';
-  selectedComp: string;
   modelSource: any;
   data: any;
-  companies: any[];
   disableLoginBtn: boolean = true;
   psURL: string = '';
   loginLbl: string = "Login";
@@ -89,7 +87,6 @@ export class LoginComponent implements OnInit {
                   this.selectedValue = this.listItems[0]; 
                   this.disableLoginBtn=false;                 
                   this.hasCompaneyData = true;
-                  console.log(this.selectedValue);
                 }
                 else {
                   this.disableLoginBtn=true;
