@@ -11,7 +11,7 @@
 }
 
 body.opti_account-module{
-    // padding: 20px !important;
+    padding: 20px !important;
     .opti_account-banner-section{
         display: none;
     }
@@ -84,13 +84,19 @@ body.opti_account-module{
 // Css Related To landing page
 ////////////////////////////////////
 
-#opti_landingpageID{
-    .opti_vertcal-align-outer-box{
-        text-align: center;
-        .panel-body{
-            .float-left, .float-right{
-                float: none !important;
-            }
-        }
-    }
+// #opti_landingpageID{
+//     .opti_vertcal-align-outer-box{
+//         text-align: center;
+//         .panel-body{
+//             .float-left, .float-right{
+//                 float: none !important;
+//             }
+//         }
+//     }
+// }
+
+
+
+.opti_body-move-order.opti_account-module{
+    padding: 0 !important
 }

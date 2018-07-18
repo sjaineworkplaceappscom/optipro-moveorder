@@ -44,7 +44,7 @@ body.opti_body-move-order.opti_account-module {
     padding: 50px;
   }
   #opti_MoveOrderID{
-    height: calc(100vh - 65px);
+    // height: calc(100vh - 65px);
     width: 100%;
     height: 100%;
   }
@@ -54,7 +54,8 @@ body.opti_body-move-order.opti_account-module {
 
   .opti_outer-moveorder-form{
     .opti_vertcal-align-outer-box{
-      height: calc(100vh - 165px);
+      // height: calc(100vh - 165px);
+      height: 100%;;
     }
   }
 

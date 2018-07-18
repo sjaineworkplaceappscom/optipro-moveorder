@@ -27,7 +27,7 @@
 
     // mian content area
     #opti_MainContentID { // main content height(After deduct top bar height)
-        height: calc(100% - 65px);
+        // height: calc(100% - 65px);
         overflow-y: scroll;
     }
  
@@ -103,7 +103,7 @@
     }
 
     #opti_MainContentID {
-        margin-top: 65px;
+        margin-top: 0px;
     }
 
 
