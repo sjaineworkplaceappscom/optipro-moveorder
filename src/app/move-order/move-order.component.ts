@@ -40,6 +40,10 @@ export class MoveOrderComponent implements OnInit {
   bEnabeSaveBtn:boolean = false;
   basicDetails:any = [];
   psItemManagedBy:string;
+
+  public startdate: Date;
+  public enddate: Date;
+
   ngOnInit() {
     const element = document.getElementsByTagName("body")[0];
     element.className = "";

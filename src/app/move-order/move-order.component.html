@@ -17,7 +17,7 @@
 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Work Order </span>
-                                    <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
+                                    <input type="text" class="k-textbox" id="txtWorkOrder"  [value]="psWONO">
                                     <button type="button" (click)="onWOPress()"  class="">WO#</button>
                                     <button  type="button" align="middle" class="">Scan WO#</button>
                                     <button  type="button"  (click)="onWorkOrderDetail(true)" align="middle" class="">Work Order Detail</button>
@@ -62,7 +62,7 @@
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
-                                    <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode">
+                                    <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode">
                                 </label>
 <!-- 
                                 <label for="ProductCode">ProductCode</label>
@@ -71,7 +71,7 @@
 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Operation Number</span>
-                                    <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
+                                    <input type="text" class="k-textbox" id="txtOperationNumber" [value]="psOperNO">
 
                                     <button  type="button"  (click)="onOperationPress()" align="middle" class="">OP#</button>
                                     <button  type="button" align="middle" class="">Scan OP#</button>
@@ -115,7 +115,7 @@
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced</span>
-                                    <input type="text" class="form-control" id="txtQtyProduced">
+                                    <input type="text" class="k-textbox" id="txtQtyProduced">
                                     <button  type="button"  (click)="onQtyProdBtnPress(true)" align="middle" class="">Link</button>
                                 </label>
 
@@ -140,26 +140,16 @@
                                 </div>
                                 </ng-template> -->
 
-                                <label for="StartDateTime">Start Date Time</label>
-                                <div class='input-group date' id='dtStartDateTime'>
-                                    <!-- <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span> -->
-                                    <input type="datetime-local" class="form-control" >
-                                    
-                                </div>
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Start Date</span>
+                                    <kendo-datepicker [value]="startdate"></kendo-datepicker>
+                                </label>
 
-                                <label for="EndDateTime">End Date Time</label>
-                                <div class='input-group date' id='dtEndDateTime'>
-                                    <!-- <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span> -->
-                                    <input type="datetime-local" class="form-control" >
-                                </div>
-                                <br>
-                                <br>
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">End Date</span>
+                                    <kendo-datepicker [value]="enddate"></kendo-datepicker>
+                                </label>
+
                                 <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
                             </form>
                             
