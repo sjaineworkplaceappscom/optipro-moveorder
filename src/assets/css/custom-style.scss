@@ -32,6 +32,11 @@
 /////////////////////////////Start Move Order CSS////////////////////
 /////////////////////////////////////////////////////////////////////  
 body.opti_body-move-order.opti_account-module {
+
+  .opti_account-submodule-container{
+    width: 60%;
+  }
+
   padding: 0;
   float: left;
   width: 100%;
@@ -52,5 +57,26 @@ body.opti_body-move-order.opti_account-module {
       height: calc(100vh - 165px);
     }
   }
+
+  // Date input css on first time load 
+  // Something is going wrong with this input css that's why i overwrite css
+  span.k-picker-wrap.k-state-default
+  {   
+      border-color: rgba(33, 37, 41, 0.125);
+      kendo-dateinput {
+          width: 100%;
+          flex: 1 1 0%;
+          margin: 0;
+          span.k-dateinput-wrap {
+              border: none;
+          }
+      }
+
+      .k-select{
+        background-image: linear-gradient(#f6f6f6, #f1f1f1);
+        border-color: rgba(33, 37, 41, 0.125);
+      }
+  }
+
 }
 

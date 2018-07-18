@@ -34,7 +34,9 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TopbarComponent } from './topbar/topbar.component'; // Bootstrap Dropdown
+import { TopbarComponent } from './topbar/topbar.component';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+ // Bootstrap Dropdown
 
 
 const myRoots: Routes = [  
@@ -87,7 +89,8 @@ const myRoots: Routes = [
     UploadModule,
     ButtonsModule,
     PerfectScrollbarModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    DateInputsModule
   ],
   providers: [FGScanDetailComponent,EditService],
   bootstrap: [AppComponent]
