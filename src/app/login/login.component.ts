@@ -22,9 +22,9 @@ export class LoginComponent implements OnInit {
   private baseClassObj = new BaseClass();
   public arrConfigData: any[];
 
-  randomstring = '';
-  capchaText: string;
-  invalidCapcha: boolean = false;
+  // randomstring = '';
+  // capchaText: string;
+  // invalidCapcha: boolean = false;
   hasCompaneyData: any = false;
 
   listItems: Array<string> = ["Select Company"];
@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
   
   userName:string="";
   CompanyName:string="";
-  @ViewChild('myCanvas') myCanvas;
+  // @ViewChild('myCanvas') myCanvas;
 
   ngOnInit() {
 
-    this.getRandomStringForCaptcha();
-    this.customCaptcha(this.randomstring);
+    // this.getRandomStringForCaptcha();
+    // this.customCaptcha(this.randomstring);
 
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
@@ -134,27 +134,27 @@ export class LoginComponent implements OnInit {
   }
 
 
-  customCaptcha(string) {
-    let c = this.myCanvas.nativeElement;
-    let ctx = c.getContext("2d");
-    ctx.font = "15px Arial";
-    ctx.clearRect(0, 0, 252, 144);
-    ctx.fillStyle = "black";
-    ctx.fillText(string, 15, 21);
-  }
+  // customCaptcha(string) {
+  //   let c = this.myCanvas.nativeElement;
+  //   let ctx = c.getContext("2d");
+  //   ctx.font = "15px Arial";
+  //   ctx.clearRect(0, 0, 252, 144);
+  //   ctx.fillStyle = "black";
+  //   ctx.fillText(string, 15, 21);
+  // }
 
-  getRandomStringForCaptcha() {
-    let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    let string_length = 4;
-    for (var i = 0; i < string_length; i++) {
-      let rnum = Math.floor(Math.random() * chars.length);
-      this.randomstring += chars.substring(rnum, rnum + 1);
-    }
-  }
+  // getRandomStringForCaptcha() {
+  //   let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  //   let string_length = 4;
+  //   for (var i = 0; i < string_length; i++) {
+  //     let rnum = Math.floor(Math.random() * chars.length);
+  //     this.randomstring += chars.substring(rnum, rnum + 1);
+  //   }
+  // }
 
-  changeCaptcha() {
-    this.randomstring = '';
-    this.getRandomStringForCaptcha();
-    this.customCaptcha(this.randomstring);
-  }
+  // changeCaptcha() {
+  //   this.randomstring = '';
+  //   this.getRandomStringForCaptcha();
+  //   this.customCaptcha(this.randomstring);
+  // }
 }
