@@ -17,9 +17,6 @@ export class LoginComponent implements OnInit {
   modelSource: any;
   data: any;
   companies: any[];
-  showCompCombo: boolean = false;
-  connentLbl: string = "Connect";
-  loginLbl: string = "Login";
   disableLoginBtn: boolean = false;
   psURL: string = '';
   constructor(private auth: AuthenticationService, private router: Router, private httpClientSer: HttpClient) { }
@@ -32,7 +29,7 @@ export class LoginComponent implements OnInit {
   hasCompaneyData: any = false;
 
   listItems: Array<string> = ["Select Company"];
-  selectedValue: string ;
+  selectedValue: string;
   
 
   @ViewChild('myCanvas') myCanvas;
