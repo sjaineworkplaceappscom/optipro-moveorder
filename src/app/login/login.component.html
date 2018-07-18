@@ -93,7 +93,9 @@
                             Company *
                         </span>
                         <kendo-dropdownlist [disabled]="hasCompaneyData==false"   [textField]="'OPTM_COMPID'"
-                        [valueField]="'OPTM_COMPID'" [data]="listItems" name="listname" [(ngModel)]="selectedValue"></kendo-dropdownlist>
+                        [valueField]="'OPTM_COMPID'" [data]="listItems" name="listname" [(ngModel)]="selectedValue"
+                        (selectionChange)="onCompanyChange($event)"
+                        ></kendo-dropdownlist>
                     </label> 
 
                     <label class="k-form-field opti_display-inline-flex opti_signin-captcha">

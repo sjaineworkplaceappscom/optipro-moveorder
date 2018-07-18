@@ -17,8 +17,9 @@ export class LoginComponent implements OnInit {
   modelSource: any;
   data: any;
   companies: any[];
-  disableLoginBtn: boolean = false;
+  disableLoginBtn: boolean = true;
   psURL: string = '';
+  loginLbl: string = "Login";
   constructor(private auth: AuthenticationService, private router: Router, private httpClientSer: HttpClient) { }
   private baseClassObj = new BaseClass();
   public arrConfigData: any[];
@@ -31,9 +32,7 @@ export class LoginComponent implements OnInit {
   listItems: Array<string> = ["Select Company"];
   selectedValue: string;
   
-
   @ViewChild('myCanvas') myCanvas;
-
 
   ngOnInit() {
 
@@ -69,6 +68,7 @@ export class LoginComponent implements OnInit {
 
   }
 
+  //On Password blur the authentication will be checked
   onPasswordBlur() {
     this.auth.login(this.loginId, this.password, this.psURL).subscribe(
       data => {
@@ -84,20 +84,17 @@ export class LoginComponent implements OnInit {
                 this.modelSource = data
 
                 if (this.modelSource!=undefined && this.modelSource!=null &&this.modelSource.Table.length > 0) {
-
                   //Show the Company Combo box
                   this.listItems = data.Table;
                   this.selectedValue = this.listItems[0]; 
                   this.disableLoginBtn=false;                 
                   this.hasCompaneyData = true;
-                    console.log(this.selectedValue);
-
+                  console.log(this.selectedValue);
                 }
                 else {
                   this.disableLoginBtn=true;
                   this.hasCompaneyData = false;
                   alert("You are Not an Active User");
-
                 }
               }
             )
@@ -106,24 +103,29 @@ export class LoginComponent implements OnInit {
             this.hasCompaneyData = false;
             this.disableLoginBtn=true;
             alert("Invalid User Name or Password");
-
           }
         }
         else {
           this.hasCompaneyData = false;
           this.disableLoginBtn=true;
-          alert("You are Not an Active User");
+          alert("Invalid User Name or Password");
         }
       }
     )
   }
 
   onLoginClick() {
-    this.router.navigateByUrl('/moveorder');
+    if(this.disableLoginBtn == false){
+      this.router.navigateByUrl('/moveorder');
+    }
+    else{
+      alert("Select company first");
+    }
   }
 
+  //On Comapany selection the selected comp will be set into session
   onCompanyChange(event: any) {
-    sessionStorage.setItem('selectedComp', event.target.value)
+    sessionStorage.setItem('selectedComp', event.OPTM_COMPID)
     sessionStorage.setItem('loggedInUser', this.loginId)
   }
 
@@ -151,8 +153,4 @@ export class LoginComponent implements OnInit {
     this.getRandomStringForCaptcha();
     this.customCaptcha(this.randomstring);
   }
-
-
-
-
 }
