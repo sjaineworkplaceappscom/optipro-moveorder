@@ -1,89 +1,234 @@
+<app-topbar></app-topbar>
 
-<div class="container">
-  <p></p>
-  <form>
-      <label for="WorkOrder">WorkOrder</label>
-      <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
-      <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO#</button>
-      <button  type="button" align="middle" class="btn btn-primary">Scan WO#</button>
-      <button  type="button"  (click)="onWorkOrderDetail(woDetailtemplate)" align="middle" class="btn btn-primary">Work Order Detail</button>
-      <!--Modal Body for Work Order Details-->
-      <ng-template #woDetailtemplate>
-        <div class="modal-header">
-          <h4 class="modal-title pull-left">Modal</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Work Order Details
-          <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
-        </div>
-      </ng-template>
-<br>
-      <label for="ProductCode">ProductCode</label>
-      <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode">
-      
-      <label for="OperationNumber">Operation Number</label>
-      <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
+<div id="opti_WrapperID">
+    <div id="opti_MoveOrderID">
+        <section id="opti_MainContentID" class="opti_account-submodule-wrapper opti_position-relative">
+            <!-- banner section -->
+            <div class="float-left opti_account-banner-section">
+            </div>
 
-      <button  type="button"  (click)="onOperationPress()" align="middle" class="btn btn-primary">OP#</button>
-      <button  type="button" align="middle" class="btn btn-primary">Scan OP#</button>
-      <button  type="button"  (click)="onOperDtlPress(woOperDetailtemplate)" align="middle" class="btn btn-primary">Operation Details</button>
-      <!--Modal Body for Operation Details-->
-      <ng-template #woOperDetailtemplate>
-        <div class="modal-header">
-          <h4 class="modal-title pull-left">Modal</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Operation Details
-          <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
-        </div>
-      </ng-template>
-      <br>
-      <label for="QtyProduced">Qty Produced</label>
-      <input type="text" class="form-control" id="txtQtyProduced">
-      <button  type="button"  (click)="onQtyProdBtnPress(itemLinkingScreen)" align="middle" class="btn btn-primary">Link</button>
-      <!--Modal Body for Dynamic Screens on setting basis-->
-    <ng-template #itemLinkingScreen>
-    <div class="modal-header">
-      <h4 class="modal-title center-block">{{ScreenName}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-     <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
-     <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
-     <!-- <app-qty-with-fgand-rmscan *ngIf="showQtyWithFGRMScanScreen"></app-qty-with-fgand-rmscan> -->
-     <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
-    </div>
-  </ng-template>
-      <label for="StartDateTime">Start Date Time</label>
-      <div class='input-group date' id='dtStartDateTime'>
-        <!-- <input type='text' class="form-control" />
-        <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-        </span> -->
-        <input type="datetime-local" class="form-control" >
-        
+            <!-- form section -->
+            <div class="float-right opti_account-form-section">
+                <div class="opti_outer-moveorder-form opti_account-submodule-container"> 
+                    <div class="opti_vertcal-align-outer-box">
+                        <div class="panel-body opti_position-relative" [perfectScrollbar]="">
+                            
+                            <form class="k-form">
+
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Work Order </span>
+                                    <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
+                                    <button type="button" (click)="onWOPress()"  class="">WO#</button>
+                                    <button  type="button" align="middle" class="">Scan WO#</button>
+                                    <button  type="button"  (click)="onWorkOrderDetail(true)" align="middle" class="">Work Order Detail</button>
+
+                                    <!-- template -->
+                                    <!-- <ng-template #woDetailtemplate>
+                                        <div class="modal-header">
+                                        <h4 class="modal-title pull-left">Modal</h4>
+                                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        Work Order Details
+                                        <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
+                                        </div>
+                                    </ng-template> -->
+
+                                </label>
+
+                                
+
+
+                                <!-- <label for="WorkOrder">WorkOrder</label>
+                                <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
+                                <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO#</button>
+                                <button  type="button" align="middle" class="btn btn-primary">Scan WO#</button>
+                                <button  type="button"  (click)="onWorkOrderDetail(woDetailtemplate)" align="middle" class="btn btn-primary">Work Order Detail</button> -->
+                                <!--Modal Body for Work Order Details-->
+                                <!-- <ng-template #woDetailtemplate>
+                                    <div class="modal-header">
+                                    <h4 class="modal-title pull-left">Modal</h4>
+                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Work Order Details
+                                    <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
+                                    </div>
+                                </ng-template> -->
+                                
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Product Code</span>
+                                    <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode">
+                                </label>
+<!-- 
+                                <label for="ProductCode">ProductCode</label>
+                                <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode"> -->
+                                
+
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Operation Number</span>
+                                    <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
+
+                                    <button  type="button"  (click)="onOperationPress()" align="middle" class="">OP#</button>
+                                    <button  type="button" align="middle" class="">Scan OP#</button>
+                                    <button  type="button"  (click)="onOperDtlPress(true)" align="middle" class="">Operation Details</button>
+
+                                    <!-- <ng-template #woOperDetailtemplate>
+                                        <div class="modal-header">
+                                        <h4 class="modal-title pull-left">Modal</h4>
+                                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        Operation Details
+                                        <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
+                                        </div>
+                                    </ng-template> -->
+
+                                </label>
+
+                                <!-- <label for="OperationNumber">Operation Number</label>
+                                <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
+
+                                <button  type="button"  (click)="onOperationPress()" align="middle" class="btn btn-primary">OP#</button>
+                                <button  type="button" align="middle" class="btn btn-primary">Scan OP#</button>
+                                <button  type="button"  (click)="onOperDtlPress(woOperDetailtemplate)" align="middle" class="btn btn-primary">Operation Details</button> -->
+
+                                <!--Modal Body for Operation Details-->
+                                <!-- <ng-template #woOperDetailtemplate>
+                                    <div class="modal-header">
+                                    <h4 class="modal-title pull-left">Modal</h4>
+                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Operation Details
+                                    <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
+                                    </div>
+                                </ng-template> -->
+                                
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Qty Produced</span>
+                                    <input type="text" class="form-control" id="txtQtyProduced">
+                                    <button  type="button"  (click)="onQtyProdBtnPress(true)" align="middle" class="">Link</button>
+                                </label>
+
+
+                                <!-- <label for="QtyProduced">Qty Produced</label>
+                                <input type="text" class="form-control" id="txtQtyProduced">
+                                <button (click)="openRightSection(true)">Open RIght</button>
+                                <button  type="button"  (click)="onQtyProdBtnPress(itemLinkingScreen)" align="middle" class="btn btn-primary">Link</button> -->
+
+                                <!--Modal Body for Dynamic Screens on setting basis-->
+                                <!-- <ng-template #itemLinkingScreen>
+                                <div class="modal-header">
+                                <h4 class="modal-title center-block">{{ScreenName}}</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+                                <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
+                                <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+                                </div>
+                                </ng-template> -->
+
+                                <label for="StartDateTime">Start Date Time</label>
+                                <div class='input-group date' id='dtStartDateTime'>
+                                    <!-- <input type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span> -->
+                                    <input type="datetime-local" class="form-control" >
+                                    
+                                </div>
+
+                                <label for="EndDateTime">End Date Time</label>
+                                <div class='input-group date' id='dtEndDateTime'>
+                                    <!-- <input type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span> -->
+                                    <input type="datetime-local" class="form-control" >
+                                </div>
+                                <br>
+                                <br>
+                                <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
+                            </form>
+                            
+                        </div>    
+                    </div>    
+                </div>
+            </div>
+
+            <!-- right sidebar section -->
+            <div #optirightfixedsection class="opti_right-fix-section" [ngStyle]="{'display':isFixedRightSection == true ? 'block' : 'none' }">
+                <img src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
+
+                <!-- Quantity Screen start -->
+                <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
+                    <h4 class="modal-title center-block">{{ScreenName}}</h4>
+                    <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+                    <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
+                    <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+                </div>    
+                <!-- Quantity Screen end -->
+
+                <!-- Operation screen start -->
+                <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
+                    <h4 class="modal-title pull-left">Operation Details</h4>
+                    <app-operational-detail [woOperDetail]="selectedWOOperDetail"></app-operational-detail>
+                </div>
+                <!-- Operation screen end -->
+
+                <!-- Work order start -->
+                <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
+                    <h4 class="modal-title pull-left">Work Order Details</h4>
+                    <app-work-order-detail [workOrderDetail]="selectedWODetail"></app-work-order-detail>
+                </div>
+                <!-- work order end -->
+                
+
+
+            </div>
+
+        </section>
     </div>
 
-    <label for="EndDateTime">End Date Time</label>
-      <div class='input-group date' id='dtEndDateTime'>
-        <!-- <input type='text' class="form-control" />
-        <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-        </span> -->
-        <input type="datetime-local" class="form-control" >
-    </div>
-    <br>
-    <br>
-    <button align="center" type="button" align="middle" class="btn btn-primary">Move</button>
-  </form>
+    
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

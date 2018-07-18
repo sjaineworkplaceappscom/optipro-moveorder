@@ -15,12 +15,6 @@
   // signup
   body.opti_account-module
   {
-    // background-image: url('/assets/images/account/account-process.jpg');
-    // background-position: center center;
-    // background-size: cover;
-    // padding: 75px;
-
-    
     background-image: url('/assets/images/signup/nouse/shutter/body-bg-new-5.jpg');
     background-position: center center;
     background-size: cover;
@@ -28,15 +22,35 @@
     background-repeat: no-repeat;
     float: left;
     width: 100%;
-
-    // .ps__thumb-y,
-    // .ps__rail-y:hover > .ps__thumb-y, 
-    // .ps__rail-y:focus > .ps__thumb-y
-    // {
-    //   background-color: $white;
-    // }
   }
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////End Account CSS/////////////////////////
 /////////////////////////////////////////////////////////////////////  
+
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////Start Move Order CSS////////////////////
+/////////////////////////////////////////////////////////////////////  
+body.opti_body-move-order.opti_account-module {
+  padding: 0;
+  float: left;
+  width: 100%;
+  #opti_MainContentID {
+    padding: 50px;
+  }
+  #opti_MoveOrderID{
+    height: calc(100vh - 65px);
+    width: 100%;
+    height: 100%;
+  }
+  .opti_account-banner-section, .opti_account-form-section{
+    height: calc(100vh - 165px);
+  }
+
+  .opti_outer-moveorder-form{
+    .opti_vertcal-align-outer-box{
+      height: calc(100vh - 165px);
+    }
+  }
+}
 

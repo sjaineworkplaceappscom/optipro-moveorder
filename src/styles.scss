@@ -46,14 +46,12 @@ p, span, strong, div{
   app-left #opti_LeftPanelID .opti_left-nav-ul li:hover,
   .opti_user-profile-drop-down li.opti_mouse-pointer:hover,
   li.opti_list:hover,
-  ul.opti_liststyle-one-ul .opti_liststyle-one-li:hover,
   app-left #opti_LeftPanelID .opti_left-nav-ul li.active
   {
       background-color: $kendo-light-primary-hover-color;
   }
   
-  #opti_LeftPanelID,
-  #opti_ThemeSettingID{
+  #opti_LeftPanelID{
       background-color: $white;
   }
   

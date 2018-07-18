@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MoveorderService } from 'src/app/services/moveorder.service';
 import { Router } from '@angular/router';
 //For Ngx Bootstrap
@@ -29,8 +29,8 @@ export class MoveOrderComponent implements OnInit {
   psOperName:string='';
   psProductCode:string = '';
   docEntry:number;
-  showWODtPopup:boolean = false;
-  showOperDtPopup:boolean = false;
+  
+  
   showItemLinkingScreen:boolean = false;
   ScreenName:string = '';
   settingOnSAP:string="2";
@@ -41,7 +41,10 @@ export class MoveOrderComponent implements OnInit {
   basicDetails:any = [];
   psItemManagedBy:string;
   ngOnInit() {
-  
+    const element = document.getElementsByTagName("body")[0];
+    element.className = "";
+    element.classList.add("opti_body-move-order");
+    element.classList.add("opti_account-module");
   }
 
   //This will get all WO
@@ -74,24 +77,32 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
-  onWorkOrderDetail(woDetailtemplate: TemplateRef<any>){
+  isWorkOrderRightSection:boolean = false;
+  onWorkOrderDetail(status){
+    this.isWorkOrderRightSection = status;
+    this.openRightSection(status);
     this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
-    this.modalRef = this.modalService.show(woDetailtemplate);
-    this.showWODtPopup = true;
+    
   }
 
-  onOperDtlPress(woOperDetailtemplate: TemplateRef<any>){
+  isOperationRightSection:boolean = false;
+  onOperDtlPress(status){
+    this.isOperationRightSection = status
+    this.openRightSection(status)
   //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
     this.mo.getOperDetailByDocEntry(this.CompanyDBId,this.docEntry,this.psOperNO).subscribe(
       data=> {
        this.selectedWOOperDetail = data;
-       this.modalRef = this.modalService.show(woOperDetailtemplate);
-       this.showOperDtPopup = true;
+       //this.modalRef = this.modalService.show(woOperDetailtemplate);
+       
       }
     )
   }
 
-  onQtyProdBtnPress(itemLinkingScreen: TemplateRef<any>){
+  isQuantityRightSection:boolean = false;
+  onQtyProdBtnPress(status){
+    this.isQuantityRightSection = status;
+    this.openRightSection(status)
     //Setting basic details to share on another screen
     this.basicDetails.push({'WorkOrderNo':this.psWONO,'OperNo':this.psOperNO,'ItemCode':this.psProductCode,'ManagedBy': this.psItemManagedBy});
     this.showItemLinkingScreen = true; 
@@ -107,7 +118,7 @@ export class MoveOrderComponent implements OnInit {
       this.ScreenName = 'Qty with Finished Good & Raw Materials Scan';
       this.showQtyWithFGRMScanScreen = true;
     }
-    this.modalRef = this.modalService.show(itemLinkingScreen);
+    
   }
   //Core Functions
   //This will filter for filter WO
@@ -118,5 +129,26 @@ export class MoveOrderComponent implements OnInit {
   //This will filter Oper No
   filterOperDetail(data, operNo,docEntry) {
     return data.filter(e => e.U_O_OPERNO == operNo && e.DocEntry == docEntry)
-}
+  }
+
+  
+
+  // show and hide right content section
+  @ViewChild('optirightfixedsection') optirightfixedsection;
+  isFixedRightSection: boolean;
+
+  openRightSection(status) {
+      this.optirightfixedsection.nativeElement.style.display='block'; //content section
+      this.isFixedRightSection = status;
+  }
+
+  closeRightSection(status) {
+    this.optirightfixedsection.nativeElement.style.display='none';
+    this.isFixedRightSection = status;
+
+    this.isQuantityRightSection = status;
+    this.isOperationRightSection = status
+  }
+
+
 }

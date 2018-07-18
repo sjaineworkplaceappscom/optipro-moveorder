@@ -10,17 +10,17 @@ export  class UIHelper{
 
     // start sidebar and right panel manage
     // this function will call only for desktop and ipad
-    public static  manageNavigationPanel():void{
-        document.getElementById('sidebarCollapse').onclick = function() {
-        if(UIHelper.isMobile()==false){ 
-            document.getElementById('opti_LeftPanelID').classList.toggle('opti_sidebar-minimize');  
-            document.getElementById('opti_RightPanelID').classList.toggle('opti_sidebar-minimize');
-        }else{
-            document.getElementById('opti_LeftPanelID').classList.toggle('opti_menusidebar-mobile-open');  
-            document.getElementById('opti_RightPanelID').classList.toggle('opti_menusidebar-mobile-open');
-        }
-        };  
-    }
+    // public static  manageNavigationPanel():void{
+    //     document.getElementById('sidebarCollapse').onclick = function() {
+    //     if(UIHelper.isMobile()==false){ 
+    //         document.getElementById('opti_LeftPanelID').classList.toggle('opti_sidebar-minimize');  
+    //         document.getElementById('opti_RightPanelID').classList.toggle('opti_sidebar-minimize');
+    //     }else{
+    //         document.getElementById('opti_LeftPanelID').classList.toggle('opti_menusidebar-mobile-open');  
+    //         document.getElementById('opti_RightPanelID').classList.toggle('opti_menusidebar-mobile-open');
+    //     }
+    //     };  
+    // }
 
     // Apply class on the basis of device
     public static deviceClass(){

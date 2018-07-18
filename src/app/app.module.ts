@@ -33,6 +33,9 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TopbarComponent } from './topbar/topbar.component'; // Bootstrap Dropdown
+
 
 const myRoots: Routes = [  
   { path: 'login', component: LoginComponent }  ,
@@ -65,7 +68,8 @@ const myRoots: Routes = [
     QtyWithFGScanDetailComponent,
     FgrmscanparentComponent,
     FgrmscanparentinputformComponent,
-    FgrmscanchildinputformComponent
+    FgrmscanchildinputformComponent,
+    TopbarComponent
   ],
   imports: [
     HttpClientModule,
@@ -82,7 +86,8 @@ const myRoots: Routes = [
     HttpClientJsonpModule,
     UploadModule,
     ButtonsModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [FGScanDetailComponent,EditService],
   bootstrap: [AppComponent]

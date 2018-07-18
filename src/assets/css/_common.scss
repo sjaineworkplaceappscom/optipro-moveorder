@@ -94,32 +94,18 @@ body{
     }
   
     // List style 1 using in left panel
-    ul.opti_liststyle-one-ul{
-      .opti_liststyle-one-li{
-          display: flex;
-          padding: 10px 15px;
-          border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-          cursor: pointer;
-          .opti_liststyle-one-image {
-              width: 30px;
-              float: left;
-          }
-          .opti_liststyle-one-text {
-              float: left;
-              width: calc(100% - 30px);
-              padding-left: 10px;
-              h5, p{
-                  margin-bottom: 0;
-              }
-              p.opti_date {
-                  font-size: 12px;
-              }
-          }
-          img{
-              border-radius: 50%;
-          }
-      }
-    }
+    // ul.opti_liststyle-one-ul{
+    //   .opti_liststyle-one-li{
+    //       display: flex;
+    //       padding: 10px 15px;
+    //       border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+    //       cursor: pointer;
+       
+    //       img{
+    //           border-radius: 50%;
+    //       }
+    //   }
+    // }
   
     //Default Styling For List
     ul{
