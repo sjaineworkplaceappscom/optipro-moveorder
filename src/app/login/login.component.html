@@ -98,35 +98,36 @@
                         ></kendo-dropdownlist>
                     </label> 
 
-                    <label class="k-form-field opti_display-inline-flex opti_signin-captcha">
-                        <!-- <div class="opti_captcha-box"> -->
-                        <span class="float-left opti_captcha-text">
+                    <!-- <label class="k-form-field opti_display-inline-flex opti_signin-captcha"> -->
+                        <!-- <span class="float-left opti_captcha-text">
                             <input required class="k-textbox" #Captcha=ngModel [(ngModel)]="capchaText" (input)="changeValue()" type="text" name="captchatext"/>
-                        </span>
-                        <span class="float-left opti_captcha-canvas">
+                        </span> -->
+                        <!-- <span class="float-left opti_captcha-canvas">
                             <canvas #myCanvas id="captchaCanvasID" width="70" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
-                        </span>
-                        <span class="float-left opti_captcha-refresh opti_vertical-align">
+                        </span> -->
+                        <!-- <span class="float-left opti_captcha-refresh opti_vertical-align">
                             <div (click)="changeCaptcha()" class="opti_mouse-pointer">
                                 <img src="assets/images/common/refresh-button.svg" width="20" height="20" />
                             </div>
-                        </span>
-                   </label>
-                    <div class="opti_error-msg opti_display-inline-block opti_fullwidth">
+                        </span> -->
+                   <!-- </label> -->
+
+                    <!-- <div class="opti_error-msg opti_display-inline-block opti_fullwidth">
                         <span class="opti_error-msg"  *ngIf="invalidCapcha==true"  >Please enter valid captcha.</span>
                         <span class="opti_error-msg" *ngIf="Captcha.errors && (Captcha.dirty || Captcha.touched)">Captcha is required.</span>
-                    </div>
-                    <label class="k-form-field" >
+                    </div> -->
+
+                    <!-- <label class="k-form-field" >
                         <div class="opti_checkbox-container">
                         <input type="checkbox" id="auth-2fa" class="k-checkbox float-left" checked="checked">
                         <label class="k-checkbox-label" for="auth-2fa">Remember Me</label>
                         </div>
+                    </label> -->
 
-                    </label>
                     <div class="text-right">
-                    <!-- <button type="button" class="opti_fullwidth" (click)="login()" [disabled] = "!signInForm.form.valid">Login</button> -->
-                    <!-- <button (click)="onLoginClick()" align="center" type="button" class="opti_fullwidth" *ngIf="showLoginBtn" >{{loginLbl}}</button> -->
-                    <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth" >{{loginLbl}}</button>
+                        <!-- <button type="button" class="opti_fullwidth" (click)="login()" [disabled] = "!signInForm.form.valid">Login</button> -->
+                        <!-- <button (click)="onLoginClick()" align="center" type="button" class="opti_fullwidth" *ngIf="showLoginBtn" >{{loginLbl}}</button> -->
+                        <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth" >{{loginLbl}}</button>
                     </div> 
             </form>
             
