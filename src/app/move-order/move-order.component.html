@@ -24,7 +24,7 @@
                                 <label class="k-form-field">
                                     <!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONOname" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
+                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -76,6 +76,11 @@
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
                                     <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode" [disabled]=true>
+                                    
+                                </label>
+
+                                <label class="k-form-field">
+                                    <span class="opti_form-label">Product Description</span>
                                     <input type="text" class="k-textbox" id="txtProductDesc" [value]="psProductDesc" [disabled]=true>
                                 </label>
 <!-- 
@@ -86,7 +91,7 @@
                                 <label class="k-form-field">
 								<!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Operation Number</span>
-                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNoname"></span>
+                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -151,14 +156,14 @@
                                         <span class="opti_form-label">Start Date</span>
                                         <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeFrom'">
+                                            [selectMode]="'rangeFrom'" name="selectedMoments">
                                         <owl-date-time #dt12></owl-date-time>
 
 
                                         <span class="opti_form-label">End Date</span>
                                         <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeTo'">
+                                            [selectMode]="'rangeTo'" name="selectedMoments">
                                         <owl-date-time #dt13></owl-date-time>
 
                                 </label>
