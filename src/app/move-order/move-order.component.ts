@@ -78,7 +78,7 @@ export class MoveOrderComponent implements OnInit {
   }
 
   onOperationPress(){
-    if(this.psWONO.length > 0){
+    //if(this.psWONO.length > 0){
       this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
         data=> {
          this.allWOOpDetails = data;
@@ -87,10 +87,10 @@ export class MoveOrderComponent implements OnInit {
          }
         }
       )
-    }
-    else{
-      alert("Select workorder no. first");
-    }
+    // }
+    // else{
+    //   alert("Select workorder no. first");
+    // }
   }
 
   //This function will check, if the user entered WO is in the array
@@ -110,21 +110,21 @@ export class MoveOrderComponent implements OnInit {
 
   isWorkOrderRightSection:boolean = false;
   onWorkOrderDetail(status){
-    if(this.psWONO !=null && this.psWONO){
+    //if(this.psWONO !=null && this.psWONO){
       this.showWODtPopup = true;
       this.isWorkOrderRightSection = status;
       this.openRightSection(status);
       this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
-    }
-    else{
-      alert("Select workorder no. first");
-    }
+    // }
+    // else{
+    //   alert("Select workorder no. first");
+    // }
     
   }
 
   isOperationRightSection:boolean = false;
   onOperDtlPress(status){
-    if(this.psOperNO !=null && this.psOperNO){
+   // if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
     this.openRightSection(status)
     
@@ -135,10 +135,10 @@ export class MoveOrderComponent implements OnInit {
        this.showOperDtPopup = true;
       }
     )
-  }
-  else{
-    alert("Select operation no. first");
-  }
+  // }
+  // else{
+  //   alert("Select operation no. first");
+  // }
   }
 
   isQuantityRightSection:boolean = false;
