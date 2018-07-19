@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
   selector: 'app-fgrmscanparent',
@@ -19,7 +20,30 @@ export class FgrmscanparentComponent implements OnInit {
   showFGRMScanParentInsertPopup:boolean = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService) { }
 
+  gridHeight: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+      this.gridHeight = UIHelper.getMainContentHeight();
+  }
+
+  islevel2:boolean=false;
+  islevel1:boolean=true;
+  @ViewChild('qtylevel1') qtylevel1;
+  @ViewChild('qtylevelChildSuperchild') qtylevelChildSuperchild;
+  showLevelChildSuperChild(){
+    this.qtylevel1.nativeElement.style.display = 'none';
+    this.qtylevelChildSuperchild.nativeElement.style.display = 'block';
+  }
+  
+
   ngOnInit() {
+   
+   this.gridHeight = UIHelper.getMainContentHeight();
+
+   // hide childsuperchild level on initial    
+   this.qtylevelChildSuperchild.nativeElement.style.display = 'none';
+
    this.CompanyDBId = sessionStorage.getItem('selectedComp');
    console.log(this.basicDetailsFrmMO);
    this.basicDetailsToFGParentInput = this.basicDetailsFrmMO;
@@ -31,7 +55,7 @@ export class FgrmscanparentComponent implements OnInit {
   //Event
   onInsertFGBatSerRowPress(){
     //show the dialog for fg serial / batch
-    this.showFGRMScanParentInsertPopup = true;
+    //this.showFGRMScanParentInsertPopup = true;
   }
 
   //Core Functions

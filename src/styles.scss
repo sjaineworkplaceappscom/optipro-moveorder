@@ -2,112 +2,108 @@
 // @import '~bootstrap/dist/css/bootstrap.min.css';
 
 // stripe theme variable start
-$base-theme:Bootstrap;
-$skin-name:stripe-secondry-color;
-$accent: #1fa2ff;
-$secondary: #9dd0f3;
-$info: #17a2b8;
-$success: #28a745;
-$warning: #ffc107;
-$error: #dc3545;
-$body-bg: #dbe1e6;
-$body-color: #292b2c;
-$component-bg: #ffffff;
-$component-color: #292b2c;
-$card-cap-bg: #ffffff;
-$card-cap-color: #1fa2ff;
-$series-a: #0275d8;
-$series-b: #5bc0de;
-$series-c: #5cb85c;
-$series-d: #f0ad4e;
-$series-e: #e67d4a;
-$series-f: #d9534f;
+// $base-theme:Bootstrap;
+// $skin-name:stripe-secondry-color;
+// $accent: #1fa2ff;
+// $secondary: #9dd0f3;
+// $info: #17a2b8;
+// $success: #28a745;
+// $warning: #ffc107;
+// $error: #dc3545;
+// $body-bg: #dbe1e6;
+// $body-color: #292b2c;
+// $component-bg: #ffffff;
+// $component-color: #292b2c;
+// $card-cap-bg: #ffffff;
+// $card-cap-color: #1fa2ff;
+// $series-a: #0275d8;
+// $series-b: #5bc0de;
+// $series-c: #5cb85c;
+// $series-d: #f0ad4e;
+// $series-e: #e67d4a;
+// $series-f: #d9534f;
 
-$kendo-light-primary-hover-color: rgba(31, 162, 255, 0.2);
-$kendo-off-white-color: #f0f0f0;
-$white:#fff;
+// $kendo-light-primary-hover-color: rgba(31, 162, 255, 0.2);
+// $kendo-off-white-color: #f0f0f0;
+// $white:#fff;
 
 
-p, span, strong, div{
-    color: #232323;
-    }
+// p, span, strong, div{
+//     color: #232323;
+//     }
   
-    section#opti_TopBarID {
-      background: linear-gradient(177deg, #483DF6 2%, #435EF8 10%, #1BA0F1 44%, #25DDF5 91%, #45D790 130%);
-    }
+//     section#opti_TopBarID {
+//       background: linear-gradient(177deg, #483DF6 2%, #435EF8 10%, #1BA0F1 44%, #25DDF5 91%, #45D790 130%);
+//     }
   
-    .opti_menusidebar-mobile-open app-left {
-        background: rgba(0,0,0,0.5);
-    }
+//     .opti_menusidebar-mobile-open app-left {
+//         background: rgba(0,0,0,0.5);
+//     }
   /*****************************************************/
   /* static color end */
   /*****************************************************/
   
-  app-left #opti_LeftPanelID .opti_left-nav-ul li:hover,
-  .opti_user-profile-drop-down li.opti_mouse-pointer:hover,
-  li.opti_list:hover,
-  app-left #opti_LeftPanelID .opti_left-nav-ul li.active
-  {
-      background-color: $kendo-light-primary-hover-color;
-  }
+//   app-left #opti_LeftPanelID .opti_left-nav-ul li:hover,
+//   .opti_user-profile-drop-down li.opti_mouse-pointer:hover,
+//   li.opti_list:hover,
+//   app-left #opti_LeftPanelID .opti_left-nav-ul li.active
+//   {
+//       background-color: $kendo-light-primary-hover-color;
+//   }
   
-  #opti_LeftPanelID{
-      background-color: $white;
-  }
+//   #opti_LeftPanelID{
+//       background-color: $white;
+//   }
   
-  #opti_RightPanelID,
-  .opti_menusidebar-mobile-open app-left #opti_LeftPanelID{
-      background-color: $kendo-off-white-color;
-  }
+//   #opti_RightPanelID,
+//   .opti_menusidebar-mobile-open app-left #opti_LeftPanelID{
+//       background-color: $kendo-off-white-color;
+//   }
   
-  .opti_tab-outer ul.tabs > li:hover,
-  .opti_tab-outer ul.tabs > li.active,
-  body .k-grid tbody tr:hover,
-  .ps__thumb-y,
-  .ps__rail-y:hover > .ps__thumb-y, 
-  .ps__rail-y:focus > .ps__thumb-y,
-  button {
-      background-color: $accent;
-  }
+//   .opti_tab-outer ul.tabs > li:hover,
+//   .opti_tab-outer ul.tabs > li.active,
+//   body .k-grid tbody tr:hover,
+//   .ps__thumb-y,
+//   .ps__rail-y:hover > .ps__thumb-y, 
+//   .ps__rail-y:focus > .ps__thumb-y,
+//   button {
+//       background-color: $accent;
+//   }
   
-  .opti_loader .opti_spinner{
-      border-top-color:$accent !important;
-  }
+//   .opti_loader .opti_spinner{
+//       border-top-color:$accent !important;
+//   }
   
-  button{
-      border-color: $accent;
-  }
+//   button{
+//       border-color: $accent;
+//   }
   
-  body{
-    .k-grid-header thead tr th a.k-link,
-    .k-indicator-container,
-    a, h1, h2, h3, h4, h5, h6,
-    .k-grid-header .k-header{
-        color: $accent;
-    }
-  }
+//   body{
+//     .k-grid-header thead tr th a.k-link,
+//     .k-indicator-container,
+//     a, h1, h2, h3, h4, h5, h6,
+//     .k-grid-header .k-header{
+//         color: $accent;
+//     }
+//   }
   
   
-  a:hover{
-      color: $secondary;
-  }
+//   a:hover{
+//       color: $secondary;
+//   }
   
-  body .k-grid tbody tr:hover,
-  button {
-      color: $white;
-  }
+//   body .k-grid tbody tr:hover,
+//   button {
+//       color: $white;
+//   }
   
-  body kendo-grid,
-  .opti_left-navigation,
-  .opti_right-fix-section{
-      box-shadow: 0px 1px 15px $accent;
-  }
-  
-
-
+//   body kendo-grid,
+//   .opti_left-navigation,
+//   .opti_right-fix-section{
+//       box-shadow: 0px 1px 15px $accent;
+//   }
 // ens stripe theme variable
 
-@import "~@progress/kendo-theme-bootstrap/scss/all";
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 @import "~ng-pick-datetime/assets/style/picker.min.css";

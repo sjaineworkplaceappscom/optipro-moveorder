@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import {FgrmscanparentinputformService } from '../services/fgrmscanparentinputform.service';
 import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrmscanchildinputform.component";
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
   selector: 'app-fgrmscanparentinputform',
@@ -30,7 +31,40 @@ export class FgrmscanparentinputformComponent implements OnInit {
   iSeqNo:number;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
 
+
+  gridHeight: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+      this.gridHeight = UIHelper.getMainContentHeight();
+  }
+
+
+  @ViewChild('qtylevelChild') qtylevelChild;
+  @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
+  showLevelSuperChild(){
+    this.qtylevelChild.nativeElement.style.display = 'none';
+    this.qtylevelSuperchild.nativeElement.style.display = 'block';
+  }
+
+  showLevelParent(){
+    document.getElementById('opti_QtylevelChildSuperChildID').style.display = 'none';
+    document.getElementById('opti_QtylevelParentID').style.display = 'block';
+  }
+
+  // showLevelChild(){
+  //   this.qtylevelChild.nativeElement.style.display = 'block';
+  //   this.qtylevelSuperchild.nativeElement.style.display = 'none';
+  // }
+
+
   ngOnInit() {
+
+    this.gridHeight = UIHelper.getMainContentHeight();
+
+    // Hide superchild section on initial
+    this.qtylevelSuperchild.nativeElement.style.display = 'none';
+
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     console.log("On FG SCANC PARENT");
     console.log(this.basicFGInputForm)
@@ -63,7 +97,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //Events
   onInsertChildRowPress(){
-  this.showFGRMScanChildInsertPopup = true;
+  //this.showFGRMScanChildInsertPopup = true;
   }
 
   onBatchSerBlur(){

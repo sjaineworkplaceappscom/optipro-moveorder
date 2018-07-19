@@ -167,15 +167,15 @@ export class MoveOrderComponent implements OnInit {
     this.basicDetails.push({'WorkOrderNo':this.psWONO,'OperNo':this.psOperNO,'ItemCode':this.psProductCode,'ManagedBy': this.psItemManagedBy});
     this.showItemLinkingScreen = true; 
     if(this.settingOnSAP == "1"){
-      this.ScreenName = 'Qty with No Scan';
+      this.ScreenName = 'Move Order Summary';
       this.showQtyNoScanScreen = true;
     }
     if(this.settingOnSAP =="2"){
-      this.ScreenName = 'Qty with Scan';
+      this.ScreenName = 'Finished Goods Scan';
       this.showQtyWithFGScanScreen = true;
     }
     if(this.settingOnSAP == "3"){
-      this.ScreenName = 'Qty with Finished Good & Raw Materials Scan';
+      this.ScreenName = 'Finished Goods & Raw Materials Scan';
       this.showQtyWithFGRMScanScreen = true;
     }
     
