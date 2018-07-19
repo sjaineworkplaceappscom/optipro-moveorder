@@ -38,6 +38,10 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
  // Bootstrap Dropdown
 
+ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+ 
+
+
 
 const myRoots: Routes = [  
   { path: 'login', component: LoginComponent }  ,
@@ -90,7 +94,9 @@ const myRoots: Routes = [
     ButtonsModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
-    DateInputsModule
+    DateInputsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [FGScanDetailComponent,EditService],
   bootstrap: [AppComponent]

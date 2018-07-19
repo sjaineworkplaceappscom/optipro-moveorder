@@ -41,8 +41,10 @@ export class MoveOrderComponent implements OnInit {
   basicDetails:any = [];
   psItemManagedBy:string;
 
-  public startdate: Date;
-  public enddate: Date;  
+  public selectedMoments = [
+    new Date(2018, 1, 12, 10, 30),
+    new Date(2018, 3, 21, 20, 30)
+];
   
 
   ngOnInit() {
