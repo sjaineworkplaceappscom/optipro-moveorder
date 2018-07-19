@@ -51,8 +51,9 @@ export class FgrmscanchildinputformComponent implements OnInit {
             this.childCompItemCodeDetls = data;
             
             //if the item not exists then we will give error 
-            if(this.childCompItemCodeDetls[0].isChildComExists == false){
+            if(this.childCompItemCodeDetls[0].isChildComExists == "False"){
               alert("The item code does'nt exists");
+              this.psChildCompItemCode = '';
             }
             //if all ok then will fill another details of the item code 
             else{
@@ -67,6 +68,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
     }
   }
 
+  //This will check the bat / serial enterd by user
   onChildCompBatchSerBlur(){
     if(this.psChildCompBatchSer != null){
       this.FGRMinput.CheckIfValidBatchSerialComponentEntered(this.CompanyDBId,this.sChildWhse,this.sChildBin,this.psChildCompBatchSer,this.psChildCompItemCode).subscribe(

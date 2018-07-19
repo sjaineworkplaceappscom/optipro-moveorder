@@ -65,11 +65,11 @@ export class MoveOrderComponent implements OnInit {
       data=> {
        this.allWODetails = data;
        if(this.allWODetails.length > 0){
-          this.psWONO = this.allWODetails[16].U_O_ORDRNO
-          this.psProductCode = this.allWODetails[16].U_O_PRODID
-          this.psProductDesc = this.allWODetails[16].ItemName
-          this.docEntry = this.allWODetails[16].DocEntry
-          this.psItemManagedBy = this.allWODetails[16].ManagedBy
+          this.psWONO = this.allWODetails[38].U_O_ORDRNO
+          this.psProductCode = this.allWODetails[38].U_O_PRODID
+          this.psProductDesc = this.allWODetails[38].ItemName
+          this.docEntry = this.allWODetails[38].DocEntry
+          this.psItemManagedBy = this.allWODetails[38].ManagedBy
        }
       }
     )
@@ -100,7 +100,9 @@ export class MoveOrderComponent implements OnInit {
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur(){
    
-    if(this.allWODetails != null && this.allWODetails.length > 0){
+    if(this.allWODetails != null && 
+      this.allWODetails.length > 0 &&
+      this.psWONO.length > 0){
       //To check in the array
       let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
       if(isWOExists == false){
@@ -206,11 +208,11 @@ export class MoveOrderComponent implements OnInit {
       data=> {
        this.allWODetails = data;
        if(this.allWODetails.length > 0){
-          // this.psWONO = this.allWODetails[16].U_O_ORDRNO
-          // this.psProductCode = this.allWODetails[16].U_O_PRODID
-          // this.psProductDesc = this.allWODetails[16].ItemName
-          // this.docEntry = this.allWODetails[16].DocEntry
-          // this.psItemManagedBy = this.allWODetails[16].ManagedBy
+          // this.psWONO = this.allWODetails[38].U_O_ORDRNO
+          // this.psProductCode = this.allWODetails[38].U_O_PRODID
+          // this.psProductDesc = this.allWODetails[38].ItemName
+          // this.docEntry = this.allWODetails[38].DocEntry
+          // this.psItemManagedBy = this.allWODetails[38].ManagedBy
        }
       }
     )

@@ -14,30 +14,31 @@
 </div> -->
 
 <form class="k-form col-md-12 col-sm-12 col-xs-12" >
-
-      <label class="k-form-field opti_fgbatch-serial">
-            <span class="opti_form-label">FG Batch Serial</span>
+      <!--No need of this input box here-->
+      <!-- <label class="k-form-field opti_fgbatch-serial"> -->
+            <!-- <span class="opti_form-label">FG Batch Serial</span> -->
             <!-- <input   type="text" width="50" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px"> -->
-            <input   type="text" width="50" class="k-textbox"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
-      </label>
+            <!-- <input   type="text" width="50" class="k-textbox"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px"> -->
+      <!-- </label> -->
 
       <label class="k-form-field">
             <span class="opti_form-label">Item Code</span>
-            <input type="text" class="k-textbox" value = "" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()">
+            <input type="text" width="50" class="k-textbox" class="k-textbox" value = "" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()" id="psChildCompItemCodeID" name="psChildCompItemCodeName">
+            <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
       </label>
 
       <label class="k-form-field">
             <span class="opti_form-label">RM Batch Serial</span>
-            <input type="text" class="k-textbox"  [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()">
+            <input type="text" class="k-textbox"  [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()" id="psChildCompBatchSerID" name="psChildCompBatchSerName">
       </label>
 
       <label class="k-form-field">
             <span class="opti_form-label">Qty</span>
-            <input type="text" class="k-textbox" [(ngModel)]="iQty">
+            <input type="text" class="k-textbox" [(ngModel)]="iQty" id="iQtyID" name="iQyName">
       </label>
 
       <div class="text-left">
-            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onRMAddRowPress()">Save RM Data</button>
+            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onRMAddRowPress()">Add</button>
             <button align="center" type="button" align="middle" class="k-button" (click)="showLevelChild()">Cancel</button>
       </div> 
 </form>            

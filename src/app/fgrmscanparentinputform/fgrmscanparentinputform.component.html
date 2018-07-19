@@ -6,13 +6,13 @@
                 <form class="k-form" >
                     <label class="k-form-field opti_fgbatch-serial">
                         <span class="opti_form-label">FG Batch Serial</span>
-                        <input   type="text" width="50" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
+                        <input   type="text" width="50" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" id="psBatchSerID" name = "psBatchSername"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
                         <!-- <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button> -->
                     </label>
 
                     <label class="k-form-field">
                         <span class="opti_form-label">Qty</span>
-                        <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled">
+                        <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
                     </label>
 
                     <div class="k-form-field">
