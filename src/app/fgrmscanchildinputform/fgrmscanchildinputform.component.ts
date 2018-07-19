@@ -35,6 +35,11 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   }
 
+  showLevelChild(){
+    document.getElementById('opti_QtylevelChildID').style.display = 'block';
+    document.getElementById('opti_qtylevelSuperchildID').style.display = 'none';
+  }
+
   //Events
   onChildCompItemBlur(){
     //First we will check whether the child component Item code entered is valid and get its details

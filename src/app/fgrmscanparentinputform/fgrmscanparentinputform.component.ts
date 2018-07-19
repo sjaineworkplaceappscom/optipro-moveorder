@@ -30,7 +30,27 @@ export class FgrmscanparentinputformComponent implements OnInit {
   iSeqNo:number;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
 
+  @ViewChild('qtylevelChild') qtylevelChild;
+  @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
+  showLevelSuperChild(){
+    this.qtylevelChild.nativeElement.style.display = 'none';
+    this.qtylevelSuperchild.nativeElement.style.display = 'block';
+  }
+
+  showLevelParent(){
+    document.getElementById('opti_QtylevelChildSuperChildID').style.display = 'none';
+    document.getElementById('opti_QtylevelParentID').style.display = 'block';
+  }
+
+  // showLevelChild(){
+  //   this.qtylevelChild.nativeElement.style.display = 'block';
+  //   this.qtylevelSuperchild.nativeElement.style.display = 'none';
+  // }
+
+
   ngOnInit() {
+    this.qtylevelSuperchild.nativeElement.style.display = 'none';
+
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     console.log("On FG SCANC PARENT");
     console.log(this.basicFGInputForm)
@@ -63,7 +83,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //Events
   onInsertChildRowPress(){
-  this.showFGRMScanChildInsertPopup = true;
+  //this.showFGRMScanChildInsertPopup = true;
   }
 
   onBatchSerBlur(){

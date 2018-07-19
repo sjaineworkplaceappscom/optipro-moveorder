@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 
 @Component({
@@ -19,7 +19,21 @@ export class FgrmscanparentComponent implements OnInit {
   showFGRMScanParentInsertPopup:boolean = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService) { }
 
+  islevel2:boolean=false;
+  islevel1:boolean=true;
+  @ViewChild('qtylevel1') qtylevel1;
+  @ViewChild('qtylevelChildSuperchild') qtylevelChildSuperchild;
+  showLevelChildSuperChild(){
+    this.qtylevel1.nativeElement.style.display = 'none';
+    this.qtylevelChildSuperchild.nativeElement.style.display = 'block';
+  }
+  
+
   ngOnInit() {
+   
+   // hide childsuperchild level on initial    
+   this.qtylevelChildSuperchild.nativeElement.style.display = 'none';
+
    this.CompanyDBId = sessionStorage.getItem('selectedComp');
    console.log(this.basicDetailsFrmMO);
    this.basicDetailsToFGParentInput = this.basicDetailsFrmMO;
@@ -31,7 +45,7 @@ export class FgrmscanparentComponent implements OnInit {
   //Event
   onInsertFGBatSerRowPress(){
     //show the dialog for fg serial / batch
-    this.showFGRMScanParentInsertPopup = true;
+    //this.showFGRMScanParentInsertPopup = true;
   }
 
   //Core Functions

@@ -1,61 +1,85 @@
 
-<div class="">
+<section #qtylevelChild id="opti_QtylevelChildID">
+    <div class="container-fluid opti_padding-zero">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 col-xs-12">
+                <form class="k-form" >
+                    <label class="k-form-field opti_fgbatch-serial">
+                        <span class="opti_form-label">FG Batch Serial</span>
+                        <input   type="text" width="50" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
+                        <!-- <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button> -->
+                    </label>
 
-      <label >FG Batch Serial</label>
-      <input   type="text" width="50" class="" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()">
-     
-     <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button>
-     <br>
-     <br>
-      <label>Qty</label>
-      <input type="text"  width="50" class="" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled">
-      <br>
-      <br><br>
-      <label><input type="checkbox" [(ngModel)]="bIsRejected" >Rejected</label>
-      <br>
-      <label><input type="checkbox" [(ngModel)]="bIsNC" >NC Qty</label>
-      <br>
-      <br>
-    
-</div>
+                    <label class="k-form-field">
+                        <span class="opti_form-label">Qty</span>
+                        <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled">
+                    </label>
 
-<div>
-  <div>
-    <div class="text-center">
-           </div>
-      <p></p>
-      <button  type="button"  (click)="onInsertChildRowPress()" align="middle" class="btn btn-primary">+</button>
-      <kendo-grid [data]="ChildCompGridData" [height]="410"
-      (remove)="removeHandler($event)"
-      (edit)="editHandler($event)">
-        <kendo-grid-column field="OPTM_SEQ" title="#"  width="20">
-        </kendo-grid-column>
-        <kendo-grid-column field="OPTM_ITEMCODE" title="Item Code"  width="20">
-        </kendo-grid-column>
-        <kendo-grid-column field="ManagedBy" title="Managed By"  width="20" disabled>
-        </kendo-grid-column>
-        <kendo-grid-column field="OPTM_BTCHSERNO" title="RM Batch/Serial" width="120">
-        </kendo-grid-column>
-        <kendo-grid-column field="OPTM_QUANTITY" title="Quatity"  width="60">
-        </kendo-grid-column>
-        <!-- <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
-            <ng-template kendoGridCellTemplate let-dataItem>
-                <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
-            </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column field="OPTM_NC" title="NC"  width="80">
-            <ng-template kendoGridCellTemplate let-dataItem>
-                <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
-            </ng-template>
-        </kendo-grid-column> -->
-        <kendo-grid-command-column title="Actions">
-            <ng-template kendoGridCellTemplate>
-              <button kendoGridEditCommand class="k-primary">Edit</button>
-              <button kendoGridRemoveCommand class="k-primary">Delete</button>
-            </ng-template>
-          </kendo-grid-command-column>
-    </kendo-grid>
-    <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onFinalSavePress()">Save</button>
-</div>
+                    <label class="k-form-field">
+                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="bIsRejected" id="opti_bIsRejectedID">
+                        <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
+                    </label>
 
-<app-fgrmscanchildinputform (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm" *ngIf="showFGRMScanChildInsertPopup"></app-fgrmscanchildinputform>
+                    <label class="k-form-field">
+                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="bIsNC" id="opti_bIsNCID">
+                        <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
+                    </label>
+
+                    <div class="text-left">
+                        <button align="center" type="button" align="middle" class="" (click)="onFinalSavePress()">Save</button>
+                        <button align="center" type="button" align="middle" class="" (click)="showLevelParent()">Close</button>
+                    </div> 
+                </form>
+            </div>    
+        </div>
+    </div>        
+
+    <div style="clear: both;">
+
+        <!-- <button  type="button"  (click)="onInsertChildRowPress()" align="middle" class="btn btn-primary">+</button> -->
+        
+        <kendo-grid 
+        [data]="ChildCompGridData" 
+        [height]="410"
+        (remove)="removeHandler($event)"
+        (edit)="editHandler($event)"
+        [resizable]="false" 
+        [pageSize]="50" 
+        [pageable]="true" 
+        [sortable]="true"  
+        [filterable]="false"
+        [groupable]="true" 
+        >
+            <ng-template kendoGridToolbarTemplate>
+                <img src="assets/images/common/add.svg" class="opti_mouse-pointer" (click)="showLevelSuperChild()" width="20px" height="20px">
+            </ng-template>  
+
+            <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
+            <kendo-grid-column field="OPTM_ITEMCODE" title="Item Code"  width="100"></kendo-grid-column>
+            <kendo-grid-column field="ManagedBy" title="Managed By"  width="100" disabled></kendo-grid-column>
+            <kendo-grid-column field="OPTM_BTCHSERNO" title="RM Batch/Serial" width="120"></kendo-grid-column>
+            <kendo-grid-column field="OPTM_QUANTITY" title="Quatity"  width="60"></kendo-grid-column>
+            <!-- <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="OPTM_NC" title="NC"  width="80">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
+                </ng-template>
+            </kendo-grid-column> -->
+            <kendo-grid-command-column title="Actions" width="120">
+                <ng-template kendoGridCellTemplate>
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand class="k-primary">Delete</button>
+                </ng-template>
+            </kendo-grid-command-column>
+        </kendo-grid>
+        
+    </div>
+</section>
+
+<section #qtylevelSuperchild id="opti_qtylevelSuperchildID">
+    <app-fgrmscanchildinputform (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm"></app-fgrmscanchildinputform>
+</section>
