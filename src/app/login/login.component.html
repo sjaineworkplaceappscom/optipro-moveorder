@@ -1,145 +1,58 @@
-<!-- <div class="container">
-  <p></p>
-  <form>
-    <div class="form-group">
-      <label for="usr">Name:</label>
-      <input name="id" ng-change="GetCompany()"  [(ngModel)]="loginId" type="text" class="form-control" id="usr">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Password:</label>
-      <input name="pwd" [(ngModel)]="password" type="password" class="form-control" id="pwd">
-    </div>
-
-    <button (click)="onConnectClick()" align="center" type="button" class="btn btn-primary">{{connentLbl}}</button>
-    
-    <div class="form-group" >
-    <select class="selectpicker"  (change)="onCompanyChange($event)" *ngIf="showCompCombo">
-      <option selected="" value=""></option>  
-      <option [ngValue]="i.OPTM_COMPID" *ngFor="let i of companies;" >{{i.OPTM_COMPID}}</option>  
-    </select>
-    </div>
-    
-    <button (click)="onLoginClick()" align="center" type="button" class="btn btn-primary" *ngIf="showLoginBtn" >{{loginLbl}}</button>
-   
-  </form>
-</div> -->
-
-
-
-
 <div id="opti_signinID" class="opti_account-submodule-wrapper">
-
-  <!-- <div class="opti_login-brandlogo">
-    <div class="opti_vertical-align opti_logo-outer-login">
-      <img src="assets/images/logo/large-logo.png" alt="brandlogo">
+    <div class="float-left opti_account-banner-section">
     </div>
-  </div> -->
 
-  <div class="float-left opti_account-banner-section">
-  </div>
+    <div class="float-right opti_account-form-section">
+        <div class="opti_outer-login-form opti_account-submodule-container">
+            <div class="opti_vertcal-align-outer-box">
+                <div class="panel-body opti_position-relative" [perfectScrollbar]="">
 
-  <div class="float-right opti_account-form-section">
-    <div class="opti_outer-login-form opti_account-submodule-container">    
-        <div class="opti_vertcal-align-outer-box">
-        <div class="panel-body opti_position-relative" [perfectScrollbar]="">
+                    <!-- loader start -->
+                    <div class="opti_loader" *ngIf="showLoader==true">
+                        <div class="opti_spinner"></div>
+                    </div>
+                    <!-- loader end -->
 
-            <!-- loader start -->
-            <div class="opti_loader" *ngIf="showLoader==true">
-                <div class="opti_spinner"></div>
-            </div>
-            <!-- loader end -->
+                    <div class="opti_fullwidth text-center opti_signin-logo">
+                        <img src="assets/images/logo/large-logo.png" alt="brandlogo" class="opti_account-logo">
+                    </div>
 
-            <div class="opti_fullwidth text-center opti_signin-logo">
-                <img src="assets/images/logo/large-logo.png" alt="brandlogo" class="opti_account-logo">
-            </div>    
-            
-            <!-- <div class="opti_login-brandlogo"><img src="https://www.optiproerp.com/wp-content/uploads/2018/03/logos-1-1.png" alt="brandlogo"></div> -->
-            <form class="k-form" #signInForm="ngForm">
-                    <label class="k-form-field">
-                        <span class="opti_form-label">
-                            Name * 
-                            <!-- <span *ngIf="emailId.errors?.email && emailId.touched" class="float-right opti_error-msg"> Invalid emailId. </span>
-                            <span *ngIf="emailId.errors?.required && (emailId.dirty || emailId.touched)" class="float-right opti_error-msg" >Email is required.</span> -->
-                        </span>
-                        <!-- <input type="email"  email name = "email" required [(ngModel)]="userName" #emailId = ngModel class="k-textbox" value="" placeholder="e.g. test@gmail.com" /> -->
-                        <input name="id" ng-change="GetCompany()"  [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
-                    </label>
-                    
-                    <label class="k-form-field">
-                        <span class="opti_form-label">
-                            Password *
-                            <!-- <span  *ngIf="pwd.errors && (pwd.dirty || pwd.touched)"   class="float-right opti_error-msg">Password is required.</span>
-                            <span  *ngIf="this.isError==true &&  (pwd.dirty || pwd.touched) && (emailId.dirty || emailId.touched) && !pwd.errors?.required" class="float-right opti_error-msg">Invalid credentials.</span>
-                            <span  *ngIf="this.userNotExist==true &&  (pwd.dirty || pwd.touched) && (emailId.dirty || emailId.touched) && !pwd.errors?.required" class="float-right opti_error-msg">User does not exists.</span> -->
-                        </span>
-                        <!-- <input name = "password" required [(ngModel)]="password" #pwd = ngModel type="password" class="k-textbox" value="" placeholder="Your password" /> -->
-                        <input name="pwd" [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()"  placeholder="Your password">
-                        <!--No need as fo now -->
-                        <!-- <span class="opti_mouse-pointer float-right opti_form-label">Forgot your password?</span> -->
-                    </label>
+                    <form class="k-form" #signInForm="ngForm">
+                        <label class="k-form-field">
+                            <span class="opti_form-label">
+                                Name *
+                            </span>
 
-                    <!-- <label class="k-form-field">
-                        <button (click)="onConnectClick()" align="center" type="button" class="btn btn-primary">{{connentLbl}}</button> 
-                    </label>
+                            <input name="id" ng-change="GetCompany()" [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
+                        </label>
 
-                    <label class="k-form-field">
-                        <select class="selectpicker"  (change)="onCompanyChange($event)" *ngIf="showCompCombo">
-                            <option selected="" value=""></option>  
-                            <option [ngValue]="i.OPTM_COMPID" *ngFor="let i of companies;" >{{i.OPTM_COMPID}}</option>  
-                        </select>
-                    </label> -->
+                        <label class="k-form-field">
+                            <span class="opti_form-label">
+                                Password *
 
-                    <label class="k-form-field">
-                        <span class="opti_form-label">
-                            Company *
-                        </span>
-                        <kendo-dropdownlist [disabled]="hasCompaneyData==false"   [textField]="'OPTM_COMPID'"
-                        [valueField]="'OPTM_COMPID'" [data]="listItems" name="listname" [(ngModel)]="selectedValue"
-                        (selectionChange)="onCompanyChange($event)"
-                        ></kendo-dropdownlist>
-                    </label> 
+                            </span>
 
-                    <!-- <label class="k-form-field opti_display-inline-flex opti_signin-captcha"> -->
-                        <!-- <span class="float-left opti_captcha-text">
-                            <input required class="k-textbox" #Captcha=ngModel [(ngModel)]="capchaText" (input)="changeValue()" type="text" name="captchatext"/>
-                        </span> -->
-                        <!-- <span class="float-left opti_captcha-canvas">
-                            <canvas #myCanvas id="captchaCanvasID" width="70" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
-                        </span> -->
-                        <!-- <span class="float-left opti_captcha-refresh opti_vertical-align">
-                            <div (click)="changeCaptcha()" class="opti_mouse-pointer">
-                                <img src="assets/images/common/refresh-button.svg" width="20" height="20" />
-                            </div>
-                        </span> -->
-                   <!-- </label> -->
+                            <input name="pwd" [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
+                        </label>
 
-                    <!-- <div class="opti_error-msg opti_display-inline-block opti_fullwidth">
-                        <span class="opti_error-msg"  *ngIf="invalidCapcha==true"  >Please enter valid captcha.</span>
-                        <span class="opti_error-msg" *ngIf="Captcha.errors && (Captcha.dirty || Captcha.touched)">Captcha is required.</span>
-                    </div> -->
+                        <label class="k-form-field">
+                            <span class="opti_form-label">
+                                Company *
+                            </span>
+                            <kendo-dropdownlist [disabled]="hasCompaneyData==false" [textField]="'OPTM_COMPID'" [valueField]="'OPTM_COMPID'" [data]="listItems"
+                                name="listname" [(ngModel)]="selectedValue" (selectionChange)="onCompanyChange($event)"></kendo-dropdownlist>
+                        </label>
 
-                    <!-- <label class="k-form-field" >
-                        <div class="opti_checkbox-container">
-                        <input type="checkbox" id="auth-2fa" class="k-checkbox float-left" checked="checked">
-                        <label class="k-checkbox-label" for="auth-2fa">Remember Me</label>
+                        <div class="text-right">
+
+                            <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth">Login</button>
                         </div>
-                    </label> -->
+                    </form>
 
-                    <div class="text-right">
-                        <!-- <button type="button" class="opti_fullwidth" (click)="login()" [disabled] = "!signInForm.form.valid">Login</button> -->
-                        <!-- <button (click)="onLoginClick()" align="center" type="button" class="opti_fullwidth" *ngIf="showLoginBtn" >{{loginLbl}}</button> -->
-                        <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth" >{{loginLbl}}</button>
-                    </div> 
-            </form>
-            
-        </div>  
-        </div>  
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-  
 
 
-
-</div>          
-   
+</div>

@@ -18,12 +18,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GridModule } from '@progress/kendo-angular-grid';
-import { DemoKendoGridComponent } from './demo-kendo-grid/demo-kendo-grid.component';
-
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-//import { DialogModule } from '@progress/kendo-angular-dialog';
-
-import { EditService } from './services/edit.service';
 import { QtyWithFGScanDetailComponent } from './qty-with-fgscan-detail/qty-with-fgscan-detail.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { FgrmscanparentComponent } from './fgrmscanparent/fgrmscanparent.component';
@@ -44,6 +39,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 
 const myRoots: Routes = [  
+  
   { path: 'login', component: LoginComponent }  ,
   { path: 'moveorder', component: MoveOrderComponent } ,   
   { path: 'operationaldetail', component: OperationalDetailComponent } ,
@@ -52,10 +48,12 @@ const myRoots: Routes = [
   { path: 'qtywithfgandrmscan', component: QtyWithFGAndRMScanComponent },
   { path: 'qtywithfgscan', component: QtyWithFGScanComponent }, 
   { path: 'fgscandetail', component: FGScanDetailComponent },
-  { path: 'demoKendo', component: DemoKendoGridComponent },
+  
   { path: 'fgrmscanparent', component: FgrmscanparentComponent },
   { path: 'fgrmscanparentinputform', component: FgrmscanparentinputformComponent },
-  { path: 'fgrmscanchildinputform', component: FgrmscanchildinputformComponent }
+  { path: 'fgrmscanchildinputform', component: FgrmscanchildinputformComponent },
+  { path: '', component: LoginComponent }  ,
+  { path: '**', component: LoginComponent }  ,
    
 ];
 
@@ -70,7 +68,7 @@ const myRoots: Routes = [
     QtyWithFGAndRMScanComponent,
     QtyWithFGScanComponent,
     FGScanDetailComponent,
-    DemoKendoGridComponent,
+    
     QtyWithFGScanDetailComponent,
     FgrmscanparentComponent,
     FgrmscanparentinputformComponent,
@@ -98,7 +96,8 @@ const myRoots: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  providers: [FGScanDetailComponent,EditService],
+  providers: [FGScanDetailComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

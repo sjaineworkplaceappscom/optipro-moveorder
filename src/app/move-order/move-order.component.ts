@@ -101,9 +101,9 @@ export class MoveOrderComponent implements OnInit {
       // for(let rowCount in this.allWODetails){
       //     if(this.psWONO )
       // }
-      // let isExists = this.allWODetails.some(function(el){ return el.U_O_ORDRNO === 
-      //   this.psWONO});
-      // console.log('+++--->' + isExists);
+      // let isExists = this.allWODetails.some(function(el){ return el.U_O_ORDRNO === this.psWONO});
+      let isExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
+      console.log('+++--->' + isExists);
     }
     
   }
