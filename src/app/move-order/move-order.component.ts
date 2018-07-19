@@ -28,6 +28,7 @@ export class MoveOrderComponent implements OnInit {
   psOperNO:string ='';
   psOperName:string='';
   psProductCode:string = '';
+  psProductDesc:string = '';
   docEntry:number;
   showWODtPopup:boolean = false;
   showOperDtPopup:boolean = false;
@@ -63,6 +64,7 @@ export class MoveOrderComponent implements OnInit {
        if(this.allWODetails.length > 0){
           this.psWONO = this.allWODetails[16].U_O_ORDRNO
           this.psProductCode = this.allWODetails[16].U_O_PRODID
+          this.psProductDesc = this.allWODetails[16].ItemName
           this.docEntry = this.allWODetails[16].DocEntry
           this.psItemManagedBy = this.allWODetails[16].ManagedBy
        }
@@ -77,7 +79,7 @@ export class MoveOrderComponent implements OnInit {
         data=> {
          this.allWOOpDetails = data;
          if(this.allWOOpDetails.length > 0){
-          this.psOperNO = this.allWOOpDetails[1].U_O_OPERNO
+          this.psOperNO = this.allWOOpDetails[0].U_O_OPERNO
          }
         }
       )
