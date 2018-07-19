@@ -2,7 +2,7 @@
 <div #qtylevel1 id="opti_QtylevelParentID"> 
     <kendo-grid 
     [data]="FGScanGridData" 
-    [height]="410"
+    [height]=gridHeight-56
     (remove)="removeHandler($event)"
     (edit)="editHandler($event)"
     [resizable]="false" 
@@ -10,15 +10,16 @@
     [pageable]="true" 
     [sortable]="true"  
     [filterable]="false"
-    [groupable]="true" 
+    [groupable]="false" 
     >
       <ng-template kendoGridToolbarTemplate>
-        <img src="assets/images/common/add.svg" class="opti_mouse-pointer" (click)="showLevelChildSuperChild()" width="20px" height="20px">
-        &nbsp;
+        <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelChildSuperChild()" width="20px" height="20px">
+        <h5>Finished Goods List</h5>
+        <!-- &nbsp;
         <span class="text-center">
             <input type="text" [(ngModel)]="txtFGValue" (blur)="onFGTextValueChange()">
             <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button> 
-        </span>
+        </span> -->
       </ng-template>  
 
       <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
@@ -41,7 +42,7 @@
           </ng-template>
       </kendo-grid-command-column>
     </kendo-grid>
-      <br>
+      <!-- <br>
     <table class="table table-bordered">
         <tr>
             <th scope="row">Balance Qty</th>
@@ -57,7 +58,7 @@
                 <td>{{lblNCQty}}</td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 </div>
 
 <section #qtylevelChildSuperchild id="opti_QtylevelChildSuperChildID">

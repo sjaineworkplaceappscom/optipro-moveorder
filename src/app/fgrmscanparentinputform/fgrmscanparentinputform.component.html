@@ -2,7 +2,7 @@
 <section #qtylevelChild id="opti_QtylevelChildID">
     <div class="container-fluid opti_padding-zero">
         <div class="row">
-            <div class="col-md-5 col-sm-12 col-xs-12">
+            <div class="col-md-12">
                 <form class="k-form" >
                     <label class="k-form-field opti_fgbatch-serial">
                         <span class="opti_form-label">FG Batch Serial</span>
@@ -15,20 +15,29 @@
                         <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled">
                     </label>
 
-                    <label class="k-form-field">
-                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="bIsRejected" id="opti_bIsRejectedID">
-                        <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
-                    </label>
+                    <div class="k-form-field">
+                        <!-- <input type="radio" [(ngModel)]="bIsRejected" class="k-radio" name="group" id="opti_bIsRejectedID">
+                        <label class="k-radio-label" for="opti_bIsRejectedID">Rejected</label>
 
-                    <label class="k-form-field">
-                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="bIsNC" id="opti_bIsNCID">
-                        <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
-                    </label>
+                        <input type="radio" [(ngModel)]="bIsNC" class="k-radio" name="group" id="opti_bIsNCID">
+                        <label class="k-radio-label" for="opti_bIsNCID">NC Qty</label> -->
 
-                    <div class="text-left">
-                        <button align="center" type="button" align="middle" class="" (click)="onFinalSavePress()">Save</button>
-                        <button align="center" type="button" align="middle" class="" (click)="showLevelParent()">Close</button>
-                    </div> 
+
+                        <input type="radio" name="group" id="radio1" class="k-radio" checked />
+                        <label class="k-radio-label" for="radio1">Rejected</label>
+                       
+
+                        <input type="radio" name="group" class="k-radio" id="radio3" />
+                        <label class="k-radio-label" for="radio3">NC Qty</label>
+
+
+                        </div>
+
+                    <!-- <label class="k-form-field">
+                        
+                    </label> -->
+
+                    
                 </form>
             </div>    
         </div>
@@ -40,7 +49,7 @@
         
         <kendo-grid 
         [data]="ChildCompGridData" 
-        [height]="410"
+        [height]=gridHeight-254
         (remove)="removeHandler($event)"
         (edit)="editHandler($event)"
         [resizable]="false" 
@@ -48,10 +57,10 @@
         [pageable]="true" 
         [sortable]="true"  
         [filterable]="false"
-        [groupable]="true" 
+        [groupable]="false" 
         >
             <ng-template kendoGridToolbarTemplate>
-                <img src="assets/images/common/add.svg" class="opti_mouse-pointer" (click)="showLevelSuperChild()" width="20px" height="20px">
+                <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelSuperChild()" width="20px" height="20px">
             </ng-template>  
 
             <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
@@ -76,6 +85,11 @@
                 </ng-template>
             </kendo-grid-command-column>
         </kendo-grid>
+        <br/>
+        <div class="text-left">
+            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onFinalSavePress()">Save</button>
+            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelParent()">Cancel</button>
+        </div> 
         
     </div>
 </section>

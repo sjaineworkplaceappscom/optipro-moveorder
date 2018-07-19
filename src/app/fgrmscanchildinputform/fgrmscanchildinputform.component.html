@@ -13,7 +13,14 @@
       <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onRMAddRowPress()">Save RM Data</button>
 </div> -->
 
-<form class="k-form col-md-5 col-sm-12 col-xs-12" >
+<form class="k-form col-md-12 col-sm-12 col-xs-12" >
+
+      <label class="k-form-field opti_fgbatch-serial">
+            <span class="opti_form-label">FG Batch Serial</span>
+            <!-- <input   type="text" width="50" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px"> -->
+            <input   type="text" width="50" class="k-textbox"> <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
+      </label>
+
       <label class="k-form-field">
             <span class="opti_form-label">Item Code</span>
             <input type="text" class="k-textbox" value = "" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()">
@@ -30,7 +37,7 @@
       </label>
 
       <div class="text-left">
-            <button align="center" type="button" align="middle" class="" (click)="onRMAddRowPress()">Save RM Data</button>
-            <button align="center" type="button" align="middle" class="" (click)="showLevelChild()">Cancel</button>
+            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onRMAddRowPress()">Save RM Data</button>
+            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelChild()">Cancel</button>
       </div> 
 </form>            

@@ -160,7 +160,7 @@
                                         <owl-date-time #dt12></owl-date-time>
 
 
-                                        <span class="opti_form-label">End Date</span>
+                                        <span class="opti_form-label" style="margin-top: 8px;">End Date</span>
                                         <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeTo'" name="selectedMoments">
@@ -185,7 +185,7 @@
 
                             <!-- Quantity Screen start -->
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
-                                <h4 class="modal-title center-block">{{ScreenName}}</h4>
+                                <h5 class="modal-title center-block">{{ScreenName}}</h5>
                                 <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
                                 <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
                                 <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>

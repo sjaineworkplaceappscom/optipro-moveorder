@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import {FgrmscanparentinputformService } from '../services/fgrmscanparentinputform.service';
 import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrmscanchildinputform.component";
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
   selector: 'app-fgrmscanparentinputform',
@@ -30,6 +31,15 @@ export class FgrmscanparentinputformComponent implements OnInit {
   iSeqNo:number;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
 
+
+  gridHeight: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+      this.gridHeight = UIHelper.getMainContentHeight();
+  }
+
+
   @ViewChild('qtylevelChild') qtylevelChild;
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild(){
@@ -49,6 +59,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.gridHeight = UIHelper.getMainContentHeight();
+
+    // Hide superchild section on initial
     this.qtylevelSuperchild.nativeElement.style.display = 'none';
 
     this.loggedInUser = sessionStorage.getItem('loggedInUser');

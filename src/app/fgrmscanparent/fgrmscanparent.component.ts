@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
   selector: 'app-fgrmscanparent',
@@ -19,6 +20,13 @@ export class FgrmscanparentComponent implements OnInit {
   showFGRMScanParentInsertPopup:boolean = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService) { }
 
+  gridHeight: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+      this.gridHeight = UIHelper.getMainContentHeight();
+  }
+
   islevel2:boolean=false;
   islevel1:boolean=true;
   @ViewChild('qtylevel1') qtylevel1;
@@ -31,6 +39,8 @@ export class FgrmscanparentComponent implements OnInit {
 
   ngOnInit() {
    
+   this.gridHeight = UIHelper.getMainContentHeight();
+
    // hide childsuperchild level on initial    
    this.qtylevelChildSuperchild.nativeElement.style.display = 'none';
 
