@@ -24,7 +24,7 @@
                                 <label class="k-form-field">
                                     <!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONOname" class="k-textbox" [(ngModel)]="psWONO"></span> 
+                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONOname" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
