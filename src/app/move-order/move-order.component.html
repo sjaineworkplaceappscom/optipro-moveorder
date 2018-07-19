@@ -12,9 +12,6 @@
                 <div class="opti_outer-moveorder-form opti_account-submodule-container"> 
                     <div class="opti_vertcal-align-outer-box">
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
-                            
-                            
-
                             <form class="k-form">
 
                                 <div class="text-center">
@@ -24,7 +21,7 @@
                                 <label class="k-form-field">
                                     <!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
+                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (blur)="onWorkOrderBlur()"></span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -50,9 +47,6 @@
                                     </ng-template> -->
 
                                 </label>
-
-                                
-
 
                                 <!-- <label for="WorkOrder">WorkOrder</label>
                                 <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
@@ -83,7 +77,7 @@
                                     <span class="opti_form-label">Product Description</span>
                                     <input type="text" class="k-textbox" id="txtProductDesc" [value]="psProductDesc" [disabled]=true>
                                 </label>
-<!-- 
+                                <!-- 
                                 <label for="ProductCode">ProductCode</label>
                                 <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode"> -->
                                 
@@ -91,7 +85,7 @@
                                 <label class="k-form-field">
 								<!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Operation Number</span>
-                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
+                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onOperationNoBlur()"></span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -168,7 +162,7 @@
 
                                 </label>
 
-                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth">Submit</button>
+                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">Submit</button>
                             </form>
                             
                         </div>    

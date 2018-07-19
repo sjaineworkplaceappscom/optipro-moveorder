@@ -3,7 +3,6 @@ import { MoveorderService } from 'src/app/services/moveorder.service';
 import { Router } from '@angular/router';
 //For Ngx Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-move-order',
@@ -15,7 +14,6 @@ export class MoveOrderComponent implements OnInit {
   
   constructor(private mo:MoveorderService,private router:Router, private modalService: BsModalService) { }
   
-  modalRef: BsModalRef;
   selectedWODetail:any;
   selectedWOOperDetail:any;
   CompanyDBId:string;
@@ -36,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   ScreenName:string = '';
   settingOnSAP:string="3";
   showQtyWithFGScanScreen:boolean=false;
-  showQtyNoScanScreen:boolean=false;
+  showQtyNoScanScreen:boolean = false;
   showQtyWithFGRMScanScreen:boolean = false;
   bEnabeSaveBtn:boolean = false;
   basicDetails:any = [];
@@ -62,24 +60,25 @@ export class MoveOrderComponent implements OnInit {
   //This will get all WO
   onWOPress(){
     //On Form Initialization get All WO
-    this.getAllWorkOrders();
-    // this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
-    //   data=> {
-    //    this.allWODetails = data;
-    //    if(this.allWODetails.length > 0){
-    //       this.psWONO = this.allWODetails[16].U_O_ORDRNO
-    //       this.psProductCode = this.allWODetails[16].U_O_PRODID
-    //       this.psProductDesc = this.allWODetails[16].ItemName
-    //       this.docEntry = this.allWODetails[16].DocEntry
-    //       this.psItemManagedBy = this.allWODetails[16].ManagedBy
-    //    }
-    //   }
-    // )
+    // this.getAllWorkOrders();
+    this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
+      data=> {
+       this.allWODetails = data;
+       if(this.allWODetails.length > 0){
+          this.psWONO = this.allWODetails[16].U_O_ORDRNO
+          this.psProductCode = this.allWODetails[16].U_O_PRODID
+          this.psProductDesc = this.allWODetails[16].ItemName
+          this.docEntry = this.allWODetails[16].DocEntry
+          this.psItemManagedBy = this.allWODetails[16].ManagedBy
+       }
+      }
+    )
   }
 
   onOperationPress(){
     //if(this.psWONO.length > 0){
-      this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
+     
+    this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
         data=> {
          this.allWOOpDetails = data;
          if(this.allWOOpDetails.length > 0){
@@ -87,23 +86,30 @@ export class MoveOrderComponent implements OnInit {
          }
         }
       )
-    // }
+
+    //This funciton will get the operation on docEntry and Work Order no. basis
+    //this.getOperationByWONO();
+
+
+      // }
     // else{
     //   alert("Select workorder no. first");
     // }
   }
 
   //This function will check, if the user entered WO is in the array
-  onWorkOrderChange(){
+  onWorkOrderBlur(){
    
     if(this.allWODetails != null && this.allWODetails.length > 0){
-      //to check in te array
-      // for(let rowCount in this.allWODetails){
-      //     if(this.psWONO )
-      // }
-      // let isExists = this.allWODetails.some(function(el){ return el.U_O_ORDRNO === this.psWONO});
-      let isExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
-      console.log('+++--->' + isExists);
+      //To check in the array
+      let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
+      if(isWOExists == false){
+        alert("Invalid workorder no. selection");
+        this.psWONO = '';
+      }
+      else{
+        this.getOperationByWONO();
+      }
     }
     
   }
@@ -141,6 +147,18 @@ export class MoveOrderComponent implements OnInit {
   // }
   }
 
+  //If user puts manual entry for operation then this fun will check whether oper is valid
+  onOperationNoBlur(){
+      if(this.allWOOpDetails != null && this.allWOOpDetails.length > 0){
+         //To check in the array
+      let isWOOperExists = this.allWOOpDetails.some(e => e.U_O_OPERNO === this.psOperNO);
+      if(isWOOperExists == false){
+        alert("Invalid operation no. selection");
+        this.psOperNO = '';
+      }
+      }
+  }
+
   isQuantityRightSection:boolean = false;
   onQtyProdBtnPress(status){
     this.isQuantityRightSection = status;
@@ -162,6 +180,16 @@ export class MoveOrderComponent implements OnInit {
     }
     
   }
+
+  //Final submission for Move Order will be done by this function
+  onSubmitPress(){
+    //submission service callled
+    this.mo.submitMoveOrder(this.CompanyDBId).subscribe(
+      data=> {
+      }
+    )
+  }
+
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {
@@ -187,6 +215,18 @@ export class MoveOrderComponent implements OnInit {
       }
     )
   }
+
+  //get Operations by work order no.
+  getOperationByWONO(){
+    this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
+      data=> {
+      if(this.data !=null && this.data.length > 0){
+        this.allWOOpDetails = data;
+        }
+      }
+    )
+  }
+  
 
   // show and hide right content section
   @ViewChild('optirightfixedsection') optirightfixedsection;
