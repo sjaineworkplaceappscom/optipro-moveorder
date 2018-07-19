@@ -24,7 +24,7 @@
                                 <label class="k-form-field">
                                     <!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONOname" class="k-textbox" id="txtWorkOrder"  [(ngModel)]="psWONO"></span> 
+                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONOname" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -75,7 +75,8 @@
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
-                                    <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode">
+                                    <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode" [disabled]=true>
+                                    <input type="text" class="k-textbox" id="txtProductDesc" [value]="psProductDesc" [disabled]=true>
                                 </label>
 <!-- 
                                 <label for="ProductCode">ProductCode</label>
@@ -85,7 +86,7 @@
                                 <label class="k-form-field">
 								<!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Operation Number</span>
-                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid"></span>
+                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNoname"></span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>

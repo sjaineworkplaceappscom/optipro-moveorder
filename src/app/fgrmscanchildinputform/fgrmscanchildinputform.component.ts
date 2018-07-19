@@ -9,8 +9,8 @@ import { FgrmscanchildinputformService } from "src/app/services/fgrmscanchildinp
 export class FgrmscanchildinputformComponent implements OnInit {
   @Input() basicDetailFrmParentInput:any;
   @Input() detailsOfParentinputFrm:any;
-  psChildCompItemCode:string = '99998';
-  psChildCompBatchSer:string = 'zxczcx';
+  psChildCompItemCode:string = '';
+  psChildCompBatchSer:string = '';
   CompanyDBId:string = '';
   iQty:number=0;
   bIsReject:boolean;

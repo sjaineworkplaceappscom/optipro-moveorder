@@ -23,7 +23,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   CompanyDBId:string= '';
   psItemManagedBy:string='';
   bIsEdit:boolean = false;
-  psBatchSer:string = '100025-36';
+  psBatchSer:string = '';
   iQty:number = 0;
   bIsRejected:any= false;
   bIsNC:any;
