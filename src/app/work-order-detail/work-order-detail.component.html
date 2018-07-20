@@ -1,4 +1,4 @@
-<div class="">
+<!-- <div class="">
   <p></p>
   <form>
       <table class="table table-bordered">
@@ -29,6 +29,42 @@
           </tbody>
         </table>
 
-        <!-- <button type="button" (click)="onOKPress()"  class="btn btn-primary">OK</button> -->
+        
       </form>
-</div>
+</div> -->
+
+
+<div class="" id="opti_workOrderDetailID">
+  <div class="container-fluid opti_padding-zero">
+    <div class="row">
+      <div class="col-md-12">
+          <form class="k-form col-md-12">
+              <label class="k-form-field">
+                <span class="opti_form-label">Sch# Start Date</span>
+                <input type="text" class="k-textbox" value="{{ oWODetails.U_O_STARTDATE | date: 'MM/dd/yyyy' }}" disabled>
+              </label>
+              
+              <label class="k-form-field">
+                <span class="opti_form-label">Sch# End Date</span>
+                <input type="text" class="k-textbox" value="{{ oWODetails.U_O_ENDDATE | date: 'MM/dd/yyyy' }}" disabled>
+              </label>
+              
+              <label class="k-form-field">
+                <span class="opti_form-label">SO#</span>
+                <input type="text" class="k-textbox" value="{{ oWODetails.U_O_SONO }}" disabled>
+              </label>
+
+              <label class="k-form-field">
+                <span class="opti_form-label">Customer</span>
+                <input type="text" class="k-textbox" value="{{ oWODetails.U_O_CUSTCODE }}" disabled>
+              </label>
+
+              <label class="k-form-field">
+                <span class="opti_form-label">Product</span>
+                <input type="text" class="k-textbox" value="{{ oWODetails.U_O_PRODID }}" disabled>
+              </label>
+          </form>
+      </div>
+    </div>
+  </div>  
+</div>    

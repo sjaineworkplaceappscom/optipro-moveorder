@@ -29,7 +29,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/@progress/kendo-theme-bootstrap/dist/all.css",
-              "src/assets/css/custom-style.scss"
+              "src/assets/css/custom-style.scss",
+              "src/assets/css/_responsive.scss"
             ],
             "scripts": []
           },

@@ -51,9 +51,11 @@ export class MoveOrderComponent implements OnInit {
  isWorkOrderRightSection:boolean = false;
  isOperationRightSection:boolean = false;
  isQuantityRightSection:boolean = false;
+ isWorkOrderListRightSection:boolean = false;
 
   ngOnInit() {
     this.isFixedRightSection = false;
+    this.isWorkOrderListRightSection = false;
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-move-order");
@@ -65,7 +67,12 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This will get all WO
-  onWOPress(){
+  onWOPress(status){
+
+    this.isWorkOrderListRightSection = status;
+    this.openRightSection(status);
+
+
     //On Form Initialization get All WO
     // this.getAllWorkOrders();
     this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
@@ -136,6 +143,7 @@ export class MoveOrderComponent implements OnInit {
     // }
     
   }
+  
 
   
   onOperDtlPress(status){
@@ -251,7 +259,71 @@ export class MoveOrderComponent implements OnInit {
     this.isQuantityRightSection = status;
     this.isOperationRightSection = status;
     this.isWorkOrderRightSection = status;
+    this.isWorkOrderListRightSection = status;
   }
+
+
+  WorkOrderDetailDataList = [
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    },
+    {
+      "startDate": '2/12/2018, 10:30 AM',
+      "endDate": '2/12/2018, 10:30 AM',
+      "so": 1,
+      "customer": 'Prashant',
+      "product": 'mobile'
+    }
+  ]
+
+  public WorkOrderDetailData: any[] = this.WorkOrderDetailDataList;
+
 
 
 }

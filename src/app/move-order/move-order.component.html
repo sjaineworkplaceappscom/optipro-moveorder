@@ -26,9 +26,9 @@
                                     <span class="opti_form-label">Work Order </span>
                                     <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
                                     <span class="opti_workorder-icon">
-                                        <img src="assets/images/common/list.svg" (click)="onWOPress()" alt="work order" width="27px" height="27px" />
-                                        <img src="assets/images/common/detail.svg" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
+                                        <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
                                         <!-- <button type="button" (click)="onWOPress()"  class="">WO#</button>
                                         <button  type="button" align="middle" class="">Scan WO#</button>
                                         <button  type="button"  (click)="onWorkOrderDetail(true)" align="middle" class="">Work Order Detail</button> -->
@@ -93,9 +93,9 @@
                                     <span class="opti_form-label">Operation Number</span>
                                     <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
                                     <span class="opti_operation-icon">
-                                        <img src="assets/images/common/list.svg" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
-                                        <img src="assets/images/common/detail.svg" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
+                                        <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
 
                                 </label>
@@ -125,7 +125,7 @@
                                     <span class="opti_form-label">Qty Produced</span>
                                     <span class="float-left opti_qty-produced"><input type="text" class="k-textbox" id="txtQtyProduced"></span>
                                     <span class="opti_qty-operation-icon">
-                                        <img src="assets/images/common/list.svg" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
                                     </span>
 
                                 </label>
@@ -201,10 +201,46 @@
 
                             <!-- Work order detail start -->
                             <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
-                                <h4 class="modal-title pull-left">Work Order Details</h4>
+                                <h5 class="">Work Order Details</h5>
                                 <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
                             </div>
                             <!-- work order detail end -->
+
+                            <!-- Work order List start -->
+                            <div id="opti_WorkOrderListRightSection" [ngStyle]="{'display':isWorkOrderListRightSection == true ? 'block' : 'none' }">
+                                <h5 class="">Work Order List</h5>
+                                <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
+                                    <div class="container-fluid opti_padding-zero">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <kendo-grid 
+                                            [data]="WorkOrderDetailData" 
+                                            [height]=gridHeight-52
+                                            [resizable]="false" 
+                                            [pageSize]="50" 
+                                            [pageable]="true" 
+                                            [sortable]="true"  
+                                            [filterable]="false"
+                                            [groupable]="false" >
+                                            
+                                                <!-- <ng-template kendoGridToolbarTemplate>
+                                                Hello This is Top Bar
+                                                </ng-template>  -->
+                                            
+                                                <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
+                                                <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
+                                                <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
+                                                <kendo-grid-column field="customer" title="Customer" width="100"></kendo-grid-column>
+                                                <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
+                                            </kendo-grid> 
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- work order List end -->
+
                         </div>    
                     </div>    
                 </div>    

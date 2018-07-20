@@ -1,3 +1,4 @@
+    @import '_base';
 
     @media screen and (max-width: 479px){
         @import 'device/mobile/_mobile';
@@ -5,9 +6,19 @@
 
     @media screen and (min-width: 480px) and (max-width: 767px){
         @import 'device/mobile/_mobile';
+
+
+            // body.opti_body-move-order.opti_account-module .opti_account-banner-section, body.opti_body-move-order.opti_account-module .opti_account-form-section {
+            //     height: calc(100vh - 105px) ;
+            // }
+
+            // body.opti_body-move-order.opti_account-module #opti_MainContentID {
+            //     padding: 20px;
+            // }
+
         
             //////////////////////////////////////////////
-            // SignUp, SignIn, SetPassword, resetpassword
+            // SignIn
             //////////////////////////////////////////////
             .opti_account-module .opti_account-submodule-wrapper
             {
@@ -21,35 +32,15 @@
                 }
             }
 
-            //left panel
-            #opti_LeftPanelFooterLogo{
-                max-height: 100px;
-                img{
-                    width: 200px !important;
-                }
-            }
-
-            #opti_WrapperID .opti_left-navigation{
-                max-height: calc(100% - 125px);
-            }
-
             .k-column-list{
                 max-height: 130px !important;
             }
 
-            /////////////////////////////
-            // CSS Related To signin Page
-            /////////////////////////////
-            .opti_body-login #opti_signinID{
-                // @media screen and (orientation:landscape) {
-                //     .opti_login-brandlogo img{
-                //         max-width: 87%;
-                //         margin-left: 4%;
-                //         margin-right: 4%;
-                //         width: 100%;
-                //     }
-                // }
+            #opti_QtylevelChildID kendo-grid{
+                height: 200px !important;
             }
+
+           
         
     }
 
