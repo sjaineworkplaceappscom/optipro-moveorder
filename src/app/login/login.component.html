@@ -22,8 +22,10 @@
                             <span class="opti_form-label">
                                 Name *
                             </span>
-
-                            <input name="id" ng-change="GetCompany()" [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
+                          
+                            <input name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
+                            <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> name is required. </span>
+                            
                         </label>
 
                         <label class="k-form-field">
