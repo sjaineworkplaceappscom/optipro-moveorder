@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { sampleCustomers, customers } from 'src/sample';
 
 @Component({
@@ -7,16 +7,14 @@ import { sampleCustomers, customers } from 'src/sample';
     styleUrls: ['./lookup.component.scss']
 })
 export class LookupComponent implements OnInit {
-    public height: number = 400;
-    public dataSource: any = customers;
-
+    @Input() height: number = 400;
+    @Input() dataSource: any = customers;
+   
     constructor() { }
 
     ngOnInit() {
-
-        this.SetDataSource();
-
-    }
+       // this.SetDataSource();
+    }      
 
     public columns: any = [];
 
