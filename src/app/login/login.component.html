@@ -24,17 +24,16 @@
                             </span>
                           
                             <input name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
-                            <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> name is required. </span>
+                            <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
                             
                         </label>
 
                         <label class="k-form-field">
                             <span class="opti_form-label">
                                 Password *
-
                             </span>
-
-                            <input name="pwd" [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
+                            <input name="pwd" required #PasswordBlank = ngModel   [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
+                            <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required  </span>
                         </label>
 
                         <label class="k-form-field">
