@@ -254,8 +254,10 @@
                                         <div class="col-md-12">
 
                                             <!-- paste here shortcode lookup-->
-                                            <kendo-grid 
-                                            [kendoGridBinding]="WorkOrderDetailData" 
+
+                                            <app-lookup *ngIf="showLookup" [fillLookupArray]="allWODetails"></app-lookup>
+                                            <!-- <kendo-grid 
+                                            [data]="WorkOrderDetailData" 
                                             [height]=gridHeight-52
                                             [resizable]="false" 
                                             [pageSize]="50" 
@@ -264,16 +266,16 @@
                                             [filterable]="true"
                                             [groupable]="false" >
                                             
-                                                <!-- <ng-template kendoGridToolbarTemplate>
+                                             <ng-template kendoGridToolbarTemplate>
                                                 Hello This is Top Bar
-                                                </ng-template>  -->
+                                                </ng-template> 
                                             
                                                 <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
                                                 <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
                                                 <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
                                                 <kendo-grid-column field="customer" title="Customer" width="100" ></kendo-grid-column>
                                                 <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
-                                            </kendo-grid> 
+                                            </kendo-grid>  -->
                                         </div>
                                         </div>
                                     </div>
