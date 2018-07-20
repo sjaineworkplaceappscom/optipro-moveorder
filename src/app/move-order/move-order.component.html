@@ -209,10 +209,14 @@
                             <!-- Work order List start -->
                             <div id="opti_WorkOrderListRightSection" [ngStyle]="{'display':isWorkOrderListRightSection == true ? 'block' : 'none' }">
                                 <h5 class="">Work Order List</h5>
+                                 
+
                                 <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
                                     <div class="container-fluid opti_padding-zero">
                                         <div class="row">
                                         <div class="col-md-12">
+
+                                            <!-- paste here shortcode lookup-->
                                             <kendo-grid 
                                             [data]="WorkOrderDetailData" 
                                             [height]=gridHeight-52
