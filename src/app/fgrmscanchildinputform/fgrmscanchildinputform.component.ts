@@ -9,6 +9,7 @@ import { FgrmscanchildinputformService } from "src/app/services/fgrmscanchildinp
 export class FgrmscanchildinputformComponent implements OnInit {
   @Input() basicDetailFrmParentInput:any;
   @Input() detailsOfParentinputFrm:any;
+  @Input() childGridDataArray:any;
   psChildCompItemCode:string = '';
   psChildCompBatchSer:string = '';
   CompanyDBId:string = '';
@@ -43,7 +44,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   //Events
   onChildCompItemBlur(){
     //First we will check whether the child component Item code entered is valid and get its details
-    if(this.psChildCompItemCode != null){
+    if(this.psChildCompItemCode != null && this.psChildCompItemCode.length > 0){
       this.FGRMinput.CheckIfChildCompExists(this.CompanyDBId,this.basicDetailFrmParentInput[0].ItemCode,this.psChildCompItemCode,this.basicDetailFrmParentInput[0].WorkOrderNo,this.basicDetailFrmParentInput[0].OperNo).subscribe(
         data=> {
           if(data != null){
@@ -70,7 +71,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //This will check the bat / serial enterd by user
   onChildCompBatchSerBlur(){
-    if(this.psChildCompBatchSer != null){
+    if(this.psChildCompBatchSer != null && this.psChildCompBatchSer.length > 0){
       this.FGRMinput.CheckIfValidBatchSerialComponentEntered(this.CompanyDBId,this.sChildWhse,this.sChildBin,this.psChildCompBatchSer,this.psChildCompItemCode).subscribe(
         data=> {
           if(data != null){
@@ -78,7 +79,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
               this.iSysNum = data[0].SYSNUMBER;
             }
             else{
-              alert("It does'nt belong to this item or it is consumed")            
+              alert("It does'nt belong to this item or it is consumed");            
             }
           }
         }
@@ -104,7 +105,20 @@ export class FgrmscanchildinputformComponent implements OnInit {
       OperNo: this.detailsOfParentinputFrm.OperNo,
       SysNumber: this.iSysNum
     };
-    this.messageEvent.emit(sendRMRowToParent);
+
+    //check that the entered data is not duplicate before pushing into array
+    let isEntryExists = this.childGridDataArray.some(e => e.OPTM_BTCHSERNO === this.psChildCompBatchSer && e.OPTM_ITEMCODE == e.psChildCompItemCode);
+
+    //if the entry is new then ok else we will stop
+    if(isEntryExists == false){
+      this.messageEvent.emit(sendRMRowToParent);
+    }
+    else{
+      alert("The item code with this serial/batch already exsits")
+      this.psChildCompBatchSer = '';
+      this.psChildCompItemCode = '';
+    }
+    
   }
   //Core Functions
   

@@ -16,10 +16,10 @@
                     </label>
 
                     <div class="k-form-field">
-                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="opti_bIsRejectedID" id="opti_bIsRejectedID">
+                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="opti_bIsRejectedID" id="opti_bIsRejectedID"  (change)="isCheckBoxChecked($event)">
                         <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
 
-                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID">
+                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="isCheckBoxChecked($event)">
                         <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
 
 
@@ -95,5 +95,5 @@
 </section>
 
 <section #qtylevelSuperchild id="opti_qtylevelSuperchildID">
-    <app-fgrmscanchildinputform (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm"></app-fgrmscanchildinputform>
+    <app-fgrmscanchildinputform (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm" [childGridDataArray]="ChildCompGridData"></app-fgrmscanchildinputform>
 </section>

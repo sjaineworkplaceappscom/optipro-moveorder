@@ -34,6 +34,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
  // Bootstrap Dropdown
 
  import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { LookupComponent } from './lookup/lookup.component';
  
 
 
@@ -52,6 +53,7 @@ const myRoots: Routes = [
   { path: 'fgrmscanparent', component: FgrmscanparentComponent },
   { path: 'fgrmscanparentinputform', component: FgrmscanparentinputformComponent },
   { path: 'fgrmscanchildinputform', component: FgrmscanchildinputformComponent },
+  { path: 'lookup', component: LookupComponent },
   { path: '', component: LoginComponent }  ,
   { path: '**', component: LoginComponent }  ,
    
@@ -73,7 +75,8 @@ const myRoots: Routes = [
     FgrmscanparentComponent,
     FgrmscanparentinputformComponent,
     FgrmscanchildinputformComponent,
-    TopbarComponent
+    TopbarComponent,
+    LookupComponent
   ],
   imports: [
     HttpClientModule,
