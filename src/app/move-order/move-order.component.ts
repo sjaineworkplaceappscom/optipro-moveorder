@@ -45,8 +45,15 @@ export class MoveOrderComponent implements OnInit {
     new Date(2018, 3, 21, 20, 30)
 ];
   
+ // show and hide right content section
+ @ViewChild('optirightfixedsection') optirightfixedsection;
+ isFixedRightSection: boolean;
+ isWorkOrderRightSection:boolean = false;
+ isOperationRightSection:boolean = false;
+ isQuantityRightSection:boolean = false;
 
   ngOnInit() {
+    this.isFixedRightSection = false;
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-move-order");
@@ -116,7 +123,7 @@ export class MoveOrderComponent implements OnInit {
     
   }
 
-  isWorkOrderRightSection:boolean = false;
+  
   onWorkOrderDetail(status){
     //if(this.psWONO !=null && this.psWONO){
       this.showWODtPopup = true;
@@ -130,7 +137,7 @@ export class MoveOrderComponent implements OnInit {
     
   }
 
-  isOperationRightSection:boolean = false;
+  
   onOperDtlPress(status){
    // if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
@@ -161,7 +168,7 @@ export class MoveOrderComponent implements OnInit {
       }
   }
 
-  isQuantityRightSection:boolean = false;
+  
   onQtyProdBtnPress(status){
     this.isQuantityRightSection = status;
     this.openRightSection(status)
@@ -230,9 +237,7 @@ export class MoveOrderComponent implements OnInit {
   }
   
 
-  // show and hide right content section
-  @ViewChild('optirightfixedsection') optirightfixedsection;
-  isFixedRightSection: boolean;
+ 
 
   openRightSection(status) {
       this.optirightfixedsection.nativeElement.style.display='block'; //content section
