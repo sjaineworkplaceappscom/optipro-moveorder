@@ -93,7 +93,7 @@
                                     <span class="opti_form-label">Operation Number</span>
                                     <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
                                     <span class="opti_operation-icon">
-                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress()" alt="work order" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
@@ -192,12 +192,49 @@
                             </div>    
                             <!-- Quantity Screen end -->
 
-                            <!-- Operation screen start -->
+                            <!-- Operation Detail start -->
                             <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
                                 <h4 class="modal-title pull-left">Operation Details</h4>
                                 <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
                             </div>
-                            <!-- Operation screen end -->
+                            <!-- Operation Detail end -->
+
+                            <!-- Operation List start -->
+                            <div id="opti_OperationListRightSection" [ngStyle]="{'display':isOperationListRightSection == true ? 'block' : 'none' }">
+                                <h5>Operation List</h5>
+                                <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
+                                    <div class="container-fluid opti_padding-zero">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <!-- paste here shortcode lookup-->
+                                                <kendo-grid 
+                                                [data]="WorkOrderDetailData" 
+                                                [height]=gridHeight-52
+                                                [resizable]="false" 
+                                                [pageSize]="50" 
+                                                [pageable]="true" 
+                                                [sortable]="true"  
+                                                [filterable]="true"
+                                                [groupable]="false" >
+                                                
+                                                    <!-- <ng-template kendoGridToolbarTemplate>
+                                                    Hello This is Top Bar
+                                                    </ng-template>  -->
+                                                
+                                                    <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
+                                                    <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
+                                                    <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
+                                                    <kendo-grid-column field="customer" title="Customer" width="100"></kendo-grid-column>
+                                                    <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
+                                                </kendo-grid> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- Operation List end -->
 
                             <!-- Work order detail start -->
                             <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
@@ -224,7 +261,7 @@
                                             [pageSize]="50" 
                                             [pageable]="true" 
                                             [sortable]="true"  
-                                            [filterable]="false"
+                                            [filterable]="true"
                                             [groupable]="false" >
                                             
                                                 <!-- <ng-template kendoGridToolbarTemplate>
@@ -234,7 +271,7 @@
                                                 <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
                                                 <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
                                                 <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="customer" title="Customer" width="100"></kendo-grid-column>
+                                                <kendo-grid-column field="customer" title="Customer" width="100" ></kendo-grid-column>
                                                 <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
                                             </kendo-grid> 
                                         </div>
