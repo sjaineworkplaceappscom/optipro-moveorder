@@ -12,66 +12,20 @@
                 <div class="opti_outer-moveorder-form opti_account-submodule-container"> 
                     <div class="opti_vertcal-align-outer-box">
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
-                            
-                            
-
                             <form class="k-form">
-
                                 <div class="text-center">
                                     <h5>Move Order</h5>
                                 </div>
 
                                 <label class="k-form-field">
-                                    <!--id and name given to DOM element...Ashish Devade-->
                                     <span class="opti_form-label">Work Order </span>
                                     <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
-                                        <!-- <button type="button" (click)="onWOPress()"  class="">WO#</button>
-                                        <button  type="button" align="middle" class="">Scan WO#</button>
-                                        <button  type="button"  (click)="onWorkOrderDetail(true)" align="middle" class="">Work Order Detail</button> -->
                                     </span>
-                                    
-
-                                    <!-- template -->
-                                    <!-- <ng-template #woDetailtemplate>
-                                        <div class="modal-header">
-                                        <h4 class="modal-title pull-left">Modal</h4>
-                                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                        <div class="modal-body">
-                                        Work Order Details
-                                        <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
-                                        </div>
-                                    </ng-template> -->
-
                                 </label>
-
-                                
-
-
-                                <!-- <label for="WorkOrder">WorkOrder</label>
-                                <input type="text" class="form-control" id="txtWorkOrder"  [value]="psWONO">
-                                <button type="button" (click)="onWOPress()"  class="btn btn-primary">WO#</button>
-                                <button  type="button" align="middle" class="btn btn-primary">Scan WO#</button>
-                                <button  type="button"  (click)="onWorkOrderDetail(woDetailtemplate)" align="middle" class="btn btn-primary">Work Order Detail</button> -->
-                                <!--Modal Body for Work Order Details-->
-                                <!-- <ng-template #woDetailtemplate>
-                                    <div class="modal-header">
-                                    <h4 class="modal-title pull-left">Modal</h4>
-                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                    Work Order Details
-                                    <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
-                                    </div>
-                                </ng-template> -->
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
@@ -83,43 +37,16 @@
                                     <span class="opti_form-label">Product Description</span>
                                     <input type="text" class="k-textbox" id="txtProductDesc" [value]="psProductDesc" [disabled]=true>
                                 </label>
-<!-- 
-                                <label for="ProductCode">ProductCode</label>
-                                <input type="text" class="form-control" id="txtProductCode" [value]="psProductCode"> -->
-                                
 
                                 <label class="k-form-field">
-								<!--id and name given to DOM element...Ashish Devade-->
-                                    <span class="opti_form-label">Operation Number</span>
+								    <span class="opti_form-label">Operation Number</span>
                                     <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
-
                                 </label>
-
-                                <!-- <label for="OperationNumber">Operation Number</label>
-                                <input type="text" class="form-control" id="txtOperationNumber" [value]="psOperNO">
-
-                                <button  type="button"  (click)="onOperationPress()" align="middle" class="btn btn-primary">OP#</button>
-                                <button  type="button" align="middle" class="btn btn-primary">Scan OP#</button>
-                                <button  type="button"  (click)="onOperDtlPress(woOperDetailtemplate)" align="middle" class="btn btn-primary">Operation Details</button> -->
-
-                                <!--Modal Body for Operation Details-->
-                                <!-- <ng-template #woOperDetailtemplate>
-                                    <div class="modal-header">
-                                    <h4 class="modal-title pull-left">Modal</h4>
-                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                    Operation Details
-                                    <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
-                                    </div>
-                                </ng-template> -->
                                 
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced</span>
@@ -130,29 +57,7 @@
 
                                 </label>
 
-
-                                <!-- <label for="QtyProduced">Qty Produced</label>
-                                <input type="text" class="form-control" id="txtQtyProduced">
-                                <button (click)="openRightSection(true)">Open RIght</button>
-                                <button  type="button"  (click)="onQtyProdBtnPress(itemLinkingScreen)" align="middle" class="btn btn-primary">Link</button> -->
-
-                                <!--Modal Body for Dynamic Screens on setting basis-->
-                                <!-- <ng-template #itemLinkingScreen>
-                                <div class="modal-header">
-                                <h4 class="modal-title center-block">{{ScreenName}}</h4>
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                <app-qty-without-fgscan *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
-                                <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
-                                <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
-                                </div>
-                                </ng-template> -->
-
                                 <label class="k-form-field opti_date-start-end">
-                                    
                                         <span class="opti_form-label">Start Date</span>
                                         <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
@@ -171,7 +76,6 @@
 
                                 <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth">Submit</button>
                             </form>
-                            
                         </div>    
                     </div>    
                 </div>
@@ -236,7 +140,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                             <!-- Operation List end -->
 
@@ -250,53 +153,24 @@
                             <!-- Work order List start -->
                             <div id="opti_WorkOrderListRightSection" [ngStyle]="{'display':isWorkOrderListRightSection == true ? 'block' : 'none' }">
                                 <h5 class="">Work Order Lookup List</h5>
-                                 
-
                                 <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
                                     <div class="container-fluid opti_padding-zero">
                                         <div class="row">
                                         <div class="col-md-12">
-
                                             <!-- paste here shortcode lookup-->
-
                                             <app-lookup *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData"></app-lookup>
-                                            <!-- <kendo-grid 
-                                            [data]="WorkOrderDetailData" 
-                                            [height]=gridHeight-52
-                                            [resizable]="false" 
-                                            [pageSize]="50" 
-                                            [pageable]="true" 
-                                            [sortable]="true"  
-                                            [filterable]="true"
-                                            [groupable]="false" >
-                                            
-                                             <ng-template kendoGridToolbarTemplate>
-                                                Hello This is Top Bar
-                                                </ng-template> 
-                                            
-                                                <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="customer" title="Customer" width="100" ></kendo-grid-column>
-                                                <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
-                                            </kendo-grid>  -->
                                         </div>
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                             <!-- work order List end -->
-
                         </div>    
                     </div>    
                 </div>    
             </div>
-
         </section>
     </div>
-
-    
 </div>
 
 
