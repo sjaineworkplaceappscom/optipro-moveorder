@@ -55,7 +55,9 @@ body.opti_body-move-order.opti_account-module {
   .opti_outer-moveorder-form{
     .opti_vertcal-align-outer-box{
       // height: calc(100vh - 165px);
-      height: 100%;;
+      height: 100%;
+      padding: 0;
+
     }
   }
 
@@ -66,6 +68,7 @@ body.opti_body-move-order.opti_account-module {
       height: 27px;
       font-size: 12px;
       border-radius: 3px;
+      font-weight: $font-weight-regular;
       &:focus{
         outline: none;
       }

@@ -2,46 +2,12 @@
 
     @media screen and (max-width: 479px){
         @import 'device/mobile/_mobile';
+        @import 'device/mobile/account_module/_mobile_account_portrait';
     }
 
     @media screen and (min-width: 480px) and (max-width: 767px){
         @import 'device/mobile/_mobile';
-
-
-            // body.opti_body-move-order.opti_account-module .opti_account-banner-section, body.opti_body-move-order.opti_account-module .opti_account-form-section {
-            //     height: calc(100vh - 105px) ;
-            // }
-
-            // body.opti_body-move-order.opti_account-module #opti_MainContentID {
-            //     padding: 20px;
-            // }
-
-        
-            //////////////////////////////////////////////
-            // SignIn
-            //////////////////////////////////////////////
-            .opti_account-module .opti_account-submodule-wrapper
-            {
-                @media screen and (orientation:landscape) {
-                    .opti_account-submodule-container
-                    {
-                        width: 100%;
-                        margin-left: 0;
-                        padding: 0 12%;
-                    }   
-                }
-            }
-
-            .k-column-list{
-                max-height: 130px !important;
-            }
-
-            #opti_QtylevelChildID kendo-grid{
-                height: 200px !important;
-            }
-
-           
-        
+        @import 'device/mobile/account_module/_mobile_account_landscape';
     }
 
     @media only screen and (min-width: 768px) and (max-width: 959px) {

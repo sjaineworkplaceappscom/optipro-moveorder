@@ -1,0 +1,65 @@
+/////////////////////////////////////
+// SignUp, SignIn, SetPassword, Reset Password
+////////////////////////////////////
+.opti_account-module .opti_account-submodule-wrapper{
+    .opti_account-submodule-container{
+        width: 100%;
+        margin-left: 0;
+        padding: 0;
+        height: 100%;
+    }
+}
+
+body.opti_account-module{
+    padding: 20px !important;
+    .opti_account-banner-section{
+        display: none;
+    }
+    .opti_account-form-section{
+        height: calc(100vh - 40px);
+        border-radius: 5px;
+        width: 100% !important;
+        background: none !important;
+        box-shadow: none !important;
+    }
+    .opti_vertcal-align-outer-box{
+        height: 100%;
+    }
+    .panel-body{
+        // height: 100%;
+    }
+    .opti_account-logo{
+    //    margin-top: 20px;
+       width: 100%;
+    //    margin-bottom: 0;
+    }
+}
+
+body.opti_account-module{
+    background-image: none !important;
+    background:linear-gradient(177deg, #483DF6 2%, #435EF8 10%, #1BA0F1 44%, #25DDF5 91%, #45D790 130%) !important;
+    
+}
+
+.opti_body-move-order.opti_account-module{
+    padding: 0 !important
+}
+
+body.opti_body-move-order.opti_account-module .opti_account-banner-section, 
+body.opti_body-move-order.opti_account-module .opti_account-form-section {
+    height: calc(100vh - 85px);
+}
+body.opti_body-move-order.opti_account-module #opti_MainContentID {
+    padding: 10px;
+}
+
+app-topbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#opti_WrapperID #opti_MainContentID {
+    margin-top: 65px;
+}
