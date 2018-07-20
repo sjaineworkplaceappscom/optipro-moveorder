@@ -1,4 +1,4 @@
-<div class="">
+<!-- <div class=""> 
     <p></p>
     <form>
         <table class="table table-bordered">
@@ -45,4 +45,56 @@
             </tbody>
           </table>
         </form>
-  </div>
+  </div> -->
+
+
+
+  <div class="" id="opti_operationDetailID">
+      <div class="container-fluid opti_padding-zero">
+        <div class="row">
+          <div class="col-md-12">
+              <form class="k-form col-md-12">
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Sc# Start Date</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_OPSDATE | date: 'MM/dd/yyyy' }}" disabled>
+                  </label>
+                  
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Sch# End Date</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_OPEDATE | date: 'MM/dd/yyyy' }}" disabled>
+                  </label>
+                  
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Qty Bal</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.U_O_BALQTY}}" disabled>
+                  </label>
+    
+                  <label class="k-form-field">
+                    <span class="opti_form-label">WC</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_WC_ID}}" disabled>
+                  </label>
+    
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Previous Operation</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.PrevOperNo}}" disabled>
+                  </label>
+
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Previous Operation Bal. Qty</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.PrevBalQty}}" disabled>
+                  </label>
+
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Next Operation </span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.NextOperNo}}" disabled>
+                  </label>
+
+                  <label class="k-form-field">
+                    <span class="opti_form-label">Next Operation Bal. Qty</span>
+                    <input type="text" class="k-textbox" value="{{oOperDetails.NextBalQty}}" disabled>
+                  </label>
+              </form>
+          </div>
+        </div>
+      </div>  
+    </div>   
