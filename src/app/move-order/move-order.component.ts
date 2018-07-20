@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MoveorderService } from 'src/app/services/moveorder.service';
 import { Router } from '@angular/router';
+import { LookupComponent } from "src/app/lookup/lookup.component";
 //For Ngx Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
 
@@ -12,7 +13,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 export class MoveOrderComponent implements OnInit {
   
-  constructor(private mo:MoveorderService,private router:Router, private modalService: BsModalService) { }
+  constructor(private mo:MoveorderService,private router:Router, private modalService: BsModalService, private lookupData: LookupComponent) { }
   
   selectedWODetail:any;
   selectedWOOperDetail:any;
@@ -40,9 +41,11 @@ export class MoveOrderComponent implements OnInit {
   basicDetails:any = [];
   psItemManagedBy:string;
   showLookup:boolean = false;
-  lookupData:any = [];
+  openedLookup:string = '';
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
-  columnsToShow:Array<string> = ["WorkOrder No","Product Id","Start Date","End Date"];
+  columnsToShow:Array<string> = [];
+  sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
+  sOperationLookupColumns = "Operation No,Operation Desc,Balance Quantity"
   public selectedMoments = [
     new Date(2018, 1, 12, 10, 30),
     new Date(2018, 3, 21, 20, 30)
@@ -50,6 +53,8 @@ export class MoveOrderComponent implements OnInit {
   
  // show and hide right content section
  @ViewChild('optirightfixedsection') optirightfixedsection;
+ //lookup data reciever
+ @ViewChild(LookupComponent) child;
  isFixedRightSection: boolean;
  isWorkOrderRightSection:boolean = false;
  isOperationRightSection:boolean = false;
@@ -71,46 +76,35 @@ export class MoveOrderComponent implements OnInit {
 
   //This will get all WO
   onWOPress(status){
-
+    this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
+    this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
     this.openRightSection(status);
 
     this.showLookup = true;
     //On Form Initialization get All WO
-     this.getAllWorkOrders();
-  
-  
-    // this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
-    //   data=> {
-    //    this.allWODetails = data;
-    //    if(this.allWODetails.length > 0){
-    //       this.psWONO = this.allWODetails[38].U_O_ORDRNO
-    //       this.psProductDesc = this.allWODetails[38].ItemName
-    //       this.docEntry = this.allWODetails[38].DocEntry
-    //       this.psItemManagedBy = this.allWODetails[38].ManagedBy
-    //    }
-    //   }
-    // )
+    this.getAllWorkOrders();
+    
   }
 
   onOperationPress(status){
-
+    this.columnsToShow = this.sOperationLookupColumns.split(",");
     this.isOperationListRightSection = status;
     this.openRightSection(status);
+    
+    //This funciton will get the operation on docEntry and Work Order no. basis
+    this.getOperationByWONO();
 
     //if(this.psWONO.length > 0){
      
-    this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
-        data=> {
-         this.allWOOpDetails = data;
-         if(this.allWOOpDetails.length > 0){
-          this.psOperNO = this.allWOOpDetails[0].U_O_OPERNO
-         }
-        }
-      )
-
-    //This funciton will get the operation on docEntry and Work Order no. basis
-    //this.getOperationByWONO();
+    // this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
+    //     data=> {
+    //      this.allWOOpDetails = data;
+    //      if(this.allWOOpDetails.length > 0){
+    //       this.psOperNO = this.allWOOpDetails[0].U_O_OPERNO
+    //      }
+    //     }
+    //   )
 
 
       // }
@@ -183,7 +177,6 @@ export class MoveOrderComponent implements OnInit {
       }
       }
   }
-
   
   onQtyProdBtnPress(status){
     this.isQuantityRightSection = status;
@@ -215,6 +208,36 @@ export class MoveOrderComponent implements OnInit {
     )
   }
 
+  //This will recive data from lookup
+  receiveLookupRowData($event){
+    console.log("---> DAATA FROM WO LOOKUP");
+    console.log($event);   
+    if(this.openedLookup == "WOLookup"){
+      this.psWONO = $event.U_O_ORDRNO;
+      this.psProductCode = $event.U_O_PRODID;
+      this.psProductDesc = $event.ItemName;
+      this.docEntry = $event.DocEntry;
+
+     }
+
+     if(this.openedLookup == "OperLookup"){
+       this.psOperNO = $event.U_O_OPERNO;
+     }
+      //To hide the lookup
+      this.showLookup = false;
+
+      //close the right section
+      this.closeRightSection(false);
+      
+      //To clear the lookup screen name on close
+      this.openedLookup = '';
+      
+      //Clear the data of lookup
+      this.lookupData = null;
+
+      //To clear the columns name 
+      this.columnsToShow = [];
+  }
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {
@@ -226,17 +249,12 @@ export class MoveOrderComponent implements OnInit {
     return data.filter(e => e.U_O_OPERNO == operNo && e.DocEntry == docEntry)
   }
 
+  //This fun will get all WO
   getAllWorkOrders(){
     this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
       data=> {
        this.allWODetails = data;
        if(this.allWODetails.length > 0){
-          // this.psWONO = this.allWODetails[38].U_O_ORDRNO
-          // this.psProductCode = this.allWODetails[38].U_O_PRODID
-          // this.psProductDesc = this.allWODetails[38].ItemName
-          // this.docEntry = this.allWODetails[38].DocEntry
-          // this.psItemManagedBy = this.allWODetails[38].ManagedBy
-
           this.lookupData = this.allWODetails;
        }
       }
@@ -247,9 +265,14 @@ export class MoveOrderComponent implements OnInit {
   getOperationByWONO(){
     this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
       data=> {
-      if(this.data !=null && this.data.length > 0){
+      if(data !=null && data.length > 0){
         this.allWOOpDetails = data;
+        if(this.allWOOpDetails.length > 0){
+            this.lookupData = this.allWOOpDetails;
+            this.openedLookup = "OperLookup";
+            this.showLookup = true;
         }
+       }
       }
     )
   }
@@ -273,6 +296,7 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationListRightSection = status;
   }
 
+  
 
   // WorkOrderDetailDataList = [
   //   {

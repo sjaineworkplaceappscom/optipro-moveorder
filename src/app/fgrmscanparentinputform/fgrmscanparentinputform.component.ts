@@ -125,7 +125,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
   //This event will recieve the data from its child input form
   receiveArrayRMRowData($event) {
-   this.showFGRMScanChildInsertPopup = false;
+      this.showFGRMScanChildInsertPopup = false;
       this.ChildCompGridData.push($event);
   }
 

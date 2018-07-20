@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { sampleCustomers, customers } from 'src/sample';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-lookup',
@@ -11,6 +10,8 @@ export class LookupComponent implements OnInit {
     @Input() fillLookupArray: any;
     @Input() columnToShow: Array<string> = [];
     @Input() width: number = 100;
+
+    @Output() messageEvent = new EventEmitter<string>();
     constructor() { }
 
     ngOnInit() {
@@ -92,8 +93,10 @@ export class LookupComponent implements OnInit {
         return styles;
     }
 
+    //Double click will handle the lookup values back to the move order component
     onRowDoubleClick(evt, rowIndex) {
-        alert(JSON.stringify(this.fillLookupArray[rowIndex]));
+        this.messageEvent.emit(this.fillLookupArray[rowIndex]);
     }
+
 }
 

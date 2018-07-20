@@ -209,7 +209,9 @@
 
                                                 <!-- paste here shortcode lookup-->
 
-                                                <!-- <app-lookup *ngIf="showLookup" [fillLookupArray]="lookupData"></app-lookup> -->
+                                                <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" 
+                                                ></app-lookup>
+                                              
 
                                                 <!-- <kendo-grid 
                                                 [data]="WorkOrderDetailData" 
@@ -258,27 +260,9 @@
 
                                             <!-- paste here shortcode lookup-->
 
-                                            <app-lookup *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData"></app-lookup>
-                                            <!-- <kendo-grid 
-                                            [data]="WorkOrderDetailData" 
-                                            [height]=gridHeight-52
-                                            [resizable]="false" 
-                                            [pageSize]="50" 
-                                            [pageable]="true" 
-                                            [sortable]="true"  
-                                            [filterable]="true"
-                                            [groupable]="false" >
-                                            
-                                             <ng-template kendoGridToolbarTemplate>
-                                                Hello This is Top Bar
-                                                </ng-template> 
-                                            
-                                                <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
-                                                <kendo-grid-column field="customer" title="Customer" width="100" ></kendo-grid-column>
-                                                <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
-                                            </kendo-grid>  -->
+                                            <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" 
+                                            ></app-lookup>
+                                          
                                         </div>
                                         </div>
                                     </div>
