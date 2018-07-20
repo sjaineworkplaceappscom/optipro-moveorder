@@ -40,7 +40,9 @@ export class MoveOrderComponent implements OnInit {
   basicDetails:any = [];
   psItemManagedBy:string;
   showLookup:boolean = false;
-
+  lookupData:any = [];
+  //This array string will show the columns given for lookup , if want to displau all the make this array blank
+  columnsToShow:Array<string> = ["WorkOrder No","Product Id","Start Date","End Date"];
   public selectedMoments = [
     new Date(2018, 1, 12, 10, 30),
     new Date(2018, 3, 21, 20, 30)
@@ -75,18 +77,20 @@ export class MoveOrderComponent implements OnInit {
 
     this.showLookup = true;
     //On Form Initialization get All WO
-    // this.getAllWorkOrders();
-    this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
-      data=> {
-       this.allWODetails = data;
-       if(this.allWODetails.length > 0){
-          this.psWONO = this.allWODetails[38].U_O_ORDRNO
-          this.psProductDesc = this.allWODetails[38].ItemName
-          this.docEntry = this.allWODetails[38].DocEntry
-          this.psItemManagedBy = this.allWODetails[38].ManagedBy
-       }
-      }
-    )
+     this.getAllWorkOrders();
+  
+  
+    // this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
+    //   data=> {
+    //    this.allWODetails = data;
+    //    if(this.allWODetails.length > 0){
+    //       this.psWONO = this.allWODetails[38].U_O_ORDRNO
+    //       this.psProductDesc = this.allWODetails[38].ItemName
+    //       this.docEntry = this.allWODetails[38].DocEntry
+    //       this.psItemManagedBy = this.allWODetails[38].ManagedBy
+    //    }
+    //   }
+    // )
   }
 
   onOperationPress(status){
@@ -232,6 +236,8 @@ export class MoveOrderComponent implements OnInit {
           // this.psProductDesc = this.allWODetails[38].ItemName
           // this.docEntry = this.allWODetails[38].DocEntry
           // this.psItemManagedBy = this.allWODetails[38].ManagedBy
+
+          this.lookupData = this.allWODetails;
        }
       }
     )
@@ -268,66 +274,66 @@ export class MoveOrderComponent implements OnInit {
   }
 
 
-  WorkOrderDetailDataList = [
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Prashant',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Ankit',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Dheeraj',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Ankur',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Arjun',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Shashank',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Ronak',
-      "product": 'mobile'
-    },
-    {
-      "startDate": '2/12/2018, 10:30 AM',
-      "endDate": '2/12/2018, 10:30 AM',
-      "so": 1,
-      "customer": 'Harry',
-      "product": 'mobile'
-    }
-  ]
+  // WorkOrderDetailDataList = [
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Prashant',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Ankit',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Dheeraj',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Ankur',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Arjun',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Shashank',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Ronak',
+  //     "product": 'mobile'
+  //   },
+  //   {
+  //     "startDate": '2/12/2018, 10:30 AM',
+  //     "endDate": '2/12/2018, 10:30 AM',
+  //     "so": 1,
+  //     "customer": 'Harry',
+  //     "product": 'mobile'
+  //   }
+  // ]
 
-  public WorkOrderDetailData: any[] = this.WorkOrderDetailDataList;
+  // public WorkOrderDetailData: any[] = this.WorkOrderDetailDataList;
 
 
 

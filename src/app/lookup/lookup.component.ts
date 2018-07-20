@@ -9,17 +9,20 @@ import { sampleCustomers, customers } from 'src/sample';
 export class LookupComponent implements OnInit {
     @Input() height: number = 400;
     @Input() fillLookupArray: any;
-   
+    @Input() columnToShow: Array<string> = [];
+    @Input() width: number = 100;
     constructor() { }
 
     ngOnInit() {
-       // this.SetDataSource();
-    }      
+        console.log("SHOW LOOKUP");
+        console.log(this.fillLookupArray)
+        this.SetDataSource();
+    }
 
     public columns: any = [];
 
     ngOnChanges(changes: any) {
-        if (changes.dataSource != null && changes.dataSource.currentValue != null) {
+        if (changes.fillLookupArray != null && changes.fillLookupArray.currentValue != null) {
             this.SetDataSource();
         }
     }
@@ -48,12 +51,28 @@ export class LookupComponent implements OnInit {
                 if (obj.hasOwnProperty(property)) {
                     if (property != '$type') {
                         let item: any = {};
+
                         item.Name = property;
                         item.DisplayFormat = null;
                         item.CanSort = true;
                         item.CanFilter = true;
+
                         item.DataType = 'String';
+
+                        if (this.columnToShow == undefined || this.columnToShow == null || this.columnToShow.length<1) {
+                            item.Hidden = false;
+                        }
+                        else {
+
+                            if (this.columnToShow.indexOf(property) > -1) {
+                                item.Hidden = false;
+                            }
+                            else {
+                                item.Hidden = true;
+                            }
+                        }
                         properties.push(item);
+
                     }
                 }
             }
@@ -74,7 +93,7 @@ export class LookupComponent implements OnInit {
     }
 
     onRowDoubleClick(evt, rowIndex) {
-        alert('You clicked row ' + rowIndex + '!');
-      }
+        alert(JSON.stringify(this.fillLookupArray[rowIndex]));
+    }
 }
 
