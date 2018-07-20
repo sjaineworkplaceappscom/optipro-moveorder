@@ -53,10 +53,10 @@ export class MoveOrderComponent implements OnInit {
  isOperationRightSection:boolean = false;
  isQuantityRightSection:boolean = false;
  isWorkOrderListRightSection:boolean = false;
+ isOperationListRightSection:boolean = false;
 
   ngOnInit() {
     this.isFixedRightSection = false;
-    this.isWorkOrderListRightSection = false;
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-move-order");
@@ -89,7 +89,11 @@ export class MoveOrderComponent implements OnInit {
     )
   }
 
-  onOperationPress(){
+  onOperationPress(status){
+
+    this.isOperationListRightSection = status;
+    this.openRightSection(status);
+
     //if(this.psWONO.length > 0){
      
     this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
@@ -260,6 +264,7 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationRightSection = status;
     this.isWorkOrderRightSection = status;
     this.isWorkOrderListRightSection = status;
+    this.isOperationListRightSection = status;
   }
 
 
@@ -275,49 +280,49 @@ export class MoveOrderComponent implements OnInit {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Ankit',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Dheeraj',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Ankur',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Arjun',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Shashank',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Ronak',
       "product": 'mobile'
     },
     {
       "startDate": '2/12/2018, 10:30 AM',
       "endDate": '2/12/2018, 10:30 AM',
       "so": 1,
-      "customer": 'Prashant',
+      "customer": 'Harry',
       "product": 'mobile'
     }
   ]
