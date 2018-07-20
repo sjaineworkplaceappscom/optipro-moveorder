@@ -25,9 +25,9 @@ body.opti_account-module{
     .opti_vertcal-align-outer-box{
         height: 100%;
     }
-    // .panel-body{
-    //     padding: 20px;
-    // }
+    .panel-body{
+        // height: 100%;
+    }
     .opti_account-logo{
     //    margin-top: 20px;
        width: 100%;
@@ -41,62 +41,25 @@ body.opti_account-module{
     
 }
 
-/////////////////////////////////////
-// CSS Related To signup Page
-/////////////////////////////////////
-.opti_body-signup #opti_signupPageID{
-    .panel-body{
-        padding: 0;
-        .opti_signup-companyname, .opti_signup-url {
-            float: none;
-            width: 100%;
-        }
-        .opti_signup-primary-name, 
-        .opti_signup-primary-email, 
-        .opti_signup-primary-phone {
-            float: none;
-            width: 100%;
-        }
-        .opti_signup-primary-email {
-            margin: 0;
-        }
-        
-    }
-}
-
-/////////////////////////////
-// CSS Related To signin Page
-/////////////////////////////
-.opti_body-login #opti_signinID{
-
-    // .opti_vertcal-align-outer-box{
-    //     padding: 10px 0;
-    // }
-
-    // .opti_login-brandlogo{
-    //     position: relative;
-    //     width: 100%;
-    //     text-align: center;
-    // }
-}
-
-////////////////////////////////////
-// Css Related To landing page
-////////////////////////////////////
-
-// #opti_landingpageID{
-//     .opti_vertcal-align-outer-box{
-//         text-align: center;
-//         .panel-body{
-//             .float-left, .float-right{
-//                 float: none !important;
-//             }
-//         }
-//     }
-// }
-
-
-
 .opti_body-move-order.opti_account-module{
     padding: 0 !important
+}
+
+body.opti_body-move-order.opti_account-module .opti_account-banner-section, 
+body.opti_body-move-order.opti_account-module .opti_account-form-section {
+    height: calc(100vh - 85px);
+}
+body.opti_body-move-order.opti_account-module #opti_MainContentID {
+    padding: 10px;
+}
+
+app-topbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#opti_WrapperID #opti_MainContentID {
+    margin-top: 65px;
 }
