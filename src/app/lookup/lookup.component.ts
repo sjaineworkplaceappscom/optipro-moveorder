@@ -8,7 +8,7 @@ import { sampleCustomers, customers } from 'src/sample';
 })
 export class LookupComponent implements OnInit {
     @Input() height: number = 400;
-    @Input() dataSource: any = customers;
+    @Input() fillLookupArray: any;
    
     constructor() { }
 
@@ -26,7 +26,7 @@ export class LookupComponent implements OnInit {
 
 
     SetDataSource() {
-        if (this.dataSource != null) {
+        if (this.fillLookupArray != null) {
             this.SetColumns();
         }
     }
@@ -34,8 +34,8 @@ export class LookupComponent implements OnInit {
     SetColumns(): any {
         this.columns = [];
 
-        if (this.dataSource != null) {
-            let row = this.dataSource[0];
+        if (this.fillLookupArray != null) {
+            let row = this.fillLookupArray[0];
             this.columns = this.GetColumns(row);
         }
     }

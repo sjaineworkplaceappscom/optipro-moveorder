@@ -39,6 +39,7 @@ export class MoveOrderComponent implements OnInit {
   bEnabeSaveBtn:boolean = false;
   basicDetails:any = [];
   psItemManagedBy:string;
+  showLookup:boolean = false;
 
   public selectedMoments = [
     new Date(2018, 1, 12, 10, 30),
@@ -72,7 +73,7 @@ export class MoveOrderComponent implements OnInit {
     this.isWorkOrderListRightSection = status;
     this.openRightSection(status);
 
-
+    this.showLookup = true;
     //On Form Initialization get All WO
     // this.getAllWorkOrders();
     this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
@@ -80,7 +81,6 @@ export class MoveOrderComponent implements OnInit {
        this.allWODetails = data;
        if(this.allWODetails.length > 0){
           this.psWONO = this.allWODetails[38].U_O_ORDRNO
-          this.psProductCode = this.allWODetails[38].U_O_PRODID
           this.psProductDesc = this.allWODetails[38].ItemName
           this.docEntry = this.allWODetails[38].DocEntry
           this.psItemManagedBy = this.allWODetails[38].ManagedBy
