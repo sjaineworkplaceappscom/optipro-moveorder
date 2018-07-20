@@ -194,7 +194,7 @@
 
                             <!-- Operation Detail start -->
                             <div id="opti_OperationRightSection" [ngStyle]="{'display':isOperationRightSection == true ? 'block' : 'none' }">
-                                <h4 class="modal-title pull-left">Operation Details</h4>
+                                <h5>Operation Details</h5>
                                 <app-operational-detail [woOperDetail]="selectedWOOperDetail" *ngIf=showOperDtPopup></app-operational-detail>
                             </div>
                             <!-- Operation Detail end -->
@@ -208,7 +208,10 @@
                                             <div class="col-md-12">
 
                                                 <!-- paste here shortcode lookup-->
-                                                <kendo-grid 
+
+                                                <!-- <app-lookup *ngIf="showLookup" [fillLookupArray]="lookupData"></app-lookup> -->
+
+                                                <!-- <kendo-grid 
                                                 [data]="WorkOrderDetailData" 
                                                 [height]=gridHeight-52
                                                 [resizable]="false" 
@@ -217,17 +220,17 @@
                                                 [sortable]="true"  
                                                 [filterable]="true"
                                                 [groupable]="false" >
-                                                
+                                                 -->
                                                     <!-- <ng-template kendoGridToolbarTemplate>
                                                     Hello This is Top Bar
                                                     </ng-template>  -->
                                                 
-                                                    <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
+                                                    <!-- <kendo-grid-column field="startDate" title="Sch# Start Date" width="100"></kendo-grid-column>
                                                     <kendo-grid-column field="endDate" title="Sch# End Date" width="100"></kendo-grid-column>
                                                     <kendo-grid-column field="so" title="SO#" width="100"></kendo-grid-column>
                                                     <kendo-grid-column field="customer" title="Customer" width="100"></kendo-grid-column>
                                                     <kendo-grid-column field="product" title="Product" width="100"></kendo-grid-column>
-                                                </kendo-grid> 
+                                                </kendo-grid>  -->
                                             </div>
                                         </div>
                                     </div>
@@ -245,7 +248,7 @@
 
                             <!-- Work order List start -->
                             <div id="opti_WorkOrderListRightSection" [ngStyle]="{'display':isWorkOrderListRightSection == true ? 'block' : 'none' }">
-                                <h5 class="">Work Order List</h5>
+                                <h5 class="">Work Order Lookup List</h5>
                                  
 
                                 <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
@@ -255,7 +258,7 @@
 
                                             <!-- paste here shortcode lookup-->
 
-                                            <app-lookup *ngIf="showLookup" [fillLookupArray]="allWODetails"></app-lookup>
+                                            <app-lookup *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData"></app-lookup>
                                             <!-- <kendo-grid 
                                             [data]="WorkOrderDetailData" 
                                             [height]=gridHeight-52

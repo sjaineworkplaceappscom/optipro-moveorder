@@ -1,19 +1,21 @@
 
 <kendo-grid [ngStyle]="setStyles()"
-            [data]="dataSource"
+            [data]="fillLookupArray"
             [scrollable]="'scrollable'"
             [height]="height"
             [selectable]="true"
-            [sortable]="{ mode: 'multiple' }">   
+            [sortable]="{ mode: 'multiple' }"
+            [filterable]="">   
 
     <kendo-grid-column *ngFor="let col of columns;let i=index" field="{{col.Name}}" title="{{col.Name}}"
                        [sortable]="col.CanSort"
+                       [hidden]="col.Hidden"
                        [width]="100"> 
                        
 
         <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div  (dblclick)="onRowDoubleClick($event, rowIndex)" class="gridCell">  
-               {{dataItem[col.Name]}}
+                {{dataItem[col.Name]}}
             </div>
         </ng-template>
     </kendo-grid-column>
