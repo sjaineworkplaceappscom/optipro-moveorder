@@ -11,6 +11,20 @@
             [filterable]="true"
             [groupable]="false">   
 
+
+            <!-- grid template start -->
+            <ng-template kendoGridToolbarTemplate>
+                <div class="float-right opti_right-top-sec-grid">
+                    <form class="k-form opti_common-search-form float-left opti_padding-zero">
+                        <label class="k-form-field opti_common-search-label">
+                            <input type="text" class="k-textbox" name="searchRequest" />
+                            <span class="opti_vertical-align opti_mouse-pointer"><img src="assets/images/common/search-black.svg" class="" alt="Search" width="15" /></span>
+                        </label>
+                    </form>
+                </div>
+            </ng-template>
+            <!-- grid template start -->
+
     <kendo-grid-column *ngFor="let col of columns;let i=index" field="{{col.Name}}" title="{{col.Name}}"
                        [sortable]="col.CanSort"
                        [hidden]="col.Hidden"
