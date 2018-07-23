@@ -13,63 +13,65 @@ import { UIHelper } from 'src/app/helpers/ui.helpers';
 })
 
 export class MoveOrderComponent implements OnInit {
-  
-  constructor(private mo:MoveorderService,private router:Router, private modalService: BsModalService, private lookupData: LookupComponent) { }
-  
-  selectedWODetail:any;
-  selectedWOOperDetail:any;
-  CompanyDBId:string;
-  modelSource:any;
-  allWODetails:any;
-  
-  allWOOpDetails:any;
-  data:any;
-  psWONO:string = '';
-  psOperNO:string ='';
-  psOperName:string='';
-  psProductCode:string = '';
-  psProductDesc:string = '';
-  docEntry:number;
-  showWODtPopup:boolean = false;
-  showOperDtPopup:boolean = false;
-  showItemLinkingScreen:boolean = false;
-  ScreenName:string = '';
-  settingOnSAP:string="3";
-  showQtyWithFGScanScreen:boolean=false;
-  showQtyNoScanScreen:boolean = false;
-  showQtyWithFGRMScanScreen:boolean = false;
-  bEnabeSaveBtn:boolean = false;
-  basicDetails:any = [];
-  psItemManagedBy:string;
-  showLookup:boolean = false;
-  openedLookup:string = '';
+
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService, private lookupData: LookupComponent) { }
+
+  selectedWODetail: any;
+  selectedWOOperDetail: any;
+  CompanyDBId: string;
+  modelSource: any;
+  allWODetails: any;
+  allWOOpDetails: any;
+  data: any;
+  psWONO: string = '';
+  psOperNO: string = '';
+  psOperName: string = '';
+  psProductCode: string = '';
+  psProductDesc: string = '';
+  docEntry: number;
+  showWODtPopup: boolean = false;
+  showOperDtPopup: boolean = false;
+  showItemLinkingScreen: boolean = false;
+  ScreenName: string = '';
+  settingOnSAP: string = "3";
+  showQtyWithFGScanScreen: boolean = false;
+  showQtyNoScanScreen: boolean = false;
+  showQtyWithFGRMScanScreen: boolean = false;
+  DisableEnablOperation: boolean = true;
+  DisableEnablQuantity: boolean = true;
+  bEnabeSaveBtn: boolean = false;
+  basicDetails: any = [];
+  psItemManagedBy: string;
+  showLookup: boolean = false;
+  openedLookup: string = '';
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
-  columnsToShow:Array<string> = [];
+  columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
-  sOperationLookupColumns = "Operation No,Operation Desc,Balance Quantity"
+  sOperationLookupColumns = "Operation No,Operation Desc,Balance Quantity";
+
   public selectedMoments = [
     new Date(2018, 1, 12, 10, 30),
     new Date(2018, 3, 21, 20, 30)
-];
-  
- // show and hide right content section
- @ViewChild('optirightfixedsection') optirightfixedsection;
- //lookup data reciever
- @ViewChild(LookupComponent) child;
- isFixedRightSection: boolean;
- isWorkOrderRightSection:boolean = false;
- isOperationRightSection:boolean = false;
- isQuantityRightSection:boolean = false;
- isWorkOrderListRightSection:boolean = false;
- isOperationListRightSection:boolean = false;
+  ];
+
+  // show and hide right content section
+  @ViewChild('optirightfixedsection') optirightfixedsection;
+  //lookup data reciever
+  @ViewChild(LookupComponent) child;
+  isFixedRightSection: boolean;
+  isWorkOrderRightSection: boolean = false;
+  isOperationRightSection: boolean = false;
+  isQuantityRightSection: boolean = false;
+  isWorkOrderListRightSection: boolean = false;
+  isOperationListRightSection: boolean = false;
 
 
- gridHeight: number;
+  gridHeight: number;
 
- @HostListener('window:resize', ['$event'])
- onResize(event) {
-     this.gridHeight = UIHelper.getMainContentHeight();
- }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.gridHeight = UIHelper.getMainContentHeight();
+  }
 
 
 
@@ -89,7 +91,7 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This will get all WO
-  onWOPress(status){
+  onWOPress(status) {
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
     this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
@@ -98,19 +100,19 @@ export class MoveOrderComponent implements OnInit {
     this.showLookup = true;
     //On Form Initialization get All WO
     this.getAllWorkOrders();
-    
+
   }
 
-  onOperationPress(status){
+  onOperationPress(status) {
     this.columnsToShow = this.sOperationLookupColumns.split(",");
     this.isOperationListRightSection = status;
     this.openRightSection(status);
-    
+
     //This funciton will get the operation on docEntry and Work Order no. basis
     this.getOperationByWONO();
 
     //if(this.psWONO.length > 0){
-     
+
     // this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
     //     data=> {
     //      this.allWOOpDetails = data;
@@ -121,186 +123,235 @@ export class MoveOrderComponent implements OnInit {
     //   )
 
 
-      // }
+    // }
     // else{
     //   alert("Select workorder no. first");
     // }
   }
 
   //This function will check, if the user entered WO is in the array
-  onWorkOrderBlur(){
-   
-    if(this.allWODetails != null && 
+  onWorkOrderBlur() {
+
+    if (this.allWODetails != null &&
       this.allWODetails.length > 0 &&
-      this.psWONO.length > 0){
+      this.psWONO.length > 0) {
+      this.DisableEnablOperation = false;
       //To check in the array
       let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
-      if(isWOExists == false){
+      if (isWOExists == false) {
         alert("Invalid workorder no. selection");
         this.psWONO = '';
+        this.DisableEnablOperation = true;
       }
-      else{
+      else {
+        this.DisableEnablOperation = false;
         this.getOperationByWONO();
+
       }
     }
-    
+    else {
+
+      this.DisableEnablOperation = true;
+    }
+
   }
 
-  
-  onWorkOrderDetail(status){
+
+  onWorkOrderDetail(status) {
     //if(this.psWONO !=null && this.psWONO){
-      this.showWODtPopup = true;
-      this.isWorkOrderRightSection = status;
-      this.openRightSection(status);
-      this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
+    this.showWODtPopup = true;
+    this.isWorkOrderRightSection = status;
+    this.openRightSection(status);
+    this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
     // }
     // else{
     //   alert("Select workorder no. first");
     // }
-    
-  }
-  
 
-  
-  onOperDtlPress(status){
-   // if(this.psOperNO !=null && this.psOperNO){
+  }
+
+
+
+  onOperDtlPress(status) {
+    // if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
     this.openRightSection(status)
-    
+
     //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
-    this.mo.getOperDetailByDocEntry(this.CompanyDBId,this.docEntry,this.psOperNO).subscribe(
-      data=> {
-       this.selectedWOOperDetail = data;
-       this.showOperDtPopup = true;
+    this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
+      data => {
+        this.selectedWOOperDetail = data;
+        this.showOperDtPopup = true;
       }
     )
-  // }
-  // else{
-  //   alert("Select operation no. first");
-  // }
+    // }
+    // else{
+    //   alert("Select operation no. first");
+    // }
   }
 
   //If user puts manual entry for operation then this fun will check whether oper is valid
-  onOperationNoBlur(){
-      if(this.allWOOpDetails != null && this.allWOOpDetails.length > 0){
-         //To check in the array
+  onOperationNoBlur() {
+    if (this.allWOOpDetails != null && this.allWOOpDetails.length > 0) {
+      //Enable the Produced Quantity Input 
+      this.DisableEnablQuantity = false;
+      //To check in the array
       let isWOOperExists = this.allWOOpDetails.some(e => e.U_O_OPERNO === this.psOperNO);
-      if(isWOOperExists == false){
+      if (isWOOperExists == false) {
         alert("Invalid operation no. selection");
         this.psOperNO = '';
+        //disable the Produced Quantity Field
+        this.DisableEnablQuantity = true;
       }
+      else {
+        //Enable the Produced Quantity 
+        this.DisableEnablQuantity = false;
+
       }
+    }
+    else {
+      //Disable the Produced Quantity 
+      this.DisableEnablQuantity = true;
+
+    }
   }
-  
-  onQtyProdBtnPress(status){
+
+  onQtyProdBtnPress(status) {
     this.isQuantityRightSection = status;
     this.openRightSection(status)
     //Setting basic details to share on another screen
-    this.basicDetails.push({'WorkOrderNo':this.psWONO,'OperNo':this.psOperNO,'ItemCode':this.psProductCode,'ManagedBy': this.psItemManagedBy});
-    this.showItemLinkingScreen = true; 
-    if(this.settingOnSAP == "1"){
+    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy });
+    this.showItemLinkingScreen = true;
+    if (this.settingOnSAP == "1") {
       this.ScreenName = 'Move Order Summary';
       this.showQtyNoScanScreen = true;
     }
-    if(this.settingOnSAP =="2"){
+    if (this.settingOnSAP == "2") {
       this.ScreenName = 'Finished Goods Scan';
       this.showQtyWithFGScanScreen = true;
     }
-    if(this.settingOnSAP == "3"){
+    if (this.settingOnSAP == "3") {
       this.ScreenName = 'Finished Goods & Raw Materials Scan';
       this.showQtyWithFGRMScanScreen = true;
     }
-    
+
   }
 
   //Final submission for Move Order will be done by this function
-  onSubmitPress(){
+  onSubmitPress() {
     //submission service callled
     this.mo.submitMoveOrder(this.CompanyDBId).subscribe(
-      data=> {
+      data => {
       }
     )
   }
 
   //This will recive data from lookup
-  receiveLookupRowData($event){
+  receiveLookupRowData($event) {
     console.log("---> DAATA FROM WO LOOKUP");
-    console.log($event);   
-    if(this.openedLookup == "WOLookup"){
+    console.log($event);
+    if (this.openedLookup == "WOLookup") {
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;
       this.docEntry = $event.DocEntry;
 
-     }
+      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+      if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
+        //enable  Operation input Box
+        this.DisableEnablOperation = false;
+      }
+      else {
+        //disable the Operation input Box
+        this.DisableEnablOperation = true;
+      }
 
-     if(this.openedLookup == "OperLookup"){
-       this.psOperNO = $event.U_O_OPERNO;
-     }
-      //To hide the lookup
-      this.showLookup = false;
+    }
 
-      //close the right section
-      this.closeRightSection(false);
-      
-      //To clear the lookup screen name on close
-      this.openedLookup = '';
-      
-      //Clear the data of lookup
-      this.lookupData = null;
+    if (this.openedLookup == "OperLookup") {
+      this.psOperNO = $event.U_O_OPERNO;
 
-      //To clear the columns name 
-      this.columnsToShow = [];
+      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+      if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
+        //enable  Operation input Box
+        this.DisableEnablQuantity = false;
+      }
+      else {
+        //disable the Operation input Box
+        this.DisableEnablQuantity = true;
+      }
+
+    }
+    //To hide the lookup
+    this.showLookup = false;
+
+    //close the right section
+    this.closeRightSection(false);
+
+    //To clear the lookup screen name on close
+    this.openedLookup = '';
+
+    //Clear the data of lookup
+    this.lookupData = null;
+
+    //To clear the columns name 
+    this.columnsToShow = [];
   }
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {
-        return data.filter(e => e.DocEntry == docEntry)
+    return data.filter(e => e.DocEntry == docEntry)
   }
 
   //This will filter Oper No
-  filterOperDetail(data, operNo,docEntry) {
+  filterOperDetail(data, operNo, docEntry) {
     return data.filter(e => e.U_O_OPERNO == operNo && e.DocEntry == docEntry)
   }
 
   //This fun will get all WO
-  getAllWorkOrders(){
+  getAllWorkOrders() {
     this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
-      data=> {
-       this.allWODetails = data;
-       if(this.allWODetails.length > 0){
+      data => {
+        this.allWODetails = data;
+        if (this.allWODetails.length > 0) {
           this.lookupData = this.allWODetails;
-       }
+        }
       }
     )
   }
 
   //get Operations by work order no.
-  getOperationByWONO(){
-    this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
-      data=> {
-      if(data !=null && data.length > 0){
-        this.allWOOpDetails = data;
-        if(this.allWOOpDetails.length > 0){
+  getOperationByWONO() {
+    if (this.psWONO == "") {
+
+      alert("Please select WorkOrder")
+      return;
+    }
+
+    this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
+      data => {
+        if (data != null && data.length > 0) {
+          this.allWOOpDetails = data;
+          if (this.allWOOpDetails.length > 0) {
             this.lookupData = this.allWOOpDetails;
             this.openedLookup = "OperLookup";
             this.showLookup = true;
+          }
         }
-       }
       }
     )
   }
-  
 
- 
+
+
 
   openRightSection(status) {
-      this.optirightfixedsection.nativeElement.style.display='block'; //content section
-      this.isFixedRightSection = status;
+    this.optirightfixedsection.nativeElement.style.display = 'block'; //content section
+    this.isFixedRightSection = status;
   }
 
   closeRightSection(status) {
-    this.optirightfixedsection.nativeElement.style.display='none';
+    this.optirightfixedsection.nativeElement.style.display = 'none';
     this.isFixedRightSection = status;
 
     this.isQuantityRightSection = status;
@@ -310,7 +361,7 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationListRightSection = status;
   }
 
-  
+
 
   // WorkOrderDetailDataList = [
   //   {

@@ -14,19 +14,25 @@
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
                             <form class="k-form">
                                 <div class="text-center">
-                                    <h5>Move Order</h5>
+                                    <h5>Move Order </h5>
                                 </div>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Work Order </span>
-                                    <span class="float-left opti_work-order"><input type="text" id="psWONOid" name="psWONO" class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()"></span> 
+                                    <span class="opti_form-label">Work Order * </span>
+                                    <span class="float-left opti_work-order">
+                                        <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()">
+                                     
+                            
+                                    </span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
                                         <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
+                                  
                                 </label>
-                                
+                                <span *ngIf="WorkOrderBlank.errors?.required && WorkOrderBlank.touched" class="float-right opti_error-msg">  Enter WorkOrder Number.  </span>
+                               
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
                                     <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode" [disabled]=true>
@@ -39,8 +45,10 @@
                                 </label>
 
                                 <label class="k-form-field">
-								    <span class="opti_form-label">Operation Number</span>
-                                    <span class="float-left opti_operation"><input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO"></span>
+								    <span class="opti_form-label">Operation Number *</span>
+                                    <span class="float-left opti_operation">
+                                        <input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" [disabled]=DisableEnablOperation>
+                                    </span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
@@ -49,16 +57,17 @@
                                 </label>
                                 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Qty Produced</span>
-                                    <span class="float-left opti_qty-produced"><input type="text" class="k-textbox" id="txtQtyProduced"></span>
+                                    <span class="opti_form-label">Qty Produced *</span>
+                                    <span class="float-left opti_qty-produced">
+                                        <input type="text" class="k-textbox" id="txtQtyProduced" [disabled]=DisableEnablQuantity>
+                                    </span>
                                     <span class="opti_qty-operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
                                     </span>
-
                                 </label>
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label">Start Date</span>
+                                        <span class="opti_form-label">Start Date * </span>
                                         <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox">
