@@ -344,15 +344,19 @@ body{
             border: 1px solid $input-border-color;
             border-radius: 5px;
             padding-right: 10px;
+            padding-top: 1px;
+            padding-bottom: 1px;
             input{
-                width: 150px;
+                width: 148px;
                 float: left;
                 border: none;
+                border-radius: 5px;
             }
             span{
                 float: left;
-                height: 32px;
+                height: 27px;
                 margin: 0 !important;
+                display: flex;
             }
         }
     }
