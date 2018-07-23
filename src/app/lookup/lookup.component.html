@@ -5,7 +5,11 @@
             [height]="height"
             [selectable]="true"
             [sortable]="{ mode: 'multiple' }"
-            [filterable]="">   
+            [resizable]="false" 
+            [pageSize]="50" 
+            [pageable]="true" 
+            [filterable]="true"
+            [groupable]="false">   
 
     <kendo-grid-column *ngFor="let col of columns;let i=index" field="{{col.Name}}" title="{{col.Name}}"
                        [sortable]="col.CanSort"
