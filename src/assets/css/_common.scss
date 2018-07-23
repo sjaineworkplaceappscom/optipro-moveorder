@@ -371,10 +371,16 @@ body{
     .k-dateinput .k-dateinput-wrap, 
     .k-input, .k-textbox, 
     .k-textarea, 
-    .k-input.k-textbox, 
+    .k-input.k-textbox,
     .k-multiselect-wrap, 
     .k-numerictextbox .k-numeric-wrap{
-        border: 1px solid $input-border-color;
+        border: 1px solid $input-border-color !important;
+    }
+
+    // css for label
+    label.k-form-field {
+        float: left;
+        width: 100%;
     }
         
 }
