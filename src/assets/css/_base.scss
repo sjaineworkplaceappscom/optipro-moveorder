@@ -16,7 +16,9 @@ $list-bg-color: #F8F8F8;
 $list-seprator-color:rgba(120, 130, 140, 0.13);
 $light-black:#333;
 $dark-black:#333;
-$input-border-color:rgba(33, 37, 41, 0.15);
+// $input-border-color:rgba(33, 37, 41, 0.15);
+$input-border-color:#EAEAEA;
+
 
 // Truncate
 @mixin truncate($truncation-boundary) {
