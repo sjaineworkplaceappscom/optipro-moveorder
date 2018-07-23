@@ -23,7 +23,7 @@
                                 Name *
                             </span>
                           
-                            <input name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" type="text" class="k-textbox" id="usr" placeholder="Id">
+                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Id">
                             <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
                             
                         </label>
@@ -32,8 +32,9 @@
                             <span class="opti_form-label">
                                 Password *
                             </span>
-                            <input name="pwd" required #PasswordBlank = ngModel   [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
-                            <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required  </span>
+                            <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
+                            <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required.  </span>
+                            <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> Invalid username or password.</span>
                         </label>
 
                         <label class="k-form-field">

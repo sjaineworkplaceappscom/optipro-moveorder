@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   public userName: string = "";
   public companyName: string = "";
-
+  public invalidCredentials: boolean = false;
 
   constructor(
     private auth: AuthenticationService, private router: Router,
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
               this.psURL = data;
 
               //For code analysis remove in live enviorments.
-              this.psURL = "http://localhost:57966/api";
+              this.psURL = "http://localhost:57962/api";
             }
           }
         )
@@ -65,55 +65,66 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
+  onKeyUp(){
+    if (this.loginId == "" || this.password == "") {
+      this.invalidCredentials=false;
+      this.listItems=[];
+      return;
+    }
+  }
   //On Password blur the authentication will be checked
   onPasswordBlur() {
-
+    if (this.loginId == "" || this.password == "") {
+      this.invalidCredentials=false;
+      this.listItems=[];      
+      return;
+    }
     // Check users authontication 
     this.auth.login(this.loginId, this.password, this.psURL).subscribe(
       data => {
 
         this.modelSource = data;
 
-        if (this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {          
-            //If everything is ok then we will navigate the user to main home page
-            //this.router.navigateByUrl('/moveorder');
-            this.auth.getCompany(this.loginId, this.psURL).subscribe(
-              data => {
+        if (this.modelSource != null && this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {
+          //If everything is ok then we will navigate the user to main home page
+          //this.router.navigateByUrl('/moveorder');
+          this.auth.getCompany(this.loginId, this.psURL).subscribe(
+            data => {
 
-                this.modelSource = data
+              this.modelSource = data
 
-                if (this.modelSource != undefined 
-                    && this.modelSource != null 
-                    && this.modelSource.Table.length > 0) 
-                    {
-                      //Show the Company Combo box
-                      this.listItems = data.Table;
-                      this.selectedValue = this.listItems[0];
-                      this.disableLoginBtn = false;
-                      this.hasCompaneyData = true;
-                    }
-                else {
-                  this.disableLoginBtn = true;
-                  this.hasCompaneyData = false;
-                  alert("You are Not an Active User");
-                }
+              if (this.modelSource != undefined
+                && this.modelSource != null
+                && this.modelSource.Table.length > 0) {
+                //Show the Company Combo box
+                this.listItems = data.Table;
+                this.selectedValue = this.listItems[0];
+                this.disableLoginBtn = false;
+                this.hasCompaneyData = true;
+                this.invalidCredentials = false;
               }
-            )
-          }
-          else {
-            this.hasCompaneyData = false;
-            this.disableLoginBtn = true;
-            alert("Invalid User Name or Password");
-          }        
-       
+              else {
+                this.disableLoginBtn = true;
+                this.hasCompaneyData = false;
+                alert("You are Not an Active User");
+              }
+            }
+          )
+        }
+        else {
+          this.hasCompaneyData = false;
+          this.disableLoginBtn = true;
+          this.invalidCredentials = true;
+          // alert("Invalid User Name or Password");
+        }
+
       }
     )
   }
 
   // On Login button clicked
   onLoginClick() {
-    if (this.disableLoginBtn == false) {      
+    if (this.disableLoginBtn == false) {
       sessionStorage.setItem('selectedComp', this.companyName);
       sessionStorage.setItem('loggedInUser', this.userName);
       this.router.navigateByUrl('/moveorder');

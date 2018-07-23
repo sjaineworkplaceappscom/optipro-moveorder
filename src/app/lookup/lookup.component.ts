@@ -14,9 +14,7 @@ export class LookupComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
     constructor() { }
 
-    ngOnInit() {
-        console.log("SHOW LOOKUP");
-        console.log(this.fillLookupArray)
+    ngOnInit() {       
         this.SetDataSource();
     }
 
