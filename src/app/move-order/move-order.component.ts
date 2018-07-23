@@ -39,6 +39,13 @@ export class MoveOrderComponent implements OnInit {
   showQtyWithFGRMScanScreen: boolean = false;
   DisableEnablOperation: boolean = true;
   DisableEnablQuantity: boolean = true;
+  //variable for Invalid Operation 
+  InvalidOperation: boolean
+  //variable for Invalid WorkOrder 
+  InvalidWorkOrder: boolean
+  //variable for WorkOrder Blank 
+  WorkOrderBlank: boolean =false;
+  // DisableEnablOperationLookUp:boolean =true;
   bEnabeSaveBtn: boolean = false;
   basicDetails: any = [];
   psItemManagedBy: string;
@@ -139,19 +146,25 @@ export class MoveOrderComponent implements OnInit {
       //To check in the array
       let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
       if (isWOExists == false) {
-        alert("Invalid workorder no. selection");
+        //alert("Invalid workorder no. selection");
+        //Message for Invalid WorkOdere
+        this.InvalidWorkOrder = true;
         this.psWONO = '';
         this.DisableEnablOperation = true;
+        // this.DisableEnablOperationLookUp=true;
       }
       else {
         this.DisableEnablOperation = false;
+        //remove the Message if Workorder is not Blank 
+        this.InvalidWorkOrder = false;
+        //this.DisableEnablOperationLookUp=false;
         this.getOperationByWONO();
 
       }
     }
     else {
-
       this.DisableEnablOperation = true;
+      //this.DisableEnablOperationLookUp=true;
     }
 
   }
@@ -198,7 +211,8 @@ export class MoveOrderComponent implements OnInit {
       //To check in the array
       let isWOOperExists = this.allWOOpDetails.some(e => e.U_O_OPERNO === this.psOperNO);
       if (isWOOperExists == false) {
-        alert("Invalid operation no. selection");
+        //message for invalid Operation
+        this.InvalidOperation = true;
         this.psOperNO = '';
         //disable the Produced Quantity Field
         this.DisableEnablQuantity = true;
@@ -206,6 +220,8 @@ export class MoveOrderComponent implements OnInit {
       else {
         //Enable the Produced Quantity 
         this.DisableEnablQuantity = false;
+        //message for invalid operation 
+        this.InvalidOperation = false;
 
       }
     }
@@ -260,10 +276,13 @@ export class MoveOrderComponent implements OnInit {
       if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
         //enable  Operation input Box
         this.DisableEnablOperation = false;
+        this.getOperationByWONO();
+        //this.DisableEnablOperationLookUp=false;
       }
       else {
         //disable the Operation input Box
         this.DisableEnablOperation = true;
+        //  this.DisableEnablOperationLookUp=true;
       }
 
     }
@@ -315,6 +334,7 @@ export class MoveOrderComponent implements OnInit {
         this.allWODetails = data;
         if (this.allWODetails.length > 0) {
           this.lookupData = this.allWODetails;
+          this.WorkOrderBlank=false;
         }
       }
     )
@@ -323,9 +343,11 @@ export class MoveOrderComponent implements OnInit {
   //get Operations by work order no.
   getOperationByWONO() {
     if (this.psWONO == "") {
-
-      alert("Please select WorkOrder")
+      this.WorkOrderBlank = true;
       return;
+    }
+     else {
+    this.WorkOrderBlank = false;
     }
 
     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
@@ -336,6 +358,7 @@ export class MoveOrderComponent implements OnInit {
             this.lookupData = this.allWOOpDetails;
             this.openedLookup = "OperLookup";
             this.showLookup = true;
+           
           }
         }
       }
