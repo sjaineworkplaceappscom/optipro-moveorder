@@ -1,9 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, HostListener } from '@angular/core';
 import { MoveorderService } from 'src/app/services/moveorder.service';
 import { Router } from '@angular/router';
 import { LookupComponent } from "src/app/lookup/lookup.component";
 //For Ngx Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
   selector: 'app-move-order',
@@ -62,7 +63,20 @@ export class MoveOrderComponent implements OnInit {
  isWorkOrderListRightSection:boolean = false;
  isOperationListRightSection:boolean = false;
 
+
+ gridHeight: number;
+
+ @HostListener('window:resize', ['$event'])
+ onResize(event) {
+     this.gridHeight = UIHelper.getMainContentHeight();
+ }
+
+
+
   ngOnInit() {
+
+    this.gridHeight = UIHelper.getMainContentHeight();
+
     this.isFixedRightSection = false;
     const element = document.getElementsByTagName("body")[0];
     element.className = "";

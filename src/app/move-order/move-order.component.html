@@ -111,11 +111,8 @@
                                     <div class="container-fluid opti_padding-zero">
                                         <div class="row">
                                             <div class="col-md-12">
-
                                                 <!-- paste here shortcode lookup-->
-
-                                                <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" 
-                                                ></app-lookup>
+                                                <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
                                             </div>
                                         </div>
                                     </div>
@@ -139,8 +136,7 @@
                                         <div class="col-md-12">
                                             <!-- paste here shortcode lookup-->
 
-                                            <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" 
-                                            ></app-lookup>
+                                            <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
                                           
                                         </div>
                                         </div>
