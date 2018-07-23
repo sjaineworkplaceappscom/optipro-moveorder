@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
 
   private baseClassObj = new BaseClass();
   public arrConfigData: any[];
-
-  public listItems: Array<string> = ["Select Company"];
+  public defaultCompnyComboValue:any=[{OPTM_COMPID: "Select Company"}];
+  public listItems: Array<string> = this.defaultCompnyComboValue;
   public selectedValue: string;
 
   public hasCompaneyData: any = false;
@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
   public userName: string = "";
   public companyName: string = "";
   public invalidCredentials: boolean = false;
+  public InvalidActiveUser: boolean = false;
+  
 
   constructor(
     private auth: AuthenticationService, private router: Router,
@@ -36,7 +38,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-
+    this.listItems = this.defaultCompnyComboValue;
+    this.selectedValue = this.listItems[0];
+    
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-login");
@@ -68,7 +72,8 @@ export class LoginComponent implements OnInit {
   onKeyUp(){
     if (this.loginId == "" || this.password == "") {
       this.invalidCredentials=false;
-      this.listItems=[];
+      this.listItems = this.defaultCompnyComboValue;
+      this.selectedValue = this.listItems[0];
       return;
     }
   }
@@ -76,7 +81,9 @@ export class LoginComponent implements OnInit {
   onPasswordBlur() {
     if (this.loginId == "" || this.password == "") {
       this.invalidCredentials=false;
-      this.listItems=[];      
+      this.listItems = this.defaultCompnyComboValue;
+      this.selectedValue = this.listItems[0];      
+          
       return;
     }
     // Check users authontication 
@@ -98,15 +105,21 @@ export class LoginComponent implements OnInit {
                 && this.modelSource.Table.length > 0) {
                 //Show the Company Combo box
                 this.listItems = data.Table;
+                console.log("data",this.listItems);
                 this.selectedValue = this.listItems[0];
                 this.disableLoginBtn = false;
                 this.hasCompaneyData = true;
                 this.invalidCredentials = false;
+                this.InvalidActiveUser=false;
               }
               else {
                 this.disableLoginBtn = true;
                 this.hasCompaneyData = false;
-                alert("You are Not an Active User");
+                this.listItems = this.defaultCompnyComboValue;
+      this.selectedValue = this.listItems[0];      
+          
+                this.InvalidActiveUser=true;
+               // alert("You are Not an Active User");
               }
             }
           )
@@ -114,7 +127,12 @@ export class LoginComponent implements OnInit {
         else {
           this.hasCompaneyData = false;
           this.disableLoginBtn = true;
+             
+          
           this.invalidCredentials = true;
+          this.InvalidActiveUser=false;
+          this.listItems = this.defaultCompnyComboValue;
+          this.selectedValue = this.listItems[0];  
           // alert("Invalid User Name or Password");
         }
 

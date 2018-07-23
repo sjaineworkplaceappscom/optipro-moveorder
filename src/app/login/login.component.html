@@ -20,10 +20,10 @@
                     <form class="k-form" #signInForm="ngForm">
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                Name *
+                                Username *
                             </span>
                           
-                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Id">
+                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Your username">
                             <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
                             
                         </label>
@@ -35,6 +35,7 @@
                             <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
                             <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required.  </span>
                             <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> Invalid username or password.</span>
+                            <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> You are not active user.</span>
                         </label>
 
                         <label class="k-form-field">
