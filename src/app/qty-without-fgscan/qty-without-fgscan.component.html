@@ -38,22 +38,22 @@
           <form class="k-form col-md-12">
               <label class="k-form-field">
                 <span class="opti_form-label">Balance Qty</span>
-                <input type="text" class="k-textbox" id="txtBalQty" [value]="iBalQty" />
+                <input type="text" class="k-textbox" id="iBalQtyID" name="iBalQtyName" [(ngModel)]="iBalQty" [disabled]=true>
               </label>
 
               <label class="k-form-field">
                 <span class="opti_form-label">Accepted Qty</span>
-                <input type="text" class="k-textbox" id="txtAcceptedQty" [value]="iAcceptedQty" />
+                <input type="text" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" />
               </label>
 
               <label class="k-form-field">
                 <span class="opti_form-label">Rejected Qty</span>
-                <input type="text" class="k-textbox" id="txtRejectedQty" [value]="iRejectedQty" />
+                <input type="text" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" />
               </label>
 
               <label class="k-form-field">
                 <span class="opti_form-label">NC Qty</span>
-                <input type="text" class="k-textbox" id="txtNCQty" [value]="iNCQty" />
+                <input type="text" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" />
               </label>
 
               <div class="text-right">
