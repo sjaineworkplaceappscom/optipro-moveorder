@@ -60,7 +60,7 @@
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced *</span>
                                     <span class="float-left opti_qty-produced">
-                                        <input type="text" class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity>
+                                        <input type="text" class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
                                     </span>
                                     <span class="opti_qty-operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />

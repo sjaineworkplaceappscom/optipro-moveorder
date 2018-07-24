@@ -32,7 +32,7 @@
                        
 
         <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div  (dblclick)="onRowDoubleClick($event, rowIndex)" class="gridCell">  
+            <div  (click)="onRowClick($event, rowIndex)" class="gridCell">  
                 {{dataItem[col.Name]}}
             </div>
         </ng-template>

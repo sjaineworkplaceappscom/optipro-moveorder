@@ -92,7 +92,7 @@ export class LookupComponent implements OnInit {
     }
 
     //Double click will handle the lookup values back to the move order component
-    onRowDoubleClick(evt, rowIndex) {
+    onRowClick(evt, rowIndex) {
         this.messageEvent.emit(this.fillLookupArray[rowIndex]);
     }
 

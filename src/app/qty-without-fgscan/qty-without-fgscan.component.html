@@ -43,17 +43,17 @@
 
               <label class="k-form-field">
                 <span class="opti_form-label">Accepted Qty</span>
-                <input type="text" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" />
+                <input type="text" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" (blur)="onAccepetedQtyBlur()" />
               </label>
 
               <label class="k-form-field">
                 <span class="opti_form-label">Rejected Qty</span>
-                <input type="text" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" />
+                <input type="text" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" (blur)="onRejectQtyBlur()" />
               </label>
 
               <label class="k-form-field">
                 <span class="opti_form-label">NC Qty</span>
-                <input type="text" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" />
+                <input type="text" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" (blur)="onNCQtyBlur()" />
               </label>
 
               <div class="text-right">

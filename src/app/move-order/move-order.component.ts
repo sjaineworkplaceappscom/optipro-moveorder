@@ -347,6 +347,16 @@ export class MoveOrderComponent implements OnInit {
   
   }
 
+  //on ProdQty Blur
+  onProducedQtyBlur(){
+    if(this.iProducedQty != null){
+      if(this.iProducedQty > this.iBalQty ){
+        alert("Produced Qty should not be greater than balance qty");
+        this.iProducedQty = 0;
+      }
+    }
+  }
+
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {

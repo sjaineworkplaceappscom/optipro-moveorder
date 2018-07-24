@@ -44,7 +44,7 @@ export class MoveorderService {
 
   //Submit Move Order
   submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,startDateTime:any,endDateTime:any):Observable<any>{
-    //JSON Obeject Prepared to be send as a param to API
+  //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
       CompanyDBID: CompanyDBID, 
       FromOperation: FromOperationNo, 
