@@ -84,7 +84,7 @@
 
                                 </label>
 
-                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth">Submit</button>
+                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">Submit</button>
                             </form>
                         </div>    
                     </div>    
@@ -101,7 +101,7 @@
                             <!-- Quantity Screen start -->
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
                                 <h5 class="modal-title center-block">{{ScreenName}}</h5>
-                                <app-qty-without-fgscan (messageEvent)="recieveChildSAPSetFormData" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+                                <app-qty-without-fgscan (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
                                 <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
                                 <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
                             </div>    

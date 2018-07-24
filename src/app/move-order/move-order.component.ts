@@ -34,11 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-<<<<<<< HEAD
   settingOnSAP: string = "1";
-=======
-  settingOnSAP: string = "3";
->>>>>>> cd09edb7444b409c03c13223ba6856eb304f7f31
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -63,6 +59,10 @@ export class MoveOrderComponent implements OnInit {
   loggedInUser:any;
   iBalQty:number;
   iProducedQty:number;
+  iAcceptedQty:number;
+  iRejectedQty:number;
+  iNCQty:number;
+  iOrderedQty:number;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -268,7 +268,7 @@ export class MoveOrderComponent implements OnInit {
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
     //submission service callled
-    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.startDateTime,this.endDateTime).subscribe(
+    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.startDateTime,this.endDateTime).subscribe(
       data => {
       }
     )
@@ -283,6 +283,7 @@ export class MoveOrderComponent implements OnInit {
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;
       this.docEntry = $event.DocEntry;
+      this.iOrderedQty = $event.U_O_ORDRQTY;
 
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
@@ -333,7 +334,18 @@ export class MoveOrderComponent implements OnInit {
     this.columnsToShow = [];
   }
 
-  recieveChildSAPSetFormData(){ alert("HELLO IANM")}
+  //This emitter event will send the data back to the main form
+  recieveChildSAPSetFormData($event){ 
+   
+    console.log("FROM CHILD SCREENSSSS--->");
+    console.log($event);
+    if(this.settingOnSAP == "1"){
+      this.iAcceptedQty = $event.AcceptedQty;
+      this.iRejectedQty = $event.RejectedQty;
+      this.iNCQty = $event.NCQty;
+    }
+  
+  }
 
   //Core Functions
   //This will filter for filter WO

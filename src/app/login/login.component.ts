@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
               this.psURL = data;
 
               //For code analysis remove in live enviorments.
-              this.psURL = "http://localhost:57962/api";
+              this.psURL = "http://localhost:57966/api";
             }
           }
         )

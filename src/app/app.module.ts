@@ -99,7 +99,7 @@ const myRoots: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  providers: [FGScanDetailComponent,LookupComponent],
+  providers: [FGScanDetailComponent,LookupComponent,QtyWithoutFGScanComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
