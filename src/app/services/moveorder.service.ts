@@ -43,22 +43,22 @@ export class MoveorderService {
   }
 
   //Submit Move Order
-  submitMoveOrder(CompanyDBID:string):Observable<any>{
+  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,startDateTime:any,endDateTime:any):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
       CompanyDBID: CompanyDBID, 
-      FromOperation: "", 
-      ToOperation:"",
-      WorkOrder:"",
-      ItemCode:"",
-      UserID:"",
+      FromOperation: FromOperationNo, 
+      ToOperation:ToOperationNo,
+      WorkOrder:WorkOrderNo,
+      ItemCode:ItemCode,
+      UserID:loggedInUser,
       QtyAccepted:"",
       QtyRejected:"",
       QtyProduced:"",
       QtyNC:"",
       QtyOrder:"",
-      StartDateTime:"",
-      EndDateTime:""
+      StartDateTime:startDateTime,
+      EndDateTime:endDateTime
 
     }]) };
   //Return the response form the API  
