@@ -60,6 +60,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     }
   }
 
+  ShowParent(){
+    document.getElementById('opti_QtyFGScanChildID').style.display='none';
+    document.getElementById('opti_QtyFGScanID').style.display='block';
+  }
+
   onAddPress(){
    if(this.psBatchSer !=null){
      if(this.bIsEdit==true){
@@ -70,6 +75,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
      }
      this.messageEvent.emit(this.message)
    }
+   this.ShowParent();
   }
 
   onBatchSerBlur(){

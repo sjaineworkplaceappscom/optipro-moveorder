@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs/Observable';
-import {  Component, OnInit, Input, ViewChild } from '@angular/core';
+import {  Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with-fgscan-detail.component';
+import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 
 @Component({
@@ -13,6 +14,10 @@ import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with
 export class QtyWithFGScanComponent implements OnInit {
   @Input() basicDetailsFrmMO: any;
   @ViewChild(QtyWithFGScanDetailComponent) child;
+  @ViewChild('QtyFGScanIDParent') QtyFGScanIDParent;
+  @ViewChild('QtyFGScanChildID') QtyFGScanChildID;
+
+  
 
   FGScanGridData:any = [];
   CompanyDBId:string= "";
@@ -35,7 +40,20 @@ public view: Observable<GridDataResult>;
   rowDataForEdit: any = [];
   showEditBtn:boolean = true;
 
+  gridHeight: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.gridHeight = UIHelper.getMainContentHeight();
+  }
+
   ngOnInit() {
+  
+  this.gridHeight = UIHelper.getMainContentHeight();  
+
+  //  hide child level 
+  this.QtyFGScanChildID.nativeElement.style.display = 'none';
+
    //console.log(this.basicDetailsFrmMO);
    this.CompanyDBId = this.CompanyDBId = sessionStorage.getItem('selectedComp');
    console.log(this.basicDetailsFrmMO);
@@ -43,6 +61,13 @@ public view: Observable<GridDataResult>;
    this.fillFGData();
    this.refreshQtys();
   }
+
+  showLevelChild(){
+    this.QtyFGScanChildID.nativeElement.style.display = 'block';
+    this.QtyFGScanIDParent.nativeElement.style.display = 'none';
+  }
+
+
   
 
   receiveMessage($event) {
