@@ -60,7 +60,7 @@
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced *</span>
                                     <span class="float-left opti_qty-produced">
-                                        <input type="text" class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
+                                        <input type="text" style="text-align: right;"  class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
                                     </span>
                                     <span class="opti_qty-operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
@@ -69,7 +69,7 @@
 
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label">Start Date * </span>
-                                        <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+                                        <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
                                         <owl-date-time #dt12></owl-date-time>
@@ -77,7 +77,7 @@
 
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label" style="margin-top: 8px;">End Date</span>
-                                        <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+                                        <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
                                         <owl-date-time #dt13></owl-date-time>

@@ -58,11 +58,11 @@ export class MoveOrderComponent implements OnInit {
   psToOperation:any;
   loggedInUser:any;
   iBalQty:number;
-  iProducedQty:number;
-  iAcceptedQty:number;
-  iRejectedQty:number;
-  iNCQty:number;
-  iOrderedQty:number;
+  iProducedQty:number = 0;
+  iAcceptedQty:number = 0;
+  iRejectedQty:number = 0;
+  iNCQty:number = 0;
+  iOrderedQty:number = 0;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -108,8 +108,8 @@ export class MoveOrderComponent implements OnInit {
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     //get the logged in user name
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
-        //On Form Initialization get All WO
-        this.getAllWorkOrders();
+    //On Form Initialization get All WO
+    this.getAllWorkOrders();
   }
 
   //This will get all WO
@@ -267,9 +267,26 @@ export class MoveOrderComponent implements OnInit {
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
+    //If oper is blank
+    if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
+      this.psToOperation = this.psOperNO;
+    }
+
+
+    //If oper is blank
+    if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
+      this.psToOperation = this.psOperNO;
+    }
     //submission service callled
     this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.startDateTime,this.endDateTime).subscribe(
       data => {
+        if(data == "True"){
+            alert("Record submitted sucessfully");
+            this.cleanupScreen();
+        }
+        else{
+          alert("There was some error while submitting the record");
+        }
       }
     )
   }
@@ -301,8 +318,6 @@ export class MoveOrderComponent implements OnInit {
     }
 
     if (this.openedLookup == "OperLookup") {
-
-
       this.psOperNO = $event.U_O_OPERNO;
       this.getSelectedOperationDetail();
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
@@ -353,6 +368,11 @@ export class MoveOrderComponent implements OnInit {
       if(this.iProducedQty > this.iBalQty ){
         alert("Produced Qty should not be greater than balance qty");
         this.iProducedQty = 0;
+      }
+      else{
+        this.iAcceptedQty = this.iProducedQty;
+        this.iNCQty =0;
+        this.iRejectedQty = 0;
       }
     }
   }
@@ -416,6 +436,8 @@ export class MoveOrderComponent implements OnInit {
       this.showOperDtPopup = true;
       this.psToOperation = data[0].NextOperNo;
       this.iBalQty = data[0].U_O_BALQTY;
+      //By default set into it
+      this.iProducedQty =  data[0].U_O_BALQTY;
     }
   ) 
   }
@@ -436,7 +458,21 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationListRightSection = status;
   }
 
+  cleanupScreen(){
+    this.psWONO = '';
+    this.psItemManagedBy ='';
+    this.psOperName ='';
+    this.psOperNO='';
+    this.psProductCode='';
+    this.psProductDesc='';
+    this.iAcceptedQty=0;
+    this.iBalQty=0;
+    this.iNCQty=0;
+    this.iOrderedQty=0;
+    this.iProducedQty = 0;
+    this.iRejectedQty =0;
 
+  }
 
   // WorkOrderDetailDataList = [
   //   {

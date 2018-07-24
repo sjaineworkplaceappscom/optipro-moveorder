@@ -17,8 +17,8 @@ constructor() { }
 @Output() messageEvent = new EventEmitter<string>();
 
   ngOnInit() {
-    this.iBalQty = this.basicDetailsFrmMO[0].BalQty;
-    this.iAcceptedQty = this.basicDetailsFrmMO[0].ProducedQty;
+    this.iBalQty = parseFloat(this.basicDetailsFrmMO[0].BalQty);
+    this.iAcceptedQty = parseFloat(this.basicDetailsFrmMO[0].ProducedQty);
   }
 
   //Events
