@@ -5,6 +5,7 @@ import { LookupComponent } from "src/app/lookup/lookup.component";
 //For Ngx Bootstrap
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
+import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
 
 @Component({
   selector: 'app-move-order',
@@ -33,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "2";
+  settingOnSAP: string = "1";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -57,6 +58,7 @@ export class MoveOrderComponent implements OnInit {
   psToOperation:any;
   loggedInUser:any;
   iBalQty:number;
+  iProducedQty:number;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -71,6 +73,7 @@ export class MoveOrderComponent implements OnInit {
   @ViewChild('optirightfixedsection') optirightfixedsection;
   //lookup data reciever
   @ViewChild(LookupComponent) child;
+  @ViewChild(QtyWithoutFGScanComponent) childSAPSettingForms;
   isFixedRightSection: boolean;
   isWorkOrderRightSection: boolean = false;
   isOperationRightSection: boolean = false;
@@ -241,7 +244,7 @@ export class MoveOrderComponent implements OnInit {
     this.isQuantityRightSection = status;
     this.openRightSection(status)
     //Setting basic details to share on another screen
-    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy , 'BalQty': this.iBalQty, 'ProducedQty': ''});
+    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy , 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty});
     this.showItemLinkingScreen = true;
     if (this.settingOnSAP == "1") {
       this.ScreenName = 'Move Order Summary';
@@ -325,6 +328,9 @@ export class MoveOrderComponent implements OnInit {
     //To clear the columns name 
     this.columnsToShow = [];
   }
+
+  recieveChildSAPSetFormData(){ alert("HELLO IANM")}
+
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {

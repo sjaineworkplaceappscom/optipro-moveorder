@@ -60,7 +60,7 @@
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced *</span>
                                     <span class="float-left opti_qty-produced">
-                                        <input type="text" class="k-textbox" id="txtQtyProduced" [disabled]=DisableEnablQuantity>
+                                        <input type="text" class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity>
                                     </span>
                                     <span class="opti_qty-operation-icon">
                                         <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
@@ -101,7 +101,7 @@
                             <!-- Quantity Screen start -->
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
                                 <h5 class="modal-title center-block">{{ScreenName}}</h5>
-                                <app-qty-without-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
+                                <app-qty-without-fgscan (messageEvent)="recieveChildSAPSetFormData" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
                                 <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
                                 <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
                             </div>    
