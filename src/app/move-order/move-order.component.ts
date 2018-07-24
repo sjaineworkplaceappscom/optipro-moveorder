@@ -44,7 +44,7 @@ export class MoveOrderComponent implements OnInit {
   //variable for Invalid WorkOrder 
   InvalidWorkOrder: boolean
   //variable for WorkOrder Blank 
-  WorkOrderBlank: boolean =false;
+ // WorkOrderBlank: boolean =false;
   // DisableEnablOperationLookUp:boolean =true;
   bEnabeSaveBtn: boolean = false;
   basicDetails: any = [];
@@ -93,8 +93,8 @@ export class MoveOrderComponent implements OnInit {
     element.classList.add("opti_account-module");
     //get company name from the session
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
-    //On Form Initialization get All WO
-    this.getAllWorkOrders();
+        //On Form Initialization get All WO
+        this.getAllWorkOrders();
   }
 
   //This will get all WO
@@ -289,15 +289,16 @@ export class MoveOrderComponent implements OnInit {
 
     if (this.openedLookup == "OperLookup") {
       this.psOperNO = $event.U_O_OPERNO;
-
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
         //enable  Operation input Box
         this.DisableEnablQuantity = false;
+        this.InvalidOperation=false;
       }
       else {
         //disable the Operation input Box
         this.DisableEnablQuantity = true;
+        this.InvalidOperation=true;
       }
 
     }
@@ -334,7 +335,7 @@ export class MoveOrderComponent implements OnInit {
         this.allWODetails = data;
         if (this.allWODetails.length > 0) {
           this.lookupData = this.allWODetails;
-          this.WorkOrderBlank=false;
+         // this.WorkOrderBlank=false;
         }
       }
     )
@@ -343,11 +344,11 @@ export class MoveOrderComponent implements OnInit {
   //get Operations by work order no.
   getOperationByWONO() {
     if (this.psWONO == "") {
-      this.WorkOrderBlank = true;
+    //  this.WorkOrderBlank = true;
       return;
     }
      else {
-    this.WorkOrderBlank = false;
+   // this.WorkOrderBlank = false;
     }
 
     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
