@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <p></p>
   <form>
       <table class="table table-bordered">
@@ -28,4 +28,40 @@
 
         <button type="button" (click)="onOKPress()"  class="btn btn-primary">OK</button>
       </form>
+</div> -->
+
+
+<div class="" id="opti_qtyWithoutFGScanID">
+  <div class="container-fluid opti_padding-zero">
+    <div class="row">
+      <div class="col-md-12">
+          <form class="k-form col-md-12">
+              <label class="k-form-field">
+                <span class="opti_form-label">Balance Qty</span>
+                <input type="text" class="k-textbox" id="txtBalQty" [value]="iBalQty" />
+              </label>
+
+              <label class="k-form-field">
+                <span class="opti_form-label">Accepted Qty</span>
+                <input type="text" class="k-textbox" id="txtAcceptedQty" [value]="iAcceptedQty" />
+              </label>
+
+              <label class="k-form-field">
+                <span class="opti_form-label">Rejected Qty</span>
+                <input type="text" class="k-textbox" id="txtRejectedQty" [value]="iRejectedQty" />
+              </label>
+
+              <label class="k-form-field">
+                <span class="opti_form-label">NC Qty</span>
+                <input type="text" class="k-textbox" id="txtNCQty" [value]="iNCQty" />
+              </label>
+
+              <div class="text-right">
+                <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
+              </div>
+
+          </form> 
+      </div>
+    </div>
+  </div>
 </div>
