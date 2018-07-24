@@ -51,6 +51,11 @@ export class MoveOrderComponent implements OnInit {
   psItemManagedBy: string;
   showLookup: boolean = false;
   openedLookup: string = '';
+  startDateTime:any;
+  endDateTime:any;
+  moDetails:any;
+  psToOperation:any;
+  loggedInUser:any;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -93,6 +98,8 @@ export class MoveOrderComponent implements OnInit {
     element.classList.add("opti_account-module");
     //get company name from the session
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    //get the logged in user name
+    this.loggedInUser = sessionStorage.getItem('loggedInUser');
         //On Form Initialization get All WO
         this.getAllWorkOrders();
   }
@@ -190,13 +197,8 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationRightSection = status
     this.openRightSection(status)
 
-    //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
-    this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
-      data => {
-        this.selectedWOOperDetail = data;
-        this.showOperDtPopup = true;
-      }
-    )
+    //Get Operation Details of the seleceted operation
+    this.getSelectedOperationDetail();
     // }
     // else{
     //   alert("Select operation no. first");
@@ -222,6 +224,8 @@ export class MoveOrderComponent implements OnInit {
         this.DisableEnablQuantity = false;
         //message for invalid operation 
         this.InvalidOperation = false;
+
+        this.getSelectedOperationDetail()
 
       }
     }
@@ -256,7 +260,7 @@ export class MoveOrderComponent implements OnInit {
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
     //submission service callled
-    this.mo.submitMoveOrder(this.CompanyDBId).subscribe(
+    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.startDateTime,this.endDateTime).subscribe(
       data => {
       }
     )
@@ -288,7 +292,10 @@ export class MoveOrderComponent implements OnInit {
     }
 
     if (this.openedLookup == "OperLookup") {
+
+
       this.psOperNO = $event.U_O_OPERNO;
+      this.getSelectedOperationDetail();
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
         //enable  Operation input Box
@@ -351,6 +358,7 @@ export class MoveOrderComponent implements OnInit {
    // this.WorkOrderBlank = false;
     }
 
+    
     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
       data => {
         if (data != null && data.length > 0) {
@@ -359,7 +367,6 @@ export class MoveOrderComponent implements OnInit {
             this.lookupData = this.allWOOpDetails;
             this.openedLookup = "OperLookup";
             this.showLookup = true;
-           
           }
         }
       }
@@ -367,7 +374,17 @@ export class MoveOrderComponent implements OnInit {
   }
 
 
-
+  //This will get the selected Operation's
+  getSelectedOperationDetail(){
+  //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
+  this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
+    data => {
+      this.selectedWOOperDetail = data;
+      this.showOperDtPopup = true;
+      this.psToOperation = data[0].NextOperNo;
+    }
+  ) 
+  }
 
   openRightSection(status) {
     this.optirightfixedsection.nativeElement.style.display = 'block'; //content section
