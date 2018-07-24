@@ -175,6 +175,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
               }
             }
     )
+
+    this.showLevelParent();
+
   }
   //Core Functions
   disableEnableControls(){

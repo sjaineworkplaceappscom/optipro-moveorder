@@ -118,6 +118,8 @@ export class FgrmscanchildinputformComponent implements OnInit {
       this.psChildCompBatchSer = '';
       this.psChildCompItemCode = '';
     }
+
+    this.showLevelChild();
     
   }
   //Core Functions

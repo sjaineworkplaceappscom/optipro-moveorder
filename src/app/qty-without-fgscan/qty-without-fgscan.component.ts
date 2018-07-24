@@ -15,4 +15,9 @@ iNCQty:number =0;
   ngOnInit() {
   }
 
+  onOKPress(){
+    // this.optirightfixedsection.nativeElement.style.display = 'none';
+    document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+  }
+
 }
