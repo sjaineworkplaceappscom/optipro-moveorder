@@ -56,6 +56,7 @@ export class MoveOrderComponent implements OnInit {
   moDetails:any;
   psToOperation:any;
   loggedInUser:any;
+  iBalQty:number;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -240,7 +241,7 @@ export class MoveOrderComponent implements OnInit {
     this.isQuantityRightSection = status;
     this.openRightSection(status)
     //Setting basic details to share on another screen
-    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy });
+    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy , 'BalQty': this.iBalQty, 'ProducedQty': ''});
     this.showItemLinkingScreen = true;
     if (this.settingOnSAP == "1") {
       this.ScreenName = 'Move Order Summary';
@@ -382,6 +383,7 @@ export class MoveOrderComponent implements OnInit {
       this.selectedWOOperDetail = data;
       this.showOperDtPopup = true;
       this.psToOperation = data[0].NextOperNo;
+      this.iBalQty = data[0].U_O_BALQTY;
     }
   ) 
   }
