@@ -34,7 +34,11 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
+<<<<<<< HEAD
   settingOnSAP: string = "1";
+=======
+  settingOnSAP: string = "3";
+>>>>>>> cd09edb7444b409c03c13223ba6856eb304f7f31
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
