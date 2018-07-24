@@ -1,4 +1,4 @@
-<div class="">
+<!-- <div class="">
   <p></p>
       <label>FG Batch Serial</label>
       <input type="text" class="form-control" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" [disabled]="bIsInEditMode">
@@ -11,5 +11,43 @@
       <label><input type="checkbox" [(ngModel)]="bIsNC" [disabled]="bIsInEditMode">NC Qty</label>
       <br>
       <br>
+
       <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onAddPress()" [disabled]="bIsInEditMode">Save</button>
-</div>
+</div> -->
+
+
+<div class="container-fluid opti_padding-zero">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="k-form" >
+                <label class="k-form-field ">
+                    <span class="opti_form-label">FG Batch Serial</span>
+                    <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" [disabled]="bIsInEditMode" name="psBatchSer" /></span> 
+                    <span class="opti_fgbatch-serial-icon">
+                        <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
+                    </span>
+                </label>
+
+                <label class="k-form-field">
+                    <span class="opti_form-label">Qty</span>
+                    <input type="text" class="k-textbox" [(ngModel)]="iQty" [disabled]="isQtyDisabled" name="iQty" />
+                </label>
+
+                <div class="k-form-field">
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsRejected" [disabled]="bIsInEditMode" name="bIsRejected" id="opti_bIsInEditModeID">
+                    <label class="k-checkbox-label" for="opti_bIsInEditModeID">Rejected</label>
+
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsNC" [disabled]="bIsInEditMode" name="bIsNC" id="opti_bIsNCID"/>
+                    <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
+                </div>
+
+                <div class="text-right">
+                    <button type="button" class="k-button k-primary" (click)="onAddPress()" [disabled]="bIsInEditMode">Save</button>
+                    <button type="button" class="k-button" (click)="ShowParent()">Close</button> 
+                </div>
+
+                
+            </form>
+        </div>    
+    </div>
+</div>  
