@@ -500,7 +500,8 @@ export class MoveOrderComponent implements OnInit {
     this.iOrderedQty=0;
     this.iProducedQty = 0;
     this.iRejectedQty =0;
-    this.FrmToDateTime=[];
+    //this function will reset the time and date of the server
+    this.getServerDate();
   }
 
   //This will set the time and date

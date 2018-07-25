@@ -70,7 +70,7 @@
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label">Start Date Time * </span>
                                         <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
-                                            [(ngModel)]="selectedMoments"
+                                            [(ngModel)]="FrmToDateTime"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
                                         <owl-date-time #dt12></owl-date-time>
 
@@ -91,7 +91,7 @@
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label">End Date Time</span>
                                         <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
-                                            [(ngModel)]="selectedMoments"
+                                            [(ngModel)]="FrmToDateTime"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
                                         <owl-date-time #dt13></owl-date-time> 
 
