@@ -16,11 +16,11 @@ label.k-form-field {
     }
 }
 
-.opti_qty-operation-icon, .opti_date-icon{
+.opti_qty-operation-icon{
     width: 27px;
     float: left;
 }
-.opti_qty-produced, .opti_date{
+.opti_qty-produced{
     width: calc(100% - 27px);
     input{
         width: 100%;
@@ -33,4 +33,15 @@ label.k-form-field {
 
 .opti_vertcal-align-outer-box{
     display: flex !important;
+}
+
+.opti_date-start-end{
+    width: calc(100% - 27px);
+    .opti_date, input{
+        width: 100%;
+    }
+}
+
+.opti_date-icon {
+    margin-top: 18px;
 }

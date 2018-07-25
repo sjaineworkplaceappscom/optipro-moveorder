@@ -81,11 +81,10 @@
                                             <span *ngIf="invalidStartDate" class="float-right opti_error-msg"> Select Start Date </span>
                                             <owl-date-time #dt12></owl-date-time>
                                         </span>
-                                        <span class="opti_date-icon text-right">
-                                            <img src="assets/images/common/start-date.svg" title="Start Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('startDate')"/>
-                                        </span>
-
                                 </label>
+                                <span class="opti_date-icon float-right">
+                                    <img src="assets/images/common/start-date.svg" title="Start Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('startDate')"/>
+                                </span>
 
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label">End Date</span>
@@ -101,10 +100,11 @@
                                             <span *ngIf="invalidEndDate" class="float-right opti_error-msg"> Select End Date </span>
                                             <owl-date-time #dt13></owl-date-time>
                                         </span>
-                                        <span class="opti_date-icon text-right">
-                                            <img src="assets/images/common/end-date.svg" title="End Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('endDate')"/>
-                                        </span>
+                                        
                                 </label>
+                                <span class="opti_date-icon float-right">
+                                    <img src="assets/images/common/end-date.svg" title="End Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('endDate')"/>
+                                </span>
 
                                 <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">Submit</button>
                             </form>
