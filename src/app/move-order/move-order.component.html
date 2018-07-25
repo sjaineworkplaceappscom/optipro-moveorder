@@ -69,18 +69,39 @@
 
                                 <label class="k-form-field opti_date-start-end">
                                         <span class="opti_form-label">Start Date * </span>
-                                        <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
+                                        <!-- <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
-                                        <owl-date-time #dt12></owl-date-time>
+                                        <owl-date-time #dt12></owl-date-time> -->
+
+                                        <span class="float-left opti_date">
+                                            <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
+                                            [(ngModel)]="selectedMoments"
+                                            [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
+                                            <owl-date-time #dt12></owl-date-time>
+                                        </span>
+                                        <span class=".opti_date-icon">
+                                            <img src="assets/images/common/list.svg" title="Start Date" class="opti_mouse-pointer" alt="Quantity" width="27px" height="27px" />
+                                        </span>
+
                                 </label>
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label" style="margin-top: 8px;">End Date</span>
-                                        <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
+                                        <span class="opti_form-label">End Date</span>
+                                        <!-- <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
-                                        <owl-date-time #dt13></owl-date-time>
+                                        <owl-date-time #dt13></owl-date-time> -->
+
+                                        <span class="float-left opti_date">
+                                            <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
+                                            [(ngModel)]="selectedMoments"
+                                            [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
+                                            <owl-date-time #dt13></owl-date-time>
+                                        </span>
+                                        <span class=".opti_date-icon">
+                                            <img src="assets/images/common/list.svg" title="End Date" class="opti_mouse-pointer" alt="Quantity" width="27px" height="27px" />
+                                        </span>
 
                                 </label>
 
