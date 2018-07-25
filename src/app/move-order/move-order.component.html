@@ -77,7 +77,7 @@
                                         <span class="float-left opti_date">
                                             <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
+                                            [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" readonly />
                                             <owl-date-time #dt12></owl-date-time>
                                         </span>
                                         <span class="opti_date-icon text-right">
@@ -96,7 +96,7 @@
                                         <span class="float-left opti_date">
                                             <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
+                                            [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime" readonly />
                                             <owl-date-time #dt13></owl-date-time>
                                         </span>
                                         <span class="opti_date-icon text-right">
