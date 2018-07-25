@@ -63,15 +63,16 @@ export class MoveOrderComponent implements OnInit {
   iRejectedQty:number = 0;
   iNCQty:number = 0;
   iOrderedQty:number = 0;
+  public selectedMoments = [];
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
   sOperationLookupColumns = "Operation No,Operation Desc,Balance Quantity";
 
-  public selectedMoments = [
-    new Date(2018, 1, 12, 10, 30),
-    new Date(2018, 3, 21, 20, 30)
-  ];
+  // public selectedMoments = [
+  //   new Date(2018, 1, 12, 10, 30),
+  //   new Date(2018, 3, 21, 20, 30)
+  // ];
 
   // show and hide right content section
   @ViewChild('optirightfixedsection') optirightfixedsection;
@@ -458,6 +459,7 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationListRightSection = status;
   }
 
+  //This function will make the screen reset
   cleanupScreen(){
     this.psWONO = '';
     this.psItemManagedBy ='';
@@ -471,70 +473,16 @@ export class MoveOrderComponent implements OnInit {
     this.iOrderedQty=0;
     this.iProducedQty = 0;
     this.iRejectedQty =0;
-
+    this.selectedMoments=[];
   }
 
-  // WorkOrderDetailDataList = [
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Prashant',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Ankit',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Dheeraj',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Ankur',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Arjun',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Shashank',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Ronak',
-  //     "product": 'mobile'
-  //   },
-  //   {
-  //     "startDate": '2/12/2018, 10:30 AM',
-  //     "endDate": '2/12/2018, 10:30 AM',
-  //     "so": 1,
-  //     "customer": 'Harry',
-  //     "product": 'mobile'
-  //   }
-  // ]
-
-  // public WorkOrderDetailData: any[] = this.WorkOrderDetailDataList;
-
-
-
+  //This will get the server date time
+  getServerDate(){
+    //here we will need to call a service which will get the Server Date Time
+    this.mo.getServerDate(this.CompanyDBId).subscribe(
+      data => {
+            console.log(data);
+      }
+    ) 
+    }
 }

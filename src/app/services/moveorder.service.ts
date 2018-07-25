@@ -42,6 +42,17 @@ export class MoveorderService {
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetOperDetailByDocEntry",jObject,this.httpOptions);
   }
 
+  
+  //Get Server Date
+  getServerDate(CompanyDBID:string):Observable<any>{
+     //JSON Obeject Prepared to be send as a param to API
+     let jObject:any={ MoveOrder: JSON.stringify([{ 
+      CompanyDBID: CompanyDBID
+    }])};
+  //Return the response form the API  
+  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetServerDate",jObject,this.httpOptions);
+  }
+
   //Submit Move Order
   submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,startDateTime:any,endDateTime:any):Observable<any>{
   //JSON Obeject Prepared to be send as a param to API
