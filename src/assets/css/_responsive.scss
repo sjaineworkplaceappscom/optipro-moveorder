@@ -21,6 +21,12 @@
         @import 'device/ipad/account_module/_ipad_account_landscape';
     }
     
+    @media only screen and (min-width: 1025px) {
+        .opti_account-form-section{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
     
     
     
