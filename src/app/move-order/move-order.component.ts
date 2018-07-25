@@ -64,6 +64,8 @@ export class MoveOrderComponent implements OnInit {
   iNCQty:number = 0;
   iOrderedQty:number = 0;
   public selectedMoments = [];
+  public invalidStartDate:boolean = false;
+  public invalidEndDate:boolean = false;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -378,6 +380,27 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
+  //On Start Date Blur
+  onStartDateBlur(){
+    if(this.startDateTime == '' || this.startDateTime == null){
+      this.invalidStartDate = true;
+    }
+    else{
+      this.invalidStartDate = false;
+    }
+
+  }
+
+  //On End Date Blur
+  onEndDateBlur(){
+    if(this.endDateTime == '' || this.endDateTime == null){
+      this.invalidEndDate= true;
+    }
+    else{
+      this.invalidEndDate= false;
+      
+    }
+  }
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {

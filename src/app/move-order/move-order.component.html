@@ -71,7 +71,8 @@
                                         <span class="opti_form-label">Start Date * </span>
                                         <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
+                                            [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" (blur)="onStartDateBlur()" >
+                                            <span *ngIf="invalidStartDate" class="float-right opti_error-msg"> Select Start Date </span>
                                         <owl-date-time #dt12></owl-date-time>
                                 </label>
 
@@ -79,7 +80,8 @@
                                         <span class="opti_form-label" style="margin-top: 8px;">End Date * </span>
                                         <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
-                                            [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
+                                            [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime" (blur)="onEndDateBlur()">
+                                            <span *ngIf="invalidEndDate" class="float-right opti_error-msg"> Select End Date </span>
                                         <owl-date-time #dt13></owl-date-time>
 
                                 </label>
