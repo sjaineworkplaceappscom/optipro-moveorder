@@ -68,41 +68,46 @@
                                 </label>
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label">Start Date * </span>
-                                        <!-- <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
+                                        <span class="opti_form-label">Start Date Time * </span>
+                                        <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
-                                        <owl-date-time #dt12></owl-date-time> -->
+                                        <owl-date-time #dt12></owl-date-time>
 
-                                        <span class="float-left opti_date">
+                                        <!-- <span class="float-left opti_date">
                                             <input [owlDateTimeTrigger]="dt12" placeholder="StartDate" [owlDateTime]="dt12"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox"  [(ngModel)]="FrmToDateTime" [max]="maxDateRestriction" readonly />
                                             <span *ngIf="invalidStartDate" class="float-right opti_error-msg"> Select Start Date </span>
                                             <owl-date-time #dt12></owl-date-time>
-                                        </span>
+                                        </span> -->
+
+                                        <!-- <span class="opti_date-icon float-right">
+                                            <img src="assets/images/common/start-date.svg" title="Start Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('startDate')"/>
+                                        </span> -->
+
                                 </label>
-                                <span class="opti_date-icon float-right">
-                                    <img src="assets/images/common/start-date.svg" title="Start Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('startDate')"/>
-                                </span>
+                                
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label">End Date</span>
-                                        <!-- <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
+                                        <span class="opti_form-label">End Date Time</span>
+                                        <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [(ngModel)]="selectedMoments"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
-                                        <owl-date-time #dt13></owl-date-time> -->
+                                        <owl-date-time #dt13></owl-date-time>
 
-                                        <span class="float-left opti_date">
+                                        <!-- <span class="float-left opti_date">
                                             <input [owlDateTimeTrigger]="dt13" placeholder="End Date" [owlDateTime]="dt13"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="FrmToDateTime" [max]="maxDateRestriction" readonly />
                                             <span *ngIf="invalidEndDate" class="float-right opti_error-msg"> Select End Date </span>
                                             <owl-date-time #dt13></owl-date-time>
-                                        </span>
+                                        </span> -->
+
+                                        <!-- <span class="opti_date-icon float-right">
+                                            <img src="assets/images/common/end-date.svg" title="End Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('endDate')"/>
+                                        </span> -->
                                         
                                 </label>
-                                <span class="opti_date-icon float-right">
-                                    <img src="assets/images/common/end-date.svg" title="End Date" class="opti_mouse-pointer" alt="Quantity" width="24px" height="27px" (click)="setCurrentServerDate('endDate')"/>
-                                </span>
+                                
 
                                 <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">Submit</button>
                             </form>
