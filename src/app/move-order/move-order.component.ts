@@ -61,12 +61,11 @@ export class MoveOrderComponent implements OnInit {
   iRejectedQty:number = 0;
   iNCQty:number = 0;
   iOrderedQty:number = 0;
-  public selectedMoments = [];
+  public FrmToDateTime = [];
   public invalidStartDate:boolean = false;
   public invalidEndDate:boolean = false;
-  FrmToDateTime:any;
   maxDateRestriction:any = new Date();
-  currentServerDate:any;
+  currentServerDateTime:any;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -114,6 +113,9 @@ export class MoveOrderComponent implements OnInit {
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     //On Form Initialization get All WO
     this.getAllWorkOrders();
+    //this function will set the time and date of the server
+    this.getServerDate();
+   
   }
 
   //This will get all WO
@@ -381,17 +383,7 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
-  setCurrentServerDate(forInputBox){
-   this.FrmToDateTime = [];
-    //To get the server date
-   this.getServerDate();
-   if(forInputBox == 'startDate'){
-     this.FrmToDateTime[0] = this.currentServerDate;
-   }
-   if(forInputBox == 'endDate'){
-     this.FrmToDateTime[1] = this.currentServerDate;
-   }
-  }
+  
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {
@@ -453,6 +445,7 @@ export class MoveOrderComponent implements OnInit {
       this.iBalQty = data[0].U_O_BALQTY;
       //By default set into it
       this.iProducedQty =  data[0].U_O_BALQTY;
+      this.iAcceptedQty =  data[0].U_O_BALQTY;
     }
   ) 
   }
@@ -487,7 +480,20 @@ export class MoveOrderComponent implements OnInit {
     this.iOrderedQty=0;
     this.iProducedQty = 0;
     this.iRejectedQty =0;
-    this.selectedMoments=[];
+    this.FrmToDateTime=[];
+  }
+
+  //This will set the time and date
+  setDefaultDateTime(){
+    
+  if(this.currentServerDateTime != null && this.currentServerDateTime.length > 0){
+    let currentDateTime = new Date(this.currentServerDateTime);
+    this.FrmToDateTime = [
+      new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
+      new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
+    ];
+
+  }
   }
 
   //This will get the server date time
@@ -495,7 +501,8 @@ export class MoveOrderComponent implements OnInit {
     //here we will need to call a service which will get the Server Date Time
     this.mo.getServerDate(this.CompanyDBId).subscribe(
       data => {
-            this.currentServerDate = data[0].DATEANDTIME;
+            this.currentServerDateTime = data[0].DATEANDTIME;
+            this.setDefaultDateTime();
       }
     ) 
     }
