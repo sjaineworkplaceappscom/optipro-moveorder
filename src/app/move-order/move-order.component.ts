@@ -66,6 +66,8 @@ export class MoveOrderComponent implements OnInit {
   public invalidEndDate:boolean = false;
   maxDateRestriction:any = new Date();
   currentServerDateTime:any;
+  WorkOrderImageStatus:boolean = false;
+  OperationDetailImageStatus:boolean = false;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -191,13 +193,22 @@ export class MoveOrderComponent implements OnInit {
   }
 
 
-  onWorkOrderDetail(status) {
+  onWorkOrderDetail(status,WorkOrderImageStatus) {
     //if(this.psWONO !=null && this.psWONO){
+      if (this.psWONO =="" || this.psWONO ==null || this.psWONO == undefined){
+        WorkOrderImageStatus =false;
+      }
+      else{
+        WorkOrderImageStatus=true;
+      }
+      if(WorkOrderImageStatus==true){
     this.showWODtPopup = true;
     this.isWorkOrderRightSection = status;
     this.openRightSection(status);
     this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
-    // }
+   
+       } 
+       // }
     // else{
     //   alert("Select workorder no. first");
     // }
@@ -206,7 +217,15 @@ export class MoveOrderComponent implements OnInit {
 
 
 
-  onOperDtlPress(status) {
+  onOperDtlPress(status,OperationDetailImageStatus) {
+
+    if (this.psOperNO =="" || this.psOperNO==null || this.psOperNO ==undefined){
+      OperationDetailImageStatus =false;
+    }
+    else{
+      OperationDetailImageStatus=true;
+    }
+    if(OperationDetailImageStatus==true){
     // if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
     this.openRightSection(status)
@@ -217,6 +236,7 @@ export class MoveOrderComponent implements OnInit {
     // else{
     //   alert("Select operation no. first");
     // }
+    }
   }
 
   //If user puts manual entry for operation then this fun will check whether oper is valid
