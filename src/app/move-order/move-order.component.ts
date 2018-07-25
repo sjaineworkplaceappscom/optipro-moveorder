@@ -15,7 +15,7 @@ import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgs
 
 export class MoveOrderComponent implements OnInit {
 
-  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService, private lookupData: LookupComponent) { }
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent) { }
 
   selectedWODetail: any;
   selectedWOOperDetail: any;
@@ -52,8 +52,6 @@ export class MoveOrderComponent implements OnInit {
   psItemManagedBy: string;
   showLookup: boolean = false;
   openedLookup: string = '';
-  startDateTime:any;
-  endDateTime:any;
   moDetails:any;
   psToOperation:any;
   loggedInUser:any;
@@ -66,6 +64,9 @@ export class MoveOrderComponent implements OnInit {
   public selectedMoments = [];
   public invalidStartDate:boolean = false;
   public invalidEndDate:boolean = false;
+  FrmToDateTime:any;
+  maxDateRestriction:any = new Date();
+  currentServerDate:any;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -281,7 +282,7 @@ export class MoveOrderComponent implements OnInit {
       this.psToOperation = this.psOperNO;
     }
     //submission service callled
-    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.startDateTime,this.endDateTime).subscribe(
+    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime).subscribe(
       data => {
         if(data == "True"){
             alert("Record submitted sucessfully");
@@ -380,26 +381,14 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
-  //On Start Date Blur
-  onStartDateBlur(){
-    if(this.startDateTime == '' || this.startDateTime == null){
-      this.invalidStartDate = true;
-    }
-    else{
-      this.invalidStartDate = false;
-    }
+  setCurrentServerDate(forInputBox){
+   //To get the server date
+   this.getServerDate();
+   if(forInputBox == 'startDate'){
+   }
+   if(forInputBox == 'endDate'){
 
-  }
-
-  //On End Date Blur
-  onEndDateBlur(){
-    if(this.endDateTime == '' || this.endDateTime == null){
-      this.invalidEndDate= true;
-    }
-    else{
-      this.invalidEndDate= false;
-      
-    }
+   }
   }
   //Core Functions
   //This will filter for filter WO
@@ -504,8 +493,14 @@ export class MoveOrderComponent implements OnInit {
     //here we will need to call a service which will get the Server Date Time
     this.mo.getServerDate(this.CompanyDBId).subscribe(
       data => {
-            console.log(data);
+            this.currentServerDate = data[0].DATEANDTIME;
       }
     ) 
+    }
+
+    //check for the mandatory inputs on submit
+    checkMandatoryInpts(){
+
+      return false;
     }
 }
