@@ -382,12 +382,14 @@ export class MoveOrderComponent implements OnInit {
   }
 
   setCurrentServerDate(forInputBox){
-   //To get the server date
+   this.FrmToDateTime = [];
+    //To get the server date
    this.getServerDate();
    if(forInputBox == 'startDate'){
+     this.FrmToDateTime[0] = this.currentServerDate;
    }
    if(forInputBox == 'endDate'){
-
+     this.FrmToDateTime[1] = this.currentServerDate;
    }
   }
   //Core Functions
