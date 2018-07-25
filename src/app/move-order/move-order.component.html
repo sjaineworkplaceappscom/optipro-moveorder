@@ -25,9 +25,9 @@
                             
                                     </span> 
                                     <span class="opti_workorder-icon">
-                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
-                                        <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="Work Order's" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
+                                        <img src="assets/images/common/detail.svg" title="Work Order Detail" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <img src="assets/images/common/scanner.svg" title="scan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                   
                                 </label>
@@ -50,9 +50,9 @@
                                         <input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onWorkOrderBlur()" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
                                     </span>
                                     <span class="opti_operation-icon">
-                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onOperationPress(true)" alt="work order" width="27px" height="27px"  />
-                                        <img src="assets/images/common/detail.svg" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="Operation's" class="opti_mouse-pointer" (click)="onOperationPress(true)" alt="work order" width="27px" height="27px"  />
+                                        <img src="assets/images/common/detail.svg" title="Operation Detail" class="opti_mouse-pointer" (click)="onOperDtlPress(true)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <img src="assets/images/common/scanner.svg" title="Scan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                 </label>
                                 <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number. </span>
@@ -63,7 +63,7 @@
                                         <input type="text" style="text-align: right;"  class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
                                     </span>
                                     <span class="opti_qty-operation-icon">
-                                        <img src="assets/images/common/list.svg" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="Quantity" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true)" alt="Quantity" width="27px" height="27px" />
                                     </span>
                                 </label>
 
