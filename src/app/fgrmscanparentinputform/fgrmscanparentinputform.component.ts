@@ -30,6 +30,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
   bIsNC:any;
   iSeqNo:number;
   bIsInEditMode:boolean = false;
+  public bothSelectionRestrict:boolean = false;
+  public bIfBatSerEmpty:boolean = false;
+  public bIfQtyIsZero = false;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
 
 
@@ -44,8 +47,12 @@ export class FgrmscanparentinputformComponent implements OnInit {
   @ViewChild('qtylevelChild') qtylevelChild;
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild(){
-    this.qtylevelChild.nativeElement.style.display = 'none';
-    this.qtylevelSuperchild.nativeElement.style.display = 'block';
+    //While after putting all data for the FG input serial field the basic validations will be check here
+    //This mehtod will retrun true if all things are OK and after we will navigate otherwise will throw error
+    if(this.validateData() == true){
+      this.qtylevelChild.nativeElement.style.display = 'none';
+      this.qtylevelSuperchild.nativeElement.style.display = 'block';
+    }
   }
 
   showLevelParent(){
@@ -99,26 +106,45 @@ export class FgrmscanparentinputformComponent implements OnInit {
   onBatchSerBlur(){
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
+        this.bIfBatSerEmpty = false;
          if(this.chkIfFGBatSerAlreadyExists() == false){
           this.validateFGSerBat();
          }
       }
       else{
-        alert("Enter valid batch/serial")
+        this.bIfBatSerEmpty = true;
       }
     }
   }
 
   onQtyBlur(){
-    this.detailsOfParentToChild = {
-            ParentBatchSer:this.psBatchSer,
-            ParentItemManagedBy:this.psItemManagedBy,
-            OperNo:this.basicFGInputForm[0].OperNo
-          };
 
-          console.log("detailsOfParentToChild FILLED");
-          console.log(this.detailsOfParentToChild);
+    if(this.iQty <= 0 || this.iQty == undefined){
+      this.bIfQtyIsZero = true;
+    }
+    else{
+      this.bIfQtyIsZero = false;
+
+      this.detailsOfParentToChild = {
+        ParentBatchSer:this.psBatchSer,
+        ParentItemManagedBy:this.psItemManagedBy,
+        OperNo:this.basicFGInputForm[0].OperNo
+      };
+
+      console.log("detailsOfParentToChild FILLED");
+      console.log(this.detailsOfParentToChild);
+    }
+    
+    
   }
+
+  onIsRejectedCheck(){
+    console.log(this.bIsRejected);
+  }
+  onIsNCCheck(){
+    console.log(this.bIsNC);
+  }
+
   //This event will recieve the data from its child input form
   receiveArrayRMRowData($event) {
       this.showFGRMScanChildInsertPopup = false;
@@ -234,4 +260,38 @@ export class FgrmscanparentinputformComponent implements OnInit {
       }
     )
   }
+
+  validateData(){
+    //Check whether the input is not empty
+    if(this.psBatchSer == '' || this.psBatchSer == null){
+      this.bIfBatSerEmpty = true;
+      return false;
+    }
+    else{
+      this.bIfBatSerEmpty = false;
+    }
+    
+
+    //Check whether the qty is not empty
+    if(this.iQty <= 0 || this.iQty == undefined){
+      this.bIfQtyIsZero = true;
+      return false;
+    }
+    else{
+      this.bIfQtyIsZero = false;
+    }
+
+
+    //Check if selection is of both is done
+    if(this.bIsNC == true && this.bIsRejected == true){
+      this.bothSelectionRestrict = true;
+      return false;
+    }
+    else{
+      this.bothSelectionRestrict = false;
+    }
+
+    return true;
+  }
+
 }

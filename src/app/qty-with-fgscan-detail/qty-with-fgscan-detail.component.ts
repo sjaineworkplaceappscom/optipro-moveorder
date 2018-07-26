@@ -85,8 +85,6 @@ export class QtyWithFGScanDetailComponent implements OnInit {
        this.messageEvent.emit(this.message)
        this.ShowParent();
      }
-    
-  
   }
 
   onBatchSerBlur(){

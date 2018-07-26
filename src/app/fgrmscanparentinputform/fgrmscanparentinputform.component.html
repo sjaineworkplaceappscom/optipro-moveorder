@@ -10,11 +10,13 @@
                         <span class="opti_fgbatch-serial-icon">
                             <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
                         </span>
+                        <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> FG Batch/Serial can't be empty </span>
                     </label>
 
                     <label class="k-form-field">
                         <span class="opti_form-label">Qty</span>
                         <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
+                        <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> Quantity can't be blank or zero </span>
                     </label>
 
                     <div class="k-form-field">
@@ -23,23 +25,8 @@
 
                         <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="isCheckBoxChecked($event)">
                         <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
-
-
-                        <!-- <input type="radio" name="group" id="radio1" class="k-radio" checked />
-                        <label class="k-radio-label" for="radio1">Rejected</label>
-                       
-
-                        <input type="radio" name="group" class="k-radio" id="radio3" />
-                        <label class="k-radio-label" for="radio3">NC Qty</label> -->
-
-
-                        </div>
-
-                    <!-- <label class="k-form-field">
-                        
-                    </label> -->
-
-                    
+                        <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
+                    </div>
                 </form>
             </div>    
         </div>
