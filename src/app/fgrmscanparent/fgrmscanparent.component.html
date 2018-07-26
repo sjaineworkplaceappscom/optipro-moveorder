@@ -24,7 +24,7 @@
 
       <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
       <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
-      <kendo-grid-column field="OPTM_QUANTITY" title="Quantity"  width="120"></kendo-grid-column>
+      <kendo-grid-column field="OPTM_QUANTITY"  title="Quantity"  width="120"></kendo-grid-column>
       <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
           <ng-template kendoGridCellTemplate let-dataItem>
               <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
@@ -49,27 +49,27 @@
             <form class="k-form float-right col-md-5 ">
                 <label class="k-form-field">
                     <span class="opti_form-label">Balance Qty</span>
-                    <input type="text" class="k-textbox" value="{{lblBalQty}}" disabled>
+                    <input type="text" style="text-align: right;" class="k-textbox" value="{{lblBalQty}}" disabled>
                 </label>
         
                 <label class="k-form-field">
                         <span class="opti_form-label">Accepted Qty</span>
-                        <input type="text" class="k-textbox" value="{{lblAcceptedQty}}" disabled>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblAcceptedQty}}" disabled>
                 </label>
         
                 <label class="k-form-field">
                         <span class="opti_form-label">Rejected Qty</span>
-                        <input type="text" class="k-textbox" value="{{lblRejectedQty}}" disabled>
+                        <input type="text" style="text-align: right;" style="text-align: right;" class="k-textbox" value="{{lblRejectedQty}}" disabled>
                 </label>
         
                 <label class="k-form-field">
                         <span class="opti_form-label">NC Qty</span>
-                        <input type="text" class="k-textbox" value="{{lblNCQty}}" disabled>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
                 </label>
         
                 <label class="k-form-field">
                         <span class="opti_form-label">NC Qty</span>
-                        <input type="text" class="k-textbox" value="{{lblNCQty}}" disabled>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
                 </label>
             </form>
      </div>
