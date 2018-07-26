@@ -10,7 +10,7 @@
 
     <kendo-grid 
     [kendoGridBinding]="FGScanGridData" 
-    [height]=gridHeight-52
+    [height]=gridHeight-52-200
     (remove)="removeHandler($event)"
     (edit)="editHandler($event)"
     [resizable]="false" 
@@ -48,7 +48,39 @@
     </kendo-grid-command-column>
 </kendo-grid>
 
-    <table class="table table-bordered">
+<div class="text-right">
+    <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
+</div>
+
+<div class="opti_quantity-summary">
+    <form class="k-form float-right col-md-5 ">
+        <label class="k-form-field">
+            <span class="opti_form-label">Balance Qty</span>
+            <input type="text" class="k-textbox" value="{{lblBalQty}}" disabled>
+        </label>
+
+        <label class="k-form-field">
+                <span class="opti_form-label">Accepted Qty</span>
+                <input type="text" class="k-textbox" value="{{lblAcceptedQty}}" disabled>
+        </label>
+
+        <label class="k-form-field">
+                <span class="opti_form-label">Rejected Qty</span>
+                <input type="text" class="k-textbox" value="{{lblRejectedQty}}" disabled>
+        </label>
+
+        <label class="k-form-field">
+                <span class="opti_form-label">NC Qty</span>
+                <input type="text" class="k-textbox" value="{{lblNCQty}}" disabled>
+        </label>
+
+        <label class="k-form-field">
+                <span class="opti_form-label">NC Qty</span>
+                <input type="text" class="k-textbox" value="{{lblNCQty}}" disabled>
+        </label>
+    </form>
+</div>
+    <!-- <table class="table table-bordered">
         <tr>
             <th scope="row">Balance Qty</th>
             <th scope="row">Accepted Qty</th>
@@ -63,12 +95,10 @@
                 <td>{{lblNCQty}}</td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
 
-    <div class="text-right">
-        <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
-      </div>
+    
 
 </div>
         
