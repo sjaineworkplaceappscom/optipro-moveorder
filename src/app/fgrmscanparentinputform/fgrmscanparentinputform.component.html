@@ -52,7 +52,7 @@
                 <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelSuperChild()" width="20px" height="20px">
             </ng-template>  
 
-            <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
+            <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
             <kendo-grid-column field="OPTM_ITEMCODE" title="Item Code"  width="100"></kendo-grid-column>
             <kendo-grid-column field="ManagedBy" title="Managed By"  width="100" disabled></kendo-grid-column>
             <kendo-grid-column field="OPTM_BTCHSERNO" title="RM Batch/Serial" width="120"></kendo-grid-column>
@@ -84,5 +84,5 @@
 </section>
 
 <section #qtylevelSuperchild id="opti_qtylevelSuperchildID">
-    <app-fgrmscanchildinputform (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm" [childGridDataArray]="ChildCompGridData"></app-fgrmscanchildinputform>
+    <app-fgrmscanchildinputform *ngIf="showFGRMScanChildInsertPopup" (messageEvent)="receiveArrayRMRowData($event)" [detailsOfParentinputFrm]="detailsOfParentToChild" [basicDetailFrmParentInput]="basicDetailsToChildForm" [childGridDataArray]="ChildCompGridData"></app-fgrmscanchildinputform>
 </section>

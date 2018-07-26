@@ -216,7 +216,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     for(let rowCount in this.FGWithScanGridFrmMaster){
       if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
       {
-          alert("Finished Good  Already Added");
+          alert("Serial/Batch already exist");
           this.psBatchSer = "";
           return true;
       }

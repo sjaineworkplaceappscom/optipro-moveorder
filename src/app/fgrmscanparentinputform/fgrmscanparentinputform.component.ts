@@ -50,8 +50,18 @@ export class FgrmscanparentinputformComponent implements OnInit {
     //While after putting all data for the FG input serial field the basic validations will be check here
     //This mehtod will retrun true if all things are OK and after we will navigate otherwise will throw error
     if(this.validateData() == true){
+      this.detailsOfParentToChild = {
+        ParentBatchSer:this.psBatchSer,
+        ParentItemManagedBy:this.psItemManagedBy,
+        OperNo:this.basicFGInputForm[0].OperNo
+      };
+
       this.qtylevelChild.nativeElement.style.display = 'none';
       this.qtylevelSuperchild.nativeElement.style.display = 'block';
+
+      this.showFGRMScanChildInsertPopup = true;
+
+
     }
   }
 
@@ -99,10 +109,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
 
   //Events
-  onInsertChildRowPress(){
-  //this.showFGRMScanChildInsertPopup = true;
-  }
-
   onBatchSerBlur(){
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
@@ -125,14 +131,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
     else{
       this.bIfQtyIsZero = false;
 
-      this.detailsOfParentToChild = {
-        ParentBatchSer:this.psBatchSer,
-        ParentItemManagedBy:this.psItemManagedBy,
-        OperNo:this.basicFGInputForm[0].OperNo
-      };
-
-      console.log("detailsOfParentToChild FILLED");
-      console.log(this.detailsOfParentToChild);
+      
     }
     
     
@@ -190,8 +189,11 @@ export class FgrmscanparentinputformComponent implements OnInit {
       this.fgrmParentForm.SubmitDataforFGandRM(this.oModalData).subscribe(
         data=> {
               if(data !=null){
-                if(data == true){
+                if(data == "True"){
                   alert("Data saved sucessfully");
+                }
+                else{
+                  alert("There was some error while submitting data");                  
                 }
                 
               }
@@ -219,7 +221,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
             for(let rowCount in this.FGWithScanGridFrmMaster){
               if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
               {
-                  alert("Finished Good  Already Added");
+                  alert("Serial/Batch already exist");
                   this.psBatchSer = "";
                   return true;
               }
