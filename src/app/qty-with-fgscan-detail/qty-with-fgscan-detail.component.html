@@ -36,10 +36,10 @@
                 </label>
 
                 <div class="k-form-field">
-                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsRejected" (change)="onIsRejectedCheck()" [disabled]="bIsInEditMode" name="bIsRejected" id="opti_bIsInEditModeID">
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsRejected" (change)="onIsRejectedCheck()" name="bIsRejected" id="opti_bIsInEditModeID">
                     <label class="k-checkbox-label" for="opti_bIsInEditModeID">Rejected</label>
 
-                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsNC" (change)="onIsNCCheck()" [disabled]="bIsInEditMode" name="bIsNC" id="opti_bIsNCID"/>
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsNC" (change)="onIsNCCheck()" name="bIsNC" id="opti_bIsNCID"/>
                     <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
 
                     <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
@@ -47,7 +47,7 @@
               
 
                 <div class="text-right">
-                    <button type="button" class="k-button k-primary" (click)="onAddPress()" [disabled]="bIsInEditMode">Save</button>
+                    <button type="button" class="k-button k-primary" (click)="onAddPress()" >Save</button>
                     <button type="button" class="k-button" (click)="ShowParent()">Close</button> 
                 </div>
             </form>

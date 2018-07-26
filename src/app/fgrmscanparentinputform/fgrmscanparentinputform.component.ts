@@ -29,6 +29,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   bIsRejected:any= false;
   bIsNC:any;
   iSeqNo:number;
+  bIsInEditMode:boolean = false;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
 
 
@@ -51,12 +52,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
     document.getElementById('opti_QtylevelChildSuperChildID').style.display = 'none';
     document.getElementById('opti_QtylevelParentID').style.display = 'block';
   }
-
-  // showLevelChild(){
-  //   this.qtylevelChild.nativeElement.style.display = 'block';
-  //   this.qtylevelSuperchild.nativeElement.style.display = 'none';
-  // }
-
 
   ngOnInit() {
 
@@ -85,6 +80,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
         this.bIsEdit = true;
+        this.bIsInEditMode = false;
         this.psBatchSer = this.rowDataFrmFGWithScan[0].FGBatchSerNo;
         this.iQty = this.rowDataFrmFGWithScan[0].Quantity;
         this.bIsRejected = this.rowDataFrmFGWithScan[0].IsRejected;

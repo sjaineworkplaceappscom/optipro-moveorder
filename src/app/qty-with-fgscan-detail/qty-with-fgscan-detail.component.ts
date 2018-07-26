@@ -53,12 +53,16 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
         this.bIsEdit = true;
+        this.bIsInEditMode = false;
         this.psBatchSer = this.rowDataFrmFGWithScan[0].FGBatchSerNo;
         this.iQty = this.rowDataFrmFGWithScan[0].Quantity;
         this.bIsRejected = this.rowDataFrmFGWithScan[0].IsRejected;
         this.bIsNC = this.rowDataFrmFGWithScan[0].IsNC;
         this.iSeqNo = this.rowDataFrmFGWithScan[0].SeqNo;
         this.psItemManagedBy = this.rowDataFrmFGWithScan[0].ItemManagedBy;
+      }
+      else{
+        this.bIsInEditMode = true;
       }
     }
   }
@@ -75,6 +79,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.updateBatchSerInfoRow();
        }
        else{
+        this.bIsInEditMode = false;
         this.saveBatchSerInfoRow();
        }
        this.messageEvent.emit(this.message)
@@ -183,7 +188,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           if(data == "True")  {
             alert("Data Updated sucessfully");
             this.rowDataFrmFGWithScan = [];
-            
+            this.messageEvent.emit("true");
           }
           else{
             alert("Failed to update Data");

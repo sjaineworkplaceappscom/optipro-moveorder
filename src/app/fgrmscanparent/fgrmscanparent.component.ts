@@ -19,6 +19,8 @@ export class FgrmscanparentComponent implements OnInit {
   lblNCQty:number =0.0;
   basicDetailsToFGParentInput:any;
   showFGRMScanParentInsertPopup:boolean = false;
+  rowDataForEdit: any = [];
+  showFGInputForm:any = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService) { }
 
   gridHeight: number;
@@ -35,6 +37,7 @@ export class FgrmscanparentComponent implements OnInit {
   showLevelChildSuperChild(){
     this.qtylevel1.nativeElement.style.display = 'none';
     this.qtylevelChildSuperchild.nativeElement.style.display = 'block';
+    this.showFGInputForm = true;
   }
   
 
@@ -67,10 +70,11 @@ export class FgrmscanparentComponent implements OnInit {
   //For edit functionalities
   editHandler({ rowIndex }) {
     //To show the popup screen which will supdateave the data
-  this.showLevelChildSuperChild();
+    
+    this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY,IsRejected:this.FGScanGridData[rowIndex].OPTM_REJECT,IsNC: this.FGScanGridData[rowIndex].OPTM_NC,SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ,ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy});
+
+    this.showLevelChildSuperChild();
   
-    //this.showDataInsertPopup = true;
-    // this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY,IsRejected:this.FGScanGridData[rowIndex].OPTM_REJECT,IsNC: this.FGScanGridData[rowIndex].OPTM_NC,SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ,ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy});
   }
 
   //Core Functions

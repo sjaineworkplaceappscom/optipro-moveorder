@@ -6,7 +6,7 @@
                 <form class="k-form" >
                     <label class="k-form-field ">
                         <span class="opti_form-label">FG Batch Serial</span>
-                        <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" id="psBatchSerID" name ="psBatchSername"></span> 
+                        <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" id="psBatchSerID" name ="psBatchSername" [disabled]="bIsInEditMode"></span> 
                         <span class="opti_fgbatch-serial-icon">
                             <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
                         </span>
