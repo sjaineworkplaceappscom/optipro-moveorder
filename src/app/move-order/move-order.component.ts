@@ -340,6 +340,7 @@ export class MoveOrderComponent implements OnInit {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
+      this.iProducedQty = $event.ProducedQty;
     }
   
   }

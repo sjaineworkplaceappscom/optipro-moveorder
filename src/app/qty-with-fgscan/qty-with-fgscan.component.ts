@@ -32,6 +32,7 @@ export class QtyWithFGScanComponent implements OnInit {
   lblAcceptedQty:number =0.0;
   lblRejectedQty:number =0.0;
   lblNCQty:number =0.0;
+  lblProducedQty:number = 0.0;
   rowID:number = 0;
   showDataInsertPopup:boolean = false;
   rowDataForEdit: any = [];
@@ -112,7 +113,8 @@ export class QtyWithFGScanComponent implements OnInit {
       'BalQty': this.lblBalQty,
       'AcceptedQty': this.lblAcceptedQty,
       'RejectedQty': this.lblRejectedQty,
-      'NCQty': this.lblNCQty
+      'NCQty': this.lblNCQty,
+      'ProducedQty': this.lblProducedQty
     };
     
     this.messageEvent.emit(QtySummary);
@@ -167,10 +169,10 @@ export class QtyWithFGScanComponent implements OnInit {
     let iRejectCount:number =0;
     let iNCCount:number = 0;
     let balQty:number = 0;
-    let totalBalQty:number = 0;
+    let totalProducedQty:number = 0;
     for(let recCount in this.FGScanGridData){
 
-      totalBalQty = totalBalQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
+      totalProducedQty = totalProducedQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
       balQty = balQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
         if(this.FGScanGridData[recCount].OPTM_REJECT == true)
         {
@@ -186,9 +188,11 @@ export class QtyWithFGScanComponent implements OnInit {
         }
         
     }
+    
+      this.lblBalQty = this.basicDetailsFrmMO[0].BalQty;
       this.lblRejectedQty = iRejectCount;
       this.lblNCQty = iNCCount;
-      this.lblBalQty = totalBalQty;
-      this.lblAcceptedQty = totalBalQty - iNCCount - iRejectCount;
+      this.lblProducedQty = totalProducedQty;
+      this.lblAcceptedQty = totalProducedQty - iNCCount - iRejectCount;
   }
 }
