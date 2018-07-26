@@ -127,7 +127,7 @@
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
                                 <h5 class="modal-title center-block">{{ScreenName}}</h5>
                                 <app-qty-without-fgscan (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
-                                <app-qty-with-fgscan [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
+                                <app-qty-with-fgscan (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
                                 <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
                             </div>    
                             <!-- Quantity Screen end -->

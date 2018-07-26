@@ -34,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "1";
+  settingOnSAP: string = "2";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -45,8 +45,6 @@ export class MoveOrderComponent implements OnInit {
   //variable for Invalid WorkOrder 
   InvalidWorkOrder: boolean
   //variable for WorkOrder Blank 
- // WorkOrderBlank: boolean =false;
-  // DisableEnablOperationLookUp:boolean =true;
   bEnabeSaveBtn: boolean = false;
   basicDetails: any = [];
   psItemManagedBy: string;
@@ -73,11 +71,6 @@ export class MoveOrderComponent implements OnInit {
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
   sOperationLookupColumns = "Operation No,Operation Desc,Balance Quantity";
 
-  // public selectedMoments = [
-  //   new Date(2018, 1, 12, 10, 30),
-  //   new Date(2018, 3, 21, 20, 30)
-  // ];
-
   // show and hide right content section
   @ViewChild('optirightfixedsection') optirightfixedsection;
   //lookup data reciever
@@ -97,8 +90,6 @@ export class MoveOrderComponent implements OnInit {
   onResize(event) {
     this.gridHeight = UIHelper.getMainContentHeight();
   }
-
-
 
   ngOnInit() {
 
@@ -140,23 +131,6 @@ export class MoveOrderComponent implements OnInit {
 
     //This funciton will get the operation on docEntry and Work Order no. basis
     this.getOperationByWONO();
-
-    //if(this.psWONO.length > 0){
-
-    // this.mo.getOperationByWorkOrder(this.CompanyDBId,this.docEntry,this.psWONO).subscribe(
-    //     data=> {
-    //      this.allWOOpDetails = data;
-    //      if(this.allWOOpDetails.length > 0){
-    //       this.psOperNO = this.allWOOpDetails[0].U_O_OPERNO
-    //      }
-    //     }
-    //   )
-
-
-    // }
-    // else{
-    //   alert("Select workorder no. first");
-    // }
   }
 
   //This function will check, if the user entered WO is in the array
@@ -169,32 +143,27 @@ export class MoveOrderComponent implements OnInit {
       //To check in the array
       let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
       if (isWOExists == false) {
-        //alert("Invalid workorder no. selection");
         //Message for Invalid WorkOdere
         this.InvalidWorkOrder = true;
         this.psWONO = '';
         this.DisableEnablOperation = true;
-        // this.DisableEnablOperationLookUp=true;
       }
       else {
         this.DisableEnablOperation = false;
         //remove the Message if Workorder is not Blank 
         this.InvalidWorkOrder = false;
-        //this.DisableEnablOperationLookUp=false;
         this.getOperationByWONO();
 
       }
     }
     else {
       this.DisableEnablOperation = true;
-      //this.DisableEnablOperationLookUp=true;
     }
 
   }
 
 
   onWorkOrderDetail(status,WorkOrderImageStatus) {
-    //if(this.psWONO !=null && this.psWONO){
       if (this.psWONO =="" || this.psWONO ==null || this.psWONO == undefined){
         WorkOrderImageStatus =false;
       }
@@ -206,13 +175,7 @@ export class MoveOrderComponent implements OnInit {
     this.isWorkOrderRightSection = status;
     this.openRightSection(status);
     this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
-   
-       } 
-       // }
-    // else{
-    //   alert("Select workorder no. first");
-    // }
-
+    } 
   }
 
 
@@ -226,16 +189,9 @@ export class MoveOrderComponent implements OnInit {
       OperationDetailImageStatus=true;
     }
     if(OperationDetailImageStatus==true){
-    // if(this.psOperNO !=null && this.psOperNO){
     this.isOperationRightSection = status
     this.openRightSection(status)
-
-    //Get Operation Details of the seleceted operation
     this.getSelectedOperationDetail();
-    // }
-    // else{
-    //   alert("Select operation no. first");
-    // }
     }
   }
 
@@ -288,16 +244,15 @@ export class MoveOrderComponent implements OnInit {
       this.ScreenName = 'Finished Goods & Raw Materials Scan';
       this.showQtyWithFGRMScanScreen = true;
     }
-
   }
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
+    if(this.checkMandatoryInpts() == true){
     //If oper is blank
     if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
       this.psToOperation = this.psOperNO;
     }
-
 
     //If oper is blank
     if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
@@ -315,30 +270,26 @@ export class MoveOrderComponent implements OnInit {
         }
       }
     )
+   }
   }
-
   //This will recive data from lookup
   receiveLookupRowData($event) {
-    console.log("---> DAATA FROM WO LOOKUP");
-    console.log($event);
     if (this.openedLookup == "WOLookup") {
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;
       this.docEntry = $event.DocEntry;
       this.iOrderedQty = $event.U_O_ORDRQTY;
-
+      this.psItemManagedBy = $event.ManagedBy;
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
         //enable  Operation input Box
         this.DisableEnablOperation = false;
         this.getOperationByWONO();
-        //this.DisableEnablOperationLookUp=false;
       }
       else {
         //disable the Operation input Box
         this.DisableEnablOperation = true;
-        //  this.DisableEnablOperationLookUp=true;
       }
 
     }
@@ -385,6 +336,11 @@ export class MoveOrderComponent implements OnInit {
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
     }
+    if(this.settingOnSAP == "2"){
+      this.iAcceptedQty = $event.AcceptedQty;
+      this.iRejectedQty = $event.RejectedQty;
+      this.iNCQty = $event.NCQty;
+    }
   
   }
 
@@ -402,7 +358,6 @@ export class MoveOrderComponent implements OnInit {
       }
     }
   }
-
   
   //Core Functions
   //This will filter for filter WO
@@ -453,7 +408,6 @@ export class MoveOrderComponent implements OnInit {
     )
   }
 
-
   //This will get the selected Operation's
   getSelectedOperationDetail(){
   //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
@@ -478,7 +432,6 @@ export class MoveOrderComponent implements OnInit {
   closeRightSection(status) {
     this.optirightfixedsection.nativeElement.style.display = 'none';
     this.isFixedRightSection = status;
-
     this.isQuantityRightSection = status;
     this.isOperationRightSection = status;
     this.isWorkOrderRightSection = status;
@@ -513,7 +466,6 @@ export class MoveOrderComponent implements OnInit {
       new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
       new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
     ];
-
   }
   }
 
@@ -529,8 +481,32 @@ export class MoveOrderComponent implements OnInit {
     }
 
     //check for the mandatory inputs on submit
-    checkMandatoryInpts(){
-
-      return false;
+    checkMandatoryInpts() {
+      if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
+        alert("Please select workorder number ")
+        return false;
+      }
+  
+      if (this.psOperNO == "" || this.psOperNO == null || this.psOperNO == undefined) {
+        alert("Please select operation number ")
+        return false;
+      }
+      if (this.iProducedQty == 0) {
+        alert("Produced quantity cannot be Zero ")
+        return false;
+      }
+      if (this.FrmToDateTime != null) {
+        if (this.FrmToDateTime[0] == "" || this.FrmToDateTime[0] == null || this.FrmToDateTime[0] == undefined) {
+          alert("Please enter start date ")
+          return false;
+        }
+        if (this.FrmToDateTime[1] == "" || this.FrmToDateTime[1] == null || this.FrmToDateTime[1] == undefined) {
+          alert("Please enter end date ")
+          return false;
+        }
+      } else {
+        alert("please enter  date")
+      }
+      return true;
     }
 }

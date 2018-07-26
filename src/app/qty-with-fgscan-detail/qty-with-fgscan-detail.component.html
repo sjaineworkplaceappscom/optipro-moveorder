@@ -26,20 +26,25 @@
                     <span class="opti_fgbatch-serial-icon">
                         <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
                     </span>
+                    <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> FG Batch/Serial can't be empty </span>
                 </label>
 
                 <label class="k-form-field">
                     <span class="opti_form-label">Qty</span>
-                    <input type="text" class="k-textbox" [(ngModel)]="iQty" [disabled]="isQtyDisabled" name="iQty" />
+                    <input type="text" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" name="iQty" />
+                    <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> Quantity can't be blank or zero </span>
                 </label>
 
                 <div class="k-form-field">
-                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsRejected" [disabled]="bIsInEditMode" name="bIsRejected" id="opti_bIsInEditModeID">
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsRejected" (change)="onIsRejectedCheck()" [disabled]="bIsInEditMode" name="bIsRejected" id="opti_bIsInEditModeID">
                     <label class="k-checkbox-label" for="opti_bIsInEditModeID">Rejected</label>
 
-                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsNC" [disabled]="bIsInEditMode" name="bIsNC" id="opti_bIsNCID"/>
+                    <input type="checkbox" class="k-checkbox" [(ngModel)]="bIsNC" (change)="onIsNCCheck()" [disabled]="bIsInEditMode" name="bIsNC" id="opti_bIsNCID"/>
                     <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
+
+                    <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
                 </div>
+              
 
                 <div class="text-right">
                     <button type="button" class="k-button k-primary" (click)="onAddPress()" [disabled]="bIsInEditMode">Save</button>
