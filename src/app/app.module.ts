@@ -8,7 +8,6 @@ import { MoveOrderComponent } from './move-order/move-order.component';
 import { OperationalDetailComponent } from './operational-detail/operational-detail.component';
 import { WorkOrderDetailComponent } from './work-order-detail/work-order-detail.component';
 import { QtyWithoutFGScanComponent } from './qty-without-fgscan/qty-without-fgscan.component';
-import { QtyWithFGAndRMScanComponent } from './qty-with-fgand-rmscan/qty-with-fgand-rmscan.component';
 import { QtyWithFGScanComponent } from './qty-with-fgscan/qty-with-fgscan.component';
 import { FGScanDetailComponent } from './fgscan-detail/fgscan-detail.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -46,7 +45,6 @@ const myRoots: Routes = [
   { path: 'operationaldetail', component: OperationalDetailComponent } ,
   { path: 'workorderdetail', component: WorkOrderDetailComponent } ,
   { path: 'qtywithoutfgscan', component: QtyWithoutFGScanComponent },
-  { path: 'qtywithfgandrmscan', component: QtyWithFGAndRMScanComponent },
   { path: 'qtywithfgscan', component: QtyWithFGScanComponent }, 
   { path: 'fgscandetail', component: FGScanDetailComponent },
   
@@ -67,7 +65,6 @@ const myRoots: Routes = [
     OperationalDetailComponent,
     WorkOrderDetailComponent,
     QtyWithoutFGScanComponent,
-    QtyWithFGAndRMScanComponent,
     QtyWithFGScanComponent,
     FGScanDetailComponent,
     
