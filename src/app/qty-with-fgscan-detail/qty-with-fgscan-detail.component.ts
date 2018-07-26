@@ -12,9 +12,9 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   @Input() FGWithScanGridFrmMaster: any;
   psBatchSer:string = '';
   iQty:number = 0;
-  bIsRejected:any;
+  bIsRejected:any = false;
   CompanyDBId:string= '';
-  bIsNC:any;
+  bIsNC:any = false;
   bIsEdit:boolean = false;
   loggedInUser:string='';
   iSeqNo:number;
@@ -22,6 +22,9 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   bIsInEditMode = false;
   psItemManagedBy:string = '';
   bEnableSaveBtn:boolean = false;
+  public bothSelectionRestrict:boolean = false;
+  public bIfBatSerEmpty:boolean = false;
+  public bIfQtyIsZero = false;
   
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService) { }
 
@@ -66,21 +69,25 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   onAddPress(){
-   if(this.psBatchSer !=null){
-     if(this.bIsEdit==true){
-      this.updateBatchSerInfoRow();
+    //This mehtod will retrun true if all things are OK
+     if(this.validateData() == true){
+      if(this.bIsEdit==true){
+        this.updateBatchSerInfoRow();
+       }
+       else{
+        this.saveBatchSerInfoRow();
+       }
+       this.messageEvent.emit(this.message)
+       this.ShowParent();
      }
-     else{
-      this.saveBatchSerInfoRow();
-     }
-     this.messageEvent.emit(this.message)
-   }
-   this.ShowParent();
+    
+  
   }
 
   onBatchSerBlur(){
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
+        this.bIfBatSerEmpty = false;
          if(this.chkIfFGBatSerAlreadyExists() == false){
           this.validateFGSerBat();
          }
@@ -90,37 +97,57 @@ export class QtyWithFGScanDetailComponent implements OnInit {
 
       }
       else{
-        alert("Enter valid batch/serial");
+        this.bIfBatSerEmpty = true;
         //If the value is filled then only enable add button
         this.bEnableSaveBtn = true;
       }
     }
   }
 
+  onQtyBlur(){
+    if(this.iQty <= 0 || this.iQty == undefined){
+      this.bIfQtyIsZero = true;
+    }
+    else{
+      this.bIfQtyIsZero = false;
+    }
+    
+  }
+
+  onIsRejectedCheck(){
+    console.log(this.bIsRejected);
+  }
+  onIsNCCheck(){
+    console.log(this.bIsNC);
+  }
+
   //Core Functions
   
   //this will save data 
   saveBatchSerInfoRow(){
+    let isRejected;
+    let isNC;
     if(this.bIsRejected == true){
-      this.bIsRejected = 'Y';
+      isRejected = 'Y';
     }
     else{
-      this.bIsRejected = 'N';
+      isRejected = 'N';
     }
 
     if(this.bIsNC == true){
-      this.bIsNC = 'Y';
+      isNC = 'Y';
     }
     else{
-      this.bIsNC = 'N';
+      isNC = 'N';
     }
     
-    this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.psBatchSer,this.iQty,this.bIsRejected,this.bIsNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
+    this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.psBatchSer,this.iQty,isRejected,isNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
       data=> {
            if(data!=null){
             if(data == "True")  {
               alert("Data saved");
               this.rowDataFrmFGWithScan = [];
+              this.messageEvent.emit("true");
             }
             else{
               alert("Failed to Save Data");
@@ -156,6 +183,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           if(data == "True")  {
             alert("Data Updated sucessfully");
             this.rowDataFrmFGWithScan = [];
+            
           }
           else{
             alert("Failed to update Data");
@@ -191,5 +219,38 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  validateData(){
+    //Check whether the input is not empty
+    if(this.psBatchSer == '' || this.psBatchSer == null){
+      this.bIfBatSerEmpty = true;
+      return false;
+    }
+    else{
+      this.bIfBatSerEmpty = false;
+    }
+    
+
+    //Check whether the qty is not empty
+    if(this.iQty <= 0 || this.iQty == undefined){
+      this.bIfQtyIsZero = true;
+      return false;
+    }
+    else{
+      this.bIfQtyIsZero = false;
+    }
+
+
+    //Check if selection is of both is done
+    if(this.bIsNC == true && this.bIsRejected == true){
+      this.bothSelectionRestrict = true;
+      return false;
+    }
+    else{
+      this.bothSelectionRestrict = false;
+    }
+
+    return true;
   }
 }

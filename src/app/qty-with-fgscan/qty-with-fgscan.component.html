@@ -48,12 +48,7 @@
     </kendo-grid-command-column>
 </kendo-grid>
 
-<!-- upload  file start -->
-    <!-- <kendo-upload></kendo-upload> -->
-<!-- upload file end -->
-    
-    
-    <!-- <table class="table table-bordered">
+    <table class="table table-bordered">
         <tr>
             <th scope="row">Balance Qty</th>
             <th scope="row">Accepted Qty</th>
@@ -68,13 +63,17 @@
                 <td>{{lblNCQty}}</td>
             </tr>
         </tbody>
-    </table> -->
+    </table>
 
+
+    <div class="text-right">
+        <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
+      </div>
 
 </div>
         
 <section #QtyFGScanChildID id="opti_QtyFGScanChildID">
-    <app-qty-with-fgscan-detail (messageEvent)="receiveMessage($event)" [basicDetailsFrmFGWithScan]="basicDetailsFrmMO" [rowDataFrmFGWithScan]="rowDataForEdit" [FGWithScanGridFrmMaster]="FGScanGridData"></app-qty-with-fgscan-detail>
+    <app-qty-with-fgscan-detail (messageEvent)="receiveMessage($event)" [basicDetailsFrmFGWithScan]="basicDetailsFrmMO" [rowDataFrmFGWithScan]="rowDataForEdit" [FGWithScanGridFrmMaster]="FGScanGridData" *ngIf="showFGInputForm"></app-qty-with-fgscan-detail>
 </section>
         
           

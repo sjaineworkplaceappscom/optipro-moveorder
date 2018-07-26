@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import {  Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
+import {  Component, OnInit, Input, ViewChild, HostListener, EventEmitter, Output } from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with-fgscan-detail.component';
@@ -17,16 +17,13 @@ export class QtyWithFGScanComponent implements OnInit {
   @ViewChild('QtyFGScanIDParent') QtyFGScanIDParent;
   @ViewChild('QtyFGScanChildID') QtyFGScanChildID;
 
-  
-
   FGScanGridData:any = [];
   CompanyDBId:string= "";
-  message:string=""
-  
-public view: Observable<GridDataResult>;
+  public showFGInputForm:boolean = false;
+  public view: Observable<GridDataResult>;
 
   constructor(private qtyWithFGScan: QtyWithFGScanService) { }
-
+  @Output() messageEvent = new EventEmitter<string>();
   txtFGValue:string ="";
   txtFGSerBatValue:string ="";
   txtFGQty:number=0;
@@ -65,17 +62,18 @@ public view: Observable<GridDataResult>;
   showLevelChild(){
     this.QtyFGScanChildID.nativeElement.style.display = 'block';
     this.QtyFGScanIDParent.nativeElement.style.display = 'none';
+    //This will make the FG input Form show 
+    this.showFGInputForm = true;
   }
 
-
-  
-
   receiveMessage($event) {
-    //This will again hide the popup again
-    this.showDataInsertPopup = false;   
-    //This will again refresh the grid again
-    this.fillFGData();
-    this.rowDataForEdit = [];
+    if($event == "true"){
+      //This will again hide the popup again
+      this.showDataInsertPopup = false;   
+      //This will again refresh the grid again
+      this.fillFGData();
+      this.rowDataForEdit = [];
+    }
   }
   //Kendo inbuilt method handlers
   removeHandler({rowIndex}){
@@ -103,6 +101,23 @@ public view: Observable<GridDataResult>;
     this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY,IsRejected:this.FGScanGridData[rowIndex].OPTM_REJECT,IsNC: this.FGScanGridData[rowIndex].OPTM_NC,SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ,ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy});
   }
 
+//On OK Press the control will back to the main Move Order screen
+  onOKPress(){
+  // this.optirightfixedsection.nativeElement.style.display = 'none';
+  document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+  //We will get this values and push into this array to send back
+
+  
+    let QtySummary:any = {
+      'BalQty': this.lblBalQty,
+      'AcceptedQty': this.lblAcceptedQty,
+      'RejectedQty': this.lblRejectedQty,
+      'NCQty': this.lblNCQty
+    };
+    
+    this.messageEvent.emit(QtySummary);
+}
+
   //This will open a form for taking the inputs
   onInsertRowPress(){
     //To show the popup screen which will save the data
@@ -123,6 +138,13 @@ public view: Observable<GridDataResult>;
               }
               else{
                 this.FGScanGridData[iCount].OPTM_REJECT = false;
+              }
+
+              if(this.FGScanGridData[iCount].OPTM_NC == 'Y'){
+                this.FGScanGridData[iCount].OPTM_NC = true;
+              }
+              else{
+                this.FGScanGridData[iCount].OPTM_NC = false;
               }
           }
             // refresh the qtys in the lower table
