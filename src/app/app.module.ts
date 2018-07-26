@@ -9,7 +9,6 @@ import { OperationalDetailComponent } from './operational-detail/operational-det
 import { WorkOrderDetailComponent } from './work-order-detail/work-order-detail.component';
 import { QtyWithoutFGScanComponent } from './qty-without-fgscan/qty-without-fgscan.component';
 import { QtyWithFGScanComponent } from './qty-with-fgscan/qty-with-fgscan.component';
-import { FGScanDetailComponent } from './fgscan-detail/fgscan-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
@@ -46,7 +45,6 @@ const myRoots: Routes = [
   { path: 'workorderdetail', component: WorkOrderDetailComponent } ,
   { path: 'qtywithoutfgscan', component: QtyWithoutFGScanComponent },
   { path: 'qtywithfgscan', component: QtyWithFGScanComponent }, 
-  { path: 'fgscandetail', component: FGScanDetailComponent },
   
   { path: 'fgrmscanparent', component: FgrmscanparentComponent },
   { path: 'fgrmscanparentinputform', component: FgrmscanparentinputformComponent },
@@ -66,7 +64,6 @@ const myRoots: Routes = [
     WorkOrderDetailComponent,
     QtyWithoutFGScanComponent,
     QtyWithFGScanComponent,
-    FGScanDetailComponent,
     
     QtyWithFGScanDetailComponent,
     FgrmscanparentComponent,
@@ -96,7 +93,7 @@ const myRoots: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  providers: [FGScanDetailComponent,LookupComponent,QtyWithoutFGScanComponent],
+  providers: [LookupComponent,QtyWithoutFGScanComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

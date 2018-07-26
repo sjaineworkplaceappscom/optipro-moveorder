@@ -15,12 +15,8 @@
 
                     <label class="k-form-field">
                         <span class="opti_form-label">Qty</span>
-<<<<<<< HEAD
-                        <input type="text"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
+                        <input type="text" style="text-align: right;" width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
                         <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> Quantity can't be blank or zero </span>
-=======
-                        <input type="text"  style="text-align: right;"  width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
->>>>>>> 8a63ae0f8af95dda6179c9d23cc566e15934b1af
                     </label>
 
                     <div class="k-form-field">
