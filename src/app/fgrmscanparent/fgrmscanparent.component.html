@@ -22,7 +22,7 @@
         </span> -->
       </ng-template>  
 
-      <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
+      <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
       <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
       <kendo-grid-column field="OPTM_QUANTITY" title="Quantity"  width="120"></kendo-grid-column>
       <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
@@ -42,23 +42,7 @@
           </ng-template>
       </kendo-grid-command-column>
     </kendo-grid>
-      <!-- <br>
-    <table class="table table-bordered">
-        <tr>
-            <th scope="row">Balance Qty</th>
-            <th scope="row">Accepted Qty</th>
-            <th scope="row">Rejected Qty</th>
-            <th scope="row">NC Qty</th>
-        </tr>
-        <tbody>
-            <tr>
-                <td>{{lblBalQty}}</td>
-                <td>{{lblAcceptedQty}}</td> 
-                <td>{{lblRejectedQty}}</td>
-                <td>{{lblNCQty}}</td>
-            </tr>
-        </tbody>
-    </table> -->
+     
 </div>
 
 <section #qtylevelChildSuperchild id="opti_QtylevelChildSuperChildID">

@@ -78,9 +78,6 @@ export class QtyWithFGScanComponent implements OnInit {
   }
   //Kendo inbuilt method handlers
   removeHandler({rowIndex}){
-    //this.FGScanGridData.splice(rowIndex,1);
-    //console.log(this.FGScanGridData[rowIndex].OPTM_BTCHSERNO);
-
     this.qtyWithFGScan.deleteBatchSerInfo(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ).subscribe(
       data=> {
         if(data!=null){
@@ -98,7 +95,8 @@ export class QtyWithFGScanComponent implements OnInit {
 
   editHandler({ rowIndex }) {
     //To show the popup screen which will supdateave the data
-    this.showDataInsertPopup = true;
+    this.showLevelChild();
+    //this.showDataInsertPopup = true;
     this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY,IsRejected:this.FGScanGridData[rowIndex].OPTM_REJECT,IsNC: this.FGScanGridData[rowIndex].OPTM_NC,SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ,ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy});
   }
 

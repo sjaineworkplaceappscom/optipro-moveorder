@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
+import { FgrmscanparentService } from '../services/fgrmscanparent.service';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 
 @Component({
@@ -18,7 +19,7 @@ export class FgrmscanparentComponent implements OnInit {
   lblNCQty:number =0.0;
   basicDetailsToFGParentInput:any;
   showFGRMScanParentInsertPopup:boolean = false;
-  constructor(private qtyWithFGScan: QtyWithFGScanService) { }
+  constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService) { }
 
   gridHeight: number;
 
@@ -57,6 +58,20 @@ export class FgrmscanparentComponent implements OnInit {
     //show the dialog for fg serial / batch
     //this.showFGRMScanParentInsertPopup = true;
   }
+  
+  //Kendo inbuilt method handlers
+  removeHandler({rowIndex}){
+  this.deleteParentFGandRM(rowIndex);
+  }
+
+  //For edit functionalities
+  editHandler({ rowIndex }) {
+    //To show the popup screen which will supdateave the data
+  this.showLevelChildSuperChild();
+  
+    //this.showDataInsertPopup = true;
+    // this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY,IsRejected:this.FGScanGridData[rowIndex].OPTM_REJECT,IsNC: this.FGScanGridData[rowIndex].OPTM_NC,SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ,ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy});
+  }
 
   //Core Functions
   //This func. will fill data into the grid
@@ -79,12 +94,12 @@ export class FgrmscanparentComponent implements OnInit {
       }
     )
 
-    if(this.basicDetailsFrmMO[0].ManagedBy == "Serial"){
-      this.showEditBtn = false;
-    }
-    else{
-      this.showEditBtn = true;
-    }
+    // if(this.basicDetailsFrmMO[0].ManagedBy == "Serial"){
+    //   this.showEditBtn = false;
+    // }
+    // else{
+    //   this.showEditBtn = true;
+    // }
 
   }
 
@@ -117,6 +132,25 @@ refreshQtys(){
     this.lblBalQty = totalBalQty;
     this.lblAcceptedQty = totalBalQty - iNCCount - iRejectCount;
 }
+
+//This will Delete the Parent FGs and its corresponding attached Child RMs
+deleteParentFGandRM(rowIndex){
+  this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
+    data=> {
+      if(data!=null){
+        if(data == "True")  {
+          alert("Data deleted");
+          this.fillFGData();
+        }
+        else{
+          alert("Failed to delete data");
+        }
+       }
+    }
+  )
+
+} 
+
 }
 
 
