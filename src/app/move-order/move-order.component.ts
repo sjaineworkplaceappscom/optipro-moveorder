@@ -66,6 +66,8 @@ export class MoveOrderComponent implements OnInit {
   currentServerDateTime:any;
   WorkOrderImageStatus:boolean = false;
   OperationDetailImageStatus:boolean = false;
+  GetOperationImageStatus: Boolean = false;
+  QuantityImageStatus:Boolean =false;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -124,14 +126,23 @@ export class MoveOrderComponent implements OnInit {
 
   }
 
-  onOperationPress(status) {
-    this.columnsToShow = this.sOperationLookupColumns.split(",");
-    this.isOperationListRightSection = status;
-    this.openRightSection(status);
+  onOperationPress(status, GetOperationImageStatus) {
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
+     GetOperationImageStatus = false;
+    }
+    else {
+     GetOperationImageStatus = true;
+    }
+    if (GetOperationImageStatus == true) {
+      this.columnsToShow = this.sOperationLookupColumns.split(",");
+      this.isOperationListRightSection = status;
+      this.openRightSection(status);
+      //This funciton will get the operation on docEntry and Work Order no. basis
+      this.getOperationByWONO();
+    }
+  
+}
 
-    //This funciton will get the operation on docEntry and Work Order no. basis
-    this.getOperationByWONO();
-  }
 
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur() {
@@ -226,25 +237,35 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
-  onQtyProdBtnPress(status) {
-    this.isQuantityRightSection = status;
-    this.openRightSection(status)
-    //Setting basic details to share on another screen
-    this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy , 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty});
-    this.showItemLinkingScreen = true;
-    if (this.settingOnSAP == "1") {
-      this.ScreenName = 'Move Order Summary';
-      this.showQtyNoScanScreen = true;
+  onQtyProdBtnPress(status,QuantityImageStatus) {
+
+    if (this.psWONO==""||this.psWONO==null||this.psWONO==undefined ||this.psOperNO==""||this.psOperNO==undefined || this.psOperNO == null){
+      QuantityImageStatus =false;
+    }else{
+      QuantityImageStatus =true;
     }
-    if (this.settingOnSAP == "2") {
-      this.ScreenName = 'Finished Goods Scan';
-      this.showQtyWithFGScanScreen = true;
+    
+    if (QuantityImageStatus ==true){
+      this.isQuantityRightSection = status;
+      this.openRightSection(status)
+      //Setting basic details to share on another screen
+      this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
+      this.showItemLinkingScreen = true;
+      if (this.settingOnSAP == "1") {
+        this.ScreenName = 'Move Order Summary';
+        this.showQtyNoScanScreen = true;
+      }
+      if (this.settingOnSAP == "2") {
+        this.ScreenName = 'Finished Goods Scan';
+        this.showQtyWithFGScanScreen = true;
+      }
+      if (this.settingOnSAP == "3") {
+        this.ScreenName = 'Finished Goods & Raw Materials Scan';
+        this.showQtyWithFGRMScanScreen = true;
+      }
+    
     }
-    if (this.settingOnSAP == "3") {
-      this.ScreenName = 'Finished Goods & Raw Materials Scan';
-      this.showQtyWithFGRMScanScreen = true;
-    }
-  }
+         }
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
