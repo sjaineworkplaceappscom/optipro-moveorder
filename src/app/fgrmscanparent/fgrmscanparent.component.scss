@@ -2,3 +2,10 @@
     padding-top: 20px;
 }
 
+.opti_quantity-summary{
+    display: flex;
+    flex-direction: row-reverse;
+    form{
+        padding: 0;
+    }
+}
