@@ -45,3 +45,8 @@ label.k-form-field {
 // .opti_date-icon {
 //     margin-top: 18px;
 // }
+
+.k-form .k-form-field > span:not(.k-widget) {
+    padding: 0;
+    margin: 0;
+}
