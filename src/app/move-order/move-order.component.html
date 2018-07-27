@@ -14,7 +14,7 @@
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
 
                             <!-- loader start -->
-                            <div class="opti_loader" *ngIf="showLoader==false">
+                            <div class="opti_loader" *ngIf="false">
                                 <div class="opti_spinner"></div>
                             </div>
                             <!-- loader end -->
@@ -135,7 +135,7 @@
                                 <h5 class="modal-title center-block">{{ScreenName}}</h5>
                                 <app-qty-without-fgscan (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyNoScanScreen"></app-qty-without-fgscan> 
                                 <app-qty-with-fgscan (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGScanScreen"></app-qty-with-fgscan>
-                                <app-fgrmscanparent [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
+                                <app-fgrmscanparent (messageEvent)="recieveChildSAPSetFormData($event)" [basicDetailsFrmMO]="basicDetails" *ngIf="showQtyWithFGRMScanScreen"></app-fgrmscanparent>
                             </div>    
                             <!-- Quantity Screen end -->
 

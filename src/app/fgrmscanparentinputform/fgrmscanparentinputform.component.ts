@@ -99,7 +99,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
         this.bIsEdit = true;
-        this.bIsInEditMode = false;
+        this.bIsInEditMode = true;
         this.psBatchSer = this.rowDataFrmFGWithScan[0].FGBatchSerNo;
         this.iQty = this.rowDataFrmFGWithScan[0].Quantity;
         this.bIsRejected = this.rowDataFrmFGWithScan[0].IsRejected;
@@ -109,6 +109,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
         //If screen is in edit mode then will get all childs
         this.GetAllChildByParentId();
+      }
+      else{
+        this.bIsInEditMode = false;
       }
     }
   }

@@ -34,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "3";
+  settingOnSAP: string = "2";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -358,6 +358,12 @@ export class MoveOrderComponent implements OnInit {
       this.iNCQty = $event.NCQty;
     }
     if(this.settingOnSAP == "2"){
+      this.iAcceptedQty = $event.AcceptedQty;
+      this.iRejectedQty = $event.RejectedQty;
+      this.iNCQty = $event.NCQty;
+      this.iProducedQty = $event.ProducedQty;
+    }
+    if(this.settingOnSAP == "3"){
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
