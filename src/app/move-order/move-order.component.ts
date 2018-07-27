@@ -140,7 +140,7 @@ export class MoveOrderComponent implements OnInit {
       this.isOperationListRightSection = status;
       this.openRightSection(status);
       //This funciton will get the operation on docEntry and Work Order no. basis
-      this.getOperationByWONO();
+      //this.getOperationByWONO();
     }
   
 }
@@ -171,6 +171,7 @@ export class MoveOrderComponent implements OnInit {
     }
     else {
       this.DisableEnablOperation = true;
+      this.cleanupScreen();
     }
 
   }
@@ -214,7 +215,7 @@ export class MoveOrderComponent implements OnInit {
       //Enable the Produced Quantity Input 
       this.DisableEnablQuantity = false;
       //To check in the array
-      let isWOOperExists = this.allWOOpDetails.some(e => e.U_O_OPERNO === this.psOperNO);
+      let isWOOperExists = this.allWOOpDetails.some(e => e.U_O_OPERNO == this.psOperNO);
       if (isWOOperExists == false) {
         //message for invalid Operation
         this.InvalidOperation = true;
@@ -485,20 +486,30 @@ export class MoveOrderComponent implements OnInit {
     this.iOrderedQty=0;
     this.iProducedQty = 0;
     this.iRejectedQty =0;
+    this.psToOperation = '';
+    
     //this function will reset the time and date of the server
-    this.getServerDate();
+    //As discussed with vaibhav sir and rohit sir the date will not be of server
+    //this.getServerDate();
+      this.setDefaultDateTime();
   }
 
   //This will set the time and date
   setDefaultDateTime(){
     
-  if(this.currentServerDateTime != null && this.currentServerDateTime.length > 0){
-    let currentDateTime = new Date(this.currentServerDateTime);
-    this.FrmToDateTime = [
-      new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
-      new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
-    ];
-  }
+  // if(this.currentServerDateTime != null && this.currentServerDateTime.length > 0){
+  //   let currentDateTime = new Date(this.currentServerDateTime);
+  //   this.FrmToDateTime = [
+  //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
+  //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
+  //   ];
+  // }
+
+  let defDateTime = new Date();
+  this.FrmToDateTime = [
+        new Date(defDateTime.getFullYear(), defDateTime.getMonth(),defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes()),
+        new Date(defDateTime.getFullYear(), defDateTime.getMonth(),defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes())
+      ];
   }
 
   //This will get the server date time
