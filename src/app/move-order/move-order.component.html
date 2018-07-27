@@ -70,7 +70,7 @@
                                         <input type="text" style="text-align: right;"  class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
                                     </span>
                                     <span class="opti_qty-operation-icon">
-                                        <img src="assets/images/common/list.svg" title="Quantity" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(true,QuantityImageStatus)" alt="Quantity" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="Quantity" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(QuantityImageStatus)" alt="Quantity" width="27px" height="27px" />
                                     </span>
                                 </label>
 
@@ -129,7 +129,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <img src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
-
+                            
                             <!-- Quantity Screen start -->
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
                                 <h5 class="modal-title center-block">{{ScreenName}}</h5>
@@ -164,6 +164,11 @@
 
                             <!-- Work order detail start -->
                             <div id="opti_WorkOrderRightSection" [ngStyle]="{'display':isWorkOrderRightSection == true ? 'block' : 'none' }">
+                                <!-- loader start -->
+                                <!-- <div class="opti_loader">
+                                    <div class="opti_spinner"></div>
+                                </div> -->
+                                <!-- loader end -->
                                 <h5 class="">Work Order Details</h5>
                                 <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
                             </div>
@@ -171,6 +176,13 @@
 
                             <!-- Work order List start -->
                             <div id="opti_WorkOrderListRightSection" [ngStyle]="{'display':isWorkOrderListRightSection == true ? 'block' : 'none' }">
+
+                                <!-- loader start -->
+                                    <!-- <div class="opti_loader">
+                                        <div class="opti_spinner"></div>
+                                    </div> -->
+                                <!-- loader end -->
+
                                 <h5 class="">Work Order Lookup List</h5>
                                 <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
                                     <div class="container-fluid opti_padding-zero">
