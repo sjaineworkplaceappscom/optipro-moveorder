@@ -34,7 +34,7 @@
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" title="Work Order's" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
                                         <img src="assets/images/common/detail.svg" title="Work Order Detail" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" title="scan" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/scanner.svg" title="scan" id="workOrderScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                   
                                 </label>
@@ -59,7 +59,7 @@
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" title="Operation's" class="opti_mouse-pointer" (click)="onOperationPress(true,GetOperationImageStatus)" alt="work order" width="27px" height="27px"  />
                                         <img src="assets/images/common/detail.svg" title="Operation Detail" class="opti_mouse-pointer" (click)="onOperDtlPress(true,OperationDetailImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
-                                        <img src="assets/images/common/scanner.svg" title="Scan" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/scanner.svg" title="Scan" id="operationNumberScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                 </label>
                                 <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number. </span>
