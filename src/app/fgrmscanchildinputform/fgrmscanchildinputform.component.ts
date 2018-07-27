@@ -1,5 +1,6 @@
 import { Component, OnInit,Input, EventEmitter, Output } from '@angular/core';
 import { FgrmscanchildinputformService } from "src/app/services/fgrmscanchildinputform.service";
+import { isWorkbookOptions } from '@progress/kendo-angular-excel-export';
 
 @Component({
   selector: 'app-fgrmscanchildinputform',
@@ -89,7 +90,10 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //on Save row press
   onRMAddRowPress(){
-    //This json row will be added to the grid present in the parent form of this one
+   
+    if(this.checkIfChildComponentsExists() == false)
+    {
+      //This json row will be added to the grid present in the parent form of this one
     let sendRMRowToParent: any = {
       OPTM_SEQ: 0,
       OPTM_ITEMCODE: this.psChildCompItemCode,
@@ -120,9 +124,20 @@ export class FgrmscanchildinputformComponent implements OnInit {
     }
 
     this.showLevelChild();
-    
+
+    }
+    else{
+      alert("Item componenent with this batch/serial already exists");
+    }
   }
   //Core Functions
-  
+  checkIfChildComponentsExists(){
+    let isCompExists = false;
+    if(this.childGridDataArray != null && this.childGridDataArray.length > 0){
+      isCompExists = this.childGridDataArray.some(e => e.OPTM_ITEMCODE == this.psChildCompItemCode && e.OPTM_BTCHSERNO == this.psChildCompBatchSer);  
+    }
+    
+    return isCompExists;
+  }
 
 }
