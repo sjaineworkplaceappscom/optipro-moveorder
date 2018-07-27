@@ -1,13 +1,4 @@
 <div #QtyFGScanIDParent id="opti_QtyFGScanID"> 
-
-<!-- <div class="text-center">
-        <input type="text" [(ngModel)]="txtFGValue" (blur)="onFGTextValueChange()">
-    <button type="button"  (click)="onFGScan()" align="middle" class="btn btn-primary">Scan</button> 
-</div>
-
-    <p></p>
-    <button  type="button"  (click)="onInsertRowPress()" align="middle" class="btn btn-primary">+</button> -->
-
     <kendo-grid 
     [kendoGridBinding]="FGScanGridData" 
     [height]=gridHeight-52-200
@@ -56,7 +47,7 @@
     <form class="k-form float-right col-md-5 ">
         <label class="k-form-field">
             <span class="opti_form-label">Produced Qty</span>
-            <input type="text" class="k-textbox" value="{{lblProducedQty}}" disabled>
+            <input type="text" style="text-align: right;" class="k-textbox" value="{{lblProducedQty}}" disabled>
         </label>
 
         <label class="k-form-field">
@@ -78,11 +69,7 @@
                 <span class="opti_form-label">NC Qty</span>
                 <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
         </label>
-
-        <label class="k-form-field">
-                <span class="opti_form-label">NC Qty</span>
-                <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
-        </label>
+      
     </form>
 </div>
 </div>

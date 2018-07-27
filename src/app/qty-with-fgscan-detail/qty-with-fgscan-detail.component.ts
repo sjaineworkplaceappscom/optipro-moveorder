@@ -53,7 +53,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
         this.bIsEdit = true;
-        this.bIsInEditMode = false;
+        this.bIsInEditMode = true;
         this.psBatchSer = this.rowDataFrmFGWithScan[0].FGBatchSerNo;
         this.iQty = this.rowDataFrmFGWithScan[0].Quantity;
         this.bIsRejected = this.rowDataFrmFGWithScan[0].IsRejected;
@@ -62,7 +62,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.psItemManagedBy = this.rowDataFrmFGWithScan[0].ItemManagedBy;
       }
       else{
-        this.bIsInEditMode = true;
+        this.bIsInEditMode = false;
       }
     }
   }
@@ -144,7 +144,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       isNC = 'N';
     }
     
-    this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.psBatchSer,this.iQty,isRejected,isNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
+    if(this.iSeqNo == undefined || this.iSeqNo == null){
+        this.iSeqNo = 0;
+    }
+
+    this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.iSeqNo,this.psBatchSer,this.iQty,isRejected,isNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
       data=> {
            if(data!=null){
             if(data == "True")  {
