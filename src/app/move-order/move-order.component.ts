@@ -115,6 +115,7 @@ export class MoveOrderComponent implements OnInit {
 
   //This will get all WO
   onWOPress(status) {
+    //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
     this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
@@ -127,6 +128,7 @@ export class MoveOrderComponent implements OnInit {
   }
 
   onOperationPress(status, GetOperationImageStatus) {
+    //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
      GetOperationImageStatus = false;
     }
@@ -238,17 +240,19 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
-  onQtyProdBtnPress(status,QuantityImageStatus) {
+  onQtyProdBtnPress(status) {
 
     if (this.psWONO==""||this.psWONO==null||this.psWONO==undefined ||this.psOperNO==""||this.psOperNO==undefined || this.psOperNO == null){
-      QuantityImageStatus =false;
+      status =false;
     }else{
-      QuantityImageStatus =true;
+      status =true;
     }
     
-    if (QuantityImageStatus ==true){
-      this.isQuantityRightSection = status;
+    if (status == true){
       this.openRightSection(status)
+      this.isQuantityRightSection = status;
+      document.getElementById('opti_QuantityRightSection').style.display = 'block';
+
       //Setting basic details to share on another screen
       this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
       this.showItemLinkingScreen = true;
@@ -266,7 +270,7 @@ export class MoveOrderComponent implements OnInit {
       }
     
     }
-         }
+  }
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {

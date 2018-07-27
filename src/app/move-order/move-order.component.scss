@@ -50,3 +50,10 @@ label.k-form-field {
     padding: 0;
     margin: 0;
 }
+
+#opti_WorkOrderListRightSection,
+#opti_WorkOrderRightSection{
+    .opti_loader {
+        width: 97%;
+    }    
+}

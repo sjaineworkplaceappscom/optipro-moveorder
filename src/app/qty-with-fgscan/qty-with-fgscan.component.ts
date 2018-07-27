@@ -104,6 +104,8 @@ export class QtyWithFGScanComponent implements OnInit {
   onOKPress(){
   // this.optirightfixedsection.nativeElement.style.display = 'none';
   document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+  document.getElementById('opti_QuantityRightSection').style.display = 'none';
+  
   //We will get this values and push into this array to send back
 
   
