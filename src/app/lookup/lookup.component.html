@@ -25,7 +25,7 @@
             </ng-template>
             <!-- grid template start -->
 
-    <kendo-grid-column *ngFor="let col of columns;let i=index" field="{{col.Name}}" title="{{col.Name}}"
+    <kendo-grid-column *ngFor="let col of columns;let i=index" class="opti_{{col.Name}}" field="{{col.Name}}" title="{{col.Name}}"
                        [sortable]="col.CanSort"
                        [hidden]="col.Hidden"
                        [width]="100"> 

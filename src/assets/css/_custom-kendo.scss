@@ -13,7 +13,7 @@ body{
       kendo-list{
         ul{
           li{
-            font-size: 12px !important;
+            font-size: 15px !important;
           }
           li.k-state-focused{
             box-shadow: none !important;
@@ -50,7 +50,7 @@ body{
   
     // form label
     .k-radio-label, .k-checkbox-label{
-      font-size: 12px;
+      font-size: 15px;
       margin-bottom: 0 !important;
       font-weight: $font-weight-light;
     }
@@ -90,23 +90,23 @@ body{
       }
       .k-grid-header .k-header > .k-link {
           // padding: 5px;
-          font-size: 12px;
+          font-size: 15px;
       }
 
       .k-grid-header th.k-header {
         padding: 5px;
-        font-size: 12px;
+        font-size: 15px;
       }
 
       .k-grid-table{
-        font-size: 12px;
+        font-size: 15px;
       }
       
       .k-pager-wrap .k-link, .k-pager-wrap .k-state-selected {
         padding: 0;
       }
       .k-pager-wrap .k-pager-info {
-        font-size: 12px;
+        font-size: 15px;
       }
       .k-grid-pager {
         padding: 0;
@@ -138,7 +138,7 @@ body{
 
     // top section of grid
     .k-indicator-container {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     // filter of grid

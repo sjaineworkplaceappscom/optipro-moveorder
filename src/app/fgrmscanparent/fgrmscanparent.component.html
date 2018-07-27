@@ -24,7 +24,7 @@
 
       <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
       <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
-      <kendo-grid-column field="OPTM_QUANTITY"  title="Quantity"  width="120"></kendo-grid-column>
+      <kendo-grid-column field="OPTM_QUANTITY"  title="Quantity"  width="120" class="text-right"></kendo-grid-column>
       <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="80">
           <ng-template kendoGridCellTemplate let-dataItem>
               <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
