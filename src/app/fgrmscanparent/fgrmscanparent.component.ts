@@ -77,6 +77,15 @@ export class FgrmscanparentComponent implements OnInit {
   
   }
 
+  //This will reload the screen
+  receiveMessage($event) {
+
+    if($event == "FromFGRMScanParentInputForm"){
+        this.fillFGData();
+      }
+
+  }
+
   //Core Functions
   //This func. will fill data into the grid
   fillFGData(){
@@ -90,6 +99,13 @@ export class FgrmscanparentComponent implements OnInit {
               }
               else{
                 this.FGScanGridData[iCount].OPTM_REJECT = false;
+              }
+              
+              if(this.FGScanGridData[iCount].OPTM_NC == 'Y'){
+                this.FGScanGridData[iCount].OPTM_NC = true;
+              }
+              else{
+                this.FGScanGridData[iCount].OPTM_NC = false;
               }
           }
             // refresh the qtys in the lower table

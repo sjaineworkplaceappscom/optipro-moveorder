@@ -35,4 +35,12 @@ export class FgrmscanparentinputformService {
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetAllChildByParentId",jObject,this.httpOptions);
   }  
+
+  //This method will delete the data from child RM
+  deleteRMDataBySeq(CompanyDBID:string,sequenceNo:number):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,squence: sequenceNo}]) };
+    //Return the response form the API  
+    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteChildComponent",jObject,this.httpOptions);
+  } 
 }

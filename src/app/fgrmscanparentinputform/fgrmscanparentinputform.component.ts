@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener,EventEmitter, Output } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import {FgrmscanparentinputformService } from '../services/fgrmscanparentinputform.service';
 import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrmscanchildinputform.component";
@@ -34,6 +34,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
+
+  @Output() messageEvent = new EventEmitter<string>();
 
 
   gridHeight: number;
@@ -104,6 +106,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
         this.bIsNC = this.rowDataFrmFGWithScan[0].IsNC;
         this.iSeqNo = this.rowDataFrmFGWithScan[0].SeqNo;
         this.psItemManagedBy = this.rowDataFrmFGWithScan[0].ItemManagedBy;
+
+        //If screen is in edit mode then will get all childs
+        this.GetAllChildByParentId();
       }
     }
   }
@@ -168,8 +173,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
    else{
         sIsNC = 'N';
    }
+  
+   if(this.iSeqNo == undefined || this.iSeqNo == null){
+     this.iSeqNo =0;
+   }
+
    //this.oModalData.ABC = [{'keyNAME':'ashish'},{'keyNAME':'rmaesh'}]
    this.ParentGridData = [{ 
+                            'SequenceNo':this.iSeqNo,
                             'WorkOrder': this.basicFGInputForm[0].WorkOrderNo,
                             'FGBatchSerial':this.psBatchSer,
                             'Rejected':sIsRejected,
@@ -184,16 +195,18 @@ export class FgrmscanparentinputformComponent implements OnInit {
    this.oModalData.HeaderData = [{CompanyDBId:this.CompanyDBId}]                        
    this.oModalData.ChildDataToSave = this.ChildCompGridData
    this.oModalData.ParentDataToSave = this.ParentGridData
-   console.log("OMODAL ADTA")
-   console.log(this.oModalData)
       this.fgrmParentForm.SubmitDataforFGandRM(this.oModalData).subscribe(
         data=> {
               if(data !=null){
                 if(data == "True"){
                   alert("Data saved sucessfully");
+                  //Now call the parent componet by event emitter here
+                  this.messageEvent.emit("FromFGRMScanParentInputForm");
+                  this.GetAllChildByParentId();
                 }
                 else{
-                  alert("There was some error while submitting data");                  
+                  alert("There was some error while submitting data"); 
+                  this.GetAllChildByParentId();                 
                 }
                 
               }
@@ -203,6 +216,11 @@ export class FgrmscanparentinputformComponent implements OnInit {
     this.showLevelParent();
 
   }
+
+  removeHandler({ rowIndex }){
+      this.deleteRMDataBySeq(rowIndex);
+  }
+  editHandler({ rowIndex }){}
   //Core Functions
   disableEnableControls(){
     // if(this.bIsEdit == true){
@@ -239,7 +257,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           if(data[0].ItemCheck =="ItemExists")
           {
             //If entered bat ser is wright then will fetch its child 
-            this.GetAllChildByParentId();
+            //this.GetAllChildByParentId();
           }
           else if(data[0].ItemCheck =="ItemNotExists"){
             alert("FG Bat/Ser you are entering is not valid");
@@ -294,6 +312,28 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
 
     return true;
+  }
+
+  //to delete the RM
+  deleteRMDataBySeq(rowIndex){
+    console.log(this.ChildCompGridData[rowIndex].OPTM_SEQ);
+    this.fgrmParentForm.deleteRMDataBySeq(this.CompanyDBId,this.ChildCompGridData[rowIndex].OPTM_SEQ).subscribe(
+
+      
+      data=> {
+        if(data!=null){
+          if(data == "True")  {
+            alert("Data deleted");
+            //After the Data Deletion the grid will refreshed by this
+            this.GetAllChildByParentId();
+          }
+          else{
+            alert("Failed to delete data");
+          }
+         }
+      }
+    )
+
   }
 
 }

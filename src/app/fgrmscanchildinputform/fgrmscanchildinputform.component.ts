@@ -91,7 +91,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   onRMAddRowPress(){
     //This json row will be added to the grid present in the parent form of this one
     let sendRMRowToParent: any = {
-      OPTM_SEQ: '',
+      OPTM_SEQ: 0,
       OPTM_ITEMCODE: this.psChildCompItemCode,
       OPTM_BTCHSERNO: this.psChildCompBatchSer,
       OPTM_QUANTITY:this.iQty,
