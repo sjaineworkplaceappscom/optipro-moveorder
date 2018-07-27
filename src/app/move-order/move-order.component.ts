@@ -363,6 +363,12 @@ export class MoveOrderComponent implements OnInit {
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
     }
+    if(this.settingOnSAP == "3"){
+      this.iAcceptedQty = $event.AcceptedQty;
+      this.iRejectedQty = $event.RejectedQty;
+      this.iNCQty = $event.NCQty;
+      this.iProducedQty = $event.ProducedQty;
+    }
   
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener,EventEmitter, Output } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { FgrmscanparentService } from '../services/fgrmscanparent.service';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
@@ -17,11 +17,13 @@ export class FgrmscanparentComponent implements OnInit {
   lblAcceptedQty:number =0.0;
   lblRejectedQty:number =0.0;
   lblNCQty:number =0.0;
+  lblProducedQty:number = 0.0;
   basicDetailsToFGParentInput:any;
   showFGRMScanParentInsertPopup:boolean = false;
   rowDataForEdit: any = [];
   showFGInputForm:any = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService) { }
+  @Output() messageEvent = new EventEmitter<string>();
 
   gridHeight: number;
 
@@ -86,6 +88,23 @@ export class FgrmscanparentComponent implements OnInit {
 
   }
 
+  //On OK Press the control will back to the main Move Order screen
+  onOKPress(){
+    // this.optirightfixedsection.nativeElement.style.display = 'none';
+    document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+    //We will get this values and push into this array to send back
+  
+    
+      let QtySummary:any = {
+        'BalQty': this.lblBalQty,
+        'AcceptedQty': this.lblAcceptedQty,
+        'RejectedQty': this.lblRejectedQty,
+        'NCQty': this.lblNCQty,
+        'ProducedQty': this.lblProducedQty
+      };
+      
+      this.messageEvent.emit(QtySummary);
+  }
   //Core Functions
   //This func. will fill data into the grid
   fillFGData(){
@@ -129,9 +148,10 @@ refreshQtys(){
   let iNCCount:number = 0;
   let balQty:number = 0;
   let totalBalQty:number = 0;
+  let totalProducedQty:number = 0;
   for(let recCount in this.FGScanGridData){
 
-    totalBalQty = totalBalQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
+    totalProducedQty = totalProducedQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
     balQty = balQty+this.FGScanGridData[recCount].OPTM_QUANTITY;
       if(this.FGScanGridData[recCount].OPTM_REJECT == true)
       {
@@ -147,10 +167,11 @@ refreshQtys(){
       }
       
   }
+    this.lblBalQty = this.basicDetailsFrmMO[0].BalQty;
     this.lblRejectedQty = iRejectCount;
     this.lblNCQty = iNCCount;
-    this.lblBalQty = totalBalQty;
-    this.lblAcceptedQty = totalBalQty - iNCCount - iRejectCount;
+    this.lblProducedQty = totalProducedQty;
+    this.lblAcceptedQty = totalProducedQty - iNCCount - iRejectCount;
 }
 
 //This will Delete the Parent FGs and its corresponding attached Child RMs
