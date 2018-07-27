@@ -23,10 +23,7 @@ constructor() { }
 
   //Events
   onOKPress(){
-    // this.optirightfixedsection.nativeElement.style.display = 'none';
-    document.getElementById('opti_rightfixedsectionID').style.display = 'none';
     //We will get this values and push into this array to send back
-
     if(this.validateSumOfQtys() == true){
       let QtySummary:any = {
         'BalQty': this.iBalQty,
@@ -36,12 +33,13 @@ constructor() { }
       };
       
       this.messageEvent.emit(QtySummary);
+      //If data is ok then we will navigate back
+      document.getElementById('opti_rightfixedsectionID').style.display = 'none';
     }
-    else{
-        return false;
-    }
+    
   }
 
+  //On Accepeted Qty blur
   onAccepetedQtyBlur(){
     if(this.iAcceptedQty !=null){
         if(this.isQtyIsNegative(this.iAcceptedQty) == true){
@@ -50,6 +48,7 @@ constructor() { }
     }
   }
 
+  //On Rejected Qry blur
   onRejectQtyBlur(){
     if(this.iRejectedQty !=null){
       if(this.isQtyIsNegative(this.iRejectedQty) == true){
@@ -58,6 +57,7 @@ constructor() { }
     }
   }
 
+  //On NC Qty blur
   onNCQtyBlur(){
     if(this.iNCQty !=null){
       if(this.isQtyIsNegative(this.iNCQty) == true){
