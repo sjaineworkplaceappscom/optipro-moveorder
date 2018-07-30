@@ -6,7 +6,6 @@ import { LookupComponent } from "src/app/lookup/lookup.component";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
-import { Z_DEFAULT_COMPRESSION } from 'zlib';
 
 @Component({
   selector: 'app-move-order',
@@ -35,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "1";
+  settingOnSAP: string = "3";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;

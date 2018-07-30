@@ -1,20 +1,8 @@
-<!-- <div class="">
-  <p></p>
-      <label>FG Batch Serial</label>
-      <input type="text" class="form-control" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" [disabled]="bIsInEditMode">
-     
-      <label>Qty</label>
-      <input type="text" class="form-control" [(ngModel)]="iQty" [disabled]="isQtyDisabled" >
-      <br>
-      <label><input type="checkbox" [(ngModel)]="bIsRejected" [disabled]="bIsInEditMode">Rejected</label>
-      <br>
-      <label><input type="checkbox" [(ngModel)]="bIsNC" [disabled]="bIsInEditMode">NC Qty</label>
-      <br>
-      <br>
-
-      <button align="center" type="button" align="middle" class="btn btn-primary" (click)="onAddPress()" [disabled]="bIsInEditMode">Save</button>
-</div> -->
-
+ <!-- loader start -->
+ <div class="opti_loader" *ngIf="showLoader">
+        <div class="opti_spinner"></div>
+    </div>
+<!-- loader end -->
 
 <div class="container-fluid opti_padding-zero">
     <div class="row">

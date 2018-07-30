@@ -22,6 +22,7 @@ export class FgrmscanparentComponent implements OnInit {
   showFGRMScanParentInsertPopup:boolean = false;
   rowDataForEdit: any = [];
   showFGInputForm:any = false;
+  showLoader:boolean = false;
   constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService) { }
   @Output() messageEvent = new EventEmitter<string>();
 
@@ -110,6 +111,7 @@ export class FgrmscanparentComponent implements OnInit {
   //Core Functions
   //This func. will fill data into the grid
   fillFGData(){
+    this.showLoader = true;
     this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId,this.basicDetailsFrmMO[0].WorkOrderNo,this.basicDetailsFrmMO[0].ItemCode,this.basicDetailsFrmMO[0].OperNo).subscribe(
       data=> {
         if(data != null){
@@ -131,17 +133,10 @@ export class FgrmscanparentComponent implements OnInit {
           }
             // refresh the qtys in the lower table
             this.refreshQtys();
+            this.showLoader = false;
         }
       }
     )
-
-    // if(this.basicDetailsFrmMO[0].ManagedBy == "Serial"){
-    //   this.showEditBtn = false;
-    // }
-    // else{
-    //   this.showEditBtn = true;
-    // }
-
   }
 
 //refresh Qtys in the lower table
@@ -178,6 +173,7 @@ refreshQtys(){
 
 //This will Delete the Parent FGs and its corresponding attached Child RMs
 deleteParentFGandRM(rowIndex){
+  this.showLoader = true;
   this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
     data=> {
       if(data!=null){
@@ -188,6 +184,10 @@ deleteParentFGandRM(rowIndex){
         else{
           alert("Failed to delete data");
         }
+        this.showLoader = false;
+       }
+       else{
+        this.showLoader = false;
        }
     }
   )

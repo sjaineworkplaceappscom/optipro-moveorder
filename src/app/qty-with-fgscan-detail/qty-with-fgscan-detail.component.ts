@@ -25,6 +25,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
+  public showLoader = false;
   
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService) { }
 
@@ -36,8 +37,6 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   //Events
   ngOnInit() {
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
-    //console.log(this.basicDetailsFrmFGWithScan)
-    //console.log(this.rowDataFrmFGWithScan);
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
 
     //taking item managed by
@@ -107,14 +106,20 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     }
   }
 
+  //On Qty blur thi swill run
   onQtyBlur(){
     if(this.iQty <= 0 || this.iQty == undefined){
       this.bIfQtyIsZero = true;
     }
     else{
       this.bIfQtyIsZero = false;
+      //If value is ok then chk produced qty not greater than bal qty
+      if(this.iQty > this.basicDetailsFrmFGWithScan[0].BalQty){
+        alert("Produced qty can't be greater than balance qty");
+        this.iQty = 0;
+        return;
+      }
     }
-    
   }
 
   onIsRejectedCheck(){
@@ -183,6 +188,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
 
   //This will update FG Ser Batch 
   updateBatchSerInfoRow(){
+    this.showLoader = true;
+
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     this.qtyWithFGScanDtl.updateBatchSerInfoRow(this.CompanyDBId,this.psBatchSer,this.iQty,this.bIsRejected,this.bIsNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].OperNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.loggedInUser,this.iSeqNo).subscribe(
       data=> {
@@ -196,6 +203,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
             alert("Failed to update Data");
             this.rowDataFrmFGWithScan = [];
           }
+          this.showLoader = false;
          }
       }
   )

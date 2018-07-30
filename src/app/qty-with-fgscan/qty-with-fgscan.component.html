@@ -1,3 +1,8 @@
+ <!-- loader start -->
+ <div class="opti_loader" *ngIf="showLoader">
+        <div class="opti_spinner"></div>
+    </div>
+<!-- loader end -->
 <div #QtyFGScanIDParent id="opti_QtyFGScanID"> 
     <kendo-grid 
     [kendoGridBinding]="FGScanGridData" 
@@ -18,7 +23,7 @@
     </ng-template>  
 
     
-    <kendo-grid-column field="OPTM_SEQ" title="#"  width="100"></kendo-grid-column>
+    <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
     <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
     <kendo-grid-column field="OPTM_QUANTITY" title="Quatity" class="text-right" width="120"></kendo-grid-column>
     <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="120">

@@ -24,6 +24,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   childCompItemCodeDetls:any;
   loggedInUser:string;
   iSysNum:number;  
+  showLoader:boolean = false;
   constructor(private FGRMinput:FgrmscanchildinputformService) { }
   
   @Output() messageEvent = new EventEmitter<string>();
@@ -32,7 +33,6 @@ export class FgrmscanchildinputformComponent implements OnInit {
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     console.log(this.basicDetailFrmParentInput)
-    //console.log("THAT COMP OVER");
     console.log(this.detailsOfParentinputFrm);
 
   }
@@ -44,6 +44,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //Events
   onChildCompItemBlur(){
+    this.showLoader = true;
     //First we will check whether the child component Item code entered is valid and get its details
     if(this.psChildCompItemCode != null && this.psChildCompItemCode.length > 0){
       this.FGRMinput.CheckIfChildCompExists(this.CompanyDBId,this.basicDetailFrmParentInput[0].ItemCode,this.psChildCompItemCode,this.basicDetailFrmParentInput[0].WorkOrderNo,this.basicDetailFrmParentInput[0].OperNo).subscribe(
@@ -63,6 +64,11 @@ export class FgrmscanchildinputformComponent implements OnInit {
                   this.sChildWhse = this.childCompItemCodeDetls[0].WareHouse
                   this.sChildManagedBy = this.childCompItemCodeDetls[0].ManagedBy
                 }
+
+                this.showLoader = false;
+          }
+          else{
+            this.showLoader = false;
           }
         }
       )
@@ -72,6 +78,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //This will check the bat / serial enterd by user
   onChildCompBatchSerBlur(){
+    this.showLoader = true;
     if(this.psChildCompBatchSer != null && this.psChildCompBatchSer.length > 0){
       this.FGRMinput.CheckIfValidBatchSerialComponentEntered(this.CompanyDBId,this.sChildWhse,this.sChildBin,this.psChildCompBatchSer,this.psChildCompItemCode).subscribe(
         data=> {
@@ -82,6 +89,11 @@ export class FgrmscanchildinputformComponent implements OnInit {
             else{
               alert("It does'nt belong to this item or it is consumed");            
             }
+            
+            this.showLoader = false;
+          }
+          else{
+            this.showLoader = false;
           }
         }
       )

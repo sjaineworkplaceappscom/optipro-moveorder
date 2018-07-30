@@ -29,6 +29,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   bIsRejected:any= false;
   bIsNC:any;
   iSeqNo:number;
+  showLoader:boolean = false;
   bIsInEditMode:boolean = false;
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
@@ -94,7 +95,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
 
     //Disable/enalbe controls
-    this.disableEnableControls();
+    //this.disableEnableControls();
     
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
@@ -131,18 +132,20 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
   }
 
+  //On Qty blur thi swill run
   onQtyBlur(){
-
     if(this.iQty <= 0 || this.iQty == undefined){
       this.bIfQtyIsZero = true;
     }
     else{
       this.bIfQtyIsZero = false;
-
-      
+      //If value is ok then chk produced qty not greater than bal qty
+      if(this.iQty > this.basicFGInputForm[0].BalQty){
+        alert("Produced qty can't be greater than balance qty");
+        this.iQty = 0;
+        return;
+      }
     }
-    
-    
   }
 
   onIsRejectedCheck(){
@@ -215,9 +218,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
               }
             }
     )
-
     this.showLevelParent();
-
   }
 
   removeHandler({ rowIndex }){
@@ -225,17 +226,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
   editHandler({ rowIndex }){}
   //Core Functions
-  disableEnableControls(){
-    // if(this.bIsEdit == true){
-    //   // if(this.basicDetailsFrmFGWithScan[0].itemType == "Serial"){
-    //   //   this.isQtyDisabled = true;
-    //   // }
-    // }
-    // else{
-    //       this.bIsInEditMode = false;
-    // }
-  }
-
+  
   //this will chk if the data we are adding is duplicate
   chkIfFGBatSerAlreadyExists(){
       if(this.FGWithScanGridFrmMaster !=null){
@@ -275,10 +266,15 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //This will get all childs of the parent batchserial enterd
   GetAllChildByParentId(){
+    this.showLoader = true;
     this.fgrmParentForm.GetAllChildByParentId(this.CompanyDBId,this.psBatchSer).subscribe(
       data=> {
         if(data != null){
           this.ChildCompGridData = data;
+          this.showLoader = false;
+        }
+        else{
+          this.showLoader = false;
         }
       }
     )
@@ -293,7 +289,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
     else{
       this.bIfBatSerEmpty = false;
     }
-    
 
     //Check whether the qty is not empty
     if(this.iQty <= 0 || this.iQty == undefined){
@@ -303,7 +298,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
     else{
       this.bIfQtyIsZero = false;
     }
-
 
     //Check if selection is of both is done
     if(this.bIsNC == true && this.bIsRejected == true){
@@ -319,10 +313,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //to delete the RM
   deleteRMDataBySeq(rowIndex){
+    this.showLoader = true;
     console.log(this.ChildCompGridData[rowIndex].OPTM_SEQ);
     this.fgrmParentForm.deleteRMDataBySeq(this.CompanyDBId,this.ChildCompGridData[rowIndex].OPTM_SEQ).subscribe(
-
-      
       data=> {
         if(data!=null){
           if(data == "True")  {
@@ -333,6 +326,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
           else{
             alert("Failed to delete data");
           }
+          this.showLoader = false;
+         }
+         else{
+           this.showLoader = false;
          }
       }
     )
