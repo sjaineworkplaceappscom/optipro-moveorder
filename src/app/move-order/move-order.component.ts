@@ -34,7 +34,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "3";
+  settingOnSAP: string = "1";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -53,6 +53,7 @@ export class MoveOrderComponent implements OnInit {
   moDetails:any;
   psToOperation:any;
   loggedInUser:any;
+  warehouseName:any;
   iBalQty:number;
   iProducedQty:number = 0;
   iAcceptedQty:number = 0;
@@ -102,10 +103,12 @@ export class MoveOrderComponent implements OnInit {
     element.className = "";
     element.classList.add("opti_body-move-order");
     element.classList.add("opti_account-module");
-    //get company name from the session
+    //get company name from session
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
-    //get the logged in user name
+    //get the logged in user name from session
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
+    //get Whse name from session
+    this.warehouseName = sessionStorage.getItem('selectedWhse');
     //On Form Initialization get All WO
     this.getAllWorkOrders();
     //this function will set the time and date of the server
@@ -139,8 +142,6 @@ export class MoveOrderComponent implements OnInit {
       this.columnsToShow = this.sOperationLookupColumns.split(",");
       this.isOperationListRightSection = status;
       this.openRightSection(status);
-      //This funciton will get the operation on docEntry and Work Order no. basis
-      //this.getOperationByWONO();
     }
   
 }
@@ -405,7 +406,7 @@ export class MoveOrderComponent implements OnInit {
 
   //This fun will get all WO
   getAllWorkOrders() {
-    this.mo.getAllWorkOrders(this.CompanyDBId).subscribe(
+    this.mo.getAllWorkOrders(this.CompanyDBId,this.warehouseName).subscribe(
       data => {
         this.allWODetails = data;
         if (this.allWODetails.length > 0) {

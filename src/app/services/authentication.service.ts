@@ -37,9 +37,17 @@ export class AuthenticationService {
   //Get psURL
   getPSURL(CompanyDBID:string,optiProMoveOrderAPIURL:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID }]) };
-  //Return the response form the API  
-  return this.httpclient.post(optiProMoveOrderAPIURL+"/MoveOrder/GetPSURL",jObject,this.httpOptions);
+    let jObject: any = { MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID }]) };
+    //Return the response form the API  
+    return this.httpclient.post(optiProMoveOrderAPIURL + "/MoveOrder/GetPSURL", jObject, this.httpOptions);
+  }
+
+  //Get Warehouses
+  getWarehouse(loginId:string,CompanyDBID:string,psURL:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject: any = { CompanyName: JSON.stringify([{ Username: loginId, CompanyDBId: CompanyDBID }]) };
+    //Return the response form the API  
+    return this.httpclient.post(psURL + "/login/GetWHS", jObject, this.httpOptions)
   }
 
 };

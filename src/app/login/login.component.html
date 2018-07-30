@@ -33,17 +33,9 @@
                                 Password *
                             </span>
                             <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
-                            <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required.  </span>
+                            <span *ngIf="passwordBlank" class="float-right opti_error-msg">  Password required.  </span>
                             <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> Invalid username or password.</span>
                             <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> You are not active user.</span>
-                        </label>
-
-                        <label class="k-form-field">
-                            <span class="opti_form-label">
-                                Warehouse *
-                            </span>
-                            <kendo-dropdownlist [disabled]="hasCompaneyData==false" [textField]="'OPTM_COMPID'" [valueField]="'OPTM_COMPID'" [data]="listItems"
-                                name="listname" [(ngModel)]="selectedValue" (selectionChange)="onCompanyChange($event)"></kendo-dropdownlist>
                         </label>
 
                         <label class="k-form-field">
@@ -54,9 +46,17 @@
                                 name="listname" [(ngModel)]="selectedValue" (selectionChange)="onCompanyChange($event)"></kendo-dropdownlist>
                         </label>
 
+                        <label class="k-form-field">
+                            <span class="opti_form-label">
+                                Warehouse *
+                            </span>
+                            <kendo-dropdownlist [disabled]="hasWhseData==false" [textField]="'OPTM_WHSE'" [valueField]="'OPTM_WHSE'" [data]="whseListItems"
+                            name="whseListItems" [(ngModel)]="selectedWhseValue" (selectionChange)="onWarehouseChange($event)"></kendo-dropdownlist>
+                        </label>
+
                         <div class="text-right">
 
-                            <button (click)="onLoginClick()" [disabled]="disableLoginBtn" align="center" type="button" class="opti_fullwidth">Login</button>
+                            <button (click)="onLoginClick()" [disabled]="!signInForm.form.valid  || disableLoginBtn" align="center" type="button" class="opti_fullwidth">Login</button>
                         </div>
                     </form>
 

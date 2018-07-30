@@ -19,9 +19,9 @@ export class MoveorderService {
     };
 
   //GetAllWO function to hit login API
-  getAllWorkOrders(CompanyDBID:string):Observable<any>{
+  getAllWorkOrders(CompanyDBID:string,Warehouse:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID }]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID, Warehouse: Warehouse }]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetAllWorkOrders",jObject,this.httpOptions);
   }
