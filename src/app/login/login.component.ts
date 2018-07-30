@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
   public invalidCredentials: boolean = false;
   public InvalidActiveUser: boolean = false;
   public passwordBlank: boolean = false;
+  public showLoader:boolean = false;
   
 
   constructor(
@@ -93,6 +94,7 @@ export class LoginComponent implements OnInit {
   }
   //On Password blur the authentication will be checked
   onPasswordBlur() {
+    
     if (this.loginId == "" || this.password == "") {
       this.invalidCredentials=false;
       this.passwordBlank = true;
@@ -103,6 +105,7 @@ export class LoginComponent implements OnInit {
       this.selectedWhseValue = this.whseListItems[0];
       return;
     }
+    this.showLoader = true;
     // Check users authontication 
     this.auth.login(this.loginId, this.password, this.psURL).subscribe(
       data => {
@@ -110,7 +113,8 @@ export class LoginComponent implements OnInit {
         this.modelSource = data;
 
         if (this.modelSource != null && this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {
-            //If everything is ok then we will navigate the user to main home page
+          this.showLoader = false;
+          //If everything is ok then we will navigate the user to main home page
             //this.router.navigateByUrl('/moveorder');
             this.getCompanies();
 
@@ -136,6 +140,7 @@ export class LoginComponent implements OnInit {
 
   // On Login button clicked
   onLoginClick() {
+    this.showLoader = true;
     if (this.disableLoginBtn == false) {
       sessionStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
       sessionStorage.setItem('loggedInUser', this.loginId);
@@ -145,6 +150,7 @@ export class LoginComponent implements OnInit {
     else {
       alert("Select company first");
     }
+    this.showLoader = false;
   }
 
   //On Comapany selection the selected comp will be set into session
@@ -164,6 +170,7 @@ export class LoginComponent implements OnInit {
 
   //Core Functions
   getCompanies(){
+    this.showLoader = true;
     this.auth.getCompany(this.loginId, this.psURL).subscribe(
       data => {
 
@@ -183,6 +190,7 @@ export class LoginComponent implements OnInit {
           
           //When the first item sets in the drop down then will get its warehouse
           this.getWarehouse(this.selectedValue.OPTM_COMPID);
+          this.showLoader = false;
         }
         else {
           this.disableLoginBtn = true;
@@ -190,6 +198,7 @@ export class LoginComponent implements OnInit {
           this.listItems = this.defaultCompnyComboValue;
           this.selectedValue = this.listItems[0];
           this.InvalidActiveUser = true;
+          this.showLoader = false;
         }
       }
     )
@@ -197,6 +206,7 @@ export class LoginComponent implements OnInit {
 
   //This Funciton will get all the whse of this company
   getWarehouse(companyName:string){
+    this.showLoader = true;
     this.auth.getWarehouse(this.loginId,companyName,this.psURL).subscribe(
       data => {
         if(data !=null || data != undefined){
@@ -204,6 +214,10 @@ export class LoginComponent implements OnInit {
           this.hasWhseData = true;
           this.selectedWhseValue = this.whseListItems[0];
           this.warehouseName = this.selectedWhseValue.OPTM_WHSE
+          this.showLoader = false;
+        }
+        else{
+          this.showLoader = false;
         }
       }
     )

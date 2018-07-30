@@ -4,26 +4,34 @@
       <div class="col-md-12">
           <form class="k-form col-md-12">
               <label class="k-form-field">
-                <span class="opti_form-label">Balance Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
+                <span class="opti_form-label">Balance Qty 
+                  <!-- <span class="float-right opti_error-msg"> Invalid Balance Quantity </span> -->
+                </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iBalQtyID" name="iBalQtyName" [(ngModel)]="iBalQty" [disabled]=true>
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Accepted Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
+                <span class="opti_form-label">Accepted Qty </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" (blur)="onAccepetedQtyBlur()" />
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Rejected Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
+                <span class="opti_form-label">Rejected Qty </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" (blur)="onRejectQtyBlur()" />
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">NC Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
+                <span class="opti_form-label">NC Qty </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" (blur)="onNCQtyBlur()" />
               </label>
 
+              <span class="float-right opti_error-msg" *ngIf="negativeQty"> Qty should not be negative </span>
+              <span class="float-right opti_error-msg" *ngIf="sumOfQty"> Sum of accepted quantity and reject quantity should not equal to produced quantity </span>
+              
+              <br>
               <div class="text-right">
+               
+                <br>
                 <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
               </div>
 

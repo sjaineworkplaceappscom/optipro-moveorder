@@ -11,10 +11,14 @@ export class LookupComponent implements OnInit {
     @Input() columnToShow: Array<string> = [];
     @Input() width: number = 100;
 
+    public showLoader:boolean = false;
+
     @Output() messageEvent = new EventEmitter<string>();
     constructor() { }
 
-    ngOnInit() {       
+    ngOnInit() {   
+        //show loader
+        this.showLoader = true;    
         this.SetDataSource();
     }
 
@@ -40,6 +44,8 @@ export class LookupComponent implements OnInit {
             let row = this.fillLookupArray[0];
             this.columns = this.GetColumns(row);
         }
+        //hide loader
+        this.showLoader = false;
     }
 
     protected GetColumns(obj: any): any {

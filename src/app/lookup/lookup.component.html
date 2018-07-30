@@ -1,4 +1,8 @@
-
+ <!-- loader start -->
+ <div class="opti_loader" *ngIf="showLoader">
+    <div class="opti_spinner"></div>
+</div>
+<!-- loader end -->
 <kendo-grid [ngStyle]="setStyles()"
             [kendoGridBinding]="fillLookupArray"
             [scrollable]="'scrollable'"

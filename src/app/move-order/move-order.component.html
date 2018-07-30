@@ -14,7 +14,7 @@
                         <div class="panel-body opti_position-relative" [perfectScrollbar]="">
 
                             <!-- loader start -->
-                            <div class="opti_loader" *ngIf="false">
+                            <div class="opti_loader" *ngIf="showLoader">
                                 <div class="opti_spinner"></div>
                             </div>
                             <!-- loader end -->
@@ -33,7 +33,6 @@
                                     </span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" title="Work Order's" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
-                                        <!-- <img src="assets/images/common/detail.svg" title="Work Order Detail" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/> -->
                                         <img src="assets/images/common/scanner.svg" title="scan" id="workOrderScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                   

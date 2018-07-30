@@ -12,6 +12,8 @@ iAcceptedQty:number = 0.0;
 iRejectedQty:number = 0.0;
 iNCQty:number = 0.0;
 iSum:number = 0.0;
+negativeQty:boolean = false;
+sumOfQty:boolean = false;
 
 constructor() { }
 @Output() messageEvent = new EventEmitter<string>();
@@ -23,12 +25,13 @@ constructor() { }
 
   //Events
   onOKPress(){
-    // this.optirightfixedsection.nativeElement.style.display = 'none';
-    document.getElementById('opti_rightfixedsectionID').style.display = 'none';
-    document.getElementById('opti_QuantityRightSection').style.display = 'none';
+   
     
     //We will get this values and push into this array to send back
     if(this.validateSumOfQtys() == true){
+       // this.optirightfixedsection.nativeElement.style.display = 'none';
+      document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+      document.getElementById('opti_QuantityRightSection').style.display = 'none';
       let QtySummary:any = {
         'BalQty': this.iBalQty,
         'AcceptedQty': this.iAcceptedQty,
@@ -39,6 +42,9 @@ constructor() { }
       this.messageEvent.emit(QtySummary);
       //If data is ok then we will navigate back
       document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+    }
+    else{
+        return false;
     }
     
   }
@@ -74,10 +80,11 @@ constructor() { }
   //This will check the qty is negative or not 
   isQtyIsNegative(inputQty){
     if(inputQty < 0){
-      alert("Qty should not be negative");
+      this.negativeQty= true;
       return true;
     }
     else{
+      this.negativeQty = false;
       return false;
     }
   }
@@ -87,13 +94,12 @@ constructor() { }
     this.iSum = this.iAcceptedQty + this.iRejectedQty + this.iNCQty
 
     if(this.iSum > this.basicDetailsFrmMO[0].ProducedQty){
-        alert("Sum of accepted quantity and reject quantity should not equal to produced quantity");
+        this.sumOfQty = true;
         return false;
     }
     else{
+        this.sumOfQty = false;
         return true;
     } 
   }
-
-  
 }

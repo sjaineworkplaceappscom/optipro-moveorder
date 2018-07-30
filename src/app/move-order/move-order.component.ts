@@ -6,6 +6,7 @@ import { LookupComponent } from "src/app/lookup/lookup.component";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
+import { Z_DEFAULT_COMPRESSION } from 'zlib';
 
 @Component({
   selector: 'app-move-order',
@@ -63,6 +64,7 @@ export class MoveOrderComponent implements OnInit {
   public FrmToDateTime = [];
   public invalidStartDate:boolean = false;
   public invalidEndDate:boolean = false;
+  public showLoader:boolean = false;
   maxDateRestriction:any = new Date();
   currentServerDateTime:any;
   WorkOrderImageStatus:boolean = false;
@@ -112,13 +114,15 @@ export class MoveOrderComponent implements OnInit {
     //On Form Initialization get All WO
     this.getAllWorkOrders();
     //this function will set the time and date of the server
-    this.getServerDate();
+    //this.getServerDate();
+    this.setDefaultDateTime();
    
   }
 
   //This will get all WO
   onWOPress(status) {
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
+    this.showLoader = true;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
     this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
@@ -131,6 +135,8 @@ export class MoveOrderComponent implements OnInit {
   }
 
   onOperationPress(status, GetOperationImageStatus) {
+    //show loader
+    this.showLoader = true;
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
      GetOperationImageStatus = false;
@@ -143,7 +149,8 @@ export class MoveOrderComponent implements OnInit {
       this.isOperationListRightSection = status;
       this.openRightSection(status);
     }
-  
+    //hide loader
+    this.showLoader = false;
 }
 
 
@@ -167,7 +174,6 @@ export class MoveOrderComponent implements OnInit {
         //remove the Message if Workorder is not Blank 
         this.InvalidWorkOrder = false;
         this.getOperationByWONO();
-
       }
     }
     else {
@@ -275,6 +281,9 @@ export class MoveOrderComponent implements OnInit {
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
+    //show Loader
+    this.showLoader = true;
+
     if(this.checkMandatoryInpts() == true){
     //If oper is blank
     if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
@@ -291,10 +300,16 @@ export class MoveOrderComponent implements OnInit {
         if(data == "True"){
             alert("Record submitted sucessfully");
             this.cleanupScreen();
+            //show Loader
+            this.showLoader = false;
+
         }
         else{
           alert("There was some error while submitting the record");
+              //show Loader
+              this.showLoader = false;
         }
+        
       }
     )
    }
@@ -406,6 +421,8 @@ export class MoveOrderComponent implements OnInit {
 
   //This fun will get all WO
   getAllWorkOrders() {
+    //Show Loader
+    this.showLoader = true;
     this.mo.getAllWorkOrders(this.CompanyDBId,this.warehouseName).subscribe(
       data => {
         this.allWODetails = data;
@@ -413,21 +430,17 @@ export class MoveOrderComponent implements OnInit {
           this.lookupData = this.allWODetails;
          // this.WorkOrderBlank=false;
         }
+        //Hide Loader
+        this.showLoader = false;        
       }
     )
   }
 
   //get Operations by work order no.
   getOperationByWONO() {
-    if (this.psWONO == "") {
-    //  this.WorkOrderBlank = true;
-      return;
-    }
-     else {
-   // this.WorkOrderBlank = false;
-    }
-
-    
+    //show Loader
+    this.showLoader = true;
+    if (this.psWONO != null || this.psWONO != undefined) {
     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
       data => {
         if (data != null && data.length > 0) {
@@ -437,23 +450,39 @@ export class MoveOrderComponent implements OnInit {
             this.openedLookup = "OperLookup";
             this.showLookup = true;
           }
+          //hide Loader
+          this.showLoader = false;
+        }
+        else{
+           //hide Loader
+           this.showLoader = false;
         }
       }
     )
   }
+  }
 
   //This will get the selected Operation's
   getSelectedOperationDetail(){
+  //show Loader
+  this.showLoader = true;
   //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
   this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
     data => {
-      this.selectedWOOperDetail = data;
-      this.showOperDtPopup = true;
-      this.psToOperation = data[0].NextOperNo;
-      this.iBalQty = data[0].U_O_BALQTY;
-      //By default set into it
-      this.iProducedQty =  data[0].U_O_BALQTY;
-      this.iAcceptedQty =  data[0].U_O_BALQTY;
+      if(data !=null){
+        this.selectedWOOperDetail = data;
+        this.showOperDtPopup = true;
+        this.psToOperation = data[0].NextOperNo;
+        this.iBalQty = data[0].U_O_BALQTY;
+        //By default set into it
+        this.iProducedQty =  data[0].U_O_BALQTY;
+        this.iAcceptedQty =  data[0].U_O_BALQTY;
+         //hide Loader
+         this.showLoader = false;
+      }else{
+        //hide Loader
+        this.showLoader = false;
+      }
     }
   ) 
   }
