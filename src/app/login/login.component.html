@@ -40,6 +40,14 @@
 
                         <label class="k-form-field">
                             <span class="opti_form-label">
+                                Warehouse *
+                            </span>
+                            <kendo-dropdownlist [disabled]="hasCompaneyData==false" [textField]="'OPTM_COMPID'" [valueField]="'OPTM_COMPID'" [data]="listItems"
+                                name="listname" [(ngModel)]="selectedValue" (selectionChange)="onCompanyChange($event)"></kendo-dropdownlist>
+                        </label>
+
+                        <label class="k-form-field">
+                            <span class="opti_form-label">
                                 Company *
                             </span>
                             <kendo-dropdownlist [disabled]="hasCompaneyData==false" [textField]="'OPTM_COMPID'" [valueField]="'OPTM_COMPID'" [data]="listItems"
