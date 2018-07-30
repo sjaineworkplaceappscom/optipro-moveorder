@@ -25,7 +25,7 @@
                                 </div>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Work Order * </span>
+                                    <span class="opti_form-label">Work Order * <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number </span></span>
                                     <span class="float-left opti_work-order">
                                         <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()">
                                      
@@ -38,7 +38,7 @@
                                     </span>
                                   
                                 </label>
-                                <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number. </span>
+                                
                                
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
@@ -52,7 +52,7 @@
                                 </label>
 
                                 <label class="k-form-field">
-								    <span class="opti_form-label">Operation Number *</span>
+								    <span class="opti_form-label">Operation Number * <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number</span></span>
                                     <span class="float-left opti_operation">
                                         <input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onWorkOrderBlur()" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
                                     </span>
@@ -62,7 +62,7 @@
                                         <img src="assets/images/common/scanner.svg" title="Scan" id="operationNumberScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                 </label>
-                                <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number. </span>
+                                
                             
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced *</span>
