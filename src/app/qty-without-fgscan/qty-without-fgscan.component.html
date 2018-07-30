@@ -4,22 +4,22 @@
       <div class="col-md-12">
           <form class="k-form col-md-12">
               <label class="k-form-field">
-                <span class="opti_form-label">Balance Qty</span>
+                <span class="opti_form-label">Balance Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iBalQtyID" name="iBalQtyName" [(ngModel)]="iBalQty" [disabled]=true>
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Accepted Qty</span>
+                <span class="opti_form-label">Accepted Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" (blur)="onAccepetedQtyBlur()" />
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Rejected Qty</span>
+                <span class="opti_form-label">Rejected Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" (blur)="onRejectQtyBlur()" />
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">NC Qty</span>
+                <span class="opti_form-label">NC Qty <span class="float-right opti_error-msg"> Invalid Balance Quantity </span></span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" (blur)="onNCQtyBlur()" />
               </label>
 

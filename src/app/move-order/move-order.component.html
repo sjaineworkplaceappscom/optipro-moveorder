@@ -25,7 +25,7 @@
                                 </div>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Work Order * </span>
+                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)">Work Order *</span> <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number </span></span>
                                     <span class="float-left opti_work-order">
                                         <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()">
                                      
@@ -33,12 +33,12 @@
                                     </span> 
                                     <span class="opti_workorder-icon">
                                         <img src="assets/images/common/list.svg" title="Work Order's" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
-                                        <img src="assets/images/common/detail.svg" title="Work Order Detail" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <!-- <img src="assets/images/common/detail.svg" title="Work Order Detail" class="opti_mouse-pointer" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/> -->
                                         <img src="assets/images/common/scanner.svg" title="scan" id="workOrderScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                   
                                 </label>
-                                <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number. </span>
+                                
                                
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Product Code</span>
@@ -52,17 +52,17 @@
                                 </label>
 
                                 <label class="k-form-field">
-								    <span class="opti_form-label">Operation Number *</span>
+								    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onOperDtlPress(true,OperationDetailImageStatus)">Operation Number *</span> <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number</span></span>
                                     <span class="float-left opti_operation">
                                         <input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onWorkOrderBlur()" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
                                     </span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" title="Operation's" class="opti_mouse-pointer" (click)="onOperationPress(true,GetOperationImageStatus)" alt="work order" width="27px" height="27px"  />
-                                        <img src="assets/images/common/detail.svg" title="Operation Detail" class="opti_mouse-pointer" (click)="onOperDtlPress(true,OperationDetailImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/>
+                                        <!-- <img src="assets/images/common/detail.svg" title="Operation Detail" class="opti_mouse-pointer" (click)="onOperDtlPress(true,OperationDetailImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/> -->
                                         <img src="assets/images/common/scanner.svg" title="Scan" id="operationNumberScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                 </label>
-                                <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number. </span>
+                                
                             
                                 <label class="k-form-field">
                                     <span class="opti_form-label">Qty Produced *</span>
