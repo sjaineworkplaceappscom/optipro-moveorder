@@ -82,11 +82,9 @@ export class FgrmscanparentComponent implements OnInit {
 
   //This will reload the screen
   receiveMessage($event) {
-
     if($event == "FromFGRMScanParentInputForm"){
         this.fillFGData();
       }
-
   }
 
   //On OK Press the control will back to the main Move Order screen

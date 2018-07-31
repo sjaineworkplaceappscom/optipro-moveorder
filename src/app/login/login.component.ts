@@ -73,8 +73,8 @@ export class LoginComponent implements OnInit {
               this.psURL = data;
 
               //For code analysis remove in live enviorments.
-              //this.psURL = "http://localhost:57966/api";
-              this.psURL = "http://172.16.6.140/OptiAdmin/api";
+              this.psURL = "http://localhost:57979/api";
+             // this.psURL = "http://172.16.6.140/OptiAdmin/api";
             }
           }
         )

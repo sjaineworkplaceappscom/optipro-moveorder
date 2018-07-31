@@ -11,6 +11,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   @Input() basicDetailFrmParentInput:any;
   @Input() detailsOfParentinputFrm:any;
   @Input() childGridDataArray:any;
+  @Input() rowChildEditFrmParentInpt:any;
   psChildCompItemCode:string = '';
   psChildCompBatchSer:string = '';
   CompanyDBId:string = '';
@@ -24,7 +25,9 @@ export class FgrmscanchildinputformComponent implements OnInit {
   childCompItemCodeDetls:any;
   loggedInUser:string;
   iSysNum:number;  
+  seqNo:any;
   showLoader:boolean = false;
+  bIsInEditMode:boolean = false;
   constructor(private FGRMinput:FgrmscanchildinputformService) { }
   
   @Output() messageEvent = new EventEmitter<string>();
@@ -32,9 +35,20 @@ export class FgrmscanchildinputformComponent implements OnInit {
   ngOnInit() {
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
-    console.log(this.basicDetailFrmParentInput)
-    console.log(this.detailsOfParentinputFrm);
+    
+    //Take if is in edit mode
+    if(this.rowChildEditFrmParentInpt !=null){
+      if(this.rowChildEditFrmParentInpt.length > 0){
+        this.bIsInEditMode = true;
+        this.psChildCompItemCode = this.rowChildEditFrmParentInpt[0].ChildItemCode
+        this.psChildCompBatchSer = this.rowChildEditFrmParentInpt[0].ChildBatchSerNo
+        this.iQty = this.rowChildEditFrmParentInpt[0].Qty,
+        this.seqNo = this.rowChildEditFrmParentInpt[0].SequenceNo
+        this.sChildManagedBy = this.rowChildEditFrmParentInpt[0].ManagedBy
+      }
+    }
 
+    //this.disableEnableControls();
   }
 
   showLevelChild(){
@@ -102,25 +116,42 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //on Save row press
   onRMAddRowPress(){
-   
+    let sendRMRowToParent: any;
+
+      // if(this.bIsInEditMode == false){
+        //This means it is in edit mode so prepare array for updation
+      // else{
+      //   //This json row will use to update the child data
+      //   sendRMRowToParent = {
+      //     OPTM_SEQ: this.seqNo,
+      //     OPTM_ITEMCODE: this.psChildCompItemCode,
+      //     OPTM_BTCHSERNO: this.psChildCompBatchSer,
+      //     OPTM_QUANTITY: this.iQty,
+      //     ManagedBy: this.sChildManagedBy
+      //   }
+
+      // }
+
+       if(this.bIsInEditMode == false){
     if(this.checkIfChildComponentsExists() == false)
     {
-      //This json row will be added to the grid present in the parent form of this one
-    let sendRMRowToParent: any = {
-      OPTM_SEQ: 0,
-      OPTM_ITEMCODE: this.psChildCompItemCode,
-      OPTM_BTCHSERNO: this.psChildCompBatchSer,
-      OPTM_QUANTITY:this.iQty,
-      OPTM_BINNO: this.sChildBin,
-      OPTM_WHSCODE: this.sChildWhse,
-      ManagedBy: this.sChildManagedBy,
-      CompanyDBId :this.CompanyDBId,
-      WorkOrder : this.basicDetailFrmParentInput[0].WorkOrderNo,
-      ParentBatchSerial: this.detailsOfParentinputFrm.ParentBatchSer,
-      User: this.loggedInUser,
-      OperNo: this.detailsOfParentinputFrm.OperNo,
-      SysNumber: this.iSysNum
-    };
+    
+        //This json row will be added to the grid present in the parent form of this one
+        sendRMRowToParent = {
+          OPTM_SEQ: 0,
+          OPTM_ITEMCODE: this.psChildCompItemCode,
+          OPTM_BTCHSERNO: this.psChildCompBatchSer,
+          OPTM_QUANTITY:this.iQty,
+          OPTM_BINNO: this.sChildBin,
+          OPTM_WHSCODE: this.sChildWhse,
+          ManagedBy: this.sChildManagedBy,
+          CompanyDBId :this.CompanyDBId,
+          WorkOrder : this.basicDetailFrmParentInput[0].WorkOrderNo,
+          ParentBatchSerial: this.detailsOfParentinputFrm.ParentBatchSer,
+          User: this.loggedInUser,
+          OperNo: this.detailsOfParentinputFrm.OperNo,
+          SysNumber: this.iSysNum
+        };
 
     //check that the entered data is not duplicate before pushing into array
     let isEntryExists = this.childGridDataArray.some(e => e.OPTM_BTCHSERNO === this.psChildCompBatchSer && e.OPTM_ITEMCODE == e.psChildCompItemCode);
@@ -142,6 +173,21 @@ export class FgrmscanchildinputformComponent implements OnInit {
       alert("Item componenent with this batch/serial already exists");
     }
   }
+  //update/edit Mode
+  else{
+     //This json row will use to update the child data
+        sendRMRowToParent = {
+          OPTM_SEQ: this.seqNo,
+          OPTM_ITEMCODE: this.psChildCompItemCode,
+          OPTM_BTCHSERNO: this.psChildCompBatchSer,
+          OPTM_QUANTITY: this.iQty,
+          ManagedBy: this.sChildManagedBy,
+          LoggedInUser:this.loggedInUser
+        }
+        this.messageEvent.emit(sendRMRowToParent);
+        this.showLevelChild();
+  }
+  }
   //Core Functions
   checkIfChildComponentsExists(){
     let isCompExists = false;
@@ -151,5 +197,9 @@ export class FgrmscanchildinputformComponent implements OnInit {
     
     return isCompExists;
   }
+
+  // disableEnableControls(){
+
+  // }
 
 }

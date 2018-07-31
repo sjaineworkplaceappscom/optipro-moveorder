@@ -17,6 +17,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   basicDetailsToChildForm: any;
   ChildCompGridData:any = [];
   ParentGridData:any = [];
+  rowDataForChildEdit: any = [];
   oModalData:any = {};
   detailsOfParentToChild:any;
   showFGRMScanChildInsertPopup:boolean = false;
@@ -31,6 +32,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   iSeqNo:number;
   showLoader:boolean = false;
   bIsInEditMode:boolean = false;
+  bIsRMGridInEditMode:boolean = false;
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
@@ -157,8 +159,28 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //This event will recieve the data from its child input form
   receiveArrayRMRowData($event) {
-      this.showFGRMScanChildInsertPopup = false;
+    
+    console.log($event);
+    this.showFGRMScanChildInsertPopup = false;
+    if(this.bIsRMGridInEditMode == false){
+      
       this.ChildCompGridData.push($event);
+    }
+    //if is in edit mode then
+    else{
+        for(let iRowCount in this.ChildCompGridData){
+          if($event.OPTM_SEQ == this.ChildCompGridData[iRowCount].OPTM_SEQ){
+            this.ChildCompGridData[iRowCount].OPTM_ITEMCODE = $event.OPTM_ITEMCODE
+            this.ChildCompGridData[iRowCount].OPTM_BTCHSERNO = $event.OPTM_BTCHSERNO
+            this.ChildCompGridData[iRowCount].OPTM_QUANTITY = Number($event.OPTM_QUANTITY)
+          }
+        }
+
+        console.log("NOWQ UPADTED ARRAY--->")
+        console.log(this.ChildCompGridData);
+        
+    }
+      
   }
 
   //This function will save the final data for a single FG Batch/Serial
@@ -221,10 +243,39 @@ export class FgrmscanparentinputformComponent implements OnInit {
     this.showLevelParent();
   }
 
+  //Following will remove the data
   removeHandler({ rowIndex }){
       this.deleteRMDataBySeq(rowIndex);
   }
-  editHandler({ rowIndex }){}
+  
+  //For edititng child the following fucntion will work
+  editHandler({ rowIndex }){
+    this.bIsRMGridInEditMode = true;
+    //To show the popup screen which will supdateave the data
+    this.showLevelSuperChild();
+    this.rowDataForChildEdit.push({ 
+      SequenceNo: this.ChildCompGridData[rowIndex].OPTM_SEQ,
+      ChildItemCode: this.ChildCompGridData[rowIndex].OPTM_ITEMCODE,
+      ChildBatchSerNo: this.ChildCompGridData[rowIndex].OPTM_BTCHSERNO,
+      Qty:this.ChildCompGridData[rowIndex].OPTM_QUANTITY,
+      ManagedBy: this.ChildCompGridData[rowIndex].ManagedBy,
+      loggedInUser: this.loggedInUser
+     });
+
+  }
+
+  //It will receive out put of child
+  // receiveMessage($event) {
+  //   alert("Yes i got child updated ");  
+  //   console.log($event);
+  //   //   if ($event == "true") {
+  // //     //This will again hide the popup again
+  // //  //   this.showDataInsertPopup = false;
+  // //     //This will again refresh the grid again
+  // //   //  this.fillFGData();
+  // //     this.rowDataForChildEdit = [];
+  // //   }
+  // }
   //Core Functions
   
   //this will chk if the data we are adding is duplicate
