@@ -4,79 +4,83 @@
     </div>
 <!-- loader end -->
 <div #QtyFGScanIDParent id="opti_QtyFGScanID"> 
-    <kendo-grid 
-    [kendoGridBinding]="FGScanGridData" 
-    [height]=gridHeight-52-200
-    (remove)="removeHandler($event)"
-    (edit)="editHandler($event)"
-    [resizable]="false" 
-    [pageSize]="50" 
-    [pageable]="true" 
-    [sortable]="true"  
-    [filterable]="false"
-    [groupable]="false" 
-    >
+        <kendo-grid 
+        [kendoGridBinding]="FGScanGridData" 
+        [height]=gridHeight-52-62 
+        (remove)="removeHandler($event)"
+        (edit)="editHandler($event)"
+        [resizable]="false" 
+        [pageSize]="50" 
+        [pageable]="true" 
+        [sortable]="true"  
+        [filterable]="false"
+        [groupable]="false" 
+        >
 
-    <ng-template kendoGridToolbarTemplate>
-        <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelChild()" width="20px" height="20px">
-        <h5>Finished Goods List</h5>
-    </ng-template>  
+        <ng-template kendoGridToolbarTemplate>
+            <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelChild()" width="20px" height="20px">
+            <h5>Finished Goods List</h5>
+        </ng-template>  
 
-    
-    <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
-    <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
-    <kendo-grid-column field="OPTM_QUANTITY" title="Quatity" class="text-right" width="120"></kendo-grid-column>
-    <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="120">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="OPTM_NC" title="NC"  width="100">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-command-column title="Actions" width="120">
-        <ng-template kendoGridCellTemplate>
-            <button kendoGridEditCommand class="k-primary"  *ngIf="showEditBtn">Edit</button>
-            <button kendoGridRemoveCommand class="k-primary">Delete</button>
-        </ng-template>
-    </kendo-grid-command-column>
-</kendo-grid>
+        
+        <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
+        <kendo-grid-column field="OPTM_BTCHSERNO" title="FG Batch/Serial" width="120"></kendo-grid-column>
+        <kendo-grid-column field="OPTM_QUANTITY" title="Quatity" class="text-right" width="120"></kendo-grid-column>
+        <kendo-grid-column field="OPTM_REJECT" title="Reject"  width="120">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="OPTM_NC" title="NC"  width="100">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column title="Actions" width="150">
+            <ng-template kendoGridCellTemplate>
+                <button kendoGridEditCommand class="k-primary"  *ngIf="showEditBtn">Edit</button>
+                <button kendoGridRemoveCommand class="k-primary">Delete</button>
+            </ng-template>
+        </kendo-grid-command-column>
+    </kendo-grid>
 
-<div class="text-right">
-    <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
-</div>
 
-<div class="opti_quantity-summary">
-    <form class="k-form float-right col-md-5 ">
-        <label class="k-form-field">
-            <span class="opti_form-label">Produced Qty</span>
-            <input type="text" style="text-align: right;" class="k-textbox" value="{{lblProducedQty}}" disabled>
-        </label>
+    <div class="row">
+        <div class="opti_quantity-summary col-md-12 col-lg-10">
+            <form class="k-form float-right">
+                <label class="k-form-field">
+                    <span class="opti_form-label">Produced Qty</span>
+                    <input type="text" style="text-align: right;" class="k-textbox" value="{{lblProducedQty}}" disabled>
+                </label>
 
-        <label class="k-form-field">
-            <span class="opti_form-label">Balance Qty</span>
-            <input type="text" style="text-align: right;" class="k-textbox" value="{{lblBalQty}}" disabled>
-        </label>
+                <label class="k-form-field">
+                    <span class="opti_form-label">Balance Qty</span>
+                    <input type="text" style="text-align: right;" class="k-textbox" value="{{lblBalQty}}" disabled>
+                </label>
 
-        <label class="k-form-field">
-                <span class="opti_form-label">Accepted Qty</span>
-                <input type="text" style="text-align: right;" class="k-textbox" value="{{lblAcceptedQty}}" disabled>
-        </label>
+                <label class="k-form-field">
+                        <span class="opti_form-label">Accepted Qty</span>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblAcceptedQty}}" disabled>
+                </label>
 
-        <label class="k-form-field">
-                <span class="opti_form-label">Rejected Qty</span>
-                <input type="text" style="text-align: right;" class="k-textbox" value="{{lblRejectedQty}}" disabled>
-        </label>
+                <label class="k-form-field">
+                        <span class="opti_form-label">Rejected Qty</span>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblRejectedQty}}" disabled>
+                </label>
 
-        <label class="k-form-field">
-                <span class="opti_form-label">NC Qty</span>
-                <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
-        </label>
-      
-    </form>
-</div>
+                <label class="k-form-field">
+                        <span class="opti_form-label">NC Qty</span>
+                        <input type="text" style="text-align: right;" class="k-textbox" value="{{lblNCQty}}" disabled>
+                </label>
+            
+            </form>
+        </div>
+
+        <div class="text-right col-md-12 col-lg-2">
+            <button type="button" (click)="onOKPress()"  class="k-button k-primary opti_ok">OK</button>
+        </div>
+    </div>    
+
 </div>
         
 <section #QtyFGScanChildID id="opti_QtyFGScanChildID">
