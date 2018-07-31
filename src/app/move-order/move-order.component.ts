@@ -319,6 +319,7 @@ export class MoveOrderComponent implements OnInit {
   //This will recive data from lookup
   receiveLookupRowData($event) {
     if (this.openedLookup == "WOLookup") {
+      this.cleanupScreen();
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;

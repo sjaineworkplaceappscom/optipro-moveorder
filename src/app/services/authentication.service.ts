@@ -23,7 +23,7 @@ export class AuthenticationService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ Login: JSON.stringify([{ User: loginId, Password: loginPassword, IsAdmin: false }]) };
   //Return the response form the API  
-  return this.httpclient.post(psURL+"/login/ValidateUserLogin",jObject,this.httpOptions);
+  return this.httpclient.post(psURL+"/api/login/ValidateUserLogin",jObject,this.httpOptions);
   }
 
   //This function will get Company acc. to User
@@ -31,7 +31,7 @@ export class AuthenticationService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ Username: JSON.stringify([{ Username: loginId ,Product: "SFES"}]) };
     //Return the response form the API  
-    return this.httpclient.post(psURL+"/login/GetCompaniesAndLanguages",jObject,this.httpOptions)
+    return this.httpclient.post(psURL+"/api/login/GetCompaniesAndLanguages",jObject,this.httpOptions)
   }
 
   //Get psURL
@@ -47,7 +47,7 @@ export class AuthenticationService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject: any = { CompanyName: JSON.stringify([{ Username: loginId, CompanyDBId: CompanyDBID }]) };
     //Return the response form the API  
-    return this.httpclient.post(psURL + "/login/GetWHS", jObject, this.httpOptions)
+    return this.httpclient.post(psURL + "/api/login/GetWHS", jObject, this.httpOptions)
   }
 
 };
