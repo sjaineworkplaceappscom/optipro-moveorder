@@ -23,7 +23,7 @@ export class QtyWithFGScanComponent implements OnInit {
   public view: Observable<GridDataResult>;
   public showLoader: boolean = false;
 
-  constructor(private qtyWithFGScan: QtyWithFGScanService) { }
+  constructor(private qtyWithFGScan: QtyWithFGScanService) { this.clearValues();}
   @Output() messageEvent = new EventEmitter<string>();
   txtFGValue: string = "";
   txtFGSerBatValue: string = "";
@@ -45,9 +45,17 @@ export class QtyWithFGScanComponent implements OnInit {
   onResize(event) {
     this.gridHeight = UIHelper.getMainContentHeight();
   }
-
+  ngOnChange(){
+    this.clearValues();
+    alert('onchange-Child');
+    this.fillFGData();
+    this.refreshQtys();
+  }
   ngOnInit() {
 
+  this.clearValues();
+
+    alert('change init');  
     this.gridHeight = UIHelper.getMainContentHeight();
 
     //  hide child level 
@@ -61,6 +69,23 @@ export class QtyWithFGScanComponent implements OnInit {
     this.refreshQtys();
   }
 
+  clearValues(){
+    this.txtFGValue = "";
+  this.txtFGSerBatValue = "";
+  this.txtFGQty = 0;
+  this.isFGValid = true;
+  this.lblBalQty = 0.0;
+  this.lblAcceptedQty= 0.0;
+  this.lblRejectedQty = 0.0;
+  this.lblNCQty= 0.0;
+  this.lblProducedQty= 0.0;
+  this.rowID= 0;
+  this.showDataInsertPopup = false;
+  this.rowDataForEdit = [];
+  this.showEditBtn = true;
+  //this.basicDetailsFrmMO=[];
+  
+  }
   showLevelChild() {
     this.QtyFGScanChildID.nativeElement.style.display = 'block';
     this.QtyFGScanIDParent.nativeElement.style.display = 'none';

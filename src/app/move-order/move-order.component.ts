@@ -261,7 +261,7 @@ export class MoveOrderComponent implements OnInit {
       this.openRightSection(status)
       this.isQuantityRightSection = status;
       document.getElementById('opti_QuantityRightSection').style.display = 'block';
-
+      this.basicDetails=[];
       //Setting basic details to share on another screen
       this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
       this.showItemLinkingScreen = true;
@@ -319,7 +319,16 @@ export class MoveOrderComponent implements OnInit {
   //This will recive data from lookup
   receiveLookupRowData($event) {
     if (this.openedLookup == "WOLookup") {
-      this.cleanupScreen();
+      //this.cleanupScreen();
+      //here we will clear values
+      this.psOperNO = "";
+      this.psOperName = "";
+      this.psToOperation = "";
+      this.iProducedQty = 0;
+      if(this.settingOnSAP == "2"){
+        this.showQtyWithFGScanScreen = false;
+      }
+
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;
@@ -386,6 +395,7 @@ export class MoveOrderComponent implements OnInit {
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
+      this.showQtyWithFGScanScreen=false;
     }
     if(this.settingOnSAP == "3"){
       this.iAcceptedQty = $event.AcceptedQty;
