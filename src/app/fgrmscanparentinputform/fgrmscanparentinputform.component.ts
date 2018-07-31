@@ -180,7 +180,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
         console.log(this.ChildCompGridData);
         
     }
-      
+    //To clear the array after call backing from the child form
+    this.rowDataForChildEdit = [];
   }
 
   //This function will save the final data for a single FG Batch/Serial
