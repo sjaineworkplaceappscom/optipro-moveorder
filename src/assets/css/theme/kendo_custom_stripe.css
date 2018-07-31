@@ -37,17 +37,20 @@ li.opti_list:hover,
 ul.opti_liststyle-one-ul .opti_liststyle-one-li:hover,
 app-left #opti_LeftPanelID .opti_left-nav-ul li.active
 {
-    background-color: var(--kendo-light-primary-hover-color);
+    /* background-color: var(--kendo-light-primary-hover-color); */
+    background-color: rgba(31, 162, 255, 0.2);
 }
 
 #opti_LeftPanelID,
 #opti_ThemeSettingID{
-    background-color: var(--kendo-white-color);
+    /* background-color: var(--kendo-white-color); */
+    background-color: #fff;
 }
 
 #opti_RightPanelID,
 .opti_menusidebar-mobile-open app-left #opti_LeftPanelID{
-    background-color: var(--kendo-off-white-color);
+    /* background-color: var(--kendo-off-white-color); */
+    background-color: #f0f0f0;
 }
 
 .opti_tab-outer ul.tabs > li:hover,
@@ -57,37 +60,46 @@ body .k-grid tbody tr:hover,
 .ps__rail-y:hover > .ps__thumb-y, 
 .ps__rail-y:focus > .ps__thumb-y,
 button {
-    background-color: var(--kendo-primary-color);
+    /* background-color: var(--kendo-primary-color); */
+    background-color : #1fa2ff
 }
 
 .opti_loader .opti_spinner{
-    border-top-color:var(--kendo-primary-color) !important;
+    /* border-top-color:var(--kendo-primary-color) !important; */
+    border-top-color:#1fa2ff !important;
 }
 
 button{
-    border-color: var(--kendo-primary-color);
+    /* border-color: var(--kendo-primary-color); */
+    border-color: #1fa2ff;
 }
 
 .k-grid-header thead tr th a.k-link,
   .k-indicator-container,
   a, h1, h2, h3, h4, h5, h6,
   .k-grid-header .k-header{
-      color: var(--kendo-primary-color);
+      /* color: var(--kendo-primary-color); */
+      color: #1fa2ff;
   }
 
 a:hover{
-    color: var(--kendo-secondry-color);
+    /* color: var(--kendo-secondry-color); */
+    color: #9dd0f3;
+    
 }
 
 body .k-grid tbody tr:hover,
 button {
-    color: var(--kendo-white-color);
+    /* color: var(--kendo-white-color); */
+    color: #fff;
 }
 
 body kendo-grid,
 .opti_left-navigation,
 .opti_right-fix-section{
-    box-shadow: 0px 1px 15px var(--kendo-primary-color);
+    /* box-shadow: 0px 1px 15px var(--kendo-primary-color); */
+    box-shadow: 0px 1px 15px #1fa2ff;
+    
 }
 
   /*****************************************************************************************/
