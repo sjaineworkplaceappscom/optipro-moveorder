@@ -6,6 +6,7 @@ import { LookupComponent } from "src/app/lookup/lookup.component";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
+import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY } from 'ng-pick-datetime/date-time/date-time-picker.component';
 
 @Component({
   selector: 'app-move-order',
@@ -34,7 +35,7 @@ export class MoveOrderComponent implements OnInit {
   showOperDtPopup: boolean = false;
   showItemLinkingScreen: boolean = false;
   ScreenName: string = '';
-  settingOnSAP: string = "3";
+  settingOnSAP: string = "";
   showQtyWithFGScanScreen: boolean = false;
   showQtyNoScanScreen: boolean = false;
   showQtyWithFGRMScanScreen: boolean = false;
@@ -110,6 +111,8 @@ export class MoveOrderComponent implements OnInit {
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     //get Whse name from session
     this.warehouseName = sessionStorage.getItem('selectedWhse');
+    //Get Settingsfrom DB for Option Screens
+    this.getSettingOnSAP();
     //On Form Initialization get All WO
     this.getAllWorkOrders();
     //this function will set the time and date of the server
@@ -580,5 +583,22 @@ export class MoveOrderComponent implements OnInit {
         alert("please enter  date")
       }
       return true;
+    }
+
+    getSettingOnSAP(){
+    this.showLoader = true;
+      //here we will read the settings frm db
+    this.mo.getSettingOnSAP(this.CompanyDBId).subscribe(
+      data => {
+        if(data !=null || data != undefined){
+          this.settingOnSAP = data;
+          this.showLoader = false;
+        }
+        else{
+          this.showLoader = false;
+        }
+      }
+    ) 
+
     }
 }

@@ -74,4 +74,14 @@ export class MoveorderService {
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);
   }
+
+  //Get Setting from DB
+  getSettingOnSAP(CompanyDBID:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ 
+     CompanyDBID: CompanyDBID
+   }])};
+ //Return the response form the API  
+ return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetSettingOnSAP",jObject,this.httpOptions);
+ }
 }
