@@ -158,6 +158,10 @@ export class MoveOrderComponent implements OnInit {
 
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur() {
+    var inputValue = (<HTMLInputElement>document.getElementById('psWONOid')).value;
+    if(inputValue.length>0){
+      this.psWONO = inputValue;
+    }
 
     if (this.allWODetails != null &&
       this.allWODetails.length > 0 &&
@@ -220,6 +224,11 @@ export class MoveOrderComponent implements OnInit {
 
   //If user puts manual entry for operation then this fun will check whether oper is valid
   onOperationNoBlur() {
+    var inputValue = (<HTMLInputElement>document.getElementById('psOperNOid')).value;
+    if(inputValue.length>0){
+      this.psOperNO = inputValue;
+    }
+
     if (this.allWOOpDetails != null && this.allWOOpDetails.length > 0) {
       //Enable the Produced Quantity Input 
       this.DisableEnablQuantity = false;

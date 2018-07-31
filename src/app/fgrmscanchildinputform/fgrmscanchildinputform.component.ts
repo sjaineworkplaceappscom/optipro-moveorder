@@ -56,6 +56,10 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //Events
   onChildCompItemBlur(){
+    var inputValue = (<HTMLInputElement>document.getElementById('psChildCompItemCodeID')).value;
+    if(inputValue.length>0){
+      this.psChildCompItemCode = inputValue;
+    }
     this.showLoader = true;
     //First we will check whether the child component Item code entered is valid and get its details
     if(this.psChildCompItemCode != null && this.psChildCompItemCode.length > 0){
