@@ -67,3 +67,7 @@ app-topbar{
 body kendo-grid{
     box-shadow: none !important;
 }
+
+kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-edit-command {
+    margin: 0 5px 5px 0 !important;
+}

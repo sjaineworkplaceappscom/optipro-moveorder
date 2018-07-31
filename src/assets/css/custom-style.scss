@@ -90,3 +90,11 @@ body.opti_body-move-order.opti_account-module {
 td.opti_Balance.Quantity {
   text-align: right;
 }
+
+
+kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-remove-command {
+  margin: 0 !important;
+}
+kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-edit-command {
+  margin: 0 5px 0 0 !important;
+}

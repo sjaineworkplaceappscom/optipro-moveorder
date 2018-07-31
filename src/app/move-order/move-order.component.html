@@ -127,7 +127,7 @@
                 <div class="container-fluid"> 
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
+                            <img *ngIf="!isQuantityRightSection" src="assets/images/common/back-opposite.svg" (click)="closeRightSection(false)" class="opti_mouse-pointer float-right opti_vertical-align opti_close-icon-right-section" width="20px" height="20px" />
                             
                             <!-- Quantity Screen start -->
                             <div id="opti_QuantityRightSection" [ngStyle]="{'display':isQuantityRightSection == true ? 'block' : 'none' }">
