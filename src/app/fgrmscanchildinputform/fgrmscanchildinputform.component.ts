@@ -47,8 +47,6 @@ export class FgrmscanchildinputformComponent implements OnInit {
         this.sChildManagedBy = this.rowChildEditFrmParentInpt[0].ManagedBy
       }
     }
-
-    //this.disableEnableControls();
   }
 
   showLevelChild(){
@@ -78,7 +76,6 @@ export class FgrmscanchildinputformComponent implements OnInit {
                   this.sChildWhse = this.childCompItemCodeDetls[0].WareHouse
                   this.sChildManagedBy = this.childCompItemCodeDetls[0].ManagedBy
                 }
-
                 this.showLoader = false;
           }
           else{
@@ -197,9 +194,4 @@ export class FgrmscanchildinputformComponent implements OnInit {
     
     return isCompExists;
   }
-
-  // disableEnableControls(){
-
-  // }
-
 }
