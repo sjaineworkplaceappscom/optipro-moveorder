@@ -19,7 +19,6 @@ export class FgrmscanparentComponent implements OnInit {
   lblNCQty:number =0.0;
   lblProducedQty:number = 0.0;
   basicDetailsToFGParentInput:any;
-  showFGRMScanParentInsertPopup:boolean = false;
   rowDataForEdit: any = [];
   showFGInputForm:any = false;
   showLoader:boolean = false;
@@ -83,7 +82,11 @@ export class FgrmscanparentComponent implements OnInit {
   //This will reload the screen
   receiveMessage($event) {
     if($event == "FromFGRMScanParentInputForm"){
-        this.fillFGData();
+      //This will hide the FGRM Svan paretn input form
+      this.showFGInputForm = false;
+      this.fillFGData();
+      //This will clear ro data
+      this.rowDataForEdit = [];
       }
   }
 
