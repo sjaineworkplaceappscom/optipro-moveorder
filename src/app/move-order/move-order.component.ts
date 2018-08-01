@@ -7,6 +7,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
 import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY } from 'ng-pick-datetime/date-time/date-time-picker.component';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-move-order',
@@ -16,7 +17,9 @@ import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY } from 'ng-pick-datetime/
 
 export class MoveOrderComponent implements OnInit {
 
-  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent) { }
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent,private commonService:CommonService) { }
+  showWOLookup:boolean=false;
+  showOperLookup:boolean=false;
 
   selectedWODetail: any;
   selectedWOOperDetail: any;
@@ -49,7 +52,7 @@ export class MoveOrderComponent implements OnInit {
   bEnabeSaveBtn: boolean = false;
   basicDetails: any = [];
   psItemManagedBy: string;
-  showLookup: boolean = false;
+  //showLookup: boolean = false;
   openedLookup: string = '';
   moDetails:any;
   psToOperation:any;
@@ -82,13 +85,15 @@ export class MoveOrderComponent implements OnInit {
   //lookup data reciever
   @ViewChild(LookupComponent) child;
   @ViewChild(QtyWithoutFGScanComponent) childSAPSettingForms;
+
   isFixedRightSection: boolean;
   isWorkOrderRightSection: boolean = false;
   isOperationRightSection: boolean = false;
   isQuantityRightSection: boolean = false;
   isWorkOrderListRightSection: boolean = false;
   isOperationListRightSection: boolean = false;
-
+  public parent:string="wo"
+  public selectedLookUpData:any;
 
   gridHeight: number;
 
@@ -106,6 +111,78 @@ export class MoveOrderComponent implements OnInit {
     element.className = "";
     element.classList.add("opti_body-move-order");
     element.classList.add("opti_account-module");
+
+
+    this.commonService.commonData$.subscribe(
+      data=> {
+        
+        this.selectedLookUpData=data;
+
+        
+    if (this.openedLookup == "WOLookup") {
+      //this.cleanupScreen();
+
+      //here we will clear values
+       this.clearScreenAfterLookup();
+      
+
+      this.psWONO = this.selectedLookUpData.U_O_ORDRNO;
+      this.psProductCode = this.selectedLookUpData.U_O_PRODID;
+      this.psProductDesc = this.selectedLookUpData.ItemName;
+      this.docEntry = this.selectedLookUpData.DocEntry;
+      this.iOrderedQty = this.selectedLookUpData.U_O_ORDRQTY;
+      this.psItemManagedBy = this.selectedLookUpData.ManagedBy;
+
+
+      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+      if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
+        //enable  Operation input Box
+        this.DisableEnablOperation = false;
+        this.getOperationByWONO();
+       this.showLoader=false;
+      }
+      else {
+        //disable the Operation input Box
+        this.DisableEnablOperation = true;
+      }
+
+    }
+
+    if (this.openedLookup == "OperLookup") {
+      this.psOperNO = this.selectedLookUpData.U_O_OPERNO;
+      this.getSelectedOperationDetail();
+      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+      if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
+        //enable  Operation input Box
+        this.DisableEnablQuantity = false;
+        this.InvalidOperation=false;
+      }
+      else {
+        //disable the Operation input Box
+        this.DisableEnablQuantity = true;
+        this.InvalidOperation=true;
+      }
+
+    }
+    //To hide the lookup
+    //this.showLookup = false;
+    this.showWOLookup=false;
+    this.showOperLookup=false;
+    this.parent="";
+
+    //close the right section
+    this.closeRightSection(false);
+
+    //To clear the lookup screen name on close
+    this.openedLookup = '';
+
+    //Clear the data of lookup
+    this.lookupData = null;
+
+    //To clear the columns name 
+    this.columnsToShow = [];
+      }
+    )
     //get company name from session
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     //get the logged in user name from session
@@ -122,6 +199,8 @@ export class MoveOrderComponent implements OnInit {
    
   }
 
+  
+
   //This will get all WO
   onWOPress(status) {
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
@@ -131,13 +210,19 @@ export class MoveOrderComponent implements OnInit {
     this.isWorkOrderListRightSection = status;
     this.openRightSection(status);
 
-    this.showLookup = true;
+    //this.showLookup = true;
+    
+    this.lookupData = this.allWODetails;
     //On Form Initialization get All WO
-    this.getAllWorkOrders();
+    //this.getAllWorkOrders();
+    this.showOperLookup=false;
+    this.showWOLookup=true;
+    this.parent="wo";
 
   }
 
   onOperationPress(status, GetOperationImageStatus) {
+    this.openedLookup="OperLookup";
     //show loader
     this.showLoader = true;
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
@@ -145,13 +230,17 @@ export class MoveOrderComponent implements OnInit {
      GetOperationImageStatus = false;
     }
     else {
+     GetOperationImageStatus = true;
       
-        GetOperationImageStatus = true;
+        
     }
     if (GetOperationImageStatus == true) {
       this.columnsToShow = this.sOperationLookupColumns.split(",");
       this.isOperationListRightSection = status;
       this.openRightSection(status);
+      this.showOperLookup=true;
+    this.showWOLookup=false;
+    this.parent="opr";
     }
     //hide loader
     this.showLoader = false;
@@ -221,6 +310,7 @@ export class MoveOrderComponent implements OnInit {
     this.isOperationRightSection = status
     this.openRightSection(status)
     this.getSelectedOperationDetail();
+   
     }
   }
 
@@ -329,16 +419,13 @@ export class MoveOrderComponent implements OnInit {
   }
   //This will recive data from lookup
   receiveLookupRowData($event) {
+    
     if (this.openedLookup == "WOLookup") {
       //this.cleanupScreen();
+
       //here we will clear values
-      this.psOperNO = "";
-      this.psOperName = "";
-      this.psToOperation = "";
-      this.iProducedQty = 0;
-      if(this.settingOnSAP == "2"){
-        this.showQtyWithFGScanScreen = false;
-      }
+       this.clearScreenAfterLookup();
+      
 
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
@@ -346,6 +433,8 @@ export class MoveOrderComponent implements OnInit {
       this.docEntry = $event.DocEntry;
       this.iOrderedQty = $event.U_O_ORDRQTY;
       this.psItemManagedBy = $event.ManagedBy;
+
+
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
         //enable  Operation input Box
@@ -360,7 +449,7 @@ export class MoveOrderComponent implements OnInit {
     }
 
     if (this.openedLookup == "OperLookup") {
-      this.psOperNO = $event.U_O_OPERNO;
+      //this.psOperNO = $event.U_O_OPERNO;
       this.getSelectedOperationDetail();
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
@@ -376,7 +465,10 @@ export class MoveOrderComponent implements OnInit {
 
     }
     //To hide the lookup
-    this.showLookup = false;
+    //this.showLookup = false;
+    this.showWOLookup=false;
+    this.showOperLookup=false;
+    this.parent="";
 
     //close the right section
     this.closeRightSection(false);
@@ -444,7 +536,8 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This fun will get all WO
-  getAllWorkOrders() {
+  getAllWorkOrders() {   
+
     //Show Loader
     this.showLoader = true;
     this.mo.getAllWorkOrders(this.CompanyDBId,this.warehouseName).subscribe(
@@ -474,7 +567,7 @@ export class MoveOrderComponent implements OnInit {
           if (this.allWOOpDetails.length > 0) {
             this.lookupData = this.allWOOpDetails;
             this.openedLookup = "OperLookup";
-            this.showLookup = true;
+           // this.showLookup = true;
           }
           //hide Loader
           this.showLoader = false;
@@ -611,6 +704,7 @@ export class MoveOrderComponent implements OnInit {
       return true;
     }
 
+    //This function will read the settings
     getSettingOnSAP(){
     this.showLoader = true;
       //here we will read the settings frm db
@@ -626,5 +720,25 @@ export class MoveOrderComponent implements OnInit {
       }
     ) 
 
+    }
+
+    //This will clear the screen after lookup selection
+    clearScreenAfterLookup(){
+      this.psOperNO = "";
+      this.psOperName = "";
+      this.psToOperation = "";
+      this.iProducedQty = 0;
+      
+      //Hiding forms if uncesry opened forms
+      if(this.settingOnSAP == "1"){
+        this.showQtyNoScanScreen = false;
+      }
+      if(this.settingOnSAP == "2"){
+        this.showQtyWithFGScanScreen = false;
+      }
+      if(this.settingOnSAP == "3"){
+        this.showQtyWithFGRMScanScreen = false;
+      }
+      
     }
 }

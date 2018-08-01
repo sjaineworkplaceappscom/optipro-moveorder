@@ -2,18 +2,24 @@
  <div class="opti_loader" *ngIf="showLoader">
     <div class="opti_spinner"></div>
 </div>
+
+
+
+
 <!-- loader end -->
 <kendo-grid [ngStyle]="setStyles()"
-            [kendoGridBinding]="fillLookupArray"
+            [kendoGridBinding]="dataBind"
             [scrollable]="'scrollable'"
             [height]="height"
             [selectable]="true"
             [sortable]="{ mode: 'multiple' }"
             [resizable]="false" 
-            [pageSize]="50" 
+            [pageSize]="10000" 
             [pageable]="true" 
             [filterable]="false"
-            [groupable]="false">   
+            [groupable]="false"
+            [selectable]="true"           
+              >   
 
 
             <!-- grid template start -->
@@ -39,7 +45,10 @@
             <div  (click)="onRowClick($event, rowIndex)" class="gridCell">  
                 {{dataItem[col.Name]}}
             </div>
+            <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">  
+                Select                
+            </button> -->
         </ng-template>
     </kendo-grid-column>
-
-</kendo-grid>
+	
+	</kendo-grid>

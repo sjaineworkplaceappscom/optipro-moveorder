@@ -155,7 +155,8 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <!-- paste here shortcode lookup-->
-                                                <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
+                                                <!-- (messageEvent)="receiveLookupRowData($event)" -->
+                                                <app-lookup  *ngIf="showOperLookup" [columnToShow] ="columnsToShow" [parent]="parent" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
                                             </div>
                                         </div>
                                     </div>
@@ -190,8 +191,8 @@
                                         <div class="row">
                                         <div class="col-md-12">
                                             <!-- paste here shortcode lookup-->
-
-                                            <app-lookup (messageEvent)="receiveLookupRowData($event)" *ngIf="showLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
+                                                    <!-- (messageEvent)="receiveLookupRowData($event)" -->
+                                            <app-lookup  *ngIf="showWOLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [parent]="parent" [height]="gridHeight-52"></app-lookup>
                                           
                                         </div>
                                         </div>

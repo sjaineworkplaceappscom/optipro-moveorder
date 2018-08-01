@@ -75,7 +75,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
     document.getElementById('opti_QtylevelParentID').style.display = 'block';
     this.messageEvent.emit("FromFGRMScanParentInputForm");
   }
-
+  ngOnChange(){
+    this.clearValues();
+  }
   ngOnInit() {
 
     this.gridHeight = UIHelper.getMainContentHeight();
@@ -119,6 +121,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
       }
     }
   }
+
+  clearValues(){
+    this.psBatchSer ="";
+  }  
 
   //Events
   onBatchSerBlur(){
