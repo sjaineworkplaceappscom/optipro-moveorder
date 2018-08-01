@@ -156,7 +156,9 @@
                                             <div class="col-md-12">
                                                 <!-- paste here shortcode lookup-->
                                                 <!-- (messageEvent)="receiveLookupRowData($event)" -->
-                                                <app-lookup  *ngIf="showOperLookup" [columnToShow] ="columnsToShow" [parent]="parent" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup>
+                                                <!-- <app-operation-lookup  *ngIf="showOperLookup"></app-operation-lookup> -->
+                                                <!-- <app-lookup  *ngIf="showOperLookup" [columnToShow] ="columnsToShow" [parent]="parent" [fillLookupArray]="lookupData" [height]="gridHeight-52"></app-lookup> -->
+                                                <app-operation-lookup  *ngIf="showOperLookup"    [fillLookupArray]="oprLookupData"  [height]="gridHeight-52"></app-operation-lookup>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +194,9 @@
                                         <div class="col-md-12">
                                             <!-- paste here shortcode lookup-->
                                                     <!-- (messageEvent)="receiveLookupRowData($event)" -->
-                                            <app-lookup  *ngIf="showWOLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [parent]="parent" [height]="gridHeight-52"></app-lookup>
+
+                                        <app-work-order-lookup  *ngIf="showWOLookup"    [fillLookupArray]="WoLookupData"  [height]="gridHeight-52"></app-work-order-lookup>
+                                            <!-- <app-lookup  *ngIf="showWOLookup" [columnToShow] ="columnsToShow" [fillLookupArray]="lookupData" [parent]="parent" [height]="gridHeight-52"></app-lookup> -->
                                           
                                         </div>
                                         </div>

@@ -124,9 +124,7 @@ export class LookupComponent implements OnInit {
     //Double click will handle the lookup values back to the move order component
     onRowClick(evt, rowIndex) {
         //this.messageEvent.emit(this.fillLookupArray[rowIndex]);
-        this.commonService.ShareData(this.fillLookupArray[rowIndex]);
-
-        alert(this.fillLookupArray[rowIndex]);
+        this.commonService.ShareData(this.fillLookupArray[rowIndex]);      
         console.log("Value-",this.fillLookupArray[rowIndex]);
         
     }

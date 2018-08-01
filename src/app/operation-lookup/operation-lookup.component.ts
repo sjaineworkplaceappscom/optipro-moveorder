@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-operation-lookup',
@@ -6,26 +7,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./operation-lookup.component.scss']
 })
 export class OperationLookupComponent implements OnInit {
+  
+  @Input() height: number = 400;
+  @Input() fillLookupArray: any;  
+  @Input() width: number = 100;  
+  sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
+  dataBind: any = [];
+  public showLoader: boolean = false;
 
-  constructor() { }
+  constructor(private commonService:CommonService) { }
 
   ngOnInit() {
+    this.showLoader = true;
+    this.dataBind = [];
+
+    this.dataBind = JSON.stringify(this.fillLookupArray, this.sOperationLookupColumns);
+
+    this.dataBind = JSON.parse(this.dataBind);
+
+    this.showLoader = false;
+
   }
 
-  products = [
-  {
-    "workorder":"PO00000001" ,
-    "id":"item1",
-    "start" :"17/1/2018",
-    "end":"20/1/2018"
-  }, 
-  {
-    "workorder":"PO00000002" ,
-    "id":"item2",
-    "start" :"17/1/2018",
-    "end":"20/1/2018"
-  }
-  ]
-  public gridData: any[] = this.products;
+  onRowBtnClick(evt, rowIndex){
+    this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"OPER"}); 
+    }
+  // onRowClick(evt, rowIndex) {
+  //   this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"OPER"}); 
+  // }
+  
+  
 
 }
