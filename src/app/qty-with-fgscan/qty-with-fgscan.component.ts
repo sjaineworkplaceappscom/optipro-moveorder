@@ -47,7 +47,7 @@ export class QtyWithFGScanComponent implements OnInit {
   }
   ngOnChange(){
     this.clearValues();
-    alert('onchange-Child');
+    //alert('onchange-Child');
     this.fillFGData();
     this.refreshQtys();
   }
@@ -55,7 +55,7 @@ export class QtyWithFGScanComponent implements OnInit {
 
   this.clearValues();
 
-    alert('change init');  
+    //alert('change init');  
     this.gridHeight = UIHelper.getMainContentHeight();
 
     //  hide child level 
@@ -70,7 +70,7 @@ export class QtyWithFGScanComponent implements OnInit {
   }
 
   clearValues(){
-    this.txtFGValue = "";
+  this.txtFGValue = "";
   this.txtFGSerBatValue = "";
   this.txtFGQty = 0;
   this.isFGValid = true;

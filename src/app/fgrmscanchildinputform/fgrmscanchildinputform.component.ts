@@ -36,6 +36,13 @@ export class FgrmscanchildinputformComponent implements OnInit {
     this.CompanyDBId = sessionStorage.getItem('selectedComp');
     this.loggedInUser = sessionStorage.getItem('loggedInUser');
     
+    this.psChildCompItemCode="";
+    this.psChildCompBatchSer="";
+    this.iQty = 0;
+    this.sChildBin = "";
+    this.sChildWhse = "";
+    this.sChildManagedBy = "";
+
     //Take if is in edit mode
     if(this.rowChildEditFrmParentInpt !=null){
       if(this.rowChildEditFrmParentInpt.length > 0){
