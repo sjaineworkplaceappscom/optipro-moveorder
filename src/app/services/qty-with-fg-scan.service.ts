@@ -62,4 +62,14 @@ export class QtyWithFGScanService {
       return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/UpdateBatchSerialInfo",jObject,this.httpOptions);
     } 
   
+    //Get Decoded String
+    getDecodedString(CompanyDBID:string,FGScannedString:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ 
+      CompanyDBID: CompanyDBID,
+      strScan: FGScannedString
+    }])};
+    //Return the response form the API  
+    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/GS1/GS1Setup",jObject,this.httpOptions);
+    }
 }
