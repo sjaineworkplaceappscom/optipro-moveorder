@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class QtyWithFGScanService {
   arrConfigData:any;
+  scanDataInputs:any= {};
   constructor(private httpclient:HttpClient) { 
     this.arrConfigData=JSON.parse(localStorage.getItem('arrConfigData'));
   }
@@ -64,11 +65,17 @@ export class QtyWithFGScanService {
   
     //Get Decoded String
     getDecodedString(CompanyDBID:string,FGScannedString:string):Observable<any>{
+    let dataSCAN = [];
+      this.scanDataInputs.CompanyDBID = CompanyDBID;
+    this.scanDataInputs.Vsvendorid = "";
+    this.scanDataInputs.FGItem="";
+    this.scanDataInputs.strScan = FGScannedString;
+
+    dataSCAN.push(this.scanDataInputs);
+    
+
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ 
-      CompanyDBID: CompanyDBID,
-      strScan: FGScannedString
-    }])};
+    let jObject:any={ Gs1Token: JSON.stringify(dataSCAN)};
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/GS1/GS1Setup",jObject,this.httpOptions);
     }
