@@ -33,6 +33,8 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
  import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { LookupComponent } from './lookup/lookup.component';
+import { OperationLookupComponent } from './operation-lookup/operation-lookup.component';
+import { WorkOrderLookupComponent } from './work-order-lookup/work-order-lookup.component';
  
 
 
@@ -70,7 +72,9 @@ const myRoots: Routes = [
     FgrmscanparentinputformComponent,
     FgrmscanchildinputformComponent,
     TopbarComponent,
-    LookupComponent
+    LookupComponent,
+    OperationLookupComponent,
+    WorkOrderLookupComponent
   ],
   imports: [
     HttpClientModule,
