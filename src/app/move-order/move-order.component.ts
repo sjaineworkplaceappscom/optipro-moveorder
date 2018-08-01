@@ -74,6 +74,7 @@ export class MoveOrderComponent implements OnInit {
   OperationDetailImageStatus:boolean = false;
   GetOperationImageStatus: Boolean = false;
   QuantityImageStatus:Boolean =false;
+  NoOperAvailable:boolean = false;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -225,12 +226,13 @@ export class MoveOrderComponent implements OnInit {
     //show loader
     this.showLoader = true;
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
-    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.NoOperAvailable == true) {
      GetOperationImageStatus = false;
     }
     else {
      GetOperationImageStatus = true;
-
+      
+        
     }
     if (GetOperationImageStatus == true) {
       this.columnsToShow = this.sOperationLookupColumns.split(",");
@@ -247,6 +249,10 @@ export class MoveOrderComponent implements OnInit {
 
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur() {
+    var inputValue = (<HTMLInputElement>document.getElementById('psWONOid')).value;
+    if(inputValue.length>0){
+      this.psWONO = inputValue;
+    }
 
     if (this.allWODetails != null &&
       this.allWODetails.length > 0 &&
@@ -310,6 +316,11 @@ export class MoveOrderComponent implements OnInit {
 
   //If user puts manual entry for operation then this fun will check whether oper is valid
   onOperationNoBlur() {
+    var inputValue = (<HTMLInputElement>document.getElementById('psOperNOid')).value;
+    if(inputValue.length>0){
+      this.psOperNO = inputValue;
+    }
+
     if (this.allWOOpDetails != null && this.allWOOpDetails.length > 0) {
       //Enable the Produced Quantity Input 
       this.DisableEnablQuantity = false;
@@ -550,6 +561,8 @@ export class MoveOrderComponent implements OnInit {
     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
       data => {
         if (data != null && data.length > 0) {
+          this.NoOperAvailable = false;
+          this.GetOperationImageStatus = false;
           this.allWOOpDetails = data;
           if (this.allWOOpDetails.length > 0) {
             this.lookupData = this.allWOOpDetails;
@@ -562,6 +575,8 @@ export class MoveOrderComponent implements OnInit {
         else{
            //hide Loader
            this.showLoader = false;
+           this.NoOperAvailable = true;
+           this.GetOperationImageStatus = true;
         }
       }
     )

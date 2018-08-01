@@ -73,6 +73,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   showLevelParent(){
     document.getElementById('opti_QtylevelChildSuperChildID').style.display = 'none';
     document.getElementById('opti_QtylevelParentID').style.display = 'block';
+    this.messageEvent.emit("FromFGRMScanParentInputForm");
   }
   ngOnChange(){
     this.clearValues();
@@ -165,29 +166,28 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //This event will recieve the data from its child input form
   receiveArrayRMRowData($event) {
-    
-    console.log($event);
     this.showFGRMScanChildInsertPopup = false;
-    if(this.bIsRMGridInEditMode == false){
-      
-      this.ChildCompGridData.push($event);
-    }
-    //if is in edit mode then
-    else{
-        for(let iRowCount in this.ChildCompGridData){
-          if($event.OPTM_SEQ == this.ChildCompGridData[iRowCount].OPTM_SEQ){
-            this.ChildCompGridData[iRowCount].OPTM_ITEMCODE = $event.OPTM_ITEMCODE
-            this.ChildCompGridData[iRowCount].OPTM_BTCHSERNO = $event.OPTM_BTCHSERNO
-            this.ChildCompGridData[iRowCount].OPTM_QUANTITY = Number($event.OPTM_QUANTITY)
+    console.log("I AM --->"+$event);
+    if($event != undefined || $event != null ){
+      if(this.bIsRMGridInEditMode == false){
+        this.ChildCompGridData.push($event);
+      }
+      //if is in edit mode then
+      else{
+          for(let iRowCount in this.ChildCompGridData){
+            if($event.OPTM_SEQ == this.ChildCompGridData[iRowCount].OPTM_SEQ){
+              this.ChildCompGridData[iRowCount].OPTM_ITEMCODE = $event.OPTM_ITEMCODE
+              this.ChildCompGridData[iRowCount].OPTM_BTCHSERNO = $event.OPTM_BTCHSERNO
+              this.ChildCompGridData[iRowCount].OPTM_QUANTITY = Number($event.OPTM_QUANTITY)
+            }
           }
-        }
-
-        console.log("NOWQ UPADTED ARRAY--->")
-        console.log(this.ChildCompGridData);
-        
+      }
     }
     //To clear the array after call backing from the child form
     this.rowDataForChildEdit = [];
+
+    //To hide the child input form
+    this.showFGRMScanChildInsertPopup = false;
   }
 
   //This function will save the final data for a single FG Batch/Serial
@@ -271,18 +271,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   }
 
-  //It will receive out put of child
-  // receiveMessage($event) {
-  //   alert("Yes i got child updated ");  
-  //   console.log($event);
-  //   //   if ($event == "true") {
-  // //     //This will again hide the popup again
-  // //  //   this.showDataInsertPopup = false;
-  // //     //This will again refresh the grid again
-  // //   //  this.fillFGData();
-  // //     this.rowDataForChildEdit = [];
-  // //   }
-  // }
   //Core Functions
   
   //this will chk if the data we are adding is duplicate

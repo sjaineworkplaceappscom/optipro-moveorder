@@ -23,6 +23,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   iChildQtyInInventory:number;
   sChildManagedBy:string;
   childCompItemCodeDetls:any;
+  sendRMRowToParent: any;
   loggedInUser:string;
   iSysNum:number;  
   seqNo:any;
@@ -59,10 +60,15 @@ export class FgrmscanchildinputformComponent implements OnInit {
   showLevelChild(){
     document.getElementById('opti_QtylevelChildID').style.display = 'block';
     document.getElementById('opti_qtylevelSuperchildID').style.display = 'none';
+    this.messageEvent.emit(this.sendRMRowToParent);
   }
 
   //Events
   onChildCompItemBlur(){
+    var inputValue = (<HTMLInputElement>document.getElementById('psChildCompItemCodeID')).value;
+    if(inputValue.length>0){
+      this.psChildCompItemCode = inputValue;
+    }
     this.showLoader = true;
     //First we will check whether the child component Item code entered is valid and get its details
     if(this.psChildCompItemCode != null && this.psChildCompItemCode.length > 0){
@@ -120,28 +126,13 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
   //on Save row press
   onRMAddRowPress(){
-    let sendRMRowToParent: any;
-
-      // if(this.bIsInEditMode == false){
-        //This means it is in edit mode so prepare array for updation
-      // else{
-      //   //This json row will use to update the child data
-      //   sendRMRowToParent = {
-      //     OPTM_SEQ: this.seqNo,
-      //     OPTM_ITEMCODE: this.psChildCompItemCode,
-      //     OPTM_BTCHSERNO: this.psChildCompBatchSer,
-      //     OPTM_QUANTITY: this.iQty,
-      //     ManagedBy: this.sChildManagedBy
-      //   }
-
-      // }
-
+    
        if(this.bIsInEditMode == false){
     if(this.checkIfChildComponentsExists() == false)
     {
     
         //This json row will be added to the grid present in the parent form of this one
-        sendRMRowToParent = {
+        this.sendRMRowToParent = {
           OPTM_SEQ: 0,
           OPTM_ITEMCODE: this.psChildCompItemCode,
           OPTM_BTCHSERNO: this.psChildCompBatchSer,
@@ -162,7 +153,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
 
     //if the entry is new then ok else we will stop
     if(isEntryExists == false){
-      this.messageEvent.emit(sendRMRowToParent);
+      this.messageEvent.emit(this.sendRMRowToParent);
     }
     else{
       alert("The item code with this serial/batch already exsits")
@@ -176,11 +167,13 @@ export class FgrmscanchildinputformComponent implements OnInit {
     else{
       alert("Item componenent with this batch/serial already exists");
     }
+
+    
   }
   //update/edit Mode
   else{
      //This json row will use to update the child data
-        sendRMRowToParent = {
+        this.sendRMRowToParent = {
           OPTM_SEQ: this.seqNo,
           OPTM_ITEMCODE: this.psChildCompItemCode,
           OPTM_BTCHSERNO: this.psChildCompBatchSer,
@@ -188,7 +181,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
           ManagedBy: this.sChildManagedBy,
           LoggedInUser:this.loggedInUser
         }
-        this.messageEvent.emit(sendRMRowToParent);
+        //this.messageEvent.emit(this.sendRMRowToParent);
         this.showLevelChild();
   }
   }

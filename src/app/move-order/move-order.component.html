@@ -51,9 +51,11 @@
                                 </label>
 
                                 <label class="k-form-field">
-								    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onOperDtlPress(true,OperationDetailImageStatus)">Operation Number *</span> <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number</span></span>
+                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onOperDtlPress(true,OperationDetailImageStatus)">Operation Number *</span> <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number</span>
+                                    <span *ngIf="NoOperAvailable"  class="float-right opti_error-msg"> No operations available </span>
+                                </span>
                                     <span class="float-left opti_operation">
-                                        <input type="text" class="k-textbox" id="txtOperationNumber" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
+                                        <input type="text" class="k-textbox" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
                                     </span>
                                     <span class="opti_operation-icon">
                                         <img src="assets/images/common/list.svg" title="Operation's" class="opti_mouse-pointer" (click)="onOperationPress(true,GetOperationImageStatus)" alt="work order" width="27px" height="27px"  />

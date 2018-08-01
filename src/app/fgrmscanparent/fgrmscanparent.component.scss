@@ -3,9 +3,19 @@
 }
 
 .opti_quantity-summary{
-    display: flex;
-    flex-direction: row-reverse;
+    margin-top: 5px;
     form{
         padding: 0;
+        label.k-form-field{
+            width: 19%;
+            margin-right: 1%;
+            .opti_form-label{
+                font-size: 12px;
+            }
+        }
     }
+}
+
+button.opti_ok{
+    margin-top: 23px !important;
 }

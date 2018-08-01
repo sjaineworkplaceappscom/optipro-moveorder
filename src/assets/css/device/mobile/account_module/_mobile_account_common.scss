@@ -71,3 +71,15 @@ body kendo-grid{
 kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-edit-command {
     margin: 0 5px 5px 0 !important;
 }
+
+// summary 
+#opti_QtyFGScanID .opti_quantity-summary form label.k-form-field {
+    width: 100%;
+    margin-right: 0;
+}
+
+#opti_QtylevelParentID .opti_quantity-summary form label.k-form-field {
+    width: 100%;
+    margin-right: 0;
+}
+

@@ -1,14 +1,22 @@
 #opti_QtyFGScanID{
     margin-top: 20px;
 }
+
 .opti_quantity-summary{
-    display: flex;
-    flex-direction: row-reverse;
+    margin-top: 5px;
     form{
         padding: 0;
+        label.k-form-field{
+            width: 19%;
+            margin-right: 1%;
+        }
     }
 }
 
 .k-button{
     margin-top: 10px !important;
+}
+
+button.opti_ok{
+    margin-top: 27px !important;
 }
