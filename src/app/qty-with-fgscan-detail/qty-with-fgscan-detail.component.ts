@@ -86,12 +86,56 @@ export class QtyWithFGScanDetailComponent implements OnInit {
      }
   }
 
+ 
   onBatchSerBlur(){
+     //Added if for first time value is avail\able in input field.
+     var inputValue = (<HTMLInputElement>document.getElementById('FgBatchSerialID')).value;
+     if(inputValue.length>0){
+      //alert('input values:'+inputValue);
+       this.psBatchSer = inputValue; 
+    
+    this.getDecodedString();
+       //If Local Scanning is required
+    //    if(this.psBatchSer.indexOf("#")==-1){
+    //       //nothing to do.
+    //    }else{
+    //    let x = this.psBatchSer.split("#");
+    //    //alert('splited values:'+x[0]+","+x[1]);
+    //    if(this.psItemManagedBy == "Serial"){
+    //     //alert("if serial conditon");
+    //     if(x[1] != null ||  x[1] != undefined){
+    //       //alert("in null undefined if conditon");
+    //      if(Number(x[1])> 1){
+    //       //alert("value grater then 1 if conditon");
+    //         //show error.
+    //         alert("Quantity not allowed for serial tracked item.");
+    //         return;
+    //      }
+    //      else{
+    //      // alert("batch serial else");
+    //       this.psBatchSer = x[0]; 
+    //      }
+          
+    //     }else{
+    //      // alert("outer else");
+    //      this.psBatchSer = x[0];
+    //     }
+    //    }else{
+    //    // alert("Else of serial");
+    //      this.psBatchSer = x[0];
+    //      this.iQty = Number(x[1]);
+    //    }
+    //  //  alert("values psBatchSer,iQty"+this.psBatchSer+", "+this.iQty);
+    //  }
+
+
+    }
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
         this.bIfBatSerEmpty = false;
          if(this.chkIfFGBatSerAlreadyExists() == false){
           this.validateFGSerBat();
+
          }
 
         //If the value is filled then only enable add button
@@ -116,7 +160,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       //If value is ok then chk produced qty not greater than bal qty
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].BalQty){
         alert("Produced qty can't be greater than balance qty");
-        this.iQty = 0;
+        this.iQty = 1;
         return;
       }
     }
@@ -180,7 +224,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           if(data[0].ItemCheck =="ItemNotExists"){
             alert("FG Bat/Ser you are entering is not valid");
             this.psBatchSer = '';
-            
+            this.iQty = 0;
+            return;
           }
       }
     )
@@ -267,5 +312,21 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     }
 
     return true;
+  }
+
+  //Get Decoded String
+  getDecodedString(){
+    this.qtyWithFGScanDtl.getDecodedString(this.CompanyDBId,this.psBatchSer).subscribe(
+      data=> {
+        if(data!=null){
+         console.log("DECODED DATA GOT FROM--->");
+         if(data.length > 0){
+            console.log("response data"+data);
+            this.psBatchSer = "";
+            this.iQty = 1;
+         }
+         }
+      }
+  )
   }
 }
