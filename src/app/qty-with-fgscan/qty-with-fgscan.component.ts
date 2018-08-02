@@ -92,21 +92,18 @@ export class QtyWithFGScanComponent implements OnInit {
   }
 
   receiveMessage($event) {
-    //This will again hide the popup again
-    this.showFGInputForm = false;
- 
-    //This will again refresh the grid again
    
-    this.fillFGData();
     if ($event == "true") {
-      //  //This will again hide the popup again
-      //  this.showFGInputForm = false;
+      
  
-      // //This will again refresh the grid again
+      //This will again refresh the grid again
      
-      // this.fillFGData(); 
+      this.fillFGData(); 
      
-           this.rowDataForEdit = [];
+      this.rowDataForEdit = [];
+
+       //This will again hide the popup again
+       this.showFGInputForm = false;
     }
   }
   //Kendo inbuilt method handlers

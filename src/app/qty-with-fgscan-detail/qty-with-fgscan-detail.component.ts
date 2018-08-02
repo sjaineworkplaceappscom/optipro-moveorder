@@ -66,12 +66,17 @@ export class QtyWithFGScanDetailComponent implements OnInit {
 
   }
 
-  ShowParent(){
+  onClosePress(){
+      this.ShowParent('close');
+  }
+  ShowParent(FromOper){
     document.getElementById('opti_QtyFGScanChildID').style.display='none';
     document.getElementById('opti_QtyFGScanID').style.display='block';
-
-    //THis will notify the parent form i.e fg list
-    this.messageEvent.emit("true")
+      if(FromOper == "close"){
+        //THis will notify the parent form i.e fg list
+          this.messageEvent.emit("true")
+      }
+  
   }
 
   onAddPress(){
@@ -85,7 +90,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.saveBatchSerInfoRow();
        }
        
-       this.ShowParent();
+       this.ShowParent('add');
      }
   }
 
@@ -147,6 +152,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   
   //this will save data 
   saveBatchSerInfoRow(){
+    this.showLoader = true;
     let isRejected;
     let isNC;
     if(this.bIsRejected == true){
@@ -179,6 +185,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
               alert("Failed to Save Data");
               this.rowDataFrmFGWithScan = [];
             }
+            this.showLoader = false;
           }
       }
     )
@@ -194,13 +201,13 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           if(data[0].ItemCheck =="ItemNotExists"){
             alert("FG Bat/Ser you are entering is not valid");
             this.psBatchSer = '';
-            this.iQty = 0;
+            this.iQty = 1;
             return;
           }
           if(data[0].ItemCheck =="ItemRejected"){
             alert("FG Bat/Ser you are entering is rejected");
             this.psBatchSer = '';
-            this.iQty = 0;
+            this.iQty = 1;
             return;
             }
       }
