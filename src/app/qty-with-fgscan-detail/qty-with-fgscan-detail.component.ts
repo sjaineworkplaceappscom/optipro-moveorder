@@ -177,7 +177,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       data=> {
            if(data!=null){
             if(data == "True")  {
-              alert("Data saved");
+              //alert("Data saved");
               this.rowDataFrmFGWithScan = [];
               this.messageEvent.emit("true");
             }
@@ -223,7 +223,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       data=> {
         if(data!=null){
           if(data == "True")  {
-            alert("Data Updated sucessfully");
+            //alert("Data Updated sucessfully");
             this.rowDataFrmFGWithScan = [];
             this.messageEvent.emit("true");
           }

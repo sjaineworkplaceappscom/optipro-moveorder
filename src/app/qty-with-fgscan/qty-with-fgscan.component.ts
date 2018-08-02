@@ -112,7 +112,7 @@ export class QtyWithFGScanComponent implements OnInit {
       data => {
         if (data != null) {
           if (data == "True") {
-            alert("Data deleted");
+            //alert("Data deleted");
             this.fillFGData();
           }
           else {
