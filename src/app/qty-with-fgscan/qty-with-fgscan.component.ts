@@ -35,7 +35,6 @@ export class QtyWithFGScanComponent implements OnInit {
   lblNCQty: number = 0.0;
   lblProducedQty: number = 0.0;
   rowID: number = 0;
-  showDataInsertPopup: boolean = false;
   rowDataForEdit: any = [];
   showEditBtn: boolean = true;
 
@@ -46,10 +45,10 @@ export class QtyWithFGScanComponent implements OnInit {
     this.gridHeight = UIHelper.getMainContentHeight();
   }
   ngOnChange(){
-    this.clearValues();
+    //this.clearValues();
     //alert('onchange-Child');
-    this.fillFGData();
-    this.refreshQtys();
+    //this.fillFGData();
+    //this.refreshQtys();
   }
   ngOnInit() {
 
@@ -80,7 +79,6 @@ export class QtyWithFGScanComponent implements OnInit {
   this.lblNCQty= 0.0;
   this.lblProducedQty= 0.0;
   this.rowID= 0;
-  this.showDataInsertPopup = false;
   this.rowDataForEdit = [];
   this.showEditBtn = true;
   //this.basicDetailsFrmMO=[];
@@ -94,12 +92,21 @@ export class QtyWithFGScanComponent implements OnInit {
   }
 
   receiveMessage($event) {
+    //This will again hide the popup again
+    this.showFGInputForm = false;
+ 
+    //This will again refresh the grid again
+   
+    this.fillFGData();
     if ($event == "true") {
-      //This will again hide the popup again
-      this.showDataInsertPopup = false;
-      //This will again refresh the grid again
-      this.fillFGData();
-      this.rowDataForEdit = [];
+      //  //This will again hide the popup again
+      //  this.showFGInputForm = false;
+ 
+      // //This will again refresh the grid again
+     
+      // this.fillFGData(); 
+     
+           this.rowDataForEdit = [];
     }
   }
   //Kendo inbuilt method handlers
@@ -122,7 +129,6 @@ export class QtyWithFGScanComponent implements OnInit {
   editHandler({ rowIndex }) {
     //To show the popup screen which will supdateave the data
     this.showLevelChild();
-    //this.showDataInsertPopup = true;
     this.rowDataForEdit.push({ FGBatchSerNo: this.FGScanGridData[rowIndex].OPTM_BTCHSERNO, Quantity: this.FGScanGridData[rowIndex].OPTM_QUANTITY, IsRejected: this.FGScanGridData[rowIndex].OPTM_REJECT, IsNC: this.FGScanGridData[rowIndex].OPTM_NC, SeqNo: this.FGScanGridData[rowIndex].OPTM_SEQ, ItemManagedBy: this.FGScanGridData[rowIndex].ManagedBy });
   }
 
@@ -145,19 +151,13 @@ export class QtyWithFGScanComponent implements OnInit {
    
   }
 
-
-  //This will open a form for taking the inputs
-  onInsertRowPress() {
-    //To show the popup screen which will save the data
-    this.showDataInsertPopup = true;
-  }
-
   //Core Functions
 
   //This func. will fill data into the grid
-  fillFGData() {
+   fillFGData() {
+    
     this.showLoader = true;
-    this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId, this.basicDetailsFrmMO[0].WorkOrderNo, this.basicDetailsFrmMO[0].ItemCode, this.basicDetailsFrmMO[0].OperNo).subscribe(
+     this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId, this.basicDetailsFrmMO[0].WorkOrderNo, this.basicDetailsFrmMO[0].ItemCode, this.basicDetailsFrmMO[0].OperNo).subscribe(
       data => {
         if (data != null) {
 

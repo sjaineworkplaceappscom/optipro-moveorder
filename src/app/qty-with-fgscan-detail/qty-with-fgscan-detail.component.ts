@@ -29,8 +29,6 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService) { }
 
-  message: string = ""
-
   @Output() messageEvent = new EventEmitter<string>();
 
   
@@ -46,9 +44,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       }
     }
 
-    //Disable/enalbe controls
-    this.disableEnableControls();
-
+   
     if(this.rowDataFrmFGWithScan !=null){
       if(this.rowDataFrmFGWithScan.length > 0){
         this.bIsEdit = true;
@@ -64,11 +60,18 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.bIsInEditMode = false;
       }
     }
+
+     //Disable/enalbe controls
+     this.disableEnableControls();
+
   }
 
   ShowParent(){
     document.getElementById('opti_QtyFGScanChildID').style.display='none';
     document.getElementById('opti_QtyFGScanID').style.display='block';
+
+    //THis will notify the parent form i.e fg list
+    this.messageEvent.emit("true")
   }
 
   onAddPress(){
@@ -81,7 +84,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.bIsInEditMode = false;
         this.saveBatchSerInfoRow();
        }
-       this.messageEvent.emit(this.message)
+       
        this.ShowParent();
      }
   }
@@ -89,25 +92,20 @@ export class QtyWithFGScanDetailComponent implements OnInit {
  
   onBatchSerBlur(){
      //Added if for first time value is avail\able in input field.
-     //var inputValue = (<HTMLInputElement>document.getElementById('FgBatchSerialID')).value;
-     var inputValue = "123#O1#5";
+     var inputValue = (<HTMLInputElement>document.getElementById('FgBatchSerialID')).value;
+   //  var inputValue = "123#O1#5";
      if(inputValue.length>0){
       //alert('input values:'+inputValue);
        this.psBatchSer = inputValue; 
     
-    //this.getDecodedString();
-
-    this.decodeBarcodeQRString();
-      
-
-
+      //this.getDecodedString();
+      //this.decodeBarcodeQRString();
     }
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
         this.bIfBatSerEmpty = false;
          if(this.chkIfFGBatSerAlreadyExists() == false){
           this.validateFGSerBat();
-
          }
 
         //If the value is filled then only enable add button
@@ -311,39 +309,39 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   //Decode the string
-  decodeBarcodeQRString(){
+//   decodeBarcodeQRString(){
 
- //If Local Scanning is required
-       if(this.psBatchSer.indexOf("#")==-1){
-          //nothing to do.
-       }else{
-       let x = this.psBatchSer.split("#");
-       //alert('splited values:'+x[0]+","+x[1]);
-       if(this.psItemManagedBy == "Serial"){
-        //alert("if serial conditon");
-        if(x[1] != null ||  x[1] != undefined){
-          //alert("in null undefined if conditon");
-         if(Number(x[1])> 1){
-          //alert("value grater then 1 if conditon");
-            //show error.
-            alert("Quantity not allowed for serial tracked item.");
-            return;
-         }
-         else{
-         // alert("batch serial else");
-          this.psBatchSer = x[0]; 
-         }
+//  //If Local Scanning is required
+//        if(this.psBatchSer.indexOf("#")==-1){
+//           //nothing to do.
+//        }else{
+//        let x = this.psBatchSer.split("#");
+//        //alert('splited values:'+x[0]+","+x[1]);
+//        if(this.psItemManagedBy == "Serial"){
+//         //alert("if serial conditon");
+//         if(x[1] != null ||  x[1] != undefined){
+//           //alert("in null undefined if conditon");
+//          if(Number(x[1])> 1){
+//           //alert("value grater then 1 if conditon");
+//             //show error.
+//             alert("Quantity not allowed for serial tracked item.");
+//             return;
+//          }
+//          else{
+//          // alert("batch serial else");
+//           this.psBatchSer = x[0]; 
+//          }
           
-        }else{
-         // alert("outer else");
-         this.psBatchSer = x[0];
-        }
-       }else{
-       // alert("Else of serial");
-         this.psBatchSer = x[0];
-         this.iQty = Number(x[1]);
-       }
-     //  alert("values psBatchSer,iQty"+this.psBatchSer+", "+this.iQty);
-     }
-  }
+//         }else{
+//          // alert("outer else");
+//          this.psBatchSer = x[0];
+//         }
+//        }else{
+//        // alert("Else of serial");
+//          this.psBatchSer = x[0];
+//          this.iQty = Number(x[1]);
+//        }
+//      //  alert("values psBatchSer,iQty"+this.psBatchSer+", "+this.iQty);
+//      }
+//   }
 }
