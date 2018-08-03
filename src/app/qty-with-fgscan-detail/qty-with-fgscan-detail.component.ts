@@ -146,11 +146,19 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     }
     else{
       this.bIfQtyIsZero = false;
-      //If value is ok then chk produced qty not greater than bal qty
+     
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].BalQty){
-        alert("Produced qty can't be greater than balance qty");
+        alert("Quantity can't be greater than balance qty");
         this.iQty = 1;
         return;
+      }
+      else{
+        //If value is ok then chk produced qty not greater than bal qty
+        if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
+          alert("Quantity can't be greater than produced quantity")
+          this.iQty = 1;
+          return;
+        }
       }
     }
   }
@@ -332,23 +340,40 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   validateSumOfQtys(){
     let isValidQtys = true;
     
-   // this.iSum = this.iAcceptedQty + this.iRejectedQty + this.iNCQty;
+    if(this.psItemManagedBy == "Serial"){
+      console.log(this.FGWithScanGridFrmMaster)
+      debugger;
+      let totalQty = 0;
+      for(let rowCount in this.FGWithScanGridFrmMaster){
+        totalQty=this.FGWithScanGridFrmMaster[rowCount].OPTM_QUANTITY + totalQty;
+      }
+     
+      //Check sum of qtys here
+      if(totalQty > this.basicDetailsFrmFGWithScan[0].BalQty){
+        alert("Quantity can't be greater than balance qty");
+        this.iQty = 1;
+        return;
+      }
+      else{
+        //If value is ok then chk produced qty not greater than bal qty
+        if(totalQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
+          alert("Quantity can't be greater than produced quantity")
+          this.iQty = 1;
+          return;
+        }
+      }
 
-   if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty)
-   {
-     alert("Quantity can't be greater than produced quantity")
-     isValidQtys = false;
-   }
+    }
+    else{
+      if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty)
+      {
+        alert("Quantity can't be greater than produced quantity")
+        isValidQtys = false;
+      }
+    }
+    
 
 
-    // if(this.iSum > this.basicDetailsFrmMO[0].ProducedQty){
-    //     this.sumOfQty = true;
-    //     return false;
-    // }
-    // else{
-    //     this.sumOfQty = false;
-    //     return true;
-    // } 
     return isValidQtys;
   }
 
