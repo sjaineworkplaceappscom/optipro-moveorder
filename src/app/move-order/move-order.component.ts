@@ -75,6 +75,7 @@ export class MoveOrderComponent implements OnInit {
   GetOperationImageStatus: Boolean = false;
   QuantityImageStatus:Boolean =false;
   NoOperAvailable:boolean = false;
+  bAllowToSubmit = true;
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -376,7 +377,6 @@ export class MoveOrderComponent implements OnInit {
     }else{
       status =true;
     }
-    
     if (status == true){
       this.openRightSection(status)
       this.isQuantityRightSection = status;
@@ -384,20 +384,8 @@ export class MoveOrderComponent implements OnInit {
       this.basicDetails=[];
       //Setting basic details to share on another screen
       this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
-      this.showItemLinkingScreen = true;
-      if (this.settingOnSAP == "1") {
-        this.ScreenName = 'Move Order Summary';
-        this.showQtyNoScanScreen = true;
-      }
-      if (this.settingOnSAP == "2") {
-        this.ScreenName = 'Finished Goods Scan';
-        this.showQtyWithFGScanScreen = true;
-      }
-      if (this.settingOnSAP == "3") {
-        this.ScreenName = 'Finished Goods & Raw Materials Scan';
-        this.showQtyWithFGRMScanScreen = true;
-      }
-    
+      //This will open itel linking screen      
+      this.openItemLinkingScreen();
     }
   }
 
@@ -407,33 +395,16 @@ export class MoveOrderComponent implements OnInit {
     this.showLoader = true;
 
     if(this.checkMandatoryInpts() == true){
-    //If oper is blank
-    if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
-      this.psToOperation = this.psOperNO;
+    
+    if(this.settingOnSAP == "2" && this.psItemManagedBy != "None"){
+      //First we will chk whether the user have linked FG serials/batch for option 2 screen
+     this.GetBatchSerialLinking()
     }
 
-    //If oper is blank
-    if(this.psToOperation == '' || this.psToOperation == 0 || this.psToOperation == undefined){
-      this.psToOperation = this.psOperNO;
-    }
-    //submission service callled
-    this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime).subscribe(
-      data => {
-        if(data == "True"){
-            alert("Record submitted sucessfully");
-            this.cleanupScreen();
-            //show Loader
-            this.showLoader = false;
-
-        }
-        else{
-          alert("There was some error while submitting the record");
-              //show Loader
-              this.showLoader = false;
-        }
-        
-      }
-    )
+    
+   }
+   else{
+     this.showLoader = false;
    }
   }
   //This will recive data from lookup
@@ -742,6 +713,23 @@ export class MoveOrderComponent implements OnInit {
 
     }
 
+    submitMoveOrder(){
+      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime).subscribe(
+        data => {
+          if(data == "True"){
+              alert("Record submitted sucessfully");
+              this.cleanupScreen();
+              //show Loader
+              this.showLoader = false;
+          }
+          else{
+            alert("There was some error while submitting the record");
+                //show Loader
+                this.showLoader = false;
+          }
+        }
+      )
+    }
     //This will clear the screen after lookup selection
     clearScreenAfterLookup(){
       this.psWONO = "";
@@ -761,6 +749,90 @@ export class MoveOrderComponent implements OnInit {
       if(this.settingOnSAP == "3"){
         this.showQtyWithFGRMScanScreen = false;
       }
-      
+    }
+
+    //This function will check whether the FG is linked to WO or not 
+    GetBatchSerialLinking(){
+      this.showLoader = true;
+      this.mo.GetBatchSerialLinking(this.CompanyDBId,this.psWONO,this.warehouseName,Number(this.psOperNO)).subscribe(
+        data => {
+          let isAllowed = true;
+          if(data !=null && data.Table.length > 0){
+          //Putting qtys if there is need to open the fg input screen
+          this.basicDetails=[];
+          //Setting basic details to share on another screen
+          this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
+
+          //If data of linked qty is less then zero
+          if(Number(data.Table[0].LinkedQuantity) <= 0){
+            alert("No serials/batches attached");
+             isAllowed = false;
+             //hide Loader
+             this.showLoader = false;
+             //Load screen elements
+             this.loadFGScreenElements();
+             //This function will decide the screen to be opened
+             this.openItemLinkingScreen();
+          }
+          //If the Qty is greater than 0 then
+          else{
+              //If the number of linked qty is more than produced qty
+              if(Number(data.Table[0].LinkedQuantity) > this.iProducedQty){
+                alert("Number of attached batch/serial quantities can't be greater then produced quantity");
+                isAllowed = false;
+                //hide Loader
+                this.showLoader = false;
+                //Load screen elements
+                this.loadFGScreenElements();
+                //This function will decide the screen to be opened
+                this.openItemLinkingScreen();
+              }
+
+              //If the number of linked qty is less than produced qty
+              if(Number(data.Table[0].LinkedQuantity) < this.iProducedQty){
+                alert("Batch/Serial not linked");
+                isAllowed = false;
+                //hide Loader
+                this.showLoader = false;
+                //Load screen elements
+                this.loadFGScreenElements();
+                //This function will decide the screen to be opened
+                this.openItemLinkingScreen();
+              }
+
+              //If all ok then the flag will allow to submit otherwise not
+              if(isAllowed == true){
+                  //submission service callled
+                  this.submitMoveOrder();
+              }
+          }
+          }
+        }
+      )
+    }
+
+    //THis will deceide which screen have to be opened
+    openItemLinkingScreen(){
+      this.showItemLinkingScreen = true;
+      if (this.settingOnSAP == "1") {
+        this.ScreenName = 'Move Order Summary';
+        this.showQtyNoScanScreen = true;
+      }
+      if (this.settingOnSAP == "2") {
+        this.ScreenName = 'Finished Goods Scan';
+        this.showQtyWithFGScanScreen = true;
+      }
+      if (this.settingOnSAP == "3") {
+        this.ScreenName = 'Finished Goods & Raw Materials Scan';
+        this.showQtyWithFGRMScanScreen = true;
+      }
+    }
+
+    //Load Rifgt Screen elements
+    loadFGScreenElements(){
+      //For Opening the Right Section
+      this.openRightSection(true);
+      this.isQuantityRightSection = true;
+      document.getElementById('opti_QuantityRightSection').style.display = 'block';
     }
 }

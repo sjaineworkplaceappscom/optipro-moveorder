@@ -37,7 +37,7 @@ export class QtyWithFGScanComponent implements OnInit {
   rowID: number = 0;
   rowDataForEdit: any = [];
   showEditBtn: boolean = true;
-
+  qtySummaryValuesFGScan: any = [];
   gridHeight: number;
 
   @HostListener('window:resize', ['$event'])
@@ -61,7 +61,7 @@ export class QtyWithFGScanComponent implements OnInit {
     this.QtyFGScanChildID.nativeElement.style.display = 'none';
 
     //console.log(this.basicDetailsFrmMO);
-    this.CompanyDBId = this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.CompanyDBId = sessionStorage.getItem('selectedComp');
     console.log(this.basicDetailsFrmMO);
     //Fill all details from DB in the grid
     this.fillFGData();
@@ -222,5 +222,8 @@ export class QtyWithFGScanComponent implements OnInit {
     this.lblNCQty = iNCCount;
     this.lblProducedQty = totalProducedQty;
     this.lblAcceptedQty = totalProducedQty - iNCCount - iRejectCount;
+
+    //put the summary in an array for calculation
+    this.qtySummaryValuesFGScan.push({RejectedQty: this.lblRejectedQty, NcQty:this.lblNCQty, AcceptedQty:this.lblAcceptedQty, BalQty:this.lblBalQty, ProducedQty:this.lblProducedQty});
   }
 }

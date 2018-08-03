@@ -10,6 +10,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   @Input() basicDetailsFrmFGWithScan: any;
   @Input() rowDataFrmFGWithScan: any;
   @Input() FGWithScanGridFrmMaster: any;
+  @Input() qtySummaryValues: any;
+  
   psBatchSer:string = '';
   iQty:number = 0;
   bIsRejected:any = false;
@@ -22,6 +24,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   bIsInEditMode = false;
   psItemManagedBy:string = '';
   bEnableSaveBtn:boolean = false;
+  iSum:any =0;
+  iAcceptedQty:any = 0;
+  iRejectedQty:any = 0;
+  iNCQty:any = 0;
+  iProducedQty:any = 0;
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
@@ -64,6 +71,10 @@ export class QtyWithFGScanDetailComponent implements OnInit {
      //Disable/enalbe controls
      this.disableEnableControls();
 
+     console.log("QTY SUMMARY");
+     console.log(this.qtySummaryValues);
+
+     //this.updateQtySummaryValues();
   }
 
   onClosePress(){
@@ -74,7 +85,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     document.getElementById('opti_QtyFGScanID').style.display='block';
       if(FromOper == "close"){
         //THis will notify the parent form i.e fg list
-          this.messageEvent.emit("true")
+          this.messageEvent.emit("true");
       }
   
   }
@@ -82,15 +93,18 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   onAddPress(){
     //This mehtod will retrun true if all things are OK
      if(this.validateData() == true){
-      if(this.bIsEdit==true){
-        this.updateBatchSerInfoRow();
-       }
-       else{
-        this.bIsInEditMode = false;
-        this.saveBatchSerInfoRow();
-       }
-       
-       this.ShowParent('add');
+      //validate sum of qtys
+      if(this.validateSumOfQtys()==true){
+          if(this.bIsEdit==true){
+            this.updateBatchSerInfoRow();
+          }
+          else{
+            this.bIsInEditMode = false;
+            this.saveBatchSerInfoRow();
+          }
+          
+          this.ShowParent('add');
+      }
      }
   }
 
@@ -273,7 +287,6 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     else{
       this.bIfBatSerEmpty = false;
     }
-    
 
     //Check whether the qty is not empty
     if(this.iQty <= 0 || this.iQty == undefined){
@@ -315,6 +328,39 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   )
   }
 
+  //This will check the sum of qty not to be greater then produced
+  validateSumOfQtys(){
+    let isValidQtys = true;
+    
+   // this.iSum = this.iAcceptedQty + this.iRejectedQty + this.iNCQty;
+
+   if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty)
+   {
+     alert("Quantity can't be greater than produced quantity")
+     isValidQtys = false;
+   }
+
+
+    // if(this.iSum > this.basicDetailsFrmMO[0].ProducedQty){
+    //     this.sumOfQty = true;
+    //     return false;
+    // }
+    // else{
+    //     this.sumOfQty = false;
+    //     return true;
+    // } 
+    return isValidQtys;
+  }
+
+  //Update Qty Summary Values
+  updateQtySummaryValues(){
+
+    this.iAcceptedQty = this.qtySummaryValues[0].AcceptedQty;
+    this.iNCQty = this.qtySummaryValues[0].NcQty;
+    this.iRejectedQty = this.qtySummaryValues[0].RejectedQty;
+    this.iProducedQty = this.qtySummaryValues[0].ProducedQty;
+
+  }
   //Decode the string
 //   decodeBarcodeQRString(){
 

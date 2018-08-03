@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.0.9",
+    "@angular/animations": "^6.1.1",
     "@angular/cdk": "^6.4.0",
     "@angular/common": "^6.0.3",
     "@angular/compiler": "^6.0.3",
@@ -42,6 +42,7 @@
     "ng-pick-datetime": "^6.0.10",
     "ngx-bootstrap": "^3.0.1",
     "ngx-perfect-scrollbar": "^6.2.0",
+    "ngx-toastr": "^8.10.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.0.0",
     "zone.js": "^0.8.26"
@@ -57,7 +58,7 @@
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^2.0.4",
+    "karma": "^2.0.5",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",

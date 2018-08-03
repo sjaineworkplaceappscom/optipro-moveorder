@@ -84,7 +84,7 @@
 </div>
         
 <section #QtyFGScanChildID id="opti_QtyFGScanChildID">
-    <app-qty-with-fgscan-detail (messageEvent)="receiveMessage($event)" [basicDetailsFrmFGWithScan]="basicDetailsFrmMO" [rowDataFrmFGWithScan]="rowDataForEdit" [FGWithScanGridFrmMaster]="FGScanGridData" *ngIf="showFGInputForm"></app-qty-with-fgscan-detail>
+    <app-qty-with-fgscan-detail (messageEvent)="receiveMessage($event)" [basicDetailsFrmFGWithScan]="basicDetailsFrmMO" [rowDataFrmFGWithScan]="rowDataForEdit" [FGWithScanGridFrmMaster]="FGScanGridData" [qtySummaryValues]="qtySummaryValuesFGScan" *ngIf="showFGInputForm"></app-qty-with-fgscan-detail>
 </section>
         
           

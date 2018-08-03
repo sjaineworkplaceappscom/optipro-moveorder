@@ -91,7 +91,7 @@ constructor() { }
 
   //This will check the sum of qty not to be greater then produced
   validateSumOfQtys(){
-    this.iSum = this.iAcceptedQty + this.iRejectedQty + this.iNCQty
+    this.iSum = this.iAcceptedQty + this.iRejectedQty + this.iNCQty;
 
     if(this.iSum > this.basicDetailsFrmMO[0].ProducedQty){
         this.sumOfQty = true;

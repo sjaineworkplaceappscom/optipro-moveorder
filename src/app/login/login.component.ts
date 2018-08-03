@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
   }
   //On Password blur the authentication will be checked
   onPasswordBlur() {
-    
+    this.showLoader = true;
     if (this.loginId == "" || this.password == "") {
       this.invalidCredentials=false;
       this.passwordBlank = true;
@@ -103,13 +103,14 @@ export class LoginComponent implements OnInit {
       this.listItems = this.defaultCompnyComboValue;
       this.selectedValue = this.listItems[0];      
       this.selectedWhseValue = this.whseListItems[0];
+      this.showLoader = false;
       return;
     }
-    this.showLoader = true;
+    else{
+
     // Check users authontication 
     this.auth.login(this.loginId, this.password, this.psURL).subscribe(
       data => {
-
         this.modelSource = data;
 
         if (this.modelSource != null && this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {
@@ -117,7 +118,6 @@ export class LoginComponent implements OnInit {
           //If everything is ok then we will navigate the user to main home page
             //this.router.navigateByUrl('/moveorder');
             this.getCompanies();
-
         }
         else {
           if(this.password !=null || this.password != undefined){
@@ -136,6 +136,7 @@ export class LoginComponent implements OnInit {
 
       }
     )
+  }
   }
 
   // On Login button clicked
