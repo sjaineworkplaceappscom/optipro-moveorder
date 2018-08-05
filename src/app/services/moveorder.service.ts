@@ -54,13 +54,13 @@ export class MoveorderService {
   }
 
   //Submit Move Order
-  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any):Observable<any>{
+  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,getSettingOnSAP:any):Observable<any>{
   //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
       CompanyDBID: CompanyDBID, 
       FromOperation: FromOperationNo, 
       ToOperation:ToOperationNo,
-      WorkOrder:WorkOrderNo,
+      WorkOrderNo:WorkOrderNo,
       ItemCode:ItemCode,
       UserID:loggedInUser,
       QtyAccepted:AcceptedQty,
@@ -69,7 +69,8 @@ export class MoveorderService {
       QtyNC:NCQty,
       QtyOrder:OrderedQty,
       StartDateTime:FrmToDateTime[0],
-      EndDateTime:FrmToDateTime[1]
+      EndDateTime:FrmToDateTime[1],
+      genealogySetting:getSettingOnSAP
     }]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);

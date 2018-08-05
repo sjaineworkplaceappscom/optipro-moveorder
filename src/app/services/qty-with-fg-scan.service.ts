@@ -31,7 +31,7 @@ export class QtyWithFGScanService {
     //Get all data
     public getBatchSerialInfo(CompanyDBID:string,WONo:string,FGItemCode:string,OpNo:number):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrderNo:WONo,ItemCode:FGItemCode,OperNo:OpNo }]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrderNo:WONo,ItemCode:FGItemCode,FromOperation:OpNo }]) };
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetBatchSerialInfo",jObject,this.httpOptions);
     }
