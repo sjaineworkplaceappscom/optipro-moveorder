@@ -35,6 +35,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LookupComponent } from './lookup/lookup.component';
 import { OperationLookupComponent } from './operation-lookup/operation-lookup.component';
 import { WorkOrderLookupComponent } from './work-order-lookup/work-order-lookup.component';
+import { ToastrModule } from 'ngx-toastr';
  
 
 
@@ -85,6 +86,7 @@ const myRoots: Routes = [
     ModalModule.forRoot(),
     InputsModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     GridModule,
     DropDownsModule,
     ReactiveFormsModule,

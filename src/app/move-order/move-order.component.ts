@@ -8,6 +8,8 @@ import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
 import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY } from 'ng-pick-datetime/date-time/date-time-picker.component';
 import { CommonService } from '../common.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-move-order',
@@ -17,7 +19,7 @@ import { CommonService } from '../common.service';
 
 export class MoveOrderComponent implements OnInit {
 
-  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent,private commonService:CommonService) { }
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent,private commonService:CommonService,private toastr: ToastrService) { }
   showWOLookup:boolean=false;
   showOperLookup:boolean=false;
 
@@ -218,6 +220,7 @@ export class MoveOrderComponent implements OnInit {
 
   //This will get all WO
   onWOPress(status) {
+    this.toastr.success('Hello world!', 'DEMOOOO');
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     this.showLoader = true;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
@@ -612,6 +615,7 @@ export class MoveOrderComponent implements OnInit {
     this.isWorkOrderRightSection = status;
     this.isWorkOrderListRightSection = status;
     this.isOperationListRightSection = status;
+    this.showLoader =false;
   }
 
   //This function will make the screen reset
@@ -714,10 +718,17 @@ export class MoveOrderComponent implements OnInit {
     }
 
     submitMoveOrder(){
+      //if To Operation no. is empty then put the same
+      if(this.psToOperation == "" || this.psToOperation == undefined){
+        this.psToOperation = this.psOperNO;
+      }
       this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.settingOnSAP).subscribe(
         data => {
           if(data == "True"){
+            this.toastr.success('Hello world!', 'Record submitted sucessfully');
               alert("Record submitted sucessfully");
+            
+               
               this.cleanupScreen();
               //show Loader
               this.showLoader = false;
