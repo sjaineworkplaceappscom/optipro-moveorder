@@ -220,7 +220,7 @@ export class MoveOrderComponent implements OnInit {
 
   //This will get all WO
   onWOPress(status) {
-    this.toastr.success('Hello world!', 'DEMOOOO');
+   
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     this.showLoader = true;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
@@ -402,6 +402,10 @@ export class MoveOrderComponent implements OnInit {
     if(this.settingOnSAP == "2" && this.psItemManagedBy != "None"){
       //First we will chk whether the user have linked FG serials/batch for option 2 screen
      this.GetBatchSerialLinking()
+    }
+    else{
+         //submission service callled
+         this.submitMoveOrder();
     }
 
     
@@ -725,8 +729,11 @@ export class MoveOrderComponent implements OnInit {
       this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.settingOnSAP).subscribe(
         data => {
           if(data == "True"){
-            this.toastr.success('Hello world!', 'Record submitted sucessfully');
-              alert("Record submitted sucessfully");
+            this.toastr.success('','Record submitted sucessfully',{
+              closeButton: true,
+              progressBar:true
+            });
+              //alert("Record submitted sucessfully");
             
                
               this.cleanupScreen();

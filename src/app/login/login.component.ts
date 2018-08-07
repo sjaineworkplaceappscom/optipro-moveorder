@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     else{
-
+    if(this.password != undefined || this.password != null){
     // Check users authontication 
     this.auth.login(this.loginId, this.password, this.psURL).subscribe(
       data => {
@@ -133,9 +133,14 @@ export class LoginComponent implements OnInit {
             this.selectedWhseValue = this.whseListItems[0];
           }
         }
-
+        this.showLoader = false;
       }
     )
+    }
+    else{
+      this.showLoader = false;
+    }
+   
   }
   }
 
