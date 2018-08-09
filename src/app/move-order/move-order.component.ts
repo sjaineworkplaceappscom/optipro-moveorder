@@ -6,7 +6,7 @@ import { LookupComponent } from "src/app/lookup/lookup.component";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgscan.component';
-import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY } from 'ng-pick-datetime/date-time/date-time-picker.component';
+import { BaseClass } from 'src/app/classes/BaseClass'
 import { CommonService } from '../common.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -78,6 +78,7 @@ export class MoveOrderComponent implements OnInit {
   QuantityImageStatus:Boolean =false;
   NoOperAvailable:boolean = false;
   bAllowToSubmit = true;
+  private baseClassObj = new BaseClass();
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -729,19 +730,19 @@ export class MoveOrderComponent implements OnInit {
       this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.settingOnSAP).subscribe(
         data => {
           if(data == "True"){
-            this.toastr.success('','Record submitted sucessfully',{
-              closeButton: true,
-              progressBar:true
-            });
+            this.toastr.success('','Record submitted sucessfully',this.baseClassObj.messageConfig);
               //alert("Record submitted sucessfully");
-            
-               
               this.cleanupScreen();
               //show Loader
               this.showLoader = false;
           }
+          else if(data == "Error while updating posting status for accepted qtys"){
+            console.log(data);
+            this.toastr.error('','Error while submitting record',this.baseClassObj.messageConfig);
+          }
           else{
-            alert("There was some error while submitting the record");
+            console.log(data);
+            this.toastr.error('','Error while submitting record',this.baseClassObj.messageConfig);
                 //show Loader
                 this.showLoader = false;
           }
