@@ -3,6 +3,8 @@ import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import {FgrmscanparentinputformService } from '../services/fgrmscanparentinputform.service';
 import { FgrmscanchildinputformComponent } from "../fgrmscanchildinputform/fgrmscanchildinputform.component";
 import { UIHelper } from 'src/app/helpers/ui.helpers';
+import { BaseClass } from 'src/app/classes/BaseClass'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fgrmscanparentinputform',
@@ -14,6 +16,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   @Input() FGWithScanGridFrmMaster: any;
   @Input() basicFGInputForm:any;
   @ViewChild(FgrmscanchildinputformComponent) child;
+  private baseClassObj = new BaseClass();
   basicDetailsToChildForm: any;
   ChildCompGridData:any = [];
   ParentGridData:any = [];
@@ -36,37 +39,36 @@ export class FgrmscanparentinputformComponent implements OnInit {
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
-  constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService) { }
-
+  public disableSaveBtn:boolean = false;
+  constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService,private toastr: ToastrService) { }
   @Output() messageEvent = new EventEmitter<string>();
-
-
   gridHeight: number;
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
       this.gridHeight = UIHelper.getMainContentHeight();
   }
-
-
   @ViewChild('qtylevelChild') qtylevelChild;
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild(){
-    //While after putting all data for the FG input serial field the basic validations will be check here
-    //This mehtod will retrun true if all things are OK and after we will navigate otherwise will throw error
-    if(this.validateData() == true){
-      this.detailsOfParentToChild = {
-        ParentBatchSer:this.psBatchSer,
-        ParentItemManagedBy:this.psItemManagedBy,
-        OperNo:this.basicFGInputForm[0].OperNo
-      };
+    //if fields are empty then restrict user from going to add child
+    if(this.psBatchSer != undefined){
+      //While after putting all data for the FG input serial field the basic validations will be check here
+      //This mehtod will retrun true if all things are OK and after we will navigate otherwise will throw error
+      if(this.validateData() == true){
+        this.detailsOfParentToChild = {
+          ParentBatchSer:this.psBatchSer,
+          ParentItemManagedBy:this.psItemManagedBy,
+          OperNo:this.basicFGInputForm[0].OperNo
+        };
 
-      this.qtylevelChild.nativeElement.style.display = 'none';
-      this.qtylevelSuperchild.nativeElement.style.display = 'block';
+        this.qtylevelChild.nativeElement.style.display = 'none';
+        this.qtylevelSuperchild.nativeElement.style.display = 'block';
 
-      this.showFGRMScanChildInsertPopup = true;
-
-
+        this.showFGRMScanChildInsertPopup = true;
+      }
+    }
+    else{
+      this.toastr.warning('','Please first enter the FG batch/serial',this.baseClassObj.messageConfig);
     }
   }
 
@@ -192,6 +194,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //This function will save the final data for a single FG Batch/Serial
   onFinalSavePress(){
+    //If child data is not saved then we will restrict user
+    if(this.ChildCompGridData != null && this.ChildCompGridData.length > 0){
     let sIsRejected;
     let sIsNC;
     //gather the Parent FG Data here
@@ -248,6 +252,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
             }
     )
     this.showLevelParent();
+    }
+    else{
+      this.toastr.warning('','Please attach batch/serials before saving the record',this.baseClassObj.messageConfig);
+    }
   }
 
   //Following will remove the data
@@ -257,6 +265,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   
   //For edititng child the following fucntion will work
   editHandler({ rowIndex }){
+
     this.bIsRMGridInEditMode = true;
     //To show the popup screen which will supdateave the data
     this.showLevelSuperChild();
