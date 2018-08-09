@@ -304,7 +304,7 @@ export class MoveOrderComponent implements OnInit {
 
   }
 
-
+  //On Work Order Detal Press event
   onWorkOrderDetail(status,WorkOrderImageStatus) {
       if (this.psWONO =="" || this.psWONO ==null || this.psWONO == undefined){
         WorkOrderImageStatus =false;
@@ -321,7 +321,7 @@ export class MoveOrderComponent implements OnInit {
   }
 
 
-
+  //On Operation Detal Press event
   onOperDtlPress(status,OperationDetailImageStatus) {
 
     if (this.psOperNO =="" || this.psOperNO==null || this.psOperNO ==undefined){
@@ -561,6 +561,7 @@ export class MoveOrderComponent implements OnInit {
         if (data != null && data.length > 0) {
           this.NoOperAvailable = false;
           this.GetOperationImageStatus = false;
+          this.DisableEnablOperation = false;
           this.allWOOpDetails = data;
           if (this.allWOOpDetails.length > 0) {
             // this.lookupData = this.allWOOpDetails;
@@ -576,6 +577,7 @@ export class MoveOrderComponent implements OnInit {
            this.showLoader = false;
            this.NoOperAvailable = true;
            this.GetOperationImageStatus = true;
+           this.DisableEnablOperation = true;
         }
       }
     )
