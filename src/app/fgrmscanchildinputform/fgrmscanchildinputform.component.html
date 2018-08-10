@@ -6,25 +6,24 @@
 <form class="k-form col-md-12 col-sm-12 col-xs-12" >
       <label class="k-form-field opti_item-code-superchild">
             <span class="opti_form-label">Item Code</span>
-            <!-- <input type="text" width="50" class="k-textbox" class="k-textbox" value = "" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()" id="psChildCompItemCodeID" name="psChildCompItemCodeName">
-            <img src="assets/images/common/scanner.svg" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px"> -->
-
             <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()" id="psChildCompItemCodeID" name ="psChildCompItemCodeName" [disabled]="bIsInEditMode"></span> 
             <span class="opti_fgbatch-serial-icon">
                   <img src="assets/images/common/scanner.svg" id="ItemCodeScan" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
             </span>
-
+            <span *ngIf="bIsChildItemCodeEmpty" class="float-right opti_error-msg"> Item code can't be empty </span>
 
       </label>
 
       <label class="k-form-field">
             <span class="opti_form-label">RM Batch Serial</span>
-            <input type="text" class="k-textbox"  [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()" id="psChildCompBatchSerID" name="psChildCompBatchSerName" [disabled]="bIsInEditMode">
+            <input type="text" class="k-textbox"  [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()" id="psChildCompBatchSerID" name="psChildCompBatchSerName" [disabled]="bIsInEditMode || bIsChildItemCodeEmpty || disableChildBatSerEmpty">
+            <span *ngIf="bIsChildBatSerEmpty" class="float-right opti_error-msg"> Item code batch/serial can't be empty </span>
       </label>
 
       <label class="k-form-field">
             <span class="opti_form-label">Qty</span>
-            <input type="text" style="text-align: right;" class="k-textbox" [(ngModel)]="iQty" id="iQtyID" name="iQyName">
+            <input type="number" style="text-align: right;" class="k-textbox" [(ngModel)]="iQty" id="iQtyID" name="iQyName" [disabled]="bIsChildItemCodeEmpty || disableQtyField" (blur)="onQuantityBlur()">
+            <span *ngIf="bIsQtyIsZero" class="float-right opti_error-msg"> Quantity should be greater than 0 </span>
       </label>
 
       <div class="text-left">

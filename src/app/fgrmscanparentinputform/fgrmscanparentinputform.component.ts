@@ -29,7 +29,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   psItemManagedBy:string='';
   bIsEdit:boolean = false;
   psBatchSer:string = '';
-  iQty:number = 0;
+  iQty:number = 1;
   bIsRejected:any= false;
   bIsNC:any;
   iSeqNo:number;
@@ -51,7 +51,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild(){
     //if fields are empty then restrict user from going to add child
-    if(this.psBatchSer != undefined){
+    if(this.psBatchSer != undefined || this.psBatchSer != ""){
       //While after putting all data for the FG input serial field the basic validations will be check here
       //This mehtod will retrun true if all things are OK and after we will navigate otherwise will throw error
       if(this.validateData() == true){
@@ -143,7 +143,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
   }
 
-  //On Qty blur thi swill run
+  //On Qty blur this will run
   onQtyBlur(){
     if(this.iQty <= 0 || this.iQty == undefined){
       this.bIfQtyIsZero = true;
@@ -152,9 +152,18 @@ export class FgrmscanparentinputformComponent implements OnInit {
       this.bIfQtyIsZero = false;
       //If value is ok then chk produced qty not greater than bal qty
       if(this.iQty > this.basicFGInputForm[0].BalQty){
-        alert("Produced qty can't be greater than balance qty");
-        this.iQty = 0;
+        this.toastr.error('',"Quantity can't be greater than balance qty",this.baseClassObj.messageConfig);    
+        this.iQty = 1;
         return;
+      }
+      else{
+        //If value is ok then chk produced qty not greater than bal qty
+        if(this.iQty > this.basicFGInputForm[0].ProducedQty){
+         // alert("Quantity can't be greater than produced quantity")
+         this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
+          this.iQty = 1;
+          return;
+        }
       }
     }
   }
@@ -238,20 +247,23 @@ export class FgrmscanparentinputformComponent implements OnInit {
         data=> {
               if(data !=null){
                 if(data == "True"){
-                  alert("Data saved sucessfully");
+                  //alert("Data saved sucessfully");
                   //Now call the parent componet by event emitter here
-                  this.messageEvent.emit("FromFGRMScanParentInputForm");
-                  this.GetAllChildByParentId();
+                  //this.messageEvent.emit("FromFGRMScanParentInputForm");
+                  //this.GetAllChildByParentId();
+                  this.showLevelParent();
                 }
                 else{
-                  alert("There was some error while submitting data"); 
-                  this.GetAllChildByParentId();                 
+                  //alert("There was some error while submitting data"); 
+                  this.toastr.error('',"There was some error while submitting data",this.baseClassObj.messageConfig);    
+                  //this.GetAllChildByParentId();  
+                  this.showLevelParent();               
                 }
                 
               }
             }
     )
-    this.showLevelParent();
+   
     }
     else{
       this.toastr.warning('','Please attach batch/serials before saving the record',this.baseClassObj.messageConfig);
@@ -288,7 +300,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
             for(let rowCount in this.FGWithScanGridFrmMaster){
               if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
               {
-                  alert("Serial/Batch already exist");
+                  //alert("Serial/Batch already exist");
+                  this.toastr.warning('',"Serial/Batch already exist",this.baseClassObj.messageConfig);    
                   this.psBatchSer = "";
                   return true;
               }
@@ -303,17 +316,27 @@ export class FgrmscanparentinputformComponent implements OnInit {
   validateFGSerBat(){ 
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicFGInputForm[0].WorkOrderNo,this.basicFGInputForm[0].ItemCode,this.basicFGInputForm[0].OperNo).subscribe(
           data=> {
-          if(data[0].ItemCheck =="ItemExists")
-          {
-            //If entered bat ser is wright then will fetch its child 
-            //this.GetAllChildByParentId();
-          }
-          else if(data[0].ItemCheck =="ItemNotExists"){
-            alert("FG Bat/Ser you are entering is not valid");
-            this.psBatchSer = '';
+          if(data!=null ||data[0].ItemCheck != ""){
+            
+            if(data[0].ItemCheck =="ItemNotExists"){
+              //alert("FG Bat/Ser you are entering is not valid");
+              this.toastr.error('',"FG Bat/Ser you are entering is not valid",this.baseClassObj.messageConfig);    
+              this.psBatchSer = '';
+            }
+            if(data[0].ItemCheck =="ItemRejected"){
+              //alert("FG Bat/Ser you are entering is rejected");
+              this.toastr.error('',"FG Bat/Ser you are entering is rejected",this.baseClassObj.messageConfig);   
+              this.psBatchSer = '';
+              this.iQty = 1;
+              return;
+              }
+            if(data[0].ItemCheck =="Manual"){
+              console.log(this.psBatchSer+" -->This has a maual case");
+            }
           }
           else{
-            alert("some error occured");
+            this.toastr.error('',"There was some error while validating finished good serial batch",this.baseClassObj.messageConfig);   
+            console.log("error-->"+data)
           }
       }
     )
@@ -374,12 +397,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
       data=> {
         if(data!=null){
           if(data == "True")  {
-            alert("Data deleted");
+            //alert("Data deleted");
             //After the Data Deletion the grid will refreshed by this
             this.GetAllChildByParentId();
           }
           else{
-            alert("Failed to delete data");
+            //alert("Failed to delete data");
+            this.toastr.error('',"Failed to delete Data",this.baseClassObj.messageConfig);    
+            console.log("error-->"+data);
           }
           this.showLoader = false;
          }

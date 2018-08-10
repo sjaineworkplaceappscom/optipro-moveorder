@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
+import { BaseClass } from 'src/app/classes/BaseClass'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-qty-with-fgscan-detail',
@@ -33,8 +35,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
   public showLoader = false;
-  
-  constructor(private qtyWithFGScanDtl: QtyWithFGScanService) { }
+  private baseClassObj = new BaseClass();
+  constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private toastr: ToastrService) { }
 
   @Output() messageEvent = new EventEmitter<string>();
 
@@ -148,14 +150,16 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       this.bIfQtyIsZero = false;
      
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].BalQty){
-        alert("Quantity can't be greater than balance qty");
+        //alert("Quantity can't be greater than balance qty");
+        this.toastr.error('',"Quantity can't be greater than balance qty",this.baseClassObj.messageConfig);    
         this.iQty = 1;
         return;
       }
       else{
         //If value is ok then chk produced qty not greater than bal qty
         if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
-          alert("Quantity can't be greater than produced quantity")
+         // alert("Quantity can't be greater than produced quantity")
+         this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
           this.iQty = 1;
           return;
         }
@@ -204,7 +208,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
               this.messageEvent.emit("true");
             }
             else{
-              alert("Failed to Save Data");
+              //alert("Failed to Save Data");
+              this.toastr.error('',"Failed to Save Data",this.baseClassObj.messageConfig);    
               this.rowDataFrmFGWithScan = [];
             }
             this.showLoader = false;
@@ -221,17 +226,22 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
           data=> {
           if(data[0].ItemCheck =="ItemNotExists"){
-            alert("FG Bat/Ser you are entering is not valid");
+            //alert("FG Bat/Ser you are entering is not valid");
+            this.toastr.error('',"FG Bat/Ser you are entering is not valid",this.baseClassObj.messageConfig);    
             this.psBatchSer = '';
             this.iQty = 1;
             return;
           }
           if(data[0].ItemCheck =="ItemRejected"){
-            alert("FG Bat/Ser you are entering is rejected");
+            //alert("FG Bat/Ser you are entering is rejected");
+            this.toastr.error('',"FG Bat/Ser you are entering is rejected",this.baseClassObj.messageConfig);   
             this.psBatchSer = '';
             this.iQty = 1;
             return;
             }
+          if(data[0].ItemCheck =="Manual"){
+            console.log(this.psBatchSer+" -->This has a maual case");
+          }
       }
     )
   }
@@ -250,7 +260,9 @@ export class QtyWithFGScanDetailComponent implements OnInit {
             this.messageEvent.emit("true");
           }
           else{
-            alert("Failed to update Data");
+            //alert("Failed to update Data");
+            this.toastr.error('',"Failed to update Data",this.baseClassObj.messageConfig);  
+            console.log("DATA save failed-->"+data);  
             this.rowDataFrmFGWithScan = [];
           }
           this.showLoader = false;
@@ -278,7 +290,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     for(let rowCount in this.FGWithScanGridFrmMaster){
       if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
       {
-          alert("Serial/Batch already exist");
+          //alert("Serial/Batch already exist");
+          this.toastr.warning('',"Serial/Batch already exist",this.baseClassObj.messageConfig);    
           this.psBatchSer = "";
           return true;
       }
@@ -350,14 +363,16 @@ export class QtyWithFGScanDetailComponent implements OnInit {
      
       //Check sum of qtys here
       if(totalQty > this.basicDetailsFrmFGWithScan[0].BalQty){
-        alert("Quantity can't be greater than balance qty");
+        //alert("Quantity can't be greater than balance qty");
+        this.toastr.error('',"Quantity can't be greater than balance qty",this.baseClassObj.messageConfig);    
         this.iQty = 1;
         return;
       }
       else{
         //If value is ok then chk produced qty not greater than bal qty
         if(totalQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
-          alert("Quantity can't be greater than produced quantity")
+          //alert("Quantity can't be greater than produced quantity")
+          this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
           this.iQty = 1;
           return;
         }
@@ -367,7 +382,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     else{
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty)
       {
-        alert("Quantity can't be greater than produced quantity")
+        //alert("Quantity can't be greater than produced quantity")
+        this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
         isValidQtys = false;
       }
     }

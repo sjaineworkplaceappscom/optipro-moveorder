@@ -29,7 +29,7 @@
                         <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
 
                         <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="isCheckBoxChecked($event)">
-                        <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
+                        <label class="k-checkbox-label" for="opti_bIsNCID" [hidden]="true">NC Qty</label>
                         <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
                     </div>
                 </form>

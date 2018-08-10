@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, HostListener,EventEmitter, Output 
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { FgrmscanparentService } from '../services/fgrmscanparent.service';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
+import { BaseClass } from 'src/app/classes/BaseClass'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fgrmscanparent',
@@ -22,7 +24,8 @@ export class FgrmscanparentComponent implements OnInit {
   rowDataForEdit: any = [];
   showFGInputForm:any = false;
   showLoader:boolean = false;
-  constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService) { }
+  private baseClassObj = new BaseClass();
+  constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService,private toastr: ToastrService) { }
   @Output() messageEvent = new EventEmitter<string>();
 
   gridHeight: number;
@@ -179,11 +182,11 @@ deleteParentFGandRM(rowIndex){
     data=> {
       if(data!=null){
         if(data == "True")  {
-          alert("Data deleted");
+          //alert("Data deleted");
           this.fillFGData();
         }
         else{
-          alert("Failed to delete data");
+          this.toastr.error('',"Failed to delete Data",this.baseClassObj.messageConfig);    
         }
         this.showLoader = false;
        }

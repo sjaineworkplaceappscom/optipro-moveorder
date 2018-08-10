@@ -400,7 +400,7 @@ export class MoveOrderComponent implements OnInit {
 
     if(this.checkMandatoryInpts() == true){
     
-    if(this.settingOnSAP == "2" && this.psItemManagedBy != "None"){
+    if((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None"){
       //First we will chk whether the user have linked FG serials/batch for option 2 screen
      this.GetBatchSerialLinking()
     }
@@ -503,6 +503,7 @@ export class MoveOrderComponent implements OnInit {
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
+      this.showQtyWithFGRMScanScreen = false;
     }
   
   }
@@ -786,7 +787,8 @@ export class MoveOrderComponent implements OnInit {
 
           //If data of linked qty is less then zero
           if(Number(data.Table[0].LinkedQuantity) <= 0){
-            alert("No serials/batches attached");
+            //alert("No serials/batches attached");
+            this.toastr.error('',"No serials/batches attached",this.baseClassObj.messageConfig);
              isAllowed = false;
              //hide Loader
              this.showLoader = false;
@@ -799,7 +801,8 @@ export class MoveOrderComponent implements OnInit {
           else{
               //If the number of linked qty is more than produced qty
               if(Number(data.Table[0].LinkedQuantity) > this.iProducedQty){
-                alert("Number of attached batch/serial quantities can't be greater then produced quantity");
+                //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
+                this.toastr.error('',"Number of attached batch/serial quantities can't be greater then produced quantity",this.baseClassObj.messageConfig);
                 isAllowed = false;
                 //hide Loader
                 this.showLoader = false;
@@ -811,7 +814,8 @@ export class MoveOrderComponent implements OnInit {
 
               //If the number of linked qty is less than produced qty
               if(Number(data.Table[0].LinkedQuantity) < this.iProducedQty){
-                alert("Batch/Serial not linked");
+                //alert("Batch/Serial not linked");
+                this.toastr.error('',"Batch/Serial not linked",this.baseClassObj.messageConfig);
                 isAllowed = false;
                 //hide Loader
                 this.showLoader = false;
