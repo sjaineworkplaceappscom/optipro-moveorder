@@ -331,7 +331,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
               return;
               }
             if(data[0].ItemCheck =="ItemMoved"){
-              //alert("FG Bat/Ser you are entering is rejected");
               this.toastr.error('',"FG Bat/Ser you are entering is already moved",this.baseClassObj.messageConfig);   
               this.psBatchSer = '';
               this.iQty = 1;

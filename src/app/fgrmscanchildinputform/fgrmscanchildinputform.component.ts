@@ -99,9 +99,17 @@ export class FgrmscanchildinputformComponent implements OnInit {
             }
             //if all ok then will fill another details of the item code 
             else{
-                  this.sChildBin = this.childCompItemCodeDetls[0].Bin
-                  this.sChildWhse = this.childCompItemCodeDetls[0].WareHouse
-                  this.sChildManagedBy = this.childCompItemCodeDetls[0].ManagedBy
+              if(this.childCompItemCodeDetls[0].ManagedBy != "None"){
+                this.sChildBin = this.childCompItemCodeDetls[0].Bin
+                this.sChildWhse = this.childCompItemCodeDetls[0].WareHouse
+                this.sChildManagedBy = this.childCompItemCodeDetls[0].ManagedBy
+              }
+              else{
+                this.disableChildBatSerEmpty = true;
+                this.toastr.warning('',"None tracked items not allowed",this.baseClassObj.messageConfig);
+                this.psChildCompItemCode = '';
+              }
+                
                 }
                 this.showLoader = false;
           }

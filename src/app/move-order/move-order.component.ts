@@ -815,7 +815,7 @@ export class MoveOrderComponent implements OnInit {
               //If the number of linked qty is less than produced qty
               if(Number(data.Table[0].LinkedQuantity) < this.iProducedQty){
                 //alert("Batch/Serial not linked");
-                this.toastr.error('',"Batch/Serial not linked",this.baseClassObj.messageConfig);
+                this.toastr.error('',"Quantity Mismatch",this.baseClassObj.messageConfig);
                 isAllowed = false;
                 //hide Loader
                 this.showLoader = false;
