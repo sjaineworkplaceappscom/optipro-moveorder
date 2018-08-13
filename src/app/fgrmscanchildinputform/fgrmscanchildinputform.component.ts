@@ -78,7 +78,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
     if(inputValue.length>0){
       this.psChildCompItemCode = inputValue;
 //This function will get the decoded string
-      this.getDecodedString();
+    //  this.getDecodedString();
     }
     this.showLoader = true;
     //First we will check whether the child component Item code entered is valid and get its details

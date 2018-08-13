@@ -330,6 +330,13 @@ export class FgrmscanparentinputformComponent implements OnInit {
               this.iQty = 1;
               return;
               }
+            if(data[0].ItemCheck =="ItemMoved"){
+              //alert("FG Bat/Ser you are entering is rejected");
+              this.toastr.error('',"FG Bat/Ser you are entering is already moved",this.baseClassObj.messageConfig);   
+              this.psBatchSer = '';
+              this.iQty = 1;
+              return;
+              }
             if(data[0].ItemCheck =="Manual"){
               console.log(this.psBatchSer+" -->This has a maual case");
             }
