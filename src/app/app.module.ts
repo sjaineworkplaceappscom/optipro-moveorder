@@ -81,7 +81,7 @@ const myRoots: Routes = [
     HttpClientModule,
     FormsModule,
     BrowserModule,
-    RouterModule.forRoot(myRoots),
+    RouterModule.forRoot(myRoots, {useHash: true}),
     StorageServiceModule,
     ModalModule.forRoot(),
     InputsModule,
