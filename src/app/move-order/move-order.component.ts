@@ -263,8 +263,8 @@ export class MoveOrderComponent implements OnInit {
       this.isOperationListRightSection = status;
       this.openRightSection(status);
       this.showOperLookup=true;
-    this.showWOLookup=false;
-    this.parent="opr";
+      this.showWOLookup=false;
+      this.parent="opr";
     }
     //hide loader
     this.showLoader = false;

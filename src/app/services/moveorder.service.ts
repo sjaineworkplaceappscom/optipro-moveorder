@@ -55,7 +55,10 @@ export class MoveorderService {
 
   //Submit Move Order
   submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,getSettingOnSAP:any):Observable<any>{
-  //JSON Obeject Prepared to be send as a param to API
+  let sFromDateTime = FrmToDateTime[0].toString();
+  let sEndDateTime = FrmToDateTime[1].toString();
+ 
+    //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
       CompanyDBID: CompanyDBID, 
       FromOperation: FromOperationNo, 
@@ -68,8 +71,8 @@ export class MoveorderService {
       QtyProduced:ProducedQty,
       QtyNC:NCQty,
       QtyOrder:OrderedQty,
-      StartDateTime:FrmToDateTime[0],
-      EndDateTime:FrmToDateTime[1],
+      StartDateTime:sFromDateTime,
+      EndDateTime:sEndDateTime,
       genealogySetting:getSettingOnSAP
     }]) };
   //Return the response form the API  
