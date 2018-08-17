@@ -54,10 +54,11 @@ export class MoveorderService {
   }
 
   //Submit Move Order
-  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,getSettingOnSAP:any):Observable<any>{
-  let sFromDateTime = FrmToDateTime[0].toString();
-  let sEndDateTime = FrmToDateTime[1].toString();
- 
+  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,preOperNo:any,preOperTime:any,preOperDate:any,getSettingOnSAP:any):Observable<any>{
+    
+   let sFromDateTime = new Date(FrmToDateTime[0]).toLocaleString();
+   let sEndDateTime = new Date(FrmToDateTime[1]).toLocaleString();
+
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
       CompanyDBID: CompanyDBID, 
@@ -73,7 +74,10 @@ export class MoveorderService {
       QtyOrder:OrderedQty,
       StartDateTime:sFromDateTime,
       EndDateTime:sEndDateTime,
-      genealogySetting:getSettingOnSAP
+      genealogySetting:getSettingOnSAP,
+      PreOperDate:preOperDate,
+      PreOperNo:preOperNo,
+      PreOperTime:preOperTime
     }]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);
