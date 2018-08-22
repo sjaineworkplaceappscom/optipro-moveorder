@@ -78,9 +78,6 @@ export class MoveOrderComponent implements OnInit {
   QuantityImageStatus:Boolean =false;
   NoOperAvailable:boolean = false;
   bAllowToSubmit = true;
-  public iPreOperNo:number;
-  public dtPreOperStartDate:any;
-  public iPreOperTime:any;
   private baseClassObj = new BaseClass();
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
@@ -266,8 +263,8 @@ export class MoveOrderComponent implements OnInit {
       this.isOperationListRightSection = status;
       this.openRightSection(status);
       this.showOperLookup=true;
-      this.showWOLookup=false;
-      this.parent="opr";
+    this.showWOLookup=false;
+    this.parent="opr";
     }
     //hide loader
     this.showLoader = false;
@@ -515,8 +512,7 @@ export class MoveOrderComponent implements OnInit {
   onProducedQtyBlur(){
     if(this.iProducedQty != null){
       if(this.iProducedQty > this.iBalQty ){
-        //alert("Produced qty should not be greater than balance qty");
-        this.toastr.warning('','Produced qty should not be greater than balance qty',this.baseClassObj.messageConfig);
+        alert("Produced Qty should not be greater than balance qty");
         this.iProducedQty = 0;
       }
       else{
@@ -601,9 +597,6 @@ export class MoveOrderComponent implements OnInit {
         this.showOperDtPopup = true;
         this.psToOperation = data[0].NextOperNo;
         this.iBalQty = data[0].U_O_BALQTY;
-        this.iPreOperNo = data[0].PrevOperNo;
-        this.dtPreOperStartDate = data[0].PreOperStartDate;
-        this.iPreOperTime = data[0].PreOperStartTime;
         //By default set into it
         this.iProducedQty =  data[0].U_O_BALQTY;
         this.iAcceptedQty =  data[0].U_O_BALQTY;
@@ -737,7 +730,7 @@ export class MoveOrderComponent implements OnInit {
       if(this.psToOperation == "" || this.psToOperation == undefined){
         this.psToOperation = this.psOperNO;
       }
-      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.iPreOperNo,this.iPreOperTime,this.dtPreOperStartDate,this.settingOnSAP).subscribe(
+      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.settingOnSAP,'','','').subscribe(
         data => {
           if(data == "True"){
             this.toastr.success('','Record submitted sucessfully',this.baseClassObj.messageConfig);
