@@ -31,7 +31,7 @@ export class MoveOrderComponent implements OnInit {
   allWOOpDetails: any;
   data: any;
   psWONO: string = '';
-  psOperNO: string = '';
+  psOperNO: any = '';
   psOperName: string = '';
   psProductCode: string = '';
   psProductDesc: string = '';
@@ -291,6 +291,16 @@ export class MoveOrderComponent implements OnInit {
         this.DisableEnablOperation = true;
       }
       else {
+        for(var i = 0;i<this.allWODetails.length;i++) { 
+          if(this.allWODetails[i].U_O_ORDRNO == this.psWONO){
+            this.docEntry = this.allWODetails[i].DocEntry;
+            this.psProductCode = this.allWODetails[i].U_O_PRODID;
+            this.psProductDesc = this.allWODetails[i].ItemName;
+            this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
+            this.psItemManagedBy = this.allWODetails[i].ManagedBy;
+          }
+       }
+
         this.DisableEnablOperation = false;
         //remove the Message if Workorder is not Blank 
         this.InvalidWorkOrder = false;
@@ -342,7 +352,7 @@ export class MoveOrderComponent implements OnInit {
   onOperationNoBlur() {
     var inputValue = (<HTMLInputElement>document.getElementById('psOperNOid')).value;
     if(inputValue.length>0){
-      this.psOperNO = inputValue;
+      this.psOperNO = Number(inputValue);
     }
 
     if (this.allWOOpDetails != null && this.allWOOpDetails.length > 0) {
