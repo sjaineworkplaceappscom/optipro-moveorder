@@ -698,8 +698,8 @@ export class MoveOrderComponent implements OnInit {
         alert("Please select operation number ")
         return false;
       }
-      if (this.iProducedQty == 0) {
-        alert("Produced quantity cannot be Zero ")
+      if (this.iProducedQty <= 0) {
+        this.toastr.error('',"Produced quantity can't be zero or less than zero",this.baseClassObj.messageConfig);
         return false;
       }
       if (this.FrmToDateTime != null) {
