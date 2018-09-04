@@ -4,5 +4,4 @@ export class BaseClass {
         closeButton: true
        // progressBar:true
       }
-
 }

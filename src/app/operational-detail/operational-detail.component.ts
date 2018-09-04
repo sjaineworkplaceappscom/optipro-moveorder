@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommanserviceService } from 'src/app/services/commanservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-operational-detail',
@@ -8,9 +10,22 @@ import { Component, OnInit, Input } from '@angular/core';
 export class OperationalDetailComponent implements OnInit {
   @Input() woOperDetail: any;
   oOperDetails:any;
-  constructor() { }
+  constructor(private comman: CommanserviceService,private router: Router) { }
 
   ngOnInit() {
-    this.oOperDetails = this.woOperDetail[0];
+   
+    if(window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined){
+      this.router.navigateByUrl('/login');
+    }
+      this.oOperDetails = this.woOperDetail[0];
+  
+   
   }
+
+  checkIfLoginIsValid(){
+    if(window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined){
+      this.router.navigateByUrl('/login');
+    }
+  }
+  
 }

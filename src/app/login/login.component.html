@@ -32,7 +32,6 @@
                             <span class="opti_form-label">
                                 Password *
                                 <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required.  </span>
-                                <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> Invalid username or password.</span>
                                 <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> You are not active user.</span>
                             </span>
                             <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">

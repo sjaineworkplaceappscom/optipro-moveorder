@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
   public InvalidActiveUser: boolean = false;
   public passwordBlank: boolean = false;
   public showLoader:boolean = false;
+
+  public GUID:any;
   
 
   constructor(
@@ -48,6 +50,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+   if(window.localStorage.getItem('loggedInUser') != null || window.localStorage.getItem('loggedInUser') != undefined){
+    this.router.navigateByUrl('/moveorder');
+   }
     this.listItems = this.defaultCompnyComboValue;
     this.selectedValue = this.listItems[0];
 
@@ -64,7 +69,7 @@ export class LoginComponent implements OnInit {
     this.httpClientSer.get('./assets/configuration.json').subscribe(
       data => {
         this.arrConfigData = data as string[];
-        localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
+        window.localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
 
         //This will get the psURL
         this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
@@ -72,8 +77,8 @@ export class LoginComponent implements OnInit {
             if (data != null) {
               this.psURL = data;
 
-              //For code analysis remove in live enviorments.
-               this.psURL = "http://localhost:57962/";
+                //For code analysis remove in live enviorments.
+               //this.psURL = "http://localhost:57962/";
               //this.psURL = "http://172.16.6.140/OptiAdmin";
             }
           }
@@ -101,7 +106,8 @@ export class LoginComponent implements OnInit {
       this.hasCompaneyData = false;
       this.hasWhseData = false;
       this.listItems = this.defaultCompnyComboValue;
-      this.selectedValue = this.listItems[0];      
+      this.selectedValue = this.listItems[0]; 
+      //this.companyName = this.listItems[0];
       this.selectedWhseValue = this.whseListItems[0];
       this.showLoader = false;
       return;
@@ -129,6 +135,7 @@ export class LoginComponent implements OnInit {
             this.InvalidActiveUser=false;
             this.listItems = this.defaultCompnyComboValue;
             this.selectedValue = this.listItems[0];  
+            //this.companyName = this.listItems[0];
             this.whseListItems = this.defaultWhseComboValue;
             this.selectedWhseValue = this.whseListItems[0];
           }
@@ -148,10 +155,15 @@ export class LoginComponent implements OnInit {
   onLoginClick() {
     this.showLoader = true;
     if (this.disableLoginBtn == false) {
-      sessionStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
-      sessionStorage.setItem('loggedInUser', this.loginId);
-      sessionStorage.setItem('selectedWhse',this.warehouseName);
-      this.router.navigateByUrl('/moveorder');
+      //For License Checking
+     //Commented by ashish temperary
+      // this.GetLicenseData();
+     window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
+     window.localStorage.setItem('loggedInUser', this.loginId);
+     window.localStorage.setItem('selectedWhse',this.warehouseName);
+     window.localStorage.setItem('GUID',this.GUID);
+     this.router.navigateByUrl('/moveorder');
+     
     }
     else {
       alert("Select company first");
@@ -189,6 +201,7 @@ export class LoginComponent implements OnInit {
           this.listItems = data.Table;
           console.log("data", this.listItems);
           this.selectedValue = this.listItems[0];
+          //this.companyName = this.listItems[0];
           this.disableLoginBtn = false;
           this.hasCompaneyData = true;
           this.invalidCredentials = false;
@@ -230,5 +243,40 @@ export class LoginComponent implements OnInit {
 
   }
   
+  GetLicenseData(){
+    this.auth.getLicenseData(this.loginId,this.arrConfigData[0].optiProMoveOrderAPIURL,this.companyName).subscribe(
+      data => {
+        if(data !=null || data != undefined){
+          if(data.LICData.length > 0){
+            if(data.LICData[0].ErrMessage == "" || data.LICData[0].ErrMessage == null){
+              window.localStorage.removeItem("GUID");
+              window.localStorage.removeItem("loggedInUser");
+              //if all set to go then we will set credentials in session
+              this.GUID = data.LICData[0].GUID ;
+              window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
+              window.localStorage.setItem('loggedInUser', this.loginId);
+              window.localStorage.setItem('selectedWhse',this.warehouseName);
+              window.localStorage.setItem('GUID',this.GUID);
+              this.router.navigateByUrl('/moveorder');
+              this.showLoader = false;
+            }else{
+                //If error in login then show to user the message
+                alert(data.LICData[0].ErrMessage);
+                this.showLoader = false;
+            }
+            
+          }
+          else{
+            this.showLoader = false;
+          }
+          
+        }
+        else{
+          this.showLoader = false;
+        }
+      }
+    )
+
+  }
 
 }

@@ -37,6 +37,18 @@ export class WorkOrderLookupComponent implements OnInit {
     this.showLoader = false;
   }
 
+  ngOnChanges(){
+    this.showLoader = true;
+    this.dataBind = [];
+
+    this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
+
+    console.log("this.fillLookupArray");
+    console.log(this.fillLookupArray);
+    this.dataBind = JSON.parse(this.dataBind);
+
+    this.showLoader = false;
+  }
 
   onRowBtnClick(evt, rowIndex){
     this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"WO"}); 

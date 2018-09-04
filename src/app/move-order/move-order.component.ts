@@ -78,6 +78,10 @@ export class MoveOrderComponent implements OnInit {
   QuantityImageStatus:Boolean =false;
   NoOperAvailable:boolean = false;
   bAllowToSubmit = true;
+  psPreOperation:any;
+  IsMoveOrderTimeMandatory:any;
+  
+
   private baseClassObj = new BaseClass();
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
@@ -110,6 +114,9 @@ export class MoveOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //This will check if login is valid
+    this.checkIfLoginIsValid();
 
     this.gridHeight = UIHelper.getMainContentHeight();
 
@@ -199,11 +206,11 @@ export class MoveOrderComponent implements OnInit {
 
 
     //get company name from session
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
     //get the logged in user name from session
-    this.loggedInUser = sessionStorage.getItem('loggedInUser');
+    this.loggedInUser = window.localStorage.getItem('loggedInUser');
     //get Whse name from session
-    this.warehouseName = sessionStorage.getItem('selectedWhse');
+    this.warehouseName = window.localStorage.getItem('selectedWhse');
 
 
     //Get Settingsfrom DB for Option Screens
@@ -228,14 +235,16 @@ export class MoveOrderComponent implements OnInit {
     this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
 
-    this.openRightSection(status);
+    //this.openRightSection(status);
 
     //this.showLookup = true;
     
     //this.lookupData = this.allWODetails;
+    this.getAllWorkOrders();
     this.WoLookupData=this.allWODetails;
-    //On Form Initialization get All WO
-    //this.getAllWorkOrders();
+
+    this.openRightSection(status);
+
     this.showOperLookup=false;
     this.showWOLookup=true;
     this.parent="wo";
@@ -551,13 +560,30 @@ export class MoveOrderComponent implements OnInit {
     this.showLoader = true;
     this.mo.getAllWorkOrders(this.CompanyDBId,this.warehouseName).subscribe(
       data => {
-        this.allWODetails = data;
-        if (this.allWODetails.length > 0) {
-          this.lookupData = this.allWODetails;
-         // this.WorkOrderBlank=false;
+        if(data != null){
+          if(data[0].ErrMessage  != undefined){
+            this.toastr.error('',"Session expired",this.baseClassObj.messageConfig);
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            return;
+          }
+
+
+          this.allWODetails = data;
+          if (this.allWODetails.length > 0) {
+            this.lookupData = this.allWODetails;
+            this.WoLookupData=this.allWODetails;
+            
+            // if(this.openedLookup="OperLookup"){this.openRightSection(status);}
+            //Hide Loader
+            this.showLoader = false;   
+          }
         }
-        //Hide Loader
-        this.showLoader = false;        
+        else{
+            //Hide Loader
+            this.showLoader = false;   
+        }
       }
     )
   }
@@ -606,10 +632,12 @@ export class MoveOrderComponent implements OnInit {
         this.selectedWOOperDetail = data;
         this.showOperDtPopup = true;
         this.psToOperation = data[0].NextOperNo;
+        this.psPreOperation = data[0].PrevOperNo;
         this.iBalQty = data[0].U_O_BALQTY;
         //By default set into it
         this.iProducedQty =  data[0].U_O_BALQTY;
         this.iAcceptedQty =  data[0].U_O_BALQTY;
+        
          //hide Loader
          this.showLoader = false;
       }else{
@@ -651,6 +679,8 @@ export class MoveOrderComponent implements OnInit {
     this.iProducedQty = 0;
     this.iRejectedQty =0;
     this.psToOperation = '';
+    this.psPreOperation = '';
+    
     
     //this function will reset the time and date of the server
     //As discussed with vaibhav sir and rohit sir the date will not be of server
@@ -724,8 +754,13 @@ export class MoveOrderComponent implements OnInit {
     this.mo.getSettingOnSAP(this.CompanyDBId).subscribe(
       data => {
         if(data !=null || data != undefined){
-          this.settingOnSAP = data;
           this.showLoader = false;
+          if(data.SettingTable.length > 0){
+            this.settingOnSAP = data.SettingTable[0].ScreenSetting;
+            this.IsMoveOrderTimeMandatory = data.SettingTable[0].IsMoveOrderTimeMandatory;
+            this.showLoader = false;
+          }
+          
         }
         else{
           this.showLoader = false;
@@ -740,18 +775,23 @@ export class MoveOrderComponent implements OnInit {
       if(this.psToOperation == "" || this.psToOperation == undefined){
         this.psToOperation = this.psOperNO;
       }
-      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.settingOnSAP,'','','').subscribe(
+      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.psPreOperation,this.settingOnSAP,this.IsMoveOrderTimeMandatory).subscribe(
         data => {
           if(data == "True"){
             this.toastr.success('','Record submitted sucessfully',this.baseClassObj.messageConfig);
               //alert("Record submitted sucessfully");
               this.cleanupScreen();
-              //show Loader
+              //hide Loader
               this.showLoader = false;
           }
           else if(data == "Error while updating posting status for accepted qtys"){
             console.log(data);
             this.toastr.error('','Error while submitting record',this.baseClassObj.messageConfig);
+            this.showLoader = false;
+          }
+          else if(data == "OperOverlapping"){
+            this.toastr.error('',"Operation's start date & time can't be lesser than previous operation's start date time",this.baseClassObj.messageConfig);
+            this.showLoader = false;
           }
           else{
             console.log(data);
@@ -869,5 +909,11 @@ export class MoveOrderComponent implements OnInit {
       this.openRightSection(true);
       this.isQuantityRightSection = true;
       document.getElementById('opti_QuantityRightSection').style.display = 'block';
+    }
+
+    checkIfLoginIsValid(){
+      if(window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined){
+        this.router.navigateByUrl('/login');
+      }
     }
 }
