@@ -9,7 +9,7 @@ export class QtyWithFGScanService {
   arrConfigData:any;
   scanDataInputs:any= {};
   constructor(private httpclient:HttpClient) { 
-    this.arrConfigData=JSON.parse(localStorage.getItem('arrConfigData'));
+    this.arrConfigData=JSON.parse(window.localStorage.getItem('arrConfigData'));
   }
 
   //defining properties for the call 

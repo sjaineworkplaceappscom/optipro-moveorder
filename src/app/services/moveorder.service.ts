@@ -10,7 +10,7 @@ export class MoveorderService {
   username:any;
   GUID:any;
   constructor(private httpclient:HttpClient) { 
-    this.arrConfigData=JSON.parse(localStorage.getItem('arrConfigData'));
+    this.arrConfigData=JSON.parse(window.localStorage.getItem('arrConfigData'));
     this.username = window.localStorage.getItem('loggedInUser');
     this.GUID = window.localStorage.getItem("GUID");
   }

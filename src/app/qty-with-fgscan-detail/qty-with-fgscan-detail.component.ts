@@ -43,8 +43,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   
   //Events
   ngOnInit() {
-    this.loggedInUser = sessionStorage.getItem('loggedInUser');
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.loggedInUser = window.localStorage.getItem('loggedInUser');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
 
     //taking item managed by
     if(this.basicDetailsFrmFGWithScan !=null){
@@ -222,7 +222,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   //This will validate the FG Ser Batch
   validateFGSerBat(){ 
 
-        this.CompanyDBId = sessionStorage.getItem('selectedComp');
+        this.CompanyDBId = window.localStorage.getItem('selectedComp');
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
           data=> {
           if(data[0].ItemCheck =="ItemNotExists"){
@@ -257,7 +257,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   updateBatchSerInfoRow(){
     this.showLoader = true;
 
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
     this.qtyWithFGScanDtl.updateBatchSerInfoRow(this.CompanyDBId,this.psBatchSer,this.iQty,this.bIsRejected,this.bIsNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].OperNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.loggedInUser,this.iSeqNo).subscribe(
       data=> {
         if(data!=null){

@@ -43,8 +43,8 @@ export class FgrmscanchildinputformComponent implements OnInit {
   @Output() messageEvent = new EventEmitter<string>();
   
   ngOnInit() {
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
-    this.loggedInUser = sessionStorage.getItem('loggedInUser');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
+    this.loggedInUser = window.localStorage.getItem('loggedInUser');
     
     this.psChildCompItemCode="";
     this.psChildCompBatchSer="";

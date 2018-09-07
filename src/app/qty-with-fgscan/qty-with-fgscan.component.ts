@@ -61,7 +61,7 @@ export class QtyWithFGScanComponent implements OnInit {
     this.QtyFGScanChildID.nativeElement.style.display = 'none';
 
     //console.log(this.basicDetailsFrmMO);
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
     console.log(this.basicDetailsFrmMO);
     //Fill all details from DB in the grid
     this.fillFGData();

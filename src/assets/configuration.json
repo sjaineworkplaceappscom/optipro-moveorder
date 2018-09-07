@@ -1,6 +1,5 @@
-
 [
     {
-     "optiProMoveOrderAPIURL":"http://10.12.0.40/OptiProMoveOrder/api"
+    "optiProMoveOrderAPIURL":"http://localhost:57913/api"
     }
 ]

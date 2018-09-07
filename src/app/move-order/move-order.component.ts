@@ -395,6 +395,11 @@ export class MoveOrderComponent implements OnInit {
 
   onQtyProdBtnPress(status) {
 
+    if(this.psItemManagedBy == "None"){
+      this.toastr.error('',"Not allowed to add/modify attached items for none tracked finished goods",this.baseClassObj.messageConfig);
+      return;
+    }
+
     if (this.psWONO==""||this.psWONO==null||this.psWONO==undefined ||this.psOperNO==""||this.psOperNO==undefined || this.psOperNO == null){
       status =false;
     }else{
@@ -564,7 +569,7 @@ export class MoveOrderComponent implements OnInit {
           if(data[0].ErrMessage  != undefined){
             this.toastr.error('',"Session expired",this.baseClassObj.messageConfig);
             sessionStorage.clear();
-            localStorage.clear();
+            window.localStorage.clear();
             this.router.navigateByUrl('/login');
             return;
           }

@@ -53,7 +53,7 @@ export class FgrmscanparentComponent implements OnInit {
    // hide childsuperchild level on initial    
    this.qtylevelChildSuperchild.nativeElement.style.display = 'none';
 
-   this.CompanyDBId = sessionStorage.getItem('selectedComp');
+   this.CompanyDBId = window.localStorage.getItem('selectedComp');
    console.log(this.basicDetailsFrmMO);
    this.basicDetailsToFGParentInput = this.basicDetailsFrmMO;
    //Fill all details from DB in the grid

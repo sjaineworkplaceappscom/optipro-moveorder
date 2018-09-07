@@ -9,7 +9,7 @@ import ParentScrollPosition from '@progress/kendo-popup-common/dist/npm/parent-s
 export class FgrmscanparentinputformService {
   arrConfigData:any;
   constructor(private httpclient:HttpClient) { 
-    this.arrConfigData=JSON.parse(localStorage.getItem('arrConfigData'));
+    this.arrConfigData=JSON.parse(window.localStorage.getItem('arrConfigData'));
   }
 
   //defining properties for the call 

@@ -87,12 +87,12 @@ export class FgrmscanparentinputformComponent implements OnInit {
     // Hide superchild section on initial
     this.qtylevelSuperchild.nativeElement.style.display = 'none';
 
-    this.loggedInUser = sessionStorage.getItem('loggedInUser');
+    this.loggedInUser = window.localStorage.getItem('loggedInUser');
     console.log("On FG SCANC PARENT");
     console.log(this.basicFGInputForm)
     //console.log(this.rowDataFrmFGWithScan);
     this.basicDetailsToChildForm = this.basicFGInputForm;
-    this.CompanyDBId = sessionStorage.getItem('selectedComp');
+    this.CompanyDBId = window.localStorage.getItem('selectedComp');
 
     //taking item managed by
     if(this.basicFGInputForm !=null){
