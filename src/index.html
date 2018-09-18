@@ -10,6 +10,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="assets/css/theme/kendo_custom_stripe.css">
 </head>
 <body>
   <app-root></app-root>
@@ -17,8 +18,13 @@
 
 <footer id="opti_footerID">
   <script>
-    var cssfile = '<link rel="stylesheet" class="opti__theme-css-file" href="../assets/css/theme/kendo_custom_stripe.css?v=' + (new Date()).getTime() + '" />';
-    document.write(cssfile);
+  // var cssfile = '<link rel="stylesheet" class="opti__theme-css-file" href="assets/css/theme/kendo_custom_stripe.css?v=' + (new Date()).getTime() + '" />';
+  // document.write(cssfile);
+  var hostName = (window.location.href).replace('#/', '');
+  //	var imageUrl = hostName +'/assets/images/signup/nouse/shutter/body-bg-new-5.jpg';
+  var imageUrl = '/assets/images/signup/nouse/shutter/body-bg-new-5.jpg';
+	console.warn('IMAGEPATH',imageUrl);
+	$('body').css('background-image', 'url(' + imageUrl + ')');
   </script>
 </footer>
 

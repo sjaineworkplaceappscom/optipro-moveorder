@@ -81,8 +81,9 @@ export class MoveOrderComponent implements OnInit {
   psPreOperation:any;
   IsMoveOrderTimeMandatory:any;
   
-
   private baseClassObj = new BaseClass();
+
+  public loginBackground = this.baseClassObj.get_current_url()+ "/assets/images/signup/nouse/shutter/body-bg-new-1.jpg";
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";

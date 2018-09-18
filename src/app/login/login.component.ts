@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { BaseClass } from "src/app/classes/BaseClass";
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  //styles:['']
 })
 export class LoginComponent implements OnInit {
   public loginId: string;//= 'shashank';
@@ -42,11 +44,15 @@ export class LoginComponent implements OnInit {
   public showLoader:boolean = false;
 
   public GUID:any;
+
+  public loginBackground = this.baseClassObj.get_current_url()+ "/assets/images/signup/nouse/shutter/body-bg-new-1.jpg";
   
 
   constructor(
-    private auth: AuthenticationService, private router: Router,
-    private httpClientSer: HttpClient) { }
+    private auth: AuthenticationService,
+    private router: Router,
+    private httpClientSer: HttpClient,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -66,7 +72,7 @@ export class LoginComponent implements OnInit {
     element.classList.add("opti_account-module");
 
     //This will get all config
-    this.httpClientSer.get('./assets/configuration.json').subscribe(
+    this.httpClientSer.get(this.baseClassObj.get_current_url() +'/assets/configuration.json').subscribe(
       data => {
         this.arrConfigData = data as string[];
         window.localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
@@ -78,9 +84,14 @@ export class LoginComponent implements OnInit {
               this.psURL = data;
 
                 //For code analysis remove in live enviorments.
-               //this.psURL = "http://localhost:57962/";
+               this.psURL = "http://localhost:9501/";
               //this.psURL = "http://172.16.6.140/OptiAdmin";
             }
+          },
+          error => {
+            this.toastr.error('','There was some error',this.baseClassObj.messageConfig);
+            console.log("getpsURL -->"+error);
+            this.showLoader = false;
           }
         )
       },
@@ -140,6 +151,12 @@ export class LoginComponent implements OnInit {
             this.selectedWhseValue = this.whseListItems[0];
           }
         }
+        this.showLoader = false;
+      },
+      error =>
+      {
+        this.toastr.error('','There was some error',this.baseClassObj.messageConfig);
+        console.log("getpsURL -->"+error);
         this.showLoader = false;
       }
     )
