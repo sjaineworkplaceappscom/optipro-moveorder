@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
           data => {
             if (data != null) {
               this.psURL = data;
-
+            //  this.toastr.error('',this.psURL,this.baseClassObj.messageConfig);
                 //For code analysis remove in live enviorments.
                //this.psURL = "http://localhost:9500/";
               //this.psURL = "http://172.16.6.140/OptiAdmin";
@@ -90,6 +90,8 @@ export class LoginComponent implements OnInit {
           },
           error => {
             this.toastr.error('','There was some error',this.baseClassObj.messageConfig);
+            // this.toastr.error('',error.toString(),this.baseClassObj.messageConfig);
+            // this.toastr.error('',this.arrConfigData[0].optiProMoveOrderAPIURL,this.baseClassObj.messageConfig);
             console.log("getpsURL -->"+error);
             this.showLoader = false;
           }
