@@ -24,7 +24,8 @@
                                 Username * <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
                             </span>
                           
-                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Your username">
+                            <!--Bug no. 18145... disble autocompletion of the input field-->
+                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Your username" autocomplete="off">
                             
                             
                         </label>

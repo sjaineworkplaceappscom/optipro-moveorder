@@ -218,7 +218,7 @@ export class MoveOrderComponent implements OnInit {
     this.getSettingOnSAP();
 
     //On Form Initialization get All WO
-    this.getAllWorkOrders();
+    this.getAllWorkOrders("init");
     
     //this.getServerDate();
     this.setDefaultDateTime();
@@ -241,7 +241,7 @@ export class MoveOrderComponent implements OnInit {
     //this.showLookup = true;
     
     //this.lookupData = this.allWODetails;
-    this.getAllWorkOrders();
+    this.getAllWorkOrders("lookup");
     this.WoLookupData=this.allWODetails;
 
     this.openRightSection(status);
@@ -295,10 +295,13 @@ export class MoveOrderComponent implements OnInit {
       //To check in the array
       let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
       if (isWOExists == false) {
+
+        this.getAllWorkOrders("change");
+
         //Message for Invalid WorkOdere
-        this.InvalidWorkOrder = true;
-        this.psWONO = '';
-        this.DisableEnablOperation = true;
+        // this.InvalidWorkOrder = true;
+        // this.psWONO = '';
+        // this.DisableEnablOperation = true;
       }
       else {
         for(var i = 0;i<this.allWODetails.length;i++) { 
@@ -560,7 +563,7 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This fun will get all WO
-  getAllWorkOrders() {   
+  getAllWorkOrders(fromEvent) {   
 
     //Show Loader
     this.showLoader = true;
@@ -580,12 +583,45 @@ export class MoveOrderComponent implements OnInit {
           if (this.allWODetails.length > 0) {
             this.lookupData = this.allWODetails;
             this.WoLookupData=this.allWODetails;
-            
-            // if(this.openedLookup="OperLookup"){this.openRightSection(status);}
-            //Hide Loader
-            this.showLoader = false;   
+          
+            //JSON
+            if(fromEvent == "change"){
+              let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
+              if (isWOExists == false) {
+                //Message for Invalid WorkOdere
+                this.InvalidWorkOrder = true;
+                this.psWONO = '';
+                this.DisableEnablOperation = true;
+              }
+              else{
+                this.lookupData = this.allWODetails;
+                this.WoLookupData=this.allWODetails;
+
+                for(var i = 0;i<this.allWODetails.length;i++) { 
+                  if(this.allWODetails[i].U_O_ORDRNO == this.psWONO){
+                    this.docEntry = this.allWODetails[i].DocEntry;
+                    this.psProductCode = this.allWODetails[i].U_O_PRODID;
+                    this.psProductDesc = this.allWODetails[i].ItemName;
+                    this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
+                    this.psItemManagedBy = this.allWODetails[i].ManagedBy;
+                  }
+               }
+        
+                this.DisableEnablOperation = false;
+                //remove the Message if Workorder is not Blank 
+                this.InvalidWorkOrder = false;
+                this.getOperationByWONO();
+              }
+
+            }
+            else{
+              this.InvalidWorkOrder = false;
+              this.showLoader = false;  
+            }
+            this.showLoader = false;  
           }
-        }
+             
+          }
         else{
             //Hide Loader
             this.showLoader = false;   
