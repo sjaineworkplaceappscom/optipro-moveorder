@@ -15,7 +15,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   @Input() qtySummaryValues: any;
   
   psBatchSer:string = '';
-  iQty:number = 0;
+  iQty:number = 1;
   bIsRejected:any = false;
   CompanyDBId:string= '';
   bIsNC:any = false;
@@ -345,7 +345,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       data=> {
         if(data!=null){
         this.showLoader = false;
-         console.log("DECODED DATA GOT FROM--->");
+        
          if(data.length > 0){
             console.log("response data"+data);
             this.psBatchSer = "";

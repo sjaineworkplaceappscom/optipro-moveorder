@@ -290,7 +290,6 @@ export class FgrmscanchildinputformComponent implements OnInit {
       data=> {
         if(data!=null){
         this.showLoader = false;
-         console.log("DECODED DATA GOT FROM--->");
          if(data.length > 0){
             console.log("response data"+data);
             this.psChildCompItemCode = "";

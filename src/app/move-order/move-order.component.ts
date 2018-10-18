@@ -19,9 +19,9 @@ import { ToastrService } from 'ngx-toastr';
 
 export class MoveOrderComponent implements OnInit {
 
-  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService,private lookupData: LookupComponent,private commonService:CommonService,private toastr: ToastrService) { }
-  showWOLookup:boolean=false;
-  showOperLookup:boolean=false;
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService, private lookupData: LookupComponent, private commonService: CommonService, private toastr: ToastrService) { }
+  showWOLookup: boolean = false;
+  showOperLookup: boolean = false;
 
   selectedWODetail: any;
   selectedWOOperDetail: any;
@@ -56,34 +56,35 @@ export class MoveOrderComponent implements OnInit {
   psItemManagedBy: string;
   //showLookup: boolean = false;
   openedLookup: string = '';
-  moDetails:any;
-  psToOperation:any;
-  loggedInUser:any;
-  warehouseName:any;
-  iBalQty:number;
-  iProducedQty:number = 0;
-  iAcceptedQty:number = 0;
-  iRejectedQty:number = 0;
-  iNCQty:number = 0;
-  iOrderedQty:number = 0;
+  moDetails: any;
+  psToOperation: any;
+  loggedInUser: any;
+  warehouseName: any;
+  iBalQty: number;
+  iProducedQty: number = 0;
+  iAcceptedQty: number = 0;
+  iRejectedQty: number = 0;
+  iNCQty: number = 0;
+  iOrderedQty: number = 0;
   public FrmToDateTime = [];
-  public invalidStartDate:boolean = false;
-  public invalidEndDate:boolean = false;
-  public showLoader:boolean = false;
-  maxDateRestriction:any = new Date();
-  currentServerDateTime:any;
-  WorkOrderImageStatus:boolean = false;
-  OperationDetailImageStatus:boolean = false;
+  public invalidStartDate: boolean = false;
+  public invalidEndDate: boolean = false;
+  public showLoader: boolean = false;
+  maxDateRestriction: any = new Date();
+  currentServerDateTime: any;
+  WorkOrderImageStatus: boolean = false;
+  OperationDetailImageStatus: boolean = false;
   GetOperationImageStatus: Boolean = false;
-  QuantityImageStatus:Boolean =false;
-  NoOperAvailable:boolean = false;
+  QuantityImageStatus: Boolean = false;
+  NoOperAvailable: boolean = false;
   bAllowToSubmit = true;
-  psPreOperation:any;
-  IsMoveOrderTimeMandatory:any;
-  
+  psPreOperation: any;
+  IsMoveOrderTimeMandatory: any;
+
   private baseClassObj = new BaseClass();
 
-  public loginBackground = this.baseClassObj.get_current_url()+ "/assets/images/signup/nouse/shutter/body-bg-new-1.jpg";
+  //public loginBackground = this.baseClassObj.get_current_url() + "/assets/images/signup/nouse/shutter/body-bg-new-1.jpg";
+  public loginBackground = "./assets/images/signup/nouse/shutter/body-bg-new-1.jpg";
   //This array string will show the columns given for lookup , if want to displau all the make this array blank
   columnsToShow: Array<string> = [];
   sWorkOrderLookupColumns = "WorkOrder No,Product Id,Start Date,End Date";
@@ -101,11 +102,11 @@ export class MoveOrderComponent implements OnInit {
   isQuantityRightSection: boolean = false;
   isWorkOrderListRightSection: boolean = false;
   isOperationListRightSection: boolean = false;
-  public parent:string="wo"
-  public selectedLookUpData:any;
+  public parent: string = "wo"
+  public selectedLookUpData: any;
 
-  public oprLookupData:any=[];
-  public WoLookupData:any=[];
+  public oprLookupData: any = [];
+  public WoLookupData: any = [];
 
   gridHeight: number;
 
@@ -129,78 +130,78 @@ export class MoveOrderComponent implements OnInit {
 
 
     this.commonService.commonData$.subscribe(
-      data=> {
-        if(data==null || data==undefined){
+      data => {
+        if (data == null || data == undefined) {
           return;
         }
-        this.selectedLookUpData=data.value;
-        console.log('opend lookup-',this.openedLookup);
-       
-    //if (this.openedLookup == "WOLookup") {
-      if (data.from == "WO") {
-      //this.cleanupScreen();
+        this.selectedLookUpData = data.value;
+        console.log('opend lookup-', this.openedLookup);
 
-      //here we will clear values
-       this.clearScreenAfterLookup();
-      
+        //if (this.openedLookup == "WOLookup") {
+        if (data.from == "WO") {
+          //this.cleanupScreen();
 
-      this.psWONO = this.selectedLookUpData.U_O_ORDRNO;
-      this.psProductCode = this.selectedLookUpData.U_O_PRODID;
-      this.psProductDesc = this.selectedLookUpData.ItemName;
-      this.docEntry = this.selectedLookUpData.DocEntry;
-      this.iOrderedQty = this.selectedLookUpData.U_O_ORDRQTY;
-      this.psItemManagedBy = this.selectedLookUpData.ManagedBy;
-
-       console.log("WO-",this.psWONO);
-      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-      if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
-        //enable  Operation input Box
-        this.DisableEnablOperation = false;
-        this.getOperationByWONO();
-       this.showLoader=false;
-      }
-      else {
-        //disable the Operation input Box
-        this.DisableEnablOperation = true;
-      }
-
-    }
-
-    //if (this.openedLookup == "OperLookup") {
-      if(data.from == "OPER"){
-      this.psOperNO = this.selectedLookUpData.U_O_OPERNO;
-      this.getSelectedOperationDetail();
-      //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-      if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
-        //enable  Operation input Box
-        this.DisableEnablQuantity = false;
-        this.InvalidOperation=false;
-      }
-      else {
-        //disable the Operation input Box
-        this.DisableEnablQuantity = true;
-        this.InvalidOperation=true;
-      }
-    }
+          //here we will clear values
+          this.clearScreenAfterLookup();
 
 
-    //To hide the lookup
-    //this.showLookup = false;
-    this.showWOLookup=false;
-    this.showOperLookup=false;
-    this.parent="";
+          this.psWONO = this.selectedLookUpData.U_O_ORDRNO;
+          this.psProductCode = this.selectedLookUpData.U_O_PRODID;
+          this.psProductDesc = this.selectedLookUpData.ItemName;
+          this.docEntry = this.selectedLookUpData.DocEntry;
+          this.iOrderedQty = this.selectedLookUpData.U_O_ORDRQTY;
+          this.psItemManagedBy = this.selectedLookUpData.ManagedBy;
 
-    //close the right section
-    this.closeRightSection(false);
+          console.log("WO-", this.psWONO);
+          //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+          if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
+            //enable  Operation input Box
+            this.DisableEnablOperation = false;
+            this.getOperationByWONO();
+            this.showLoader = false;
+          }
+          else {
+            //disable the Operation input Box
+            this.DisableEnablOperation = true;
+          }
 
-    //To clear the lookup screen name on close
-    this.openedLookup = '';
+        }
 
-    //Clear the data of lookup
-    this.lookupData = null;
+        //if (this.openedLookup == "OperLookup") {
+        if (data.from == "OPER") {
+          this.psOperNO = this.selectedLookUpData.U_O_OPERNO;
+          this.getSelectedOperationDetail();
+          //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
+          if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
+            //enable  Operation input Box
+            this.DisableEnablQuantity = false;
+            this.InvalidOperation = false;
+          }
+          else {
+            //disable the Operation input Box
+            this.DisableEnablQuantity = true;
+            this.InvalidOperation = true;
+          }
+        }
 
-    //To clear the columns name 
-    this.columnsToShow = [];
+
+        //To hide the lookup
+        //this.showLookup = false;
+        this.showWOLookup = false;
+        this.showOperLookup = false;
+        this.parent = "";
+
+        //close the right section
+        this.closeRightSection(false);
+
+        //To clear the lookup screen name on close
+        this.openedLookup = '';
+
+        //Clear the data of lookup
+        this.lookupData = null;
+
+        //To clear the columns name 
+        this.columnsToShow = [];
       }
 
     );
@@ -219,17 +220,17 @@ export class MoveOrderComponent implements OnInit {
 
     //On Form Initialization get All WO
     this.getAllWorkOrders("init");
-    
+
     //this.getServerDate();
     this.setDefaultDateTime();
-   
+
   }
 
-  
+
 
   //This will get all WO
   onWOPress(status) {
-   
+
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     this.showLoader = true;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
@@ -239,52 +240,52 @@ export class MoveOrderComponent implements OnInit {
     //this.openRightSection(status);
 
     //this.showLookup = true;
-    
+
     //this.lookupData = this.allWODetails;
     this.getAllWorkOrders("lookup");
-    this.WoLookupData=this.allWODetails;
+    this.WoLookupData = this.allWODetails;
 
     this.openRightSection(status);
 
-    this.showOperLookup=false;
-    this.showWOLookup=true;
-    this.parent="wo";
+    this.showOperLookup = false;
+    this.showWOLookup = true;
+    this.parent = "wo";
 
   }
 
   onOperationPress(status, GetOperationImageStatus) {
-    this.openedLookup="OperLookup";
+    this.openedLookup = "OperLookup";
     //show loader
     this.showLoader = true;
-    
+
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.NoOperAvailable == true) {
-      
-     GetOperationImageStatus = false;
+
+      GetOperationImageStatus = false;
     }
     else {
-      this.oprLookupData=this.allWOOpDetails;
-     GetOperationImageStatus = true;
-      
-        
+      this.oprLookupData = this.allWOOpDetails;
+      GetOperationImageStatus = true;
+
+
     }
     if (GetOperationImageStatus == true) {
       this.columnsToShow = this.sOperationLookupColumns.split(",");
       this.isOperationListRightSection = status;
       this.openRightSection(status);
-      this.showOperLookup=true;
-    this.showWOLookup=false;
-    this.parent="opr";
+      this.showOperLookup = true;
+      this.showWOLookup = false;
+      this.parent = "opr";
     }
     //hide loader
     this.showLoader = false;
-}
+  }
 
 
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur() {
     var inputValue = (<HTMLInputElement>document.getElementById('psWONOid')).value;
-    if(inputValue.length>0){
+    if (inputValue.length > 0) {
       this.psWONO = inputValue;
     }
 
@@ -304,15 +305,15 @@ export class MoveOrderComponent implements OnInit {
         // this.DisableEnablOperation = true;
       }
       else {
-        for(var i = 0;i<this.allWODetails.length;i++) { 
-          if(this.allWODetails[i].U_O_ORDRNO == this.psWONO){
+        for (var i = 0; i < this.allWODetails.length; i++) {
+          if (this.allWODetails[i].U_O_ORDRNO == this.psWONO) {
             this.docEntry = this.allWODetails[i].DocEntry;
             this.psProductCode = this.allWODetails[i].U_O_PRODID;
             this.psProductDesc = this.allWODetails[i].ItemName;
             this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
             this.psItemManagedBy = this.allWODetails[i].ManagedBy;
           }
-       }
+        }
 
         this.DisableEnablOperation = false;
         //remove the Message if Workorder is not Blank 
@@ -328,43 +329,43 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //On Work Order Detal Press event
-  onWorkOrderDetail(status,WorkOrderImageStatus) {
-      if (this.psWONO =="" || this.psWONO ==null || this.psWONO == undefined){
-        WorkOrderImageStatus =false;
-      }
-      else{
-        WorkOrderImageStatus=true;
-      }
-      if(WorkOrderImageStatus==true){
-    this.showWODtPopup = true;
-    this.isWorkOrderRightSection = status;
-    this.openRightSection(status);
-    this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
-    } 
+  onWorkOrderDetail(status, WorkOrderImageStatus) {
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
+      WorkOrderImageStatus = false;
+    }
+    else {
+      WorkOrderImageStatus = true;
+    }
+    if (WorkOrderImageStatus == true) {
+      this.showWODtPopup = true;
+      this.isWorkOrderRightSection = status;
+      this.openRightSection(status);
+      this.selectedWODetail = this.filterWODetail(this.allWODetails, this.docEntry);
+    }
   }
 
 
   //On Operation Detal Press event
-  onOperDtlPress(status,OperationDetailImageStatus) {
+  onOperDtlPress(status, OperationDetailImageStatus) {
 
-    if (this.psOperNO =="" || this.psOperNO==null || this.psOperNO ==undefined){
-      OperationDetailImageStatus =false;
+    if (this.psOperNO == "" || this.psOperNO == null || this.psOperNO == undefined) {
+      OperationDetailImageStatus = false;
     }
-    else{
-      OperationDetailImageStatus=true;
+    else {
+      OperationDetailImageStatus = true;
     }
-    if(OperationDetailImageStatus==true){
-    this.isOperationRightSection = status
-    this.openRightSection(status)
-    this.getSelectedOperationDetail();
-   
+    if (OperationDetailImageStatus == true) {
+      this.isOperationRightSection = status
+      this.openRightSection(status)
+      this.getSelectedOperationDetail();
+
     }
   }
 
   //If user puts manual entry for operation then this fun will check whether oper is valid
   onOperationNoBlur() {
     var inputValue = (<HTMLInputElement>document.getElementById('psOperNOid')).value;
-    if(inputValue.length>0){
+    if (inputValue.length > 0) {
       this.psOperNO = Number(inputValue);
     }
 
@@ -399,21 +400,21 @@ export class MoveOrderComponent implements OnInit {
 
   onQtyProdBtnPress(status) {
 
-    if(this.psItemManagedBy == "None"){
-      this.toastr.error('',"Not allowed to add/modify attached items for none tracked finished goods",this.baseClassObj.messageConfig);
+    if (this.psItemManagedBy == "None") {
+      this.toastr.error('', "Not allowed to add/modify attached items for none tracked finished goods", this.baseClassObj.messageConfig);
       return;
     }
 
-    if (this.psWONO==""||this.psWONO==null||this.psWONO==undefined ||this.psOperNO==""||this.psOperNO==undefined || this.psOperNO == null){
-      status =false;
-    }else{
-      status =true;
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.psOperNO == "" || this.psOperNO == undefined || this.psOperNO == null) {
+      status = false;
+    } else {
+      status = true;
     }
-    if (status == true){
+    if (status == true) {
       this.openRightSection(status)
       this.isQuantityRightSection = status;
       document.getElementById('opti_QuantityRightSection').style.display = 'block';
-      this.basicDetails=[];
+      this.basicDetails = [];
       //Setting basic details to share on another screen
       this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
       //This will open itel linking screen      
@@ -426,32 +427,32 @@ export class MoveOrderComponent implements OnInit {
     //show Loader
     this.showLoader = true;
 
-    if(this.checkMandatoryInpts() == true){
-    
-    if((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None"){
-      //First we will chk whether the user have linked FG serials/batch for option 2 screen
-     this.GetBatchSerialLinking()
-    }
-    else{
-         //submission service callled
-         this.submitMoveOrder();
-    }
+    if (this.checkMandatoryInpts() == true) {
 
-    
-   }
-   else{
-     this.showLoader = false;
-   }
+      if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None") {
+        //First we will chk whether the user have linked FG serials/batch for option 2 screen
+        this.GetBatchSerialLinking()
+      }
+      else {
+        //submission service callled
+        this.submitMoveOrder();
+      }
+
+
+    }
+    else {
+      this.showLoader = false;
+    }
   }
   //This will recive data from lookup
   receiveLookupRowData($event) {
-    
+
     if (this.openedLookup == "WOLookup") {
       //this.cleanupScreen();
 
       //here we will clear values
-       this.clearScreenAfterLookup();
-      
+      this.clearScreenAfterLookup();
+
 
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
@@ -481,20 +482,20 @@ export class MoveOrderComponent implements OnInit {
       if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
         //enable  Operation input Box
         this.DisableEnablQuantity = false;
-        this.InvalidOperation=false;
+        this.InvalidOperation = false;
       }
       else {
         //disable the Operation input Box
         this.DisableEnablQuantity = true;
-        this.InvalidOperation=true;
+        this.InvalidOperation = true;
       }
 
     }
     //To hide the lookup
     //this.showLookup = false;
-    this.showWOLookup=false;
-    this.showOperLookup=false;
-    this.parent="";
+    this.showWOLookup = false;
+    this.showOperLookup = false;
+    this.parent = "";
 
     //close the right section
     this.closeRightSection(false);
@@ -510,47 +511,47 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This emitter event will send the data back to the main form
-  recieveChildSAPSetFormData($event){ 
-   
+  recieveChildSAPSetFormData($event) {
+
     console.log("FROM CHILD SCREENSSSS--->");
     console.log($event);
-    if(this.settingOnSAP == "1"){
+    if (this.settingOnSAP == "1") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
     }
-    if(this.settingOnSAP == "2"){
+    if (this.settingOnSAP == "2") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
-      this.showQtyWithFGScanScreen=false;
+      this.showQtyWithFGScanScreen = false;
     }
-    if(this.settingOnSAP == "3"){
+    if (this.settingOnSAP == "3") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
       this.showQtyWithFGRMScanScreen = false;
     }
-  
+
   }
 
   //on ProdQty Blur
-  onProducedQtyBlur(){
-    if(this.iProducedQty != null){
-      if(this.iProducedQty > this.iBalQty ){
+  onProducedQtyBlur() {
+    if (this.iProducedQty != null) {
+      if (this.iProducedQty > this.iBalQty) {
         alert("Produced Qty should not be greater than balance qty");
         this.iProducedQty = 0;
       }
-      else{
+      else {
         this.iAcceptedQty = this.iProducedQty;
-        this.iNCQty =0;
+        this.iNCQty = 0;
         this.iRejectedQty = 0;
       }
     }
   }
-  
+
   //Core Functions
   //This will filter for filter WO
   filterWODetail(data, docEntry) {
@@ -563,15 +564,15 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This fun will get all WO
-  getAllWorkOrders(fromEvent) {   
+  getAllWorkOrders(fromEvent) {
 
     //Show Loader
     this.showLoader = true;
-    this.mo.getAllWorkOrders(this.CompanyDBId,this.warehouseName).subscribe(
+    this.mo.getAllWorkOrders(this.CompanyDBId, this.warehouseName).subscribe(
       data => {
-        if(data != null){
-          if(data[0].ErrMessage  != undefined){
-            this.toastr.error('',"Session expired",this.baseClassObj.messageConfig);
+        if (data != null) {
+          if (data[0].ErrMessage != undefined) {
+            this.toastr.error('', "Session expired", this.baseClassObj.messageConfig);
             sessionStorage.clear();
             window.localStorage.clear();
             this.router.navigateByUrl('/login');
@@ -582,10 +583,10 @@ export class MoveOrderComponent implements OnInit {
           this.allWODetails = data;
           if (this.allWODetails.length > 0) {
             this.lookupData = this.allWODetails;
-            this.WoLookupData=this.allWODetails;
-          
+            this.WoLookupData = this.allWODetails;
+
             //JSON
-            if(fromEvent == "change"){
+            if (fromEvent == "change") {
               let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
               if (isWOExists == false) {
                 //Message for Invalid WorkOdere
@@ -593,20 +594,20 @@ export class MoveOrderComponent implements OnInit {
                 this.psWONO = '';
                 this.DisableEnablOperation = true;
               }
-              else{
+              else {
                 this.lookupData = this.allWODetails;
-                this.WoLookupData=this.allWODetails;
+                this.WoLookupData = this.allWODetails;
 
-                for(var i = 0;i<this.allWODetails.length;i++) { 
-                  if(this.allWODetails[i].U_O_ORDRNO == this.psWONO){
+                for (var i = 0; i < this.allWODetails.length; i++) {
+                  if (this.allWODetails[i].U_O_ORDRNO == this.psWONO) {
                     this.docEntry = this.allWODetails[i].DocEntry;
                     this.psProductCode = this.allWODetails[i].U_O_PRODID;
                     this.psProductDesc = this.allWODetails[i].ItemName;
                     this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
                     this.psItemManagedBy = this.allWODetails[i].ManagedBy;
                   }
-               }
-        
+                }
+
                 this.DisableEnablOperation = false;
                 //remove the Message if Workorder is not Blank 
                 this.InvalidWorkOrder = false;
@@ -614,17 +615,17 @@ export class MoveOrderComponent implements OnInit {
               }
 
             }
-            else{
+            else {
               this.InvalidWorkOrder = false;
-              this.showLoader = false;  
+              this.showLoader = false;
             }
-            this.showLoader = false;  
+            this.showLoader = false;
           }
-             
-          }
-        else{
-            //Hide Loader
-            this.showLoader = false;   
+
+        }
+        else {
+          //Hide Loader
+          this.showLoader = false;
         }
       }
     )
@@ -635,59 +636,59 @@ export class MoveOrderComponent implements OnInit {
     //show Loader
     this.showLoader = true;
     if (this.psWONO != null || this.psWONO != undefined) {
-     this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
-      data => {
-        if (data != null && data.length > 0) {
-          this.NoOperAvailable = false;
-          this.GetOperationImageStatus = false;
-          this.DisableEnablOperation = false;
-          this.allWOOpDetails = data;
-          if (this.allWOOpDetails.length > 0) {
-            // this.lookupData = this.allWOOpDetails;
-            //this.oprLookupData=this.allWODetails;
-            this.openedLookup = "OperLookup";
-           // this.showLookup = true;
+      this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
+        data => {
+          if (data != null && data.length > 0) {
+            this.NoOperAvailable = false;
+            this.GetOperationImageStatus = false;
+            this.DisableEnablOperation = false;
+            this.allWOOpDetails = data;
+            if (this.allWOOpDetails.length > 0) {
+              // this.lookupData = this.allWOOpDetails;
+              //this.oprLookupData=this.allWODetails;
+              this.openedLookup = "OperLookup";
+              // this.showLookup = true;
+            }
+            //hide Loader
+            this.showLoader = false;
           }
-          //hide Loader
-          this.showLoader = false;
+          else {
+            //hide Loader
+            this.showLoader = false;
+            this.NoOperAvailable = true;
+            this.GetOperationImageStatus = true;
+            this.DisableEnablOperation = true;
+          }
         }
-        else{
-           //hide Loader
-           this.showLoader = false;
-           this.NoOperAvailable = true;
-           this.GetOperationImageStatus = true;
-           this.DisableEnablOperation = true;
-        }
-      }
-    )
-  }
+      )
+    }
   }
 
   //This will get the selected Operation's
-  getSelectedOperationDetail(){
-  //show Loader
-  this.showLoader = true;
-  //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
-  this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
-    data => {
-      if(data !=null){
-        this.selectedWOOperDetail = data;
-        this.showOperDtPopup = true;
-        this.psToOperation = data[0].NextOperNo;
-        this.psPreOperation = data[0].PrevOperNo;
-        this.iBalQty = data[0].U_O_BALQTY;
-        //By default set into it
-        this.iProducedQty =  data[0].U_O_BALQTY;
-        this.iAcceptedQty =  data[0].U_O_BALQTY;
-        
-         //hide Loader
-         this.showLoader = false;
-      }else{
-        //hide Loader
-        this.showLoader = false;
+  getSelectedOperationDetail() {
+    //show Loader
+    this.showLoader = true;
+    //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
+    this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
+      data => {
+        if (data != null) {
+          this.selectedWOOperDetail = data;
+          this.showOperDtPopup = true;
+          this.psToOperation = data[0].NextOperNo;
+          this.psPreOperation = data[0].PrevOperNo;
+          this.iBalQty = data[0].U_O_BALQTY;
+          //By default set into it
+          this.iProducedQty = data[0].U_O_BALQTY;
+          this.iAcceptedQty = data[0].U_O_BALQTY;
+
+          //hide Loader
+          this.showLoader = false;
+        } else {
+          //hide Loader
+          this.showLoader = false;
+        }
       }
-    }
-  ) 
+    )
   }
 
   openRightSection(status) {
@@ -703,259 +704,259 @@ export class MoveOrderComponent implements OnInit {
     this.isWorkOrderRightSection = status;
     this.isWorkOrderListRightSection = status;
     this.isOperationListRightSection = status;
-    this.showLoader =false;
+    this.showLoader = false;
   }
 
   //This function will make the screen reset
-  cleanupScreen(){
+  cleanupScreen() {
     this.psWONO = '';
-    this.psItemManagedBy ='';
-    this.psOperName ='';
-    this.psOperNO='';
-    this.psProductCode='';
-    this.psProductDesc='';
-    this.iAcceptedQty=0;
-    this.iBalQty=0;
-    this.iNCQty=0;
-    this.iOrderedQty=0;
+    this.psItemManagedBy = '';
+    this.psOperName = '';
+    this.psOperNO = '';
+    this.psProductCode = '';
+    this.psProductDesc = '';
+    this.iAcceptedQty = 0;
+    this.iBalQty = 0;
+    this.iNCQty = 0;
+    this.iOrderedQty = 0;
     this.iProducedQty = 0;
-    this.iRejectedQty =0;
+    this.iRejectedQty = 0;
     this.psToOperation = '';
     this.psPreOperation = '';
-    
-    
+
+
     //this function will reset the time and date of the server
     //As discussed with vaibhav sir and rohit sir the date will not be of server
     //this.getServerDate();
-      this.setDefaultDateTime();
+    this.setDefaultDateTime();
   }
 
   //This will set the time and date
-  setDefaultDateTime(){
-    
-  // if(this.currentServerDateTime != null && this.currentServerDateTime.length > 0){
-  //   let currentDateTime = new Date(this.currentServerDateTime);
-  //   this.FrmToDateTime = [
-  //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
-  //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
-  //   ];
-  // }
+  setDefaultDateTime() {
 
-  let defDateTime = new Date();
-  this.FrmToDateTime = [
-        new Date(defDateTime.getFullYear(), defDateTime.getMonth(),defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes()),
-        new Date(defDateTime.getFullYear(), defDateTime.getMonth(),defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes())
-      ];
+    // if(this.currentServerDateTime != null && this.currentServerDateTime.length > 0){
+    //   let currentDateTime = new Date(this.currentServerDateTime);
+    //   this.FrmToDateTime = [
+    //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes()),
+    //     new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(),currentDateTime.getDate(), currentDateTime.getHours(), currentDateTime.getMinutes())
+    //   ];
+    // }
+
+    let defDateTime = new Date();
+    this.FrmToDateTime = [
+      new Date(defDateTime.getFullYear(), defDateTime.getMonth(), defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes()),
+      new Date(defDateTime.getFullYear(), defDateTime.getMonth(), defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes())
+    ];
   }
 
   //This will get the server date time
-  getServerDate(){
+  getServerDate() {
     //here we will need to call a service which will get the Server Date Time
     this.mo.getServerDate(this.CompanyDBId).subscribe(
       data => {
-            this.currentServerDateTime = data[0].DATEANDTIME;
-            this.setDefaultDateTime();
+        this.currentServerDateTime = data[0].DATEANDTIME;
+        this.setDefaultDateTime();
       }
-    ) 
+    )
+  }
+
+  //check for the mandatory inputs on submit
+  checkMandatoryInpts() {
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
+      this.toastr.error('', "Select workorder number", this.baseClassObj.messageConfig);
+      return false;
     }
 
-    //check for the mandatory inputs on submit
-    checkMandatoryInpts() {
-      if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
-        alert("Please select workorder number ")
-        return false;
-      }
-  
-      if (this.psOperNO == "" || this.psOperNO == null || this.psOperNO == undefined) {
-        alert("Please select operation number ")
-        return false;
-      }
-      if (this.iProducedQty <= 0) {
-        this.toastr.error('',"Produced quantity can't be zero or less than zero",this.baseClassObj.messageConfig);
-        return false;
-      }
-      if (this.FrmToDateTime != null) {
-        if (this.FrmToDateTime[0] == "" || this.FrmToDateTime[0] == null || this.FrmToDateTime[0] == undefined) {
-          alert("Please enter start date ")
-          return false;
-        }
-        if (this.FrmToDateTime[1] == "" || this.FrmToDateTime[1] == null || this.FrmToDateTime[1] == undefined) {
-          alert("Please enter end date ")
-          return false;
-        }
-      } else {
-        alert("please enter  date")
-      }
-      return true;
+    if (this.psOperNO == "" || this.psOperNO == null || this.psOperNO == undefined) {
+      this.toastr.error('', "Select operation number", this.baseClassObj.messageConfig);
+      return false;
     }
+    if (this.iProducedQty <= 0) {
+      this.toastr.error('', "Produced quantity can't be zero or less than zero", this.baseClassObj.messageConfig);
+      return false;
+    }
+    if (this.FrmToDateTime != null) {
+      if (this.FrmToDateTime[0] == "" || this.FrmToDateTime[0] == null || this.FrmToDateTime[0] == undefined) {
+        alert("Please enter start date ")
+        return false;
+      }
+      if (this.FrmToDateTime[1] == "" || this.FrmToDateTime[1] == null || this.FrmToDateTime[1] == undefined) {
+        alert("Please enter end date ")
+        return false;
+      }
+    } else {
+      alert("please enter  date")
+    }
+    return true;
+  }
 
-    //This function will read the settings
-    getSettingOnSAP(){
+  //This function will read the settings
+  getSettingOnSAP() {
     this.showLoader = true;
-      //here we will read the settings frm db
+    //here we will read the settings frm db
     this.mo.getSettingOnSAP(this.CompanyDBId).subscribe(
       data => {
-        if(data !=null || data != undefined){
+        if (data != null || data != undefined) {
           this.showLoader = false;
-          if(data.SettingTable.length > 0){
+          if (data.SettingTable.length > 0) {
             this.settingOnSAP = data.SettingTable[0].ScreenSetting;
             this.IsMoveOrderTimeMandatory = data.SettingTable[0].IsMoveOrderTimeMandatory;
             this.showLoader = false;
           }
-          
+
         }
-        else{
+        else {
           this.showLoader = false;
         }
       }
-    ) 
+    )
 
+  }
+
+  submitMoveOrder() {
+    //if To Operation no. is empty then put the same
+    if (this.psToOperation == "" || this.psToOperation == undefined) {
+      this.psToOperation = this.psOperNO;
     }
-
-    submitMoveOrder(){
-      //if To Operation no. is empty then put the same
-      if(this.psToOperation == "" || this.psToOperation == undefined){
-        this.psToOperation = this.psOperNO;
-      }
-      this.mo.submitMoveOrder(this.CompanyDBId,this.psOperNO,this.psToOperation,this.psWONO,this.psProductCode,this.loggedInUser,this.iAcceptedQty,this.iRejectedQty,this.iNCQty,this.iOrderedQty,this.iProducedQty,this.FrmToDateTime,this.psPreOperation,this.settingOnSAP,this.IsMoveOrderTimeMandatory).subscribe(
-        data => {
-          if(data == "True"){
-            this.toastr.success('','Record submitted sucessfully',this.baseClassObj.messageConfig);
-              //alert("Record submitted sucessfully");
-              this.cleanupScreen();
-              //hide Loader
-              this.showLoader = false;
-          }
-          else if(data == "Error while updating posting status for accepted qtys"){
-            console.log(data);
-            this.toastr.error('','Error while submitting record',this.baseClassObj.messageConfig);
-            this.showLoader = false;
-          }
-          else if(data == "OperOverlapping"){
-            this.toastr.error('',"Operation's start date & time can't be lesser than previous operation's start date time",this.baseClassObj.messageConfig);
-            this.showLoader = false;
-          }
-          else{
-            console.log(data);
-            this.toastr.error('','Error while submitting record',this.baseClassObj.messageConfig);
-                //show Loader
-                this.showLoader = false;
-          }
+    this.mo.submitMoveOrder(this.CompanyDBId, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory).subscribe(
+      data => {
+        if (data == "True") {
+          this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
+          //alert("Record submitted sucessfully");
+          this.cleanupScreen();
+          //hide Loader
+          this.showLoader = false;
         }
-      )
-    }
-    //This will clear the screen after lookup selection
-    clearScreenAfterLookup(){
-      this.psWONO = "";
-      this.psOperNO = "";
-      this.psOperName = "";
-      this.psToOperation = "";
-      this.iProducedQty = 0;
-      this.allWOOpDetails = [];
-      
-      //Hiding forms if uncesry opened forms
-      if(this.settingOnSAP == "1"){
-        this.showQtyNoScanScreen = false;
+        else if (data == "Error while updating posting status for accepted qtys") {
+          console.log(data);
+          this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
+          this.showLoader = false;
+        }
+        else if (data == "OperOverlapping") {
+          this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
+          this.showLoader = false;
+        }
+        else {
+          console.log(data);
+          this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
+          //show Loader
+          this.showLoader = false;
+        }
       }
-      if(this.settingOnSAP == "2"){
-        this.showQtyWithFGScanScreen = false;
-      }
-      if(this.settingOnSAP == "3"){
-        this.showQtyWithFGRMScanScreen = false;
-      }
-    }
+    )
+  }
+  //This will clear the screen after lookup selection
+  clearScreenAfterLookup() {
+    this.psWONO = "";
+    this.psOperNO = "";
+    this.psOperName = "";
+    this.psToOperation = "";
+    this.iProducedQty = 0;
+    this.allWOOpDetails = [];
 
-    //This function will check whether the FG is linked to WO or not 
-    GetBatchSerialLinking(){
-      this.showLoader = true;
-      this.mo.GetBatchSerialLinking(this.CompanyDBId,this.psWONO,this.warehouseName,Number(this.psOperNO)).subscribe(
-        data => {
-          let isAllowed = true;
-          if(data !=null && data.Table.length > 0){
+    //Hiding forms if uncesry opened forms
+    if (this.settingOnSAP == "1") {
+      this.showQtyNoScanScreen = false;
+    }
+    if (this.settingOnSAP == "2") {
+      this.showQtyWithFGScanScreen = false;
+    }
+    if (this.settingOnSAP == "3") {
+      this.showQtyWithFGRMScanScreen = false;
+    }
+  }
+
+  //This function will check whether the FG is linked to WO or not 
+  GetBatchSerialLinking() {
+    this.showLoader = true;
+    this.mo.GetBatchSerialLinking(this.CompanyDBId, this.psWONO, this.warehouseName, Number(this.psOperNO)).subscribe(
+      data => {
+        let isAllowed = true;
+        if (data != null && data.Table.length > 0) {
           //Putting qtys if there is need to open the fg input screen
-          this.basicDetails=[];
+          this.basicDetails = [];
           //Setting basic details to share on another screen
           this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
 
           //If data of linked qty is less then zero
-          if(Number(data.Table[0].LinkedQuantity) <= 0){
+          if (Number(data.Table[0].LinkedQuantity) <= 0) {
             //alert("No serials/batches attached");
-            this.toastr.error('',"No serials/batches attached",this.baseClassObj.messageConfig);
-             isAllowed = false;
-             //hide Loader
-             this.showLoader = false;
-             //Load screen elements
-             this.loadFGScreenElements();
-             //This function will decide the screen to be opened
-             this.openItemLinkingScreen();
+            this.toastr.error('', "No serials/batches attached", this.baseClassObj.messageConfig);
+            isAllowed = false;
+            //hide Loader
+            this.showLoader = false;
+            //Load screen elements
+            this.loadFGScreenElements();
+            //This function will decide the screen to be opened
+            this.openItemLinkingScreen();
           }
           //If the Qty is greater than 0 then
-          else{
-              //If the number of linked qty is more than produced qty
-              if(Number(data.Table[0].LinkedQuantity) > this.iProducedQty){
-                //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
-                this.toastr.error('',"Number of attached batch/serial quantities can't be greater then produced quantity",this.baseClassObj.messageConfig);
-                isAllowed = false;
-                //hide Loader
-                this.showLoader = false;
-                //Load screen elements
-                this.loadFGScreenElements();
-                //This function will decide the screen to be opened
-                this.openItemLinkingScreen();
-              }
+          else {
+            //If the number of linked qty is more than produced qty
+            if (Number(data.Table[0].LinkedQuantity) > this.iProducedQty) {
+              //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
+              this.toastr.error('', "Number of attached batch/serial quantities can't be greater then produced quantity", this.baseClassObj.messageConfig);
+              isAllowed = false;
+              //hide Loader
+              this.showLoader = false;
+              //Load screen elements
+              this.loadFGScreenElements();
+              //This function will decide the screen to be opened
+              this.openItemLinkingScreen();
+            }
 
-              //If the number of linked qty is less than produced qty
-              if(Number(data.Table[0].LinkedQuantity) < this.iProducedQty){
-                //alert("Batch/Serial not linked");
-                this.toastr.error('',"Quantity Mismatch",this.baseClassObj.messageConfig);
-                isAllowed = false;
-                //hide Loader
-                this.showLoader = false;
-                //Load screen elements
-                this.loadFGScreenElements();
-                //This function will decide the screen to be opened
-                this.openItemLinkingScreen();
-              }
+            //If the number of linked qty is less than produced qty
+            if (Number(data.Table[0].LinkedQuantity) < this.iProducedQty) {
+              //alert("Batch/Serial not linked");
+              this.toastr.error('', "Quantity Mismatch", this.baseClassObj.messageConfig);
+              isAllowed = false;
+              //hide Loader
+              this.showLoader = false;
+              //Load screen elements
+              this.loadFGScreenElements();
+              //This function will decide the screen to be opened
+              this.openItemLinkingScreen();
+            }
 
-              //If all ok then the flag will allow to submit otherwise not
-              if(isAllowed == true){
-                  //submission service callled
-                  this.submitMoveOrder();
-              }
-          }
+            //If all ok then the flag will allow to submit otherwise not
+            if (isAllowed == true) {
+              //submission service callled
+              this.submitMoveOrder();
+            }
           }
         }
-      )
-    }
+      }
+    )
+  }
 
-    //THis will deceide which screen have to be opened
-    openItemLinkingScreen(){
-      this.showItemLinkingScreen = true;
-      if (this.settingOnSAP == "1") {
-        this.ScreenName = 'Move Order Summary';
-        this.showQtyNoScanScreen = true;
-      }
-      if (this.settingOnSAP == "2") {
-        this.ScreenName = 'Finished Goods Scan';
-        this.showQtyWithFGScanScreen = true;
-      }
-      if (this.settingOnSAP == "3") {
-        this.ScreenName = 'Finished Goods & Raw Materials Scan';
-        this.showQtyWithFGRMScanScreen = true;
-      }
+  //THis will deceide which screen have to be opened
+  openItemLinkingScreen() {
+    this.showItemLinkingScreen = true;
+    if (this.settingOnSAP == "1") {
+      this.ScreenName = 'Move Order Summary';
+      this.showQtyNoScanScreen = true;
     }
+    if (this.settingOnSAP == "2") {
+      this.ScreenName = 'Finished Goods Scan';
+      this.showQtyWithFGScanScreen = true;
+    }
+    if (this.settingOnSAP == "3") {
+      this.ScreenName = 'Finished Goods & Raw Materials Scan';
+      this.showQtyWithFGRMScanScreen = true;
+    }
+  }
 
-    //Load Rifgt Screen elements
-    loadFGScreenElements(){
-      //For Opening the Right Section
-      this.openRightSection(true);
-      this.isQuantityRightSection = true;
-      document.getElementById('opti_QuantityRightSection').style.display = 'block';
-    }
+  //Load Rifgt Screen elements
+  loadFGScreenElements() {
+    //For Opening the Right Section
+    this.openRightSection(true);
+    this.isQuantityRightSection = true;
+    document.getElementById('opti_QuantityRightSection').style.display = 'block';
+  }
 
-    checkIfLoginIsValid(){
-      if(window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined){
-        this.router.navigateByUrl('/login');
-      }
+  checkIfLoginIsValid() {
+    if (window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined) {
+      this.router.navigateByUrl('/login');
     }
+  }
 }
