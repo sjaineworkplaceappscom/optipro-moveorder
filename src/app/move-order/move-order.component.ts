@@ -80,6 +80,7 @@ export class MoveOrderComponent implements OnInit {
   bAllowToSubmit = true;
   psPreOperation: any;
   IsMoveOrderTimeMandatory: any;
+  public restrictedDate = new Date().getDate();
 
   private baseClassObj = new BaseClass();
 
@@ -225,7 +226,6 @@ export class MoveOrderComponent implements OnInit {
     this.setDefaultDateTime();
 
   }
-
 
 
   //This will get all WO
@@ -434,8 +434,9 @@ export class MoveOrderComponent implements OnInit {
         this.GetBatchSerialLinking()
       }
       else {
+        this.getServerDate(false);
         //submission service callled
-        this.submitMoveOrder();
+        //this.submitMoveOrder(false);
       }
 
 
@@ -444,6 +445,7 @@ export class MoveOrderComponent implements OnInit {
       this.showLoader = false;
     }
   }
+
   //This will recive data from lookup
   receiveLookupRowData($event) {
 
@@ -750,12 +752,29 @@ export class MoveOrderComponent implements OnInit {
   }
 
   //This will get the server date time
-  getServerDate() {
+  getServerDate(isForcefullSubmission) {
     //here we will need to call a service which will get the Server Date Time
     this.mo.getServerDate(this.CompanyDBId).subscribe(
       data => {
-        this.currentServerDateTime = data[0].DATEANDTIME;
-        this.setDefaultDateTime();
+        this.showLoader = false;
+        console.log("Server Date Time", data[0].DATEANDTIME);
+
+        if (this.FrmToDateTime[1] > new Date(data[0].DATEANDTIME)) {
+          this.toastr.error('', "Operation End time can't be greater than server date & time", this.baseClassObj.messageConfig);
+          return;
+        }
+        else{
+          //If time and date is not greater than server time then will go for submit
+          this.submitMoveOrder(isForcefullSubmission);
+        }
+
+        this.showLoader = false;
+        // this.currentServerDateTime = data[0].DATEANDTIME;
+        // this.setDefaultDateTime();
+      },
+      error=>{
+        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.showLoader = false;
       }
     )
   }
@@ -813,29 +832,83 @@ export class MoveOrderComponent implements OnInit {
 
   }
 
-  submitMoveOrder() {
+  submitMoveOrder(forcefullySubmission) {
+
     //if To Operation no. is empty then put the same
     if (this.psToOperation == "" || this.psToOperation == undefined) {
       this.psToOperation = this.psOperNO;
     }
-    this.mo.submitMoveOrder(this.CompanyDBId, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory).subscribe(
+    this.mo.submitMoveOrder(this.CompanyDBId, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory, forcefullySubmission).subscribe(
       data => {
-        if (data == "True") {
-          this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
-          //alert("Record submitted sucessfully");
-          this.cleanupScreen();
-          //hide Loader
-          this.showLoader = false;
+        //Submit Move Order Status
+        // if (data.recordSubmitDetails != undefined) {
+        if (data.recordSubmitDetails.length > 0) {
+          if (data.recordSubmitDetails[0].isRecordSubmitted == "True") {
+            this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
+            //alert("Record submitted sucessfully");
+            this.cleanupScreen();
+            //hide Loader
+            this.showLoader = false;
+          }
+          else if (data.recordSubmitDetails[0].isRecordSubmitted == "OperOverlapping") {
+            this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
+            this.showLoader = false;
+          }
         }
-        else if (data == "Error while updating posting status for accepted qtys") {
-          console.log(data);
-          this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
-          this.showLoader = false;
+        // }
+
+        // else if (data.recordAlreadySubmitDetails != undefined) {
+        if (data.recordAlreadySubmitDetails.length > 0) {
+          if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "N") {
+            this.toastr.warning('', 'Record already under progress', this.baseClassObj.messageConfig);
+            //this.cleanupScreen();
+            //hide Loader
+            this.showLoader = false;
+            return;
+          }
+          if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "E") {
+            let userResponse;
+            userResponse = confirm("Record have error :-" + data.recordAlreadySubmitDetails[0].OPTM_RESULTDESC + ", Do you want to continue ?");
+
+            if (userResponse == true) {
+              this.getServerDate(true);
+              //this.submitMoveOrder(true);
+            }
+            else {
+              this.cleanupScreen();
+              //hide Loader
+              this.showLoader = false;
+              return;
+            }
+
+            //hide Loader
+            this.showLoader = false;
+          }
+
         }
-        else if (data == "OperOverlapping") {
-          this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
-          this.showLoader = false;
-        }
+        // if (data == "True") {
+        //   this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
+        //   //alert("Record submitted sucessfully");
+        //   this.cleanupScreen();
+        //   //hide Loader
+        //   this.showLoader = false;
+        // }
+        // else if (data == "Error while updating posting status for accepted qtys") {
+        //   console.log(data);
+        //   this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
+        //   this.showLoader = false;
+        // }
+        // else if (data == "OperOverlapping") {
+        //   this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
+        //   this.showLoader = false;
+        // }
+        // else {
+        //   console.log(data);
+        //   this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
+        //   //show Loader
+        //   this.showLoader = false;
+        // }
+        // }
         else {
           console.log(data);
           this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
@@ -920,8 +993,9 @@ export class MoveOrderComponent implements OnInit {
 
             //If all ok then the flag will allow to submit otherwise not
             if (isAllowed == true) {
+              this.getServerDate(false);
               //submission service callled
-              this.submitMoveOrder();
+              //this.submitMoveOrder(false);
             }
           }
         }

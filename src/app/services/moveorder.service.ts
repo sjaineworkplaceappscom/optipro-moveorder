@@ -58,7 +58,7 @@ export class MoveorderService {
   }
 
   //Submit Move Order
-  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,preOperNo:any,getSettingOnSAP:any,IsMoveOrderTimeMandatory:any):Observable<any>{
+  submitMoveOrder(CompanyDBID:string,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,preOperNo:any,getSettingOnSAP:any,IsMoveOrderTimeMandatory:any,isForcefullSubmission):Observable<any>{
     
    let sFromDateTime = new Date(FrmToDateTime[0]).toLocaleString();
    let sEndDateTime = new Date(FrmToDateTime[1]).toLocaleString();
@@ -80,7 +80,8 @@ export class MoveorderService {
       EndDateTime:sEndDateTime,
       genealogySetting:getSettingOnSAP,
       PreOperNo:preOperNo,
-      IsMoveOrderTimeMandatory:IsMoveOrderTimeMandatory
+      IsMoveOrderTimeMandatory:IsMoveOrderTimeMandatory,
+      isForcefullSubmission: isForcefullSubmission
     
     }]) };
   //Return the response form the API  
