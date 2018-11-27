@@ -80,6 +80,9 @@ export class MoveOrderComponent implements OnInit {
   bAllowToSubmit = true;
   psPreOperation: any;
   IsMoveOrderTimeMandatory: any;
+  public isCustomizedFor: any;
+  public isCustEnabled:any;
+  public isUserIsSubcontracter: any = "False";
   public restrictedDate = new Date().getDate();
 
   private baseClassObj = new BaseClass();
@@ -220,7 +223,7 @@ export class MoveOrderComponent implements OnInit {
     this.getSettingOnSAP();
 
     //On Form Initialization get All WO
-    this.getAllWorkOrders("init");
+    //this.getAllWorkOrders("init");
 
     //this.getServerDate();
     this.setDefaultDateTime();
@@ -573,57 +576,62 @@ export class MoveOrderComponent implements OnInit {
     this.mo.getAllWorkOrders(this.CompanyDBId, this.warehouseName).subscribe(
       data => {
         if (data != null) {
-          if (data[0].ErrMessage != undefined) {
-            this.toastr.error('', "Session expired", this.baseClassObj.messageConfig);
-            sessionStorage.clear();
-            window.localStorage.clear();
-            this.router.navigateByUrl('/login');
-            return;
-          }
+          if (data.length > 0) {
+            if (data[0].ErrMessage != undefined) {
+              this.toastr.error('', "Session expired", this.baseClassObj.messageConfig);
+              sessionStorage.clear();
+              window.localStorage.clear();
+              this.router.navigateByUrl('/login');
+              return;
+            }
 
 
-          this.allWODetails = data;
-          if (this.allWODetails.length > 0) {
-            this.lookupData = this.allWODetails;
-            this.WoLookupData = this.allWODetails;
+            this.allWODetails = data;
+            if (this.allWODetails.length > 0) {
+              this.lookupData = this.allWODetails;
+              this.WoLookupData = this.allWODetails;
 
-            //JSON
-            if (fromEvent == "change") {
-              let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
-              if (isWOExists == false) {
-                //Message for Invalid WorkOdere
-                this.InvalidWorkOrder = true;
-                this.psWONO = '';
-                this.DisableEnablOperation = true;
-              }
-              else {
-                this.lookupData = this.allWODetails;
-                this.WoLookupData = this.allWODetails;
+              //JSON
+              if (fromEvent == "change") {
+                let isWOExists = this.allWODetails.some(e => e.U_O_ORDRNO === this.psWONO);
+                if (isWOExists == false) {
+                  //Message for Invalid WorkOdere
+                  this.InvalidWorkOrder = true;
+                  this.psWONO = '';
+                  this.DisableEnablOperation = true;
+                }
+                else {
+                  this.lookupData = this.allWODetails;
+                  this.WoLookupData = this.allWODetails;
 
-                for (var i = 0; i < this.allWODetails.length; i++) {
-                  if (this.allWODetails[i].U_O_ORDRNO == this.psWONO) {
-                    this.docEntry = this.allWODetails[i].DocEntry;
-                    this.psProductCode = this.allWODetails[i].U_O_PRODID;
-                    this.psProductDesc = this.allWODetails[i].ItemName;
-                    this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
-                    this.psItemManagedBy = this.allWODetails[i].ManagedBy;
+                  for (var i = 0; i < this.allWODetails.length; i++) {
+                    if (this.allWODetails[i].U_O_ORDRNO == this.psWONO) {
+                      this.docEntry = this.allWODetails[i].DocEntry;
+                      this.psProductCode = this.allWODetails[i].U_O_PRODID;
+                      this.psProductDesc = this.allWODetails[i].ItemName;
+                      this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
+                      this.psItemManagedBy = this.allWODetails[i].ManagedBy;
+                    }
                   }
+
+                  this.DisableEnablOperation = false;
+                  //remove the Message if Workorder is not Blank 
+                  this.InvalidWorkOrder = false;
+                  this.getOperationByWONO();
                 }
 
-                this.DisableEnablOperation = false;
-                //remove the Message if Workorder is not Blank 
-                this.InvalidWorkOrder = false;
-                this.getOperationByWONO();
               }
-
-            }
-            else {
-              this.InvalidWorkOrder = false;
+              else {
+                this.InvalidWorkOrder = false;
+                this.showLoader = false;
+              }
               this.showLoader = false;
             }
+          }
+          else {
+            this.allWODetails = data;
             this.showLoader = false;
           }
-
         }
         else {
           //Hide Loader
@@ -678,7 +686,21 @@ export class MoveOrderComponent implements OnInit {
           this.showOperDtPopup = true;
           this.psToOperation = data[0].NextOperNo;
           this.psPreOperation = data[0].PrevOperNo;
-          this.iBalQty = data[0].U_O_BALQTY;
+
+          switch (this.isCustomizedFor) {
+            case this.baseClassObj.ellyza_london:
+              if (this.isUserIsSubcontracter == "True") {
+                this.iBalQty = Number(data[0].U_O_BALQTY);
+              }
+              else{
+                this.iBalQty = Number(data[0].U_O_BALQTY);
+              }
+              break;
+            default:
+              this.iBalQty = data[0].U_O_BALQTY;
+
+          }
+
           //By default set into it
           this.iProducedQty = data[0].U_O_BALQTY;
           this.iAcceptedQty = data[0].U_O_BALQTY;
@@ -813,20 +835,45 @@ export class MoveOrderComponent implements OnInit {
   getSettingOnSAP() {
     this.showLoader = true;
     //here we will read the settings frm db
-    this.mo.getSettingOnSAP(this.CompanyDBId).subscribe(
+    this.mo.getSettingOnSAP(this.CompanyDBId, this.loggedInUser).subscribe(
       data => {
         if (data != null || data != undefined) {
           this.showLoader = false;
+          if (data.CustomizationDetails != undefined) {
+          if (data.CustomizationDetails.length > 0) {
+              this.isCustEnabled = data.CustomizationDetails[0].CustEnabled;
+              this.isCustomizedFor = data.CustomizationDetails[0].CustFor;
+              window.localStorage.setItem('isCustEnabled', this.isCustEnabled);
+            }
+          }
+          //this.isCustomizedFor = "ellyzaLondon";
+
+
           if (data.SettingTable.length > 0) {
-            this.settingOnSAP = data.SettingTable[0].ScreenSetting;
-            this.IsMoveOrderTimeMandatory = data.SettingTable[0].IsMoveOrderTimeMandatory;
-            this.showLoader = false;
+            if (data.SettingTable != undefined) {
+              this.IsMoveOrderTimeMandatory = data.SettingTable[0].IsMoveOrderTimeMandatory;
+              this.settingOnSAP = data.SettingTable[0].ScreenSetting;
+            }
           }
 
+
+          if (data.UserDetails.length > 0) {
+            if (data.UserDetails != undefined) {
+              this.isUserIsSubcontracter = data.UserDetails[0].isUserIsSubcontracter;
+              window.localStorage.setItem('isUserIsSubcontracter', this.isUserIsSubcontracter);
+            }
+            this.showLoader = false;
+          }
+          //because of async req.
+          this.getAllWorkOrders("init");
         }
         else {
           this.showLoader = false;
         }
+      },
+      error => {
+        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.showLoader = false;
       }
     )
 
@@ -838,7 +885,7 @@ export class MoveOrderComponent implements OnInit {
     if (this.psToOperation == "" || this.psToOperation == undefined) {
       this.psToOperation = this.psOperNO;
     }
-    this.mo.submitMoveOrder(this.CompanyDBId, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory, forcefullySubmission).subscribe(
+    this.mo.submitMoveOrder(this.CompanyDBId, this.docEntry, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory, this.iBalQty, forcefullySubmission).subscribe(
       data => {
         //Submit Move Order Status
         // if (data.recordSubmitDetails != undefined) {
@@ -949,7 +996,7 @@ export class MoveOrderComponent implements OnInit {
           //Putting qtys if there is need to open the fg input screen
           this.basicDetails = [];
           //Setting basic details to share on another screen
-          this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
+          this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty, 'IsUserIsSubcontracter': this.isUserIsSubcontracter });
 
           //If data of linked qty is less then zero
           if (Number(data.Table[0].LinkedQuantity) <= 0) {

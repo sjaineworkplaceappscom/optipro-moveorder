@@ -2,6 +2,7 @@
 [
     {
     "optiProMoveOrderAPIURL":"http://98.191.165.156/OptiProMMO/api",
-    "deployedFor":"handheld"
+    "deployedFor":"handheld",
+    "clientName":"EllyzaLondon"
     }
 ]
