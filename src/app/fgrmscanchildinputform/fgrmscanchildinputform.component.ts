@@ -186,6 +186,11 @@ export class FgrmscanchildinputformComponent implements OnInit {
   //on Save row press
   onRMAddRowPress(){
     
+    if(this.psChildCompItemCode == undefined || this.psChildCompItemCode == null || this.psChildCompItemCode == ''){
+
+      this.toastr.error('',"Child item code can't be blank",this.baseClassObj.messageConfig); 
+      return;
+    }
        if(this.bIsInEditMode == false){
     if(this.checkIfChildComponentsExists() == false)
     {
@@ -200,7 +205,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
           OPTM_WHSCODE: this.sChildWhse,
           ManagedBy: this.sChildManagedBy,
           CompanyDBId :this.CompanyDBId,
-          WorkOrder : this.basicDetailFrmParentInput[0].WorkOrderNo,
+          WorkOrderNo : this.basicDetailFrmParentInput[0].WorkOrderNo,
           ParentBatchSerial: this.detailsOfParentinputFrm.ParentBatchSer,
           User: this.loggedInUser,
           OperNo: this.detailsOfParentinputFrm.OperNo,

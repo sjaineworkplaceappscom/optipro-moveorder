@@ -21,7 +21,7 @@
                     <form class="k-form" #signInForm="ngForm">
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                Username * <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
+                                {{language.username}} <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
                             </span>
                           
                             <!--Bug no. 18145... disble autocompletion of the input field-->

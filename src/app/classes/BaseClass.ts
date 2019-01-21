@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 export class BaseClass {
     public href: any = window.location.href;
     public adminDBName: string = "OPTIPROADMIN";
@@ -6,6 +7,7 @@ export class BaseClass {
         // progressBar:true
     }
 
+    //This will get the path of app
     public get_current_url() {
         let temp: any = this.href.substring(0, this.href.lastIndexOf('/'));
         if (temp.lastIndexOf('#') != '-1') {
@@ -13,7 +15,7 @@ export class BaseClass {
         }
         return temp;
     }
-
+    
     //Customization Client Codes
     public ellyza_london: any = "EllyzaLondon"
     public standard:any = "standard"

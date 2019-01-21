@@ -13,6 +13,11 @@ import { ToastrService } from 'ngx-toastr';
   //styles:['']
 })
 export class LoginComponent implements OnInit {
+  private baseClassObj = new BaseClass();
+  public language: any = [];
+  public fileURL = this.baseClassObj.get_current_url() + '/assets';
+  //public fileURL = './assets';
+
   public loginId: string;//= 'shashank';
   public password: string;//= 'sha@123';
 
@@ -20,7 +25,6 @@ export class LoginComponent implements OnInit {
   public disableLoginBtn: boolean = true;
   public psURL: string = '';
 
-  private baseClassObj = new BaseClass();
   public arrConfigData: any[];
   public defaultCompnyComboValue: any = [{ OPTM_COMPID: "Select Company" }];
   public listItems: Array<string> = this.defaultCompnyComboValue;
@@ -73,27 +77,17 @@ export class LoginComponent implements OnInit {
     element.classList.add("opti_account-module");
 
     //this.toastr.warning('',this.baseClassObj.get_current_url() +'/assets/configuration.json',this.baseClassObj.messageConfig);
+
+
     //This will get all config
-    this.httpClientSer.get('./assets/configuration.json').subscribe(
+    this.httpClientSer.get(this.fileURL + '/configuration.json').subscribe(
       data => {
         this.arrConfigData = data as string[];
         window.localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
 
+        this.loadLanguage(this.arrConfigData[0].language);
         //This will get the psURL
-        this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
-          data => {
-            if (data != null) {
-              this.psURL = data;
-              //For code analysis remove in live enviorments.
-              this.psURL = "http://localhost:9500/";
-              //this.psURL = "http://172.16.6.140/OptiAdmin";
-            }
-          },
-          error => {
-            this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
-            this.showLoader = false;
-          }
-        )
+        //this.getPSURL();
       },
       (err: HttpErrorResponse) => {
         console.log(err.message);
@@ -295,4 +289,39 @@ export class LoginComponent implements OnInit {
 
   }
 
+  getPSURL() {
+    this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
+      data => {
+        if (data != null) {
+          this.psURL = data;
+          //For code analysis remove in live enviorments.
+          //this.psURL = "http://localhost:9500/";
+          //this.psURL = "http://172.16.6.140/OptiAdmin";
+        }
+      },
+      error => {
+        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.showLoader = false;
+      }
+    )
+  }
+
+  //This will load the lang file
+  public loadLanguage(langParam) {
+    this.httpClientSer.get(this.fileURL + '/i18n/' + langParam + '.json').subscribe(
+      data => {
+        window.localStorage.setItem('language', JSON.stringify(data));
+        this.language = JSON.parse(window.localStorage.getItem('language'));
+        //This will get the psURL
+        this.getPSURL();
+      },
+      error => {
+        this.toastr.error('', 'There was some error while reading language file', this.baseClassObj.messageConfig);
+        this.showLoader = false;
+      }
+    );
+
+
+
+  }
 }

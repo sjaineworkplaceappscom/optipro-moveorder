@@ -81,7 +81,7 @@ export class MoveOrderComponent implements OnInit {
   psPreOperation: any;
   IsMoveOrderTimeMandatory: any;
   public isCustomizedFor: any;
-  public isCustEnabled:any;
+  public isCustEnabled: any;
   public isUserIsSubcontracter: any = "False";
   public restrictedDate = new Date().getDate();
 
@@ -408,20 +408,13 @@ export class MoveOrderComponent implements OnInit {
       return;
     }
 
-    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.psOperNO == "" || this.psOperNO == undefined || this.psOperNO == null) {
-      status = false;
-    } else {
-      status = true;
+    //This function will get to know whthere it is necessary to attach Batch/Serials on current operation
+
+    if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None") {
+      this.checkIfOperRequiresMaterial(status);
     }
-    if (status == true) {
-      this.openRightSection(status)
-      this.isQuantityRightSection = status;
-      document.getElementById('opti_QuantityRightSection').style.display = 'block';
-      this.basicDetails = [];
-      //Setting basic details to share on another screen
-      this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty });
-      //This will open itel linking screen      
-      this.openItemLinkingScreen();
+    else{
+      this.openRespectiveScreen(status);
     }
   }
 
@@ -692,7 +685,7 @@ export class MoveOrderComponent implements OnInit {
               if (this.isUserIsSubcontracter == "True") {
                 this.iBalQty = Number(data[0].U_O_BALQTY);
               }
-              else{
+              else {
                 this.iBalQty = Number(data[0].U_O_BALQTY);
               }
               break;
@@ -785,7 +778,7 @@ export class MoveOrderComponent implements OnInit {
           this.toastr.error('', "Operation End time can't be greater than server date & time", this.baseClassObj.messageConfig);
           return;
         }
-        else{
+        else {
           //If time and date is not greater than server time then will go for submit
           this.submitMoveOrder(isForcefullSubmission);
         }
@@ -794,7 +787,7 @@ export class MoveOrderComponent implements OnInit {
         // this.currentServerDateTime = data[0].DATEANDTIME;
         // this.setDefaultDateTime();
       },
-      error=>{
+      error => {
         this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
@@ -840,7 +833,7 @@ export class MoveOrderComponent implements OnInit {
         if (data != null || data != undefined) {
           this.showLoader = false;
           if (data.CustomizationDetails != undefined) {
-          if (data.CustomizationDetails.length > 0) {
+            if (data.CustomizationDetails.length > 0) {
               this.isCustEnabled = data.CustomizationDetails[0].CustEnabled;
               this.isCustomizedFor = data.CustomizationDetails[0].CustFor;
               window.localStorage.setItem('isCustEnabled', this.isCustEnabled);
@@ -998,54 +991,60 @@ export class MoveOrderComponent implements OnInit {
           //Setting basic details to share on another screen
           this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty, 'IsUserIsSubcontracter': this.isUserIsSubcontracter });
 
-          //If data of linked qty is less then zero
-          if (Number(data.Table[0].LinkedQuantity) <= 0) {
-            //alert("No serials/batches attached");
-            this.toastr.error('', "No serials/batches attached", this.baseClassObj.messageConfig);
-            isAllowed = false;
-            //hide Loader
-            this.showLoader = false;
-            //Load screen elements
-            this.loadFGScreenElements();
-            //This function will decide the screen to be opened
-            this.openItemLinkingScreen();
-          }
-          //If the Qty is greater than 0 then
-          else {
-            //If the number of linked qty is more than produced qty
-            if (Number(data.Table[0].LinkedQuantity) > this.iProducedQty) {
-              //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
-              this.toastr.error('', "Number of attached batch/serial quantities can't be greater then produced quantity", this.baseClassObj.messageConfig);
-              isAllowed = false;
-              //hide Loader
-              this.showLoader = false;
-              //Load screen elements
-              this.loadFGScreenElements();
-              //This function will decide the screen to be opened
-              this.openItemLinkingScreen();
-            }
+          if (data.MaterialRequirement != undefined) {
+            if (data.MaterialRequirement.length > 0) {
 
-            //If the number of linked qty is less than produced qty
-            if (Number(data.Table[0].LinkedQuantity) < this.iProducedQty) {
-              //alert("Batch/Serial not linked");
-              this.toastr.error('', "Quantity Mismatch", this.baseClassObj.messageConfig);
-              isAllowed = false;
-              //hide Loader
-              this.showLoader = false;
-              //Load screen elements
-              this.loadFGScreenElements();
-              //This function will decide the screen to be opened
-              this.openItemLinkingScreen();
-            }
+              //If data of linked qty is less then zero
+              if (Number(data.Table[0].LinkedQuantity) <= 0) {
+                //alert("No serials/batches attached");
+                this.toastr.error('', "No serials/batches attached", this.baseClassObj.messageConfig);
+                isAllowed = false;
+                //hide Loader
+                this.showLoader = false;
+                //Load screen elements
+                this.loadFGScreenElements();
+                //This function will decide the screen to be opened
+                this.openItemLinkingScreen();
+              }
+              //If the Qty is greater than 0 then
+              else {
+                //If the number of linked qty is more than produced qty
+                if (Number(data.Table[0].LinkedQuantity) > this.iProducedQty) {
+                  //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
+                  this.toastr.error('', "Number of attached batch/serial quantities can't be greater then produced quantity", this.baseClassObj.messageConfig);
+                  isAllowed = false;
+                  //hide Loader
+                  this.showLoader = false;
+                  //Load screen elements
+                  this.loadFGScreenElements();
+                  //This function will decide the screen to be opened
+                  this.openItemLinkingScreen();
+                }
 
-            //If all ok then the flag will allow to submit otherwise not
-            if (isAllowed == true) {
+                //If the number of linked qty is less than produced qty
+                if (Number(data.Table[0].LinkedQuantity) < this.iProducedQty) {
+                  //alert("Batch/Serial not linked");
+                  this.toastr.error('', "Quantity mismatch", this.baseClassObj.messageConfig);
+                  isAllowed = false;
+                  //hide Loader
+                  this.showLoader = false;
+                  //Load screen elements
+                  this.loadFGScreenElements();
+                  //This function will decide the screen to be opened
+                  this.openItemLinkingScreen();
+                }
+              }
+            }
+             //If all ok then the flag will allow to submit otherwise not
+             if (isAllowed == true) {
               this.getServerDate(false);
               //submission service callled
               //this.submitMoveOrder(false);
             }
           }
         }
+
+
       }
     )
   }
@@ -1078,6 +1077,51 @@ export class MoveOrderComponent implements OnInit {
   checkIfLoginIsValid() {
     if (window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined) {
       this.router.navigateByUrl('/login');
+    }
+  }
+
+  checkIfOperRequiresMaterial(status){
+    this.showLoader = true;
+    //here we will read the settings frm db
+    this.mo.checkIfOperRequiresMaterial(this.CompanyDBId,this.psWONO,this.psOperNO).subscribe(
+      data => {
+        if (data != null || data != undefined) {
+          this.showLoader = false;
+            if (data.length <= 0) {
+              this.toastr.error('', 'Not allowed to attach batch/serial component', this.baseClassObj.messageConfig);
+              this.showLoader = false;
+              return;
+            }
+            else{
+              this.openRespectiveScreen(status);
+            }
+        }
+        else{
+          this.openRespectiveScreen(status);
+        }
+      },
+      error => {
+        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.showLoader = false;
+      }
+    )
+  }
+
+  openRespectiveScreen(status){
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.psOperNO == "" || this.psOperNO == undefined || this.psOperNO == null) {
+      status = false;
+    } else {
+      status = true;
+    }
+    if (status == true) {
+      this.openRightSection(status)
+      this.isQuantityRightSection = status;
+      document.getElementById('opti_QuantityRightSection').style.display = 'block';
+      this.basicDetails = [];
+      //Setting basic details to share on another screen
+      this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty, 'ToOperNo': this.psToOperation });
+      //This will open itel linking screen      
+      this.openItemLinkingScreen();
     }
   }
 }
