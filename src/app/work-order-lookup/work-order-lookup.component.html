@@ -14,7 +14,10 @@
 [pageable]="true" 
 [filterable]="false"
 [groupable]="false"
-[selectable]="selectableSettings" >
+[selectable]="selectableSettings"
+(selectionChange)="gridRowSelectionChange($event)"
+[ngStyle]="{ cursor: 'pointer' }">
+
         <kendo-grid-column field="WorkOrder No" title="WorkOrder No" width="130">
         </kendo-grid-column>
         <kendo-grid-column field="Product Id" title="Product Id" width="100">
@@ -24,17 +27,18 @@
         <kendo-grid-column field="End Date" title="End Date"width="100">
         </kendo-grid-column>
 
-<kendo-grid-column  width="60">
+   <!-- <kendo-grid-column  width="60">-->
 
 
-        <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">    
-                <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
-               </button>
+       <!--  <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex" > -->    
+             <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
+               </button> -->
+               
                <!-- <div (click)="onRowClick($event, rowIndex)" class="gridCell">  
                </div> -->
-        </ng-template>
+         <!--  </ng-template> -->
 
-</kendo-grid-column>
+   <!-- </kendo-grid-column>-->
     </kendo-grid>
 
 

@@ -20,13 +20,13 @@
                 <input type="number" style="text-align: right;" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" (blur)="onRejectQtyBlur()" />
               </label>
 
-              <label class="k-form-field" [hidden]="true">
+              <label class="k-form-field"> <!--[hidden]="true"-->
                 <span class="opti_form-label">NC Qty </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" (blur)="onNCQtyBlur()" />
               </label>
 
               <span class="float-left opti_error-msg" *ngIf="negativeQty"> Qty should not be negative </span>
-              <span class="float-left opti_error-msg" *ngIf="sumOfQty"> Sum of accepted quantity and reject quantity should be equal to produced quantity </span>
+              <span class="float-left opti_error-msg" *ngIf="sumOfQty"> Sum of Accepted Quantity , Reject Quantity and NC Quantity should be equal to Produced Quantity </span>
               
               <br>
               <div class="text-right">

@@ -403,7 +403,7 @@ export class MoveOrderComponent implements OnInit {
 
   onQtyProdBtnPress(status) {
 
-    if (this.psItemManagedBy == "None") {
+    if (this.settingOnSAP != "1" && this.psItemManagedBy == "None") {
       this.toastr.error('', "Not allowed to add/modify attached items for none tracked finished goods", this.baseClassObj.messageConfig);
       return;
     }

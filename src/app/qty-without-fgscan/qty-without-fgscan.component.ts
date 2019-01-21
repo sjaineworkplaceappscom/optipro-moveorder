@@ -24,8 +24,7 @@ constructor() { }
   }
 
   //Events
-  onOKPress(){
-   
+  onOKPress(){   
     
     //We will get this values and push into this array to send back
     if(this.validateSumOfQtys() == true){
@@ -41,7 +40,7 @@ constructor() { }
       
       this.messageEvent.emit(QtySummary);
       //If data is ok then we will navigate back
-      document.getElementById('opti_rightfixedsectionID').style.display = 'none';
+       document.getElementById('opti_rightfixedsectionID').style.display = 'none';
     }
     else{
         return false;
@@ -100,6 +99,7 @@ constructor() { }
     else{
         this.sumOfQty = false;
         return true;
-    } 
+    }    
+
   }
 }

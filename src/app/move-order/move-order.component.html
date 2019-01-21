@@ -29,8 +29,8 @@
                                 <label class="k-form-field">
                                     <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)">Work Order *</span> <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number </span></span>
                                     <span class="float-left opti_work-order">
-                                        <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO" (change)="onWorkOrderChange()">
-                                     
+                                        <!--Commented (change)="onWorkOrderChange()" by Sheetal-->
+                                        <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO">                                     
                             
                                     </span> 
                                     <span class="opti_workorder-icon">

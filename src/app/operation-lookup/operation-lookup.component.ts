@@ -14,6 +14,8 @@ export class OperationLookupComponent implements OnInit {
   sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
   dataBind: any = [];
   public showLoader: boolean = false;
+  dataGridSelect: any = [];
+  dataGridSelectNum: number;
 
   constructor(private commonService:CommonService) { }
 
@@ -29,6 +31,11 @@ export class OperationLookupComponent implements OnInit {
     this.showLoader = false;
 
   }
+
+  gridRowSelectionChange(evt){
+    this.dataGridSelectNum = evt.selectedRows[0].index;
+    this.commonService.ShareData({value:this.fillLookupArray[this.dataGridSelectNum],from:"OPER"}); 
+ }
 
   onRowBtnClick(evt, rowIndex){
     this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"OPER"}); 

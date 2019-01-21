@@ -16,10 +16,11 @@ export class WorkOrderLookupComponent implements OnInit {
   sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];
   dataBind: any = [];
   public showLoader: boolean = false;
+  dataGridSelect: any = [];
+  dataGridSelectNum: number;
 
 
-  //  sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];
-    
+  //  sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];    
 
   constructor(private commonService:CommonService) { }
 
@@ -30,8 +31,8 @@ export class WorkOrderLookupComponent implements OnInit {
 
     this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
 
-    console.log("this.fillLookupArray");
-    console.log(this.fillLookupArray);
+   // console.log("this.fillLookupArray");
+    //console.log(this.fillLookupArray);
     this.dataBind = JSON.parse(this.dataBind);
 
     this.showLoader = false;
@@ -43,16 +44,21 @@ export class WorkOrderLookupComponent implements OnInit {
 
     this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
 
-    console.log("this.fillLookupArray");
-    console.log(this.fillLookupArray);
+    //console.log("this.fillLookupArray");
+    //console.log(this.fillLookupArray);
     this.dataBind = JSON.parse(this.dataBind);
 
     this.showLoader = false;
   }
 
+  gridRowSelectionChange(evt){
+     this.dataGridSelectNum = evt.selectedRows[0].index;
+     this.commonService.ShareData({value:this.fillLookupArray[this.dataGridSelectNum],from:"WO"}); 
+  }
+
   onRowBtnClick(evt, rowIndex){
     this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"WO"}); 
-    }
+  }
   // onRowClick(evt, rowIndex) {
   //   alert(rowIndex)
   //   this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"WO"}); 
