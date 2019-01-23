@@ -25,11 +25,11 @@
                     </label>
 
                     <div class="k-form-field">
-                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="opti_bIsRejectedID" id="opti_bIsRejectedID"  (change)="isCheckBoxChecked($event)">
+                        <input type="checkbox" [(ngModel)]="bIsRejected" class="k-checkbox" name="opti_bIsRejectedID" id="opti_bIsRejectedID"  (change)="onIsRejectedCheck()">
                         <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
 
-                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="isCheckBoxChecked($event)">
-                        <label class="k-checkbox-label" for="opti_bIsNCID" [hidden]="true">NC Qty</label>
+                        <input type="checkbox" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="onIsNCCheck()">
+                        <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
                         <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
                     </div>
                 </form>

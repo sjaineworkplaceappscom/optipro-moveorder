@@ -18,5 +18,6 @@ export class BaseClass {
     
     //Customization Client Codes
     public ellyza_london: any = "EllyzaLondon"
+    public dacsa: any = "DACSA"
     public standard:any = "standard"
 }

@@ -158,7 +158,7 @@ export class MoveOrderComponent implements OnInit {
 
           console.log("WO-", this.psWONO);
           //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-          if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
+          if (this.psWONO != "" && this.psWONO != null && this.psWONO != undefined) {
             //enable  Operation input Box
             this.DisableEnablOperation = false;
             this.getOperationByWONO();
@@ -411,7 +411,9 @@ export class MoveOrderComponent implements OnInit {
     //This function will get to know whthere it is necessary to attach Batch/Serials on current operation
 
     if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None") {
-      this.checkIfOperRequiresMaterial(status);
+      //this.checkIfOperRequiresMaterial(status);
+      //bug fixed by Ashish
+      this.openRespectiveScreen(status);
     }
     else{
       this.openRespectiveScreen(status);
@@ -577,9 +579,20 @@ export class MoveOrderComponent implements OnInit {
               this.router.navigateByUrl('/login');
               return;
             }
+            
+            switch(this.isCustomizedFor){
+            case this.baseClassObj.ellyza_london: 
+              this.allWODetails = data;
+              break;
+            
+            case this.baseClassObj.dacsa: 
+              this.allWODetails = data;
+              break;
 
-
-            this.allWODetails = data;
+            default:
+              this.allWODetails = data;
+              break;
+            }
             if (this.allWODetails.length > 0) {
               this.lookupData = this.allWODetails;
               this.WoLookupData = this.allWODetails;

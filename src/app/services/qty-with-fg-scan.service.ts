@@ -39,7 +39,7 @@ export class QtyWithFGScanService {
     //Save Data
     public saveBatchSerInfo(CompanyDBID:string,SeqNo:number,FGBatchSer:string,QtyProd:number,IsRejected:boolean,IsNC:boolean,WorkOrderNo:string,ItemCode:string,OperationNo:string,loggedInUser:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrder: WorkOrderNo,SequenceNo: SeqNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd }]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrderNo: WorkOrderNo,SequenceNo: SeqNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd }]) };
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SaveBatchSerialInfo",jObject,this.httpOptions);
     }
