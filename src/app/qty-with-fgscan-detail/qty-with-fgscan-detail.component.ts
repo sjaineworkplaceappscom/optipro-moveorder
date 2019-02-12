@@ -31,6 +31,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   iRejectedQty:any = 0;
   iNCQty:any = 0;
   iProducedQty:any = 0;
+  checkBatch:boolean = false;
   public bothSelectionRestrict:boolean = false;
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
@@ -93,8 +94,16 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   onAddPress(){
+    
+    if(this.psItemManagedBy == "Batch"){
+      if(this.validateBatchItem() == false)
+      this.checkBatch = true;
+      else
+      this.checkBatch = false;
+    }
+    
     //This mehtod will retrun true if all things are OK
-     if(this.validateData() == true){
+     if(this.validateData() == true && this.checkBatch == false){
       //validate sum of qtys
       if(this.validateSumOfQtys()==true){
           if(this.bIsEdit==true){
@@ -125,11 +134,14 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     if(this.psBatchSer != null){
       if(this.psBatchSer.length > 0){
         this.bIfBatSerEmpty = false;
-         if(this.chkIfFGBatSerAlreadyExists() == false){
+       
+        
+         if(this.chkIfFGBatSerAlreadyExists() == false){ 
           this.validateFGSerBat();
-         }
-
-        //If the value is filled then only enable add button
+        
+      }
+  
+      //If the value is filled then only enable add button
         this.bEnableSaveBtn = true;
 
       }
@@ -168,9 +180,13 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   onIsRejectedCheck(){
+    this.bIsRejected = true;
+    this.bIsNC = false;
     console.log(this.bIsRejected);
   }
   onIsNCCheck(){
+    this.bIsNC = true;
+    this.bIsRejected = false;
     console.log(this.bIsNC);
   }
 
@@ -226,21 +242,18 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
           data=> {
           if(data[0].ItemCheck =="ItemNotExists"){
-            //alert("FG Bat/Ser you are entering is not valid");
             this.toastr.error('',"FG Bat/Ser you are entering is not valid",this.baseClassObj.messageConfig);    
             this.psBatchSer = '';
             this.iQty = 1;
             return;
           }
           if(data[0].ItemCheck =="ItemRejected"){
-            //alert("FG Bat/Ser you are entering is rejected");
             this.toastr.error('',"FG Bat/Ser you are entering is rejected",this.baseClassObj.messageConfig);   
             this.psBatchSer = '';
             this.iQty = 1;
             return;
             }
           if(data[0].ItemCheck =="ItemMoved"){
-            //alert("FG Bat/Ser you are entering is rejected");
             this.toastr.error('',"FG Bat/Ser you are entering is already moved",this.baseClassObj.messageConfig);   
             this.psBatchSer = '';
             this.iQty = 1;
@@ -251,6 +264,47 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           }
       }
     )
+  }
+
+   //This will validate the FG Batch
+
+  validateBatchItem(){
+
+    console.log(this.FGWithScanGridFrmMaster);
+
+    if (this.FGWithScanGridFrmMaster != null) {
+
+    for(let rowCount in this.FGWithScanGridFrmMaster){
+      if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
+      {
+        if(this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true){
+              this.toastr.error('',"Item is already rejected. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+              this.psBatchSer = "";
+              this.bIsRejected = false; this.iQty = 1;
+              return false;
+        }
+
+        else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true){
+            this.toastr.error('',"Item is already present in NC. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.psBatchSer = "";
+            this.bIsNC = false; this.iQty = 1;
+            return false;
+         }
+          
+        else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false){
+          if(this.bIsRejected == false && this.bIsNC == false){
+            this.toastr.error('',"Item is already present. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.psBatchSer = ""; this.iQty = 1;
+            return false;
+          }
+       }
+        
+      }
+    }
+
+    return true;
+  }
+   
   }
 
   //This will update FG Ser Batch 
@@ -291,6 +345,10 @@ export class QtyWithFGScanDetailComponent implements OnInit {
 
   //this will chk if the data we are adding is duplicate
   chkIfFGBatSerAlreadyExists(){
+
+    if(this.psItemManagedBy == "Batch"){
+      return false;
+    }
     
     console.log(this.FGWithScanGridFrmMaster);
 

@@ -20,9 +20,10 @@ export class FgrmscanparentService {
     };
 
   //Delete Data for parent FG and child RM
-  public deleteParentFGandRM(CompanyDBID:string,seqNo:number,WONo:string,ParentFGBatchSerNo:string):Observable<any>{
+  public deleteParentFGandRM(CompanyDBID:string,seqNo:number,WONo:string,ParentFGBatchSerNo:string, ItemCode:string,FGBatchSer:string ):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo,WorkOrder:WONo,ParentBatchSerial: ParentFGBatchSerNo}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo,WorkOrderNo:WONo,ParentBatchSerial: ParentFGBatchSerNo
+    , Item:ItemCode, FGBatchSerial:FGBatchSer}]) };
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteFGandRM",jObject,this.httpOptions);
     } 

@@ -108,7 +108,7 @@ export class QtyWithFGScanComponent implements OnInit {
   }
   //Kendo inbuilt method handlers
   removeHandler({ rowIndex }) {
-    this.qtyWithFGScan.deleteBatchSerInfo(this.CompanyDBId, this.FGScanGridData[rowIndex].OPTM_SEQ).subscribe(
+    this.qtyWithFGScan.deleteBatchSerInfo(this.CompanyDBId, this.FGScanGridData[rowIndex].OPTM_SEQ, this.FGScanGridData[rowIndex].OPTM_WONO, this.FGScanGridData[rowIndex].OPTM_ITEMCODE,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
       data => {
         if (data != null) {
           if (data == "True") {

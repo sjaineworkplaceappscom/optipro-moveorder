@@ -31,11 +31,12 @@ export class FgrmscanparentinputformComponent implements OnInit {
   psBatchSer: string = '';
   iQty: number = 1;
   bIsRejected: any = false;
-  bIsNC: any;
+  bIsNC: any = false;
   iSeqNo: number;
   showLoader: boolean = false;
   bIsInEditMode: boolean = false;
   bIsRMGridInEditMode: boolean = false;
+  checkBatch:boolean = false;
   public bothSelectionRestrict: boolean = false;
   public bIfBatSerEmpty: boolean = false;
   public bIfQtyIsZero = false;
@@ -50,6 +51,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
   @ViewChild('qtylevelChild') qtylevelChild;
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild() {
+
+    if(this.psItemManagedBy == "Batch"){
+      if(this.validateBatchItem() == false)
+      this.checkBatch = true;
+      else
+      this.checkBatch = false;
+    }
+
     //if fields are empty then restrict user from going to add child
     if (this.psBatchSer != undefined || this.psBatchSer != "") {
       //While after putting all data for the FG input serial field the basic validations will be check here
@@ -70,6 +79,38 @@ export class FgrmscanparentinputformComponent implements OnInit {
     else {
       this.toastr.warning('', 'Please first enter the FG batch/serial', this.baseClassObj.messageConfig);
     }
+  }
+
+  validateBatchItem(){
+    if (this.FGWithScanGridFrmMaster != null) {
+      for (let rowCount in this.FGWithScanGridFrmMaster) {
+        if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
+          
+          if(this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true){
+             this.toastr.error('',"Item is already rejected. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+             this.psBatchSer = "";
+             this.bIsRejected = false; this.iQty = 1;
+             return false;
+          }
+
+          else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true){
+            this.toastr.error('',"Item is already present in NC. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.psBatchSer = "";
+            this.bIsNC = false; this.iQty = 1;
+            return false;
+         }
+          
+        else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false){
+          if(this.bIsRejected == false && this.bIsNC == false){
+            this.toastr.error('',"Item is already present. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.psBatchSer = ""; this.iQty = 1;
+            return false;
+           }
+           }
+          }
+        }
+        return true;        
+     }
   }
 
   showLevelParent() {
@@ -130,6 +171,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //Events
   onBatchSerBlur() {
+    //alert('Hi');
     if (this.psBatchSer != null) {
       if (this.psBatchSer.length > 0) {
         this.bIfBatSerEmpty = false;
@@ -159,7 +201,6 @@ export class FgrmscanparentinputformComponent implements OnInit {
       else {
         //If value is ok then chk produced qty not greater than bal qty
         if (this.iQty > this.basicFGInputForm[0].ProducedQty) {
-          // alert("Quantity can't be greater than produced quantity")
           this.toastr.error('', "Quantity can't be greater than produced qty", this.baseClassObj.messageConfig);
           this.iQty = 1;
           return;
@@ -169,9 +210,15 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
 
   onIsRejectedCheck() {
+    this.bIsRejected = true;
+    this.bIsNC = false;
     console.log(this.bIsRejected);
   }
   onIsNCCheck() {
+    this.bIsNC = true;
+    this.bIsRejected = false;
+    //document.getElementById("opti_bIsNCID").checked = true;
+    //$('#opti_bIsNCID').prop('checked', true);
     console.log(this.bIsNC);
   }
 
@@ -311,11 +358,17 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //this will chk if the data we are adding is duplicate
   chkIfFGBatSerAlreadyExists() {
+
+    if(this.psItemManagedBy == "Batch"){
+      return false;
+    }
+
     if (this.FGWithScanGridFrmMaster != null) {
       for (let rowCount in this.FGWithScanGridFrmMaster) {
         if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
           //alert("Serial/Batch already exist");
-          this.toastr.warning('', "Serial/Batch already exist", this.baseClassObj.messageConfig);
+         // this.toastr.warning('', "Serial/Batch already exist", this.baseClassObj.messageConfig);
+          this.toastr.warning('', "Serial No. already exist", this.baseClassObj.messageConfig);
           this.psBatchSer = "";
           return true;
         }
@@ -337,13 +390,13 @@ export class FgrmscanparentinputformComponent implements OnInit {
             this.toastr.error('', "FG Bat/Ser you are entering is not valid", this.baseClassObj.messageConfig);
             this.psBatchSer = '';
           }
-          if (data[0].ItemCheck == "ItemRejected") {
-            //alert("FG Bat/Ser you are entering is rejected");
-            this.toastr.error('', "FG Bat/Ser you are entering is rejected", this.baseClassObj.messageConfig);
-            this.psBatchSer = '';
-            this.iQty = 1;
-            return;
-          }
+          // if (data[0].ItemCheck == "ItemRejected") {
+          //   //alert("FG Bat/Ser you are entering is rejected");
+          //   this.toastr.error('', "FG Bat/Ser you are entering is rejected", this.baseClassObj.messageConfig);
+          //   this.psBatchSer = '';
+          //   this.iQty = 1;
+          //   return;
+          // }
           if (data[0].ItemCheck == "ItemMoved") {
             this.toastr.error('', "FG Bat/Ser you are entering is already moved", this.baseClassObj.messageConfig);
             this.psBatchSer = '';

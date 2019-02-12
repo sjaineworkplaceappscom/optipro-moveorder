@@ -147,8 +147,6 @@ export class MoveOrderComponent implements OnInit {
 
           //here we will clear values
           this.clearScreenAfterLookup();
-
-
           this.psWONO = this.selectedLookUpData.U_O_ORDRNO;
           this.psProductCode = this.selectedLookUpData.U_O_PRODID;
           this.psProductDesc = this.selectedLookUpData.ItemName;
@@ -176,7 +174,7 @@ export class MoveOrderComponent implements OnInit {
           this.psOperNO = this.selectedLookUpData.U_O_OPERNO;
           this.getSelectedOperationDetail();
           //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-          if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
+          if (this.psOperNO != "" && this.psOperNO != null && this.psOperNO != undefined) {
             //enable  Operation input Box
             this.DisableEnablQuantity = false;
             this.InvalidOperation = false;
@@ -403,10 +401,10 @@ export class MoveOrderComponent implements OnInit {
 
   onQtyProdBtnPress(status) {
 
-    if (this.settingOnSAP != "1" && this.psItemManagedBy == "None") {
-      this.toastr.error('', "Not allowed to add/modify attached items for none tracked finished goods", this.baseClassObj.messageConfig);
-      return;
-    }
+  //  if (this.settingOnSAP != "1" && this.psItemManagedBy == "None") {
+  //    this.toastr.error('', "Not allowed to add/modify attached items for none tracked finished goods", this.baseClassObj.messageConfig);
+  //    return;
+  //  }
 
     //This function will get to know whthere it is necessary to attach Batch/Serials on current operation
 
@@ -463,7 +461,7 @@ export class MoveOrderComponent implements OnInit {
 
 
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-      if (this.psWONO != "" || this.psWONO != null || this.psWONO != undefined) {
+      if (this.psWONO != "" && this.psWONO != null && this.psWONO != undefined) {
         //enable  Operation input Box
         this.DisableEnablOperation = false;
         this.getOperationByWONO();
@@ -479,7 +477,7 @@ export class MoveOrderComponent implements OnInit {
       //this.psOperNO = $event.U_O_OPERNO;
       this.getSelectedOperationDetail();
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
-      if (this.psOperNO != "" || this.psOperNO != null || this.psOperNO != undefined) {
+      if (this.psOperNO != "" && this.psOperNO != null && this.psOperNO != undefined) {
         //enable  Operation input Box
         this.DisableEnablQuantity = false;
         this.InvalidOperation = false;
@@ -515,19 +513,20 @@ export class MoveOrderComponent implements OnInit {
 
     console.log("FROM CHILD SCREENSSSS--->");
     console.log($event);
-    if (this.settingOnSAP == "1") {
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
       this.iAcceptedQty = $event.AcceptedQty;
-      this.iRejectedQty = $event.RejectedQty;
+      this.iRejectedQty = $event.RejectedQty;      
       this.iNCQty = $event.NCQty;
+      this.iProducedQty = $event.AcceptedQty + $event.RejectedQty + $event.NCQty;
     }
-    if (this.settingOnSAP == "2") {
+    if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
       this.showQtyWithFGScanScreen = false;
     }
-    if (this.settingOnSAP == "3") {
+    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
@@ -541,7 +540,8 @@ export class MoveOrderComponent implements OnInit {
   onProducedQtyBlur() {
     if (this.iProducedQty != null) {
       if (this.iProducedQty > this.iBalQty) {
-        alert("Produced Qty should not be greater than balance qty");
+        //alert("Produced Qty should not be greater than balance qty");
+        this.toastr.error('', "Produced Qty should not be greater than balance qty", this.baseClassObj.messageConfig);
         this.iProducedQty = 0;
       }
       else {
@@ -824,15 +824,18 @@ export class MoveOrderComponent implements OnInit {
     }
     if (this.FrmToDateTime != null) {
       if (this.FrmToDateTime[0] == "" || this.FrmToDateTime[0] == null || this.FrmToDateTime[0] == undefined) {
-        alert("Please enter start date ")
+       // alert("Please enter start date ")
+       this.toastr.error('', "Please enter start date", this.baseClassObj.messageConfig);
         return false;
       }
       if (this.FrmToDateTime[1] == "" || this.FrmToDateTime[1] == null || this.FrmToDateTime[1] == undefined) {
-        alert("Please enter end date ")
+        //alert("Please enter end date ")
+        this.toastr.error('', "Please enter end date", this.baseClassObj.messageConfig);
         return false;
       }
     } else {
-      alert("please enter  date")
+     // alert("Please enter  date")
+     this.toastr.error('', "Please enter date", this.baseClassObj.messageConfig);
     }
     return true;
   }
@@ -981,13 +984,13 @@ export class MoveOrderComponent implements OnInit {
     this.allWOOpDetails = [];
 
     //Hiding forms if uncesry opened forms
-    if (this.settingOnSAP == "1") {
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
       this.showQtyNoScanScreen = false;
     }
-    if (this.settingOnSAP == "2") {
+    if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.showQtyWithFGScanScreen = false;
     }
-    if (this.settingOnSAP == "3") {
+    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
       this.showQtyWithFGRMScanScreen = false;
     }
   }
@@ -1004,8 +1007,7 @@ export class MoveOrderComponent implements OnInit {
           //Setting basic details to share on another screen
           this.basicDetails.push({ 'WorkOrderNo': this.psWONO, 'OperNo': this.psOperNO, 'ItemCode': this.psProductCode, 'ManagedBy': this.psItemManagedBy, 'BalQty': this.iBalQty, 'ProducedQty': this.iProducedQty, 'IsUserIsSubcontracter': this.isUserIsSubcontracter });
 
-          if (data.MaterialRequirement != undefined) {
-            if (data.MaterialRequirement.length > 0) {
+          if (data != undefined && data.Table.length > 0) {
 
               //If data of linked qty is less then zero
               if (Number(data.Table[0].LinkedQuantity) <= 0) {
@@ -1047,7 +1049,6 @@ export class MoveOrderComponent implements OnInit {
                   this.openItemLinkingScreen();
                 }
               }
-            }
              //If all ok then the flag will allow to submit otherwise not
              if (isAllowed == true) {
               this.getServerDate(false);
@@ -1065,17 +1066,21 @@ export class MoveOrderComponent implements OnInit {
   //THis will deceide which screen have to be opened
   openItemLinkingScreen() {
     this.showItemLinkingScreen = true;
-    if (this.settingOnSAP == "1") {
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
       this.ScreenName = 'Move Order Summary';
       this.showQtyNoScanScreen = true;
+      this.showQtyWithFGScanScreen = false;
+      this.showQtyWithFGRMScanScreen = false;
     }
-    if (this.settingOnSAP == "2") {
+    if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.ScreenName = 'Finished Goods Scan';
       this.showQtyWithFGScanScreen = true;
+      this.showQtyNoScanScreen = false;
     }
-    if (this.settingOnSAP == "3") {
+    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
       this.ScreenName = 'Finished Goods & Raw Materials Scan';
       this.showQtyWithFGRMScanScreen = true;
+      this.showQtyNoScanScreen = false;
     }
   }
 

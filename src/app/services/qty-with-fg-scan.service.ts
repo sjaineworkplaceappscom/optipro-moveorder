@@ -45,9 +45,10 @@ export class QtyWithFGScanService {
     }
 
     //Delete Data
-    public deleteBatchSerInfo(CompanyDBID:string,seqNo:number):Observable<any>{
+    public deleteBatchSerInfo(CompanyDBID:string,seqNo:number, WorkOrderNo:string,ItemCode:string,FGBatchSer:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo}]) };
+    //let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo,WorkOrderNo: WorkOrderNo, FGBatchSerial:FGBatchSer,Item:ItemCode }]) };
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteBatchSerialInfo",jObject,this.httpOptions);
     } 
@@ -58,7 +59,7 @@ export class QtyWithFGScanService {
           IsNC = false;
       }
       //JSON Obeject Prepared to be send as a param to API
-      let jObject:any={ MoveOrder: JSON.stringify([{CompanyDBID: CompanyDBID,WorkOrder: WorkOrderNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd,SeqNo:iSeqNo}]) };
+      let jObject:any={ MoveOrder: JSON.stringify([{CompanyDBID: CompanyDBID,WorkOrderNo: WorkOrderNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd,SeqNo:iSeqNo}]) };
       //Return the response form the API  
       return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/UpdateBatchSerialInfo",jObject,this.httpOptions);
     } 

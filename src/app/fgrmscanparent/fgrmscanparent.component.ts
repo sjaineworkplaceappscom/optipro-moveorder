@@ -178,7 +178,8 @@ refreshQtys(){
 //This will Delete the Parent FGs and its corresponding attached Child RMs
 deleteParentFGandRM(rowIndex){
   this.showLoader = true;
-  this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
+  this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,
+    this.FGScanGridData[rowIndex].OPTM_ITEMCODE, this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
     data=> {
       if(data!=null){
         if(data == "True")  {
