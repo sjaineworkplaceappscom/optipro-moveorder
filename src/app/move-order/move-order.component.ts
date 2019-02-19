@@ -109,6 +109,8 @@ export class MoveOrderComponent implements OnInit {
   public parent: string = "wo"
   public selectedLookUpData: any;
 
+  public language: any;
+
   public oprLookupData: any = [];
   public WoLookupData: any = [];
 
@@ -121,6 +123,8 @@ export class MoveOrderComponent implements OnInit {
 
   ngOnInit() {
 
+    this.language = JSON.parse(window.localStorage.getItem('language'));
+
     //This will check if login is valid
     this.checkIfLoginIsValid();
 
@@ -131,6 +135,8 @@ export class MoveOrderComponent implements OnInit {
     element.className = "";
     element.classList.add("opti_body-move-order");
     element.classList.add("opti_account-module");
+
+    
 
 
     this.commonService.commonData$.subscribe(

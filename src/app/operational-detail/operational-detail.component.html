@@ -4,42 +4,42 @@
         <div class="col-md-12">
           <form class="k-form col-md-12">
             <label class="k-form-field">
-              <span class="opti_form-label">Sc# Start Date</span>
+              <span class="opti_form-label">{{language.scstartdate}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_OPSDATE | date: 'MM/dd/yyyy' }}" disabled>
             </label>
             
             <label class="k-form-field">
-              <span class="opti_form-label">Sch# End Date</span>
+              <span class="opti_form-label">{{language.scenddate}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_OPEDATE | date: 'MM/dd/yyyy' }}" disabled>
             </label>
             
             <label class="k-form-field">
-              <span class="opti_form-label">Qty Bal</span>
+              <span class="opti_form-label">{{language.qtybal}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.U_O_BALQTY}}" disabled>
             </label>
 
             <label class="k-form-field">
-              <span class="opti_form-label">WC</span>
+              <span class="opti_form-label">{{language.wc}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.U_OPTM_WC_ID}}" disabled>
             </label>
 
             <label class="k-form-field">
-              <span class="opti_form-label">Previous Operation</span>
+              <span class="opti_form-label">{{language.previousoperation}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.PrevOperNo}}" disabled>
             </label>
 
             <label class="k-form-field">
-              <span class="opti_form-label">Previous Operation Bal. Qty</span>
+              <span class="opti_form-label">{{language.prevoperbalqty}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.PrevBalQty}}" disabled>
             </label>
 
             <label class="k-form-field">
-              <span class="opti_form-label">Next Operation </span>
+              <span class="opti_form-label">{{language.nextoperation}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.NextOperNo}}" disabled>
             </label>
 
             <label class="k-form-field">
-              <span class="opti_form-label">Next Operation Bal. Qty</span>
+              <span class="opti_form-label">{{language.nxtoperbalqty}}</span>
               <input type="text" class="k-textbox" value="{{oOperDetails.NextBalQty}}" disabled>
             </label>
           </form>

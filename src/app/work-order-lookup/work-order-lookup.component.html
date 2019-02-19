@@ -18,13 +18,13 @@
 (selectionChange)="gridRowSelectionChange($event)"
 [ngStyle]="{ cursor: 'pointer' }">
 
-        <kendo-grid-column field="WorkOrder No" title="WorkOrder No" width="130">
+        <kendo-grid-column field="WorkOrder No" title="{{language.workorderno_title}}" width="130">
         </kendo-grid-column>
-        <kendo-grid-column field="Product Id" title="Product Id" width="100">
+        <kendo-grid-column field="Product Id" title="{{language.productid_title}}" width="100">
         </kendo-grid-column>
-        <kendo-grid-column field="Start Date" title="Start Date" width="100">
+        <kendo-grid-column field="Start Date" title="{{language.startdate}}" width="100">
         </kendo-grid-column>
-        <kendo-grid-column field="End Date" title="End Date"width="100">
+        <kendo-grid-column field="End Date" title="{{language.enddate}}"width="100">
         </kendo-grid-column>
 
    <!-- <kendo-grid-column  width="60">-->

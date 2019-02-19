@@ -24,10 +24,14 @@ export class WorkOrderLookupComponent implements OnInit {
 
   constructor(private commonService:CommonService) { }
 
+  public language: any;
+
   ngOnInit() {
 
     this.showLoader = true;
     this.dataBind = [];
+
+    this.language = JSON.parse(window.localStorage.getItem('language'));
 
     this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
 

@@ -17,11 +17,11 @@
 [selectable]="true"  
 (selectionChange)="gridRowSelectionChange($event)"
 [ngStyle]="{ cursor: 'pointer' }">
-        <kendo-grid-column field="Operation No" title="Operation No" width="100">
+        <kendo-grid-column field="Operation No" title="{{language.operationnumber}}" width="100">
         </kendo-grid-column>
-        <kendo-grid-column field="Operation Desc" title="Operation Desc" width="100">
+        <kendo-grid-column field="Operation Desc" title="{{language.operationdesc}}" width="100">
         </kendo-grid-column>
-        <kendo-grid-column field="Balance Quantity" title="Balance Quantity" width="100">
+        <kendo-grid-column field="Balance Quantity" title="{{language.balanceqty}}" width="100">
         </kendo-grid-column>
       <!--  <kendo-grid-column width="50"> -->
            <!-- <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">  -->  

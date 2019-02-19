@@ -41,6 +41,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   public bIfBatSerEmpty: boolean = false;
   public bIfQtyIsZero = false;
   public disableSaveBtn: boolean = false;
+  public language: any;
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService, private fgrmParentForm: FgrmscanparentinputformService, private toastr: ToastrService) { }
   @Output() messageEvent = new EventEmitter<string>();
   gridHeight: number;
@@ -123,6 +124,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
   ngOnInit() {
 
+    this.language = JSON.parse(window.localStorage.getItem('language'));
     this.gridHeight = UIHelper.getMainContentHeight();
 
     // Hide superchild section on initial

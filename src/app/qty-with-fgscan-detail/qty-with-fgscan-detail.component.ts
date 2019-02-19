@@ -36,6 +36,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   public bIfBatSerEmpty:boolean = false;
   public bIfQtyIsZero = false;
   public showLoader = false;
+  public language: any;
   private baseClassObj = new BaseClass();
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private toastr: ToastrService) { }
 
@@ -44,6 +45,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   
   //Events
   ngOnInit() {
+    this.language = JSON.parse(window.localStorage.getItem('language'));
     this.loggedInUser = window.localStorage.getItem('loggedInUser');
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
 

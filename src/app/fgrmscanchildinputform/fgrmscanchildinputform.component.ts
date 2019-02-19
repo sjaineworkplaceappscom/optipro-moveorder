@@ -37,12 +37,14 @@ export class FgrmscanchildinputformComponent implements OnInit {
   public iChildInventory:any;
   public bIsQtyIsZero:boolean = false;
   public bIsChildBatSerEmpty = false;
+  public language: any;
   private baseClassObj = new BaseClass();
   constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private FGRMinput:FgrmscanchildinputformService,private toastr: ToastrService) { }
   
   @Output() messageEvent = new EventEmitter<string>();
   
   ngOnInit() {
+    this.language = JSON.parse(window.localStorage.getItem('language'));
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
     this.loggedInUser = window.localStorage.getItem('loggedInUser');
     

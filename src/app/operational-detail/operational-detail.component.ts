@@ -12,7 +12,11 @@ export class OperationalDetailComponent implements OnInit {
   oOperDetails:any;
   constructor(private comman: CommanserviceService,private router: Router) { }
 
+  public language: any;
+
   ngOnInit() {
+
+    this.language = JSON.parse(window.localStorage.getItem('language'));
    
     if(window.localStorage.getItem('loggedInUser') == null || window.localStorage.getItem('loggedInUser') == undefined){
       this.router.navigateByUrl('/login');

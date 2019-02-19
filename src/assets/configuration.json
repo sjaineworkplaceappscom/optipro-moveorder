@@ -3,7 +3,7 @@
         "optiProMoveOrderAPIURL": "http://localhost:57915/api",
         "deployedFor": "handheld",
         "version":"",
-        "language": "sp",
+        "language": "en",
         "clientName": "standard"
     }
 ]

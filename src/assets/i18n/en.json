@@ -1,4 +1,118 @@
 {
-    "username":"Username"
-    
+   "username": "User Name",
+   "username_required": "Username Required",
+   "username_placeholder": "Your username",
+   "password": "Password",
+   "password_required":"Password required",
+   "password_activeuser": "You are not active user",
+   "password_placeholder": "Your password",
+   "password_invalid":"Invalid username or password",   
+   "Company": "Company",
+   "warehouse": "Warehouse",
+   "login": "Login",
+   "productcode": "Product Code",
+   "OperationNumber": "Operation Number",
+   "QtyProduced": "Qty Produced",
+   "startdatetime": "Start Date Time",
+   "enddatetime": "End Date Time ",
+   "submit": "Submit",
+   "workorder":"Work Order",
+   "workorder_invalid": "Invalid workorder number",
+   "workorder_title": "Work Order's",
+   "workorder_scan": "scan",
+   "productdescription": "Product Description",
+   "operationnumber": "Operation Number",
+   "operation_invalid": "Invalid operation number",
+   "operation_title": "Operation's",
+   "qtyproduced": "Qty Produced",
+   "quantity": "Quantity",
+   "workorderdetails": "Work Order Details",
+   "workorderlookuplist": "Work Order Lookup List",
+   "workorderno_title": "WorkOrder No",
+   "productid_title": "Product Id",
+   "startdate": "Start Date",
+   "enddate": "End Date",
+   "moveorder": "Move Order",
+   "operationdesc": "Operation Desc",
+   "balanceqty": "Balance Quantity",
+   "scstartdate": "Sc# Start Date",
+   "scenddate": "Sch# End Date",
+   "qtybal": "Qty Bal",
+   "wc": "WC",
+   "previousoperation": "Previous Operation",
+   "prevoperbalqty": "Previous Operation Bal. Qty",
+   "nextoperation": "Next Operation",
+   "nxtoperbalqty": "Next Operation Bal. Qty",
+   "producedqty": "Produced Qty",
+   "balancequantity": "Balance Qty",
+   "acceptedqty": "Accepted Qty",
+   "rejectedqty": "Rejected Qty",
+   "ncqty": "NC Qty",
+   "ok": "OK",
+   "edit": "Edit",
+   "delete": "Delete",
+   "actions": "Actions",
+   "nc": "NC",
+   "reject": "Reject",
+   "fgbatchserial": "FG Batch/Serial",
+   "fgbatchser": "FG Batch Serial",
+   "fgrequired": "FG Batch/Serial can't be empty",
+   "qty": "Qty",
+   "qtyrequired": "Quantity can't be blank or zero",
+   "rejected":"Rejected",
+   "fgrejornc": " FG can either be Rejected or NC",
+   "save": "Save",
+   "close": "Close",
+   "qtynotnegative": "Qty should not be negative",
+   "qtysum": "Sum of Accepted Quantity , Reject Quantity and NC Quantity should be equal to Produced Quantity",
+   "itemcode": "Item Code",
+   "itemnotempty": "Item code can't be empty",
+   "rmbatchserial": "RM Batch Serial",
+   "itembtchsernotempty": "Item code batch/serial can't be empty",
+   "qtygreaterthanzero": "Quantity should be greater than 0",
+   "add": "Add",
+   "cancel": "Cancel",
+   "finishedgoodslist": "Finished Goods List",
+   "managedby": "Managed By",
+   "rmbtchser": "RM Batch/Serial",
+   "logout": "Log Out"
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 }

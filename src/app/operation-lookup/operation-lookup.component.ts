@@ -16,10 +16,13 @@ export class OperationLookupComponent implements OnInit {
   public showLoader: boolean = false;
   dataGridSelect: any = [];
   dataGridSelectNum: number;
+  public language: any;
 
   constructor(private commonService:CommonService) { }
 
   ngOnInit() {
+
+    this.language = JSON.parse(window.localStorage.getItem('language'));
 
     this.showLoader = true;
     this.dataBind = [];

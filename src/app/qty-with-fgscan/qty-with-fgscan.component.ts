@@ -39,6 +39,7 @@ export class QtyWithFGScanComponent implements OnInit {
   showEditBtn: boolean = true;
   qtySummaryValuesFGScan: any = [];
   gridHeight: number;
+  public language: any;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -52,8 +53,9 @@ export class QtyWithFGScanComponent implements OnInit {
   }
   ngOnInit() {
 
-  this.clearValues();
-
+    this.language = JSON.parse(window.localStorage.getItem('language'));
+    this.clearValues();
+    
     //alert('change init');  
     this.gridHeight = UIHelper.getMainContentHeight();
 

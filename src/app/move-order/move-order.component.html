@@ -23,62 +23,62 @@
 
                             <form class="k-form">
                                 <div class="text-center">
-                                    <h5>Move Order </h5>
+                                    <h5>{{language.moveorder}}</h5>
                                 </div>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)">Work Order *</span> <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> Invalid workorder number </span></span>
+                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onWorkOrderDetail(true,WorkOrderImageStatus)">{{language.workorder}} *</span> <span *ngIf="InvalidWorkOrder"  class="float-right opti_error-msg"> {{language.workorder_invalid}} </span></span>
                                     <span class="float-left opti_work-order">
                                         <!--Commented (change)="onWorkOrderChange()" by Sheetal-->
                                         <input type="text" id="psWONOid"  (blur)="onWorkOrderBlur()" required #WorkOrderBlank name="psWONO" requir class="k-textbox" [(ngModel)]="psWONO">                                     
                             
                                     </span> 
                                     <span class="opti_workorder-icon">
-                                        <img src="assets/images/common/list.svg" title="Work Order's" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
-                                        <img src="assets/images/common/scanner.svg" title="scan" id="workOrderScan" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="{{language.workorder_title}}" class="opti_mouse-pointer" (click)="onWOPress(true)" alt="work order" width="27px" height="27px" />
+                                        <img src="assets/images/common/scanner.svg" title="{{language.workorder_scan}}" id="workOrderScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                   
                                 </label>
                                 
                                
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Product Code</span>
+                                    <span class="opti_form-label">{{language.productcode}}</span>
                                     <input type="text" class="k-textbox" id="txtProductCode" [value]="psProductCode" [disabled]=true>
                                     
                                 </label>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Product Description</span>
+                                    <span class="opti_form-label">{{language.productdescription}}</span>
                                     <input type="text" class="k-textbox" id="txtProductDesc" [value]="psProductDesc" [disabled]=true>
                                 </label>
 
                                 <label class="k-form-field">
-                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onOperDtlPress(true,OperationDetailImageStatus)">Operation Number *</span> <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> Invalid operation number</span>
+                                    <span class="opti_form-label"><span class="opti_mouse-pointer opti_primary-color" (click)="onOperDtlPress(true,OperationDetailImageStatus)">{{language.operationnumber}} *</span> <span *ngIf="InvalidOperation"  class="float-right opti_error-msg"> {{language.operation_invalid}} </span>
                                     <span *ngIf="NoOperAvailable"  class="float-right opti_error-msg"> No operations available </span>
                                 </span>
                                     <span class="float-left opti_operation">
                                         <input type="text" class="k-textbox" [(ngModel)]="psOperNO" id="psOperNOid" name="psOperNO" (blur)="onOperationNoBlur()" [disabled]=DisableEnablOperation>
                                     </span>
                                     <span class="opti_operation-icon">
-                                        <img src="assets/images/common/list.svg" title="Operation's" class="opti_mouse-pointer" (click)="onOperationPress(true,GetOperationImageStatus)" alt="work order" width="27px" height="27px"  />
+                                        <img src="assets/images/common/list.svg" title="{{language.operation_title}}" class="opti_mouse-pointer" (click)="onOperationPress(true,GetOperationImageStatus)" alt="work order" width="27px" height="27px"  />
                                         <!-- <img src="assets/images/common/detail.svg" title="Operation Detail" class="opti_mouse-pointer" (click)="onOperDtlPress(true,OperationDetailImageStatus)" alt="work order setaiol" width="27px" height="27px" style="margin-right: 5px;"/> -->
-                                        <img src="assets/images/common/scanner.svg" title="Scan" id="operationNumberScan" class="opti_mouse-pointer" width="27px" height="27px" />
+                                        <img src="assets/images/common/scanner.svg" title="{{language.workorder_scan}}" id="operationNumberScan" class="opti_mouse-pointer" width="27px" height="27px" />
                                     </span>
                                 </label>
                                 
                             
                                 <label class="k-form-field">
-                                    <span class="opti_form-label">Qty Produced *</span>
+                                    <span class="opti_form-label">{{language.qtyproduced}} *</span>
                                     <span class="float-left opti_qty-produced">
                                         <input type="text" style="text-align: right;"  class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">
                                     </span>
                                     <span class="opti_qty-operation-icon">
-                                        <img src="assets/images/common/list.svg" title="Quantity" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(QuantityImageStatus)" alt="Quantity" width="27px" height="27px" />
+                                        <img src="assets/images/common/list.svg" title="{{language.quantity}}" class="opti_mouse-pointer" (click)="onQtyProdBtnPress(QuantityImageStatus)" alt="Quantity" width="27px" height="27px" />
                                     </span>
                                 </label>
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label">Start Date Time * </span>
+                                        <span class="opti_form-label">{{language.startdatetime}} * </span>
                                         <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                                             [(ngModel)]="FrmToDateTime"
                                             [selectMode]="'rangeFrom'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="startDateTime" >
@@ -99,7 +99,7 @@
                                 
 
                                 <label class="k-form-field opti_date-start-end">
-                                        <span class="opti_form-label">End Date Time * </span>
+                                        <span class="opti_form-label">{{language.enddatetime}} * </span>
                                         <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
                                             [(ngModel)]="FrmToDateTime"
                                             [selectMode]="'rangeTo'" name="selectedMoments" type="text" class="k-textbox" [(ngModel)]="endDateTime">
@@ -119,7 +119,7 @@
                                 </label>
                                 
 
-                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">Submit</button>
+                                <button align="center" type="button" align="middle" class="opti_full-width opti_margin-zero opti_fullwidth" (click)="onSubmitPress()">{{language.submit}}</button>
                             </form>
                         </div>    
                     </div>    
@@ -175,7 +175,7 @@
                                     <div class="opti_spinner"></div>
                                 </div> -->
                                 <!-- loader end -->
-                                <h5 class="">Work Order Details</h5>
+                                <h5 class="">{{language.workorderdetails}}</h5>
                                 <app-work-order-detail [workOrderDetail]="selectedWODetail" *ngIf="showWODtPopup"></app-work-order-detail>
                             </div>
                             <!-- work order detail end -->
@@ -189,7 +189,7 @@
                                     </div> -->
                                 <!-- loader end -->
 
-                                <h5 class="">Work Order Lookup List</h5>
+                                <h5 class="">{{language.workorderlookuplist}}</h5>
                                 <div class="" id="opti_workOrderListID" style="margin-top: 20px;">
                                     <div class="container-fluid opti_padding-zero">
                                         <div class="row">

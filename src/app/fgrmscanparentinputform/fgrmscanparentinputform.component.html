@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <form class="k-form" >
                     <label class="k-form-field ">
-                        <span class="opti_form-label">FG Batch Serial <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> FG Batch/Serial can't be empty </span></span>
+                        <span class="opti_form-label">{{language.fgbatchser}} <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> {{language.fgrequired}} </span></span>
                         <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" id="psBatchSerID" name ="psBatchSername" [disabled]="bIsInEditMode"></span> 
                         <span class="opti_fgbatch-serial-icon">
                             <img src="assets/images/common/scanner.svg" (click)="onFGScan()" id="FGBatchSerialScan" class="opti_mouse-pointer" width="27px" height="27px">
@@ -19,18 +19,18 @@
                     </label>    
 
                     <label class="k-form-field">
-                        <span class="opti_form-label">Qty <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> Quantity can't be blank or zero </span></span>
+                        <span class="opti_form-label">{{language.qty}} <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> {{language.qtyrequired}} </span></span>
                         <input type="text" style="text-align: right;" width="50" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" id="iQtyID" name = "iQtyname">
                         
                     </label>
 
                     <div class="k-form-field">
                         <input type="checkbox" [checked]= "bIsRejected" [(ngModel)]="bIsRejected" class="k-checkbox" name="opti_bIsRejectedID" id="opti_bIsRejectedID"  (change)="onIsRejectedCheck()">
-                        <label class="k-checkbox-label" for="opti_bIsRejectedID">Rejected</label>
+                        <label class="k-checkbox-label" for="opti_bIsRejectedID">{{language.rejected}}</label>
 
                         <input type="checkbox" [checked]= "bIsNC" [(ngModel)]="bIsNC" class="k-checkbox" name="opti_bIsNCID" id="opti_bIsNCID"  (change)="onIsNCCheck()">
-                        <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
-                        <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
+                        <label class="k-checkbox-label" for="opti_bIsNCID">{{language.ncqty}}</label>
+                        <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> {{language.fgrejornc}} </span>
                     </div>
                 </form>
             </div>    
@@ -58,21 +58,21 @@
             </ng-template>  
 
             <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
-            <kendo-grid-column field="OPTM_ITEMCODE" title="Item Code"  width="100"></kendo-grid-column>
-            <kendo-grid-column field="ManagedBy" title="Managed By"  width="100" disabled></kendo-grid-column>
-            <kendo-grid-column field="OPTM_BTCHSERNO" title="RM Batch/Serial" width="120"></kendo-grid-column>
-            <kendo-grid-column field="OPTM_QUANTITY" title="Quatity"  width="60"></kendo-grid-column>
-            <kendo-grid-command-column title="Actions" width="120">
+            <kendo-grid-column field="OPTM_ITEMCODE" title="{{language.itemcode}}"  width="100"></kendo-grid-column>
+            <kendo-grid-column field="ManagedBy" title="{{language.managedby}}"  width="100" disabled></kendo-grid-column>
+            <kendo-grid-column field="OPTM_BTCHSERNO" title="{{language.rmbtchser}}" width="120"></kendo-grid-column>
+            <kendo-grid-column field="OPTM_QUANTITY" title="{{language.quantity}}"  width="60"></kendo-grid-column>
+            <kendo-grid-command-column title="{{language.actions}}" width="120">
                 <ng-template kendoGridCellTemplate>
-                <button kendoGridEditCommand class="k-primary">Edit</button>
-                <button kendoGridRemoveCommand class="k-primary">Delete</button>
+                <button kendoGridEditCommand class="k-primary">{{language.edit}}</button>
+                <button kendoGridRemoveCommand class="k-primary">{{language.delete}}</button>
                 </ng-template>
             </kendo-grid-command-column>
         </kendo-grid>
         <br/>
         <div class="text-left">
-            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onFinalSavePress()" >Save</button>
-            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelParent()">Cancel</button>
+            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onFinalSavePress()" >{{language.save}}</button>
+            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelParent()">{{language.cancel}}</button>
         </div> 
         
     </div>

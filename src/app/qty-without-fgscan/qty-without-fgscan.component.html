@@ -4,35 +4,35 @@
       <div class="col-md-12">
           <form class="k-form col-md-12">
               <label class="k-form-field">
-                <span class="opti_form-label">Balance Qty 
+                <span class="opti_form-label">{{language.balancequantity}}
                   <!-- <span class="float-right opti_error-msg"> Invalid Balance Quantity </span> -->
                 </span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iBalQtyID" name="iBalQtyName" [(ngModel)]="iBalQty" [disabled]=true>
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Accepted Qty </span>
+                <span class="opti_form-label">{{language.acceptedqty}}</span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iAcceptedQtyID" name="iAcceptedQtyName" [(ngModel)]="iAcceptedQty" (blur)="onAccepetedQtyBlur()" />
               </label>
 
               <label class="k-form-field">
-                <span class="opti_form-label">Rejected Qty </span>
+                <span class="opti_form-label">{{language.rejectedqty}}</span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iRejectedQtyID" name="iRejectedQtyName" [(ngModel)]="iRejectedQty" (blur)="onRejectQtyBlur()" />
               </label>
 
               <label class="k-form-field"> <!--[hidden]="true"-->
-                <span class="opti_form-label">NC Qty </span>
+                <span class="opti_form-label">{{language.ncqty}}</span>
                 <input type="number" style="text-align: right;" class="k-textbox" id="iNCQtyID" name="iNCQtyName" [(ngModel)]="iNCQty" (blur)="onNCQtyBlur()" />
               </label>
 
-              <span class="float-left opti_error-msg" *ngIf="negativeQty"> Qty should not be negative </span>
-              <span class="float-left opti_error-msg" *ngIf="sumOfQty"> Sum of Accepted Quantity , Reject Quantity and NC Quantity should be equal to Produced Quantity </span>
+              <span class="float-left opti_error-msg" *ngIf="negativeQty"> {{language.qtynotnegative}} </span>
+              <span class="float-left opti_error-msg" *ngIf="sumOfQty"> {{language.qtysum}} </span>
               
               <br>
               <div class="text-right">
                
                 <br>
-                <button type="button" (click)="onOKPress()"  class="k-button k-primary">OK</button>
+                <button type="button" (click)="onOKPress()"  class="k-button k-primary">{{language.ok}}</button>
               </div>
 
           </form> 

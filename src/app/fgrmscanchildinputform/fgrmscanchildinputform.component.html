@@ -5,29 +5,29 @@
     <!-- loader end -->
 <form class="k-form col-md-12 col-sm-12 col-xs-12" >
       <label class="k-form-field opti_item-code-superchild">
-            <span class="opti_form-label">Item Code</span>
+            <span class="opti_form-label">{{language.itemcode}}</span>
             <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" [(ngModel)]="psChildCompItemCode" (blur)="onChildCompItemBlur()" id="psChildCompItemCodeID" name ="psChildCompItemCodeName" [disabled]="bIsInEditMode"></span> 
             <span class="opti_fgbatch-serial-icon">
                   <img src="assets/images/common/scanner.svg" id="ItemCodeScan" (click)="onFGScan()" class="opti_mouse-pointer" width="27px" height="27px">
             </span>
-            <span *ngIf="bIsChildItemCodeEmpty" class="float-right opti_error-msg"> Item code can't be empty </span>
+            <span *ngIf="bIsChildItemCodeEmpty" class="float-right opti_error-msg"> {{language.itemnotempty}} </span>
 
       </label>
 
       <label class="k-form-field">
-            <span class="opti_form-label">RM Batch Serial</span>
+            <span class="opti_form-label">{{language.rmbatchserial}}</span>
             <input type="text" class="k-textbox"  [(ngModel)]="psChildCompBatchSer" (blur)="onChildCompBatchSerBlur()" id="psChildCompBatchSerID" name="psChildCompBatchSerName" [disabled]="bIsInEditMode || bIsChildItemCodeEmpty || disableChildBatSerEmpty">
-            <span *ngIf="bIsChildBatSerEmpty" class="float-right opti_error-msg"> Item code batch/serial can't be empty </span>
+            <span *ngIf="bIsChildBatSerEmpty" class="float-right opti_error-msg"> {{language.itembtchsernotempty}}</span>
       </label>
 
       <label class="k-form-field">
-            <span class="opti_form-label">Qty</span>
+            <span class="opti_form-label">{{language.qty}}</span>
             <input type="number" style="text-align: right;" class="k-textbox" [(ngModel)]="iQty" id="iQtyID" name="iQyName" [disabled]="bIsChildItemCodeEmpty || disableQtyField" (blur)="onQuantityBlur()">
-            <span *ngIf="bIsQtyIsZero" class="float-right opti_error-msg"> Quantity should be greater than 0 </span>
+            <span *ngIf="bIsQtyIsZero" class="float-right opti_error-msg"> {{language.qtygreaterthanzero}} </span>
       </label>
 
       <div class="text-left">
-            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onRMAddRowPress()">Add</button>
-            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelChild()">Cancel</button>
+            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onRMAddRowPress()">{{language.add}}</button>
+            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelChild()">{{language.cancel}}</button>
       </div> 
 </form>            

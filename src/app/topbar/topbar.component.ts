@@ -13,9 +13,11 @@ export class TopbarComponent implements OnInit {
   private currentGuid:any;
   public arrConfigData: any;
   public showLoader:boolean = false;
+  public language: any;
   constructor(private router:Router, private auth: AuthenticationService) { }
 
   ngOnInit() {
+    this.language = JSON.parse(window.localStorage.getItem('language'));
     this.selectedCompany = window.localStorage.getItem('selectedComp');
     this.userName = window.localStorage.getItem('loggedInUser');
     this.currentGuid = window.localStorage.getItem("GUID");

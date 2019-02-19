@@ -24,6 +24,7 @@ export class FgrmscanparentComponent implements OnInit {
   rowDataForEdit: any = [];
   showFGInputForm:any = false;
   showLoader:boolean = false;
+  public language: any;
   private baseClassObj = new BaseClass();
   constructor(private qtyWithFGScan: QtyWithFGScanService, private fgrmService: FgrmscanparentService,private toastr: ToastrService) { }
   @Output() messageEvent = new EventEmitter<string>();
@@ -47,7 +48,7 @@ export class FgrmscanparentComponent implements OnInit {
   
 
   ngOnInit() {
-   
+   this.language = JSON.parse(window.localStorage.getItem('language'));
    this.gridHeight = UIHelper.getMainContentHeight();
 
    // hide childsuperchild level on initial    

@@ -9,34 +9,34 @@
         <div class="col-md-12">
             <form class="k-form" >
                 <label class="k-form-field">
-                    <span class="opti_form-label">FG Batch Serial</span> 
+                    <span class="opti_form-label">{{language.fgbatchser}}</span> 
                     <span class="float-left opti_fgbatch-serial"><input type="text" class="k-textbox" id="FgBatchSerialID" [(ngModel)]="psBatchSer" (blur)="onBatchSerBlur()" [disabled]="bIsInEditMode" name="psBatchSer" /></span>
                     <span class="opti_fgbatch-serial-icon">         
                         <img src="assets/images/common/scanner.svg"  id="scanFgBatchSerialId" class="opti_mouse-pointer" width="27px" height="27px">
                     </span>
-                    <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> FG Batch/Serial can't be empty </span>
+                    <span *ngIf="bIfBatSerEmpty" class="float-right opti_error-msg"> {{language.fgrequired}} </span>
                 </label>
 
                 <label class="k-form-field">
-                    <span class="opti_form-label">Qty</span>
+                    <span class="opti_form-label">{{language.qty}}</span>
                     <input type="text" style="text-align: right;" class="k-textbox" [(ngModel)]="iQty" (blur)="onQtyBlur()" [disabled]="isQtyDisabled" name="iQty" />
-                    <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> Quantity can't be blank or zero </span>
+                    <span *ngIf="bIfQtyIsZero" class="float-right opti_error-msg"> {{language.qtyrequired}} </span>
                 </label>
 
                 <div class="k-form-field">
                     <input type="checkbox" [checked]= "bIsRejected" class="k-checkbox" [(ngModel)]="bIsRejected" (change)="onIsRejectedCheck()" name="bIsRejected" id="opti_bIsInEditModeID">
-                    <label class="k-checkbox-label" for="opti_bIsInEditModeID">Rejected</label>
+                    <label class="k-checkbox-label" for="opti_bIsInEditModeID">{{language.rejected}}</label>
 
                     <input type="checkbox" [checked]= "bIsNC" class="k-checkbox" [(ngModel)]="bIsNC" (change)="onIsNCCheck()" name="bIsNC" id="opti_bIsNCID"/>
-                    <label class="k-checkbox-label" for="opti_bIsNCID">NC Qty</label>
+                    <label class="k-checkbox-label" for="opti_bIsNCID">{{language.ncqty}}</label>
 
-                    <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg"> FG can either be Rejected or NC </span>
+                    <span *ngIf="bothSelectionRestrict" class="float-right opti_error-msg">{{language.fgrejornc}</span>
                 </div>
               
 
                 <div class="text-right">
-                    <button type="button" class="k-button k-primary" (click)="onAddPress()" >Save</button>
-                    <button type="button" class="k-button" (click)="onClosePress()">Close</button> 
+                    <button type="button" class="k-button k-primary" (click)="onAddPress()" >{{language.save}}</button>
+                    <button type="button" class="k-button" (click)="onClosePress()">{{language.close}}</button> 
                 </div>
             </form>
         </div>    

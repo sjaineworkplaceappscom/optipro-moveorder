@@ -21,30 +21,30 @@
                     <form class="k-form" #signInForm="ngForm">
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                {{language.username}} <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> Username Required </span>
+                                {{language.username}} <span *ngIf="name.errors?.required && name.touched" class="float-right opti_error-msg"> {{language.username_required}} </span>
                             </span>
                           
                             <!--Bug no. 18145... disble autocompletion of the input field-->
-                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="Your username" autocomplete="off">
+                            <input  autofocus  name="id" required #name = ngModel  ng-change="GetCompany()" [(ngModel)]="loginId" (keyup)="onKeyUp()" type="text" class="k-textbox" id="usr" placeholder="{{language.username_placeholder}}" autocomplete="off">
                             
                             
                         </label>
 
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                Password *
-                                <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  Password required.  </span>
-                                <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> You are not active user.</span>
+                                {{language.password}} *
+                                <span *ngIf="PasswordBlank.errors?.required && PasswordBlank.touched" class="float-right opti_error-msg">  {{language.password_required}}  </span>
+                                <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> {{language.password_activeuser}}</span>
                             </span>
-                            <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="Your password">
-                            <span *ngIf="passwordBlank" class="float-right opti_error-msg">  Password required.  </span>
-                            <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> Invalid username or password.</span>
-                            <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> You are not active user.</span>
+                            <input name="pwd" required #PasswordBlank = ngModel  (keyup)="onKeyUp()"  [(ngModel)]="password" type="password" class="k-textbox" id="pwd" (blur)="onPasswordBlur()" placeholder="{{language.password_placeholder}}">
+                            <span *ngIf="passwordBlank" class="float-right opti_error-msg">   {{language.password_required}} </span>
+                            <span *ngIf="invalidCredentials"  class="float-right opti_error-msg"> {{language.password_invalid}} </span>
+                            <span *ngIf="InvalidActiveUser"  class="float-right opti_error-msg"> {{language.password_activeuser}} </span>
                         </label>
 
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                Company *
+                                {{language.Company}} *
                             </span>
                             <kendo-dropdownlist [disabled]="hasCompaneyData==false" [textField]="'OPTM_COMPID'" [valueField]="'OPTM_COMPID'" [data]="listItems"
                                 name="listname" [(ngModel)]="selectedValue" (selectionChange)="onCompanyChange($event)"></kendo-dropdownlist>
@@ -52,7 +52,7 @@
 
                         <label class="k-form-field">
                             <span class="opti_form-label">
-                                Warehouse *
+                                {{language.warehouse}} *
                             </span>
                             <kendo-dropdownlist [disabled]="hasWhseData==false" [textField]="'OPTM_WHSE'" [valueField]="'OPTM_WHSE'" [data]="whseListItems"
                             name="whseListItems" [(ngModel)]="selectedWhseValue" (selectionChange)="onWarehouseChange($event)"></kendo-dropdownlist>
@@ -60,7 +60,7 @@
 
                         <div class="text-right">
 
-                            <button (click)="onLoginClick()" [disabled]="!signInForm.form.valid  || disableLoginBtn" align="center" type="button" class="opti_fullwidth">Login</button>
+                            <button (click)="onLoginClick()" [disabled]="!signInForm.form.valid  || disableLoginBtn" align="center" type="button" class="opti_fullwidth">{{language.login}}</button>
                         </div>
                     </form>
 

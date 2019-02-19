@@ -17,11 +17,13 @@ diff:number = 0.0;
 diffFlag: number = 0.0;
 negativeQty:boolean = false;
 sumOfQty:boolean = false;
+public language: any;
 
 constructor() { }
 @Output() messageEvent = new EventEmitter<string>();
 
   ngOnInit() {
+    this.language = JSON.parse(window.localStorage.getItem('language'));
     this.iBalQty = parseFloat(this.basicDetailsFrmMO[0].BalQty);
     this.iAcceptedQty = parseFloat(this.basicDetailsFrmMO[0].ProducedQty);
   }

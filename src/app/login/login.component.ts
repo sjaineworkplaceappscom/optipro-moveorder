@@ -313,6 +313,7 @@ export class LoginComponent implements OnInit {
         window.localStorage.setItem('language', JSON.stringify(data));
         this.language = JSON.parse(window.localStorage.getItem('language'));
         //This will get the psURL
+        //this.language.username
         this.getPSURL();
       },
       error => {
