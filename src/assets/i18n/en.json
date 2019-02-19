@@ -75,44 +75,55 @@
    "finishedgoodslist": "Finished Goods List",
    "managedby": "Managed By",
    "rmbtchser": "RM Batch/Serial",
-   "logout": "Log Out"
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   "logout": "Log Out",
+   "item_not_exists":"The item code does'nt exists",
+   "select_company":"Select Company",
+   "select_warehouse": "Select Warehouse",
+   "some_error": "There was some error",
+   "some_error_lang":"There was some error while reading language file",
+   "none_tracked_not_allowed":"None tracked items not allowed",
+   "no_inventory": "No inventory found for ",
+   "item_consumed": "It does'nt belong to this item or it is consumed",
+   "child_item_code_blank": "Child item code can't be blank",
+   "item_code_already_exsits": "The item code with this serial/batch already exsits",
+   "qty_cant_greater": "Quantity can't be greater than inventory quantity",
+   "failed_to_delete_data": "Failed to delete Data",
+   "failed_to_update_data": "Failed to update Data",
+   "failed_to_save_data": "Failed to Save Data",
+   "enter_fg_batchserial": "Please first enter the FG batch/serial",
+   "item_already_rej": "Item is already rejected. You can edit it from the grid.",
+   "item_already_nc": "Item is already present in NC. You can edit it from the grid.",
+   "item_already_present": "Item is already present. You can edit it from the grid.",
+   "qty_cant_greater_bal_qty": "Quantity can't be greater than balance qty",
+   "qty_cant_greater_pro_qty": "Quantity can't be greater than produced qty",
+   "attach_all_child": "Attach all the child components",
+   "attach_batchserial_before_saving": "Please attach batch/serials before saving the record",
+   "serial_already_exist": "Serial No. already exist",
+   "serialbatch_already_exist": "Serial/Batch No. already exist",
+   "fg_not_valid": "FG Bat/Ser you are entering is not valid",
+   "fg_already_moved": "FG Bat/Ser you are entering is already moved",
+   "error_while_validate_fg": "There was some error while validating finished good serial batch",
+   "prod_qty_greater_than_bal": "Produced Qty should not be greater than balance qty",
+   "session_expired": "Session expired",
+   "oper_end_time_greater_server": "Operation End time can't be greater than server date & time",
+   "select_wo": "Select workorder number",
+   "select_oper": "Select operation number",
+   "prod_qty_zero": "Produced quantity can't be zero or less than zero",
+   "enter_start_date": "Please enter start date",
+   "enter_end_date": "Please enter end date",
+   "enter_date": "Please enter date",
+   "submit_sucessfull": "Record submitted sucessfully",
+   "oper_start_time_lesser": "Operation's start date & time can't be lesser than previous operation's start date time",
+   "record_under_progress": "Record already under progress",
+   "record_have_error": "Record have error :-",
+   "error_on_submitting": "Error while submitting record",
+   "no_batchserial_attached": "No serials/batches attached",
+   "no_attached_batchserial_greater": "Number of attached batch/serial quantities can't be greater then produced quantity",
+   "qty_mismatch": "Quantity mismatch",
+   "move_order_summary": "Move Order Summary",
+   "finished_goods_scan": "Finished Goods Scan",
+   "fg_raw_materials_scan": "Finished Goods & Raw Materials Scan",
+   "not_allowed_batchserial": "Not allowed to attach batch/serial component",
+   "fg_batchserial_rejected": "FG Bat/Ser you are entering is rejected"
    
 }

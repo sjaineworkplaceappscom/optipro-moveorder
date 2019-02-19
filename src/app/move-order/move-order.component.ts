@@ -546,8 +546,7 @@ export class MoveOrderComponent implements OnInit {
   onProducedQtyBlur() {
     if (this.iProducedQty != null) {
       if (this.iProducedQty > this.iBalQty) {
-        //alert("Produced Qty should not be greater than balance qty");
-        this.toastr.error('', "Produced Qty should not be greater than balance qty", this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.prod_qty_greater_than_bal, this.baseClassObj.messageConfig);
         this.iProducedQty = 0;
       }
       else {
@@ -579,7 +578,7 @@ export class MoveOrderComponent implements OnInit {
         if (data != null) {
           if (data.length > 0) {
             if (data[0].ErrMessage != undefined) {
-              this.toastr.error('', "Session expired", this.baseClassObj.messageConfig);
+              this.toastr.error('', this.language.session_expired, this.baseClassObj.messageConfig);
               sessionStorage.clear();
               window.localStorage.clear();
               this.router.navigateByUrl('/login');
@@ -794,7 +793,7 @@ export class MoveOrderComponent implements OnInit {
         console.log("Server Date Time", data[0].DATEANDTIME);
 
         if (this.FrmToDateTime[1] > new Date(data[0].DATEANDTIME)) {
-          this.toastr.error('', "Operation End time can't be greater than server date & time", this.baseClassObj.messageConfig);
+          this.toastr.error('', this.language.oper_end_time_greater_server, this.baseClassObj.messageConfig);
           return;
         }
         else {
@@ -807,7 +806,7 @@ export class MoveOrderComponent implements OnInit {
         // this.setDefaultDateTime();
       },
       error => {
-        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
     )
@@ -816,32 +815,32 @@ export class MoveOrderComponent implements OnInit {
   //check for the mandatory inputs on submit
   checkMandatoryInpts() {
     if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined) {
-      this.toastr.error('', "Select workorder number", this.baseClassObj.messageConfig);
+      this.toastr.error('',this.language.select_wo, this.baseClassObj.messageConfig);
       return false;
     }
 
     if (this.psOperNO == "" || this.psOperNO == null || this.psOperNO == undefined) {
-      this.toastr.error('', "Select operation number", this.baseClassObj.messageConfig);
+      this.toastr.error('', this.language.select_oper, this.baseClassObj.messageConfig);
       return false;
     }
     if (this.iProducedQty <= 0) {
-      this.toastr.error('', "Produced quantity can't be zero or less than zero", this.baseClassObj.messageConfig);
+      this.toastr.error('', this.language.prod_qty_zero, this.baseClassObj.messageConfig);
       return false;
     }
     if (this.FrmToDateTime != null) {
       if (this.FrmToDateTime[0] == "" || this.FrmToDateTime[0] == null || this.FrmToDateTime[0] == undefined) {
        // alert("Please enter start date ")
-       this.toastr.error('', "Please enter start date", this.baseClassObj.messageConfig);
+       this.toastr.error('', this.language.enter_start_date, this.baseClassObj.messageConfig);
         return false;
       }
       if (this.FrmToDateTime[1] == "" || this.FrmToDateTime[1] == null || this.FrmToDateTime[1] == undefined) {
         //alert("Please enter end date ")
-        this.toastr.error('', "Please enter end date", this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.enter_end_date, this.baseClassObj.messageConfig);
         return false;
       }
     } else {
      // alert("Please enter  date")
-     this.toastr.error('', "Please enter date", this.baseClassObj.messageConfig);
+     this.toastr.error('', this.language.enter_date, this.baseClassObj.messageConfig);
     }
     return true;
   }
@@ -887,7 +886,7 @@ export class MoveOrderComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
     )
@@ -906,14 +905,14 @@ export class MoveOrderComponent implements OnInit {
         // if (data.recordSubmitDetails != undefined) {
         if (data.recordSubmitDetails.length > 0) {
           if (data.recordSubmitDetails[0].isRecordSubmitted == "True") {
-            this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
+            this.toastr.success('', this.language.submit_sucessfull, this.baseClassObj.messageConfig);
             //alert("Record submitted sucessfully");
             this.cleanupScreen();
             //hide Loader
             this.showLoader = false;
           }
           else if (data.recordSubmitDetails[0].isRecordSubmitted == "OperOverlapping") {
-            this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
+            this.toastr.error('', this.language.oper_start_time_lesser, this.baseClassObj.messageConfig);
             this.showLoader = false;
           }
         }
@@ -922,7 +921,7 @@ export class MoveOrderComponent implements OnInit {
         // else if (data.recordAlreadySubmitDetails != undefined) {
         if (data.recordAlreadySubmitDetails.length > 0) {
           if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "N") {
-            this.toastr.warning('', 'Record already under progress', this.baseClassObj.messageConfig);
+            this.toastr.warning('', this.language.record_under_progress, this.baseClassObj.messageConfig);
             //this.cleanupScreen();
             //hide Loader
             this.showLoader = false;
@@ -930,7 +929,7 @@ export class MoveOrderComponent implements OnInit {
           }
           if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "E") {
             let userResponse;
-            userResponse = confirm("Record have error :-" + data.recordAlreadySubmitDetails[0].OPTM_RESULTDESC + ", Do you want to continue ?");
+            userResponse = confirm(this.language.record_have_error + data.recordAlreadySubmitDetails[0].OPTM_RESULTDESC + ", Do you want to continue ?");
 
             if (userResponse == true) {
               this.getServerDate(true);
@@ -973,7 +972,7 @@ export class MoveOrderComponent implements OnInit {
         // }
         else {
           console.log(data);
-          this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
+          this.toastr.error('', this.language.error_on_submitting, this.baseClassObj.messageConfig);
           //show Loader
           this.showLoader = false;
         }
@@ -1018,7 +1017,7 @@ export class MoveOrderComponent implements OnInit {
               //If data of linked qty is less then zero
               if (Number(data.Table[0].LinkedQuantity) <= 0) {
                 //alert("No serials/batches attached");
-                this.toastr.error('', "No serials/batches attached", this.baseClassObj.messageConfig);
+                this.toastr.error('', this.language.no_batchserial_attached, this.baseClassObj.messageConfig);
                 isAllowed = false;
                 //hide Loader
                 this.showLoader = false;
@@ -1032,7 +1031,7 @@ export class MoveOrderComponent implements OnInit {
                 //If the number of linked qty is more than produced qty
                 if (Number(data.Table[0].LinkedQuantity) > this.iProducedQty) {
                   //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
-                  this.toastr.error('', "Number of attached batch/serial quantities can't be greater then produced quantity", this.baseClassObj.messageConfig);
+                  this.toastr.error('', this.language.no_attached_batchserial_greater, this.baseClassObj.messageConfig);
                   isAllowed = false;
                   //hide Loader
                   this.showLoader = false;
@@ -1045,7 +1044,7 @@ export class MoveOrderComponent implements OnInit {
                 //If the number of linked qty is less than produced qty
                 if (Number(data.Table[0].LinkedQuantity) < this.iProducedQty) {
                   //alert("Batch/Serial not linked");
-                  this.toastr.error('', "Quantity mismatch", this.baseClassObj.messageConfig);
+                  this.toastr.error('', this.language.qty_mismatch, this.baseClassObj.messageConfig);
                   isAllowed = false;
                   //hide Loader
                   this.showLoader = false;
@@ -1073,18 +1072,18 @@ export class MoveOrderComponent implements OnInit {
   openItemLinkingScreen() {
     this.showItemLinkingScreen = true;
     if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
-      this.ScreenName = 'Move Order Summary';
+      this.ScreenName = this.language.move_order_summary;
       this.showQtyNoScanScreen = true;
       this.showQtyWithFGScanScreen = false;
       this.showQtyWithFGRMScanScreen = false;
     }
     if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
-      this.ScreenName = 'Finished Goods Scan';
+      this.ScreenName = this.language.finished_goods_scan;
       this.showQtyWithFGScanScreen = true;
       this.showQtyNoScanScreen = false;
     }
     if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
-      this.ScreenName = 'Finished Goods & Raw Materials Scan';
+      this.ScreenName = this.language.fg_raw_materials_scan;
       this.showQtyWithFGRMScanScreen = true;
       this.showQtyNoScanScreen = false;
     }
@@ -1112,7 +1111,7 @@ export class MoveOrderComponent implements OnInit {
         if (data != null || data != undefined) {
           this.showLoader = false;
             if (data.length <= 0) {
-              this.toastr.error('', 'Not allowed to attach batch/serial component', this.baseClassObj.messageConfig);
+              this.toastr.error('', this.language.not_allowed_batchserial, this.baseClassObj.messageConfig);
               this.showLoader = false;
               return;
             }
@@ -1125,7 +1124,7 @@ export class MoveOrderComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
     )

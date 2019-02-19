@@ -78,7 +78,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
       }
     }
     else {
-      this.toastr.warning('', 'Please first enter the FG batch/serial', this.baseClassObj.messageConfig);
+      this.toastr.warning('', this.language.enter_fg_batchserial, this.baseClassObj.messageConfig);
     }
   }
 
@@ -88,14 +88,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
         if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
           
           if(this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true){
-             this.toastr.error('',"Item is already rejected. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+             this.toastr.error('',this.language.item_already_rej,this.baseClassObj.messageConfig);    
              this.psBatchSer = "";
              this.bIsRejected = false; this.iQty = 1;
              return false;
           }
 
           else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true){
-            this.toastr.error('',"Item is already present in NC. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.toastr.error('',this.language.item_already_nc,this.baseClassObj.messageConfig);    
             this.psBatchSer = "";
             this.bIsNC = false; this.iQty = 1;
             return false;
@@ -103,7 +103,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           
         else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false){
           if(this.bIsRejected == false && this.bIsNC == false){
-            this.toastr.error('',"Item is already present. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.toastr.error('',this.language.item_already_present,this.baseClassObj.messageConfig);    
             this.psBatchSer = ""; this.iQty = 1;
             return false;
            }
@@ -196,14 +196,14 @@ export class FgrmscanparentinputformComponent implements OnInit {
       this.bIfQtyIsZero = false;
       //If value is ok then chk produced qty not greater than bal qty
       if (this.iQty > this.basicFGInputForm[0].BalQty) {
-        this.toastr.error('', "Quantity can't be greater than balance qty", this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.qty_cant_greater_bal_qty, this.baseClassObj.messageConfig);
         this.iQty = 1;
         return;
       }
       else {
         //If value is ok then chk produced qty not greater than bal qty
         if (this.iQty > this.basicFGInputForm[0].ProducedQty) {
-          this.toastr.error('', "Quantity can't be greater than produced qty", this.baseClassObj.messageConfig);
+          this.toastr.error('', this.language.qty_cant_greater_pro_qty, this.baseClassObj.messageConfig);
           this.iQty = 1;
           return;
         }
@@ -303,7 +303,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
         data => {
           if (data != null) {
             if (data == "attach_all_child_item") {
-              this.toastr.error('', "Attach all the child components", this.baseClassObj.messageConfig);
+              this.toastr.error('', this.language.attach_all_child, this.baseClassObj.messageConfig);
               this.showLevelParent();
             }
             else if (data.search("quantity is required for") != -1) {
@@ -319,7 +319,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
             }
             else {
               //alert("There was some error while submitting data"); 
-              this.toastr.error('', "There was some error while submitting data", this.baseClassObj.messageConfig);
+              this.toastr.error('',this.language.some_error, this.baseClassObj.messageConfig);
               //this.GetAllChildByParentId();  
               this.showLevelParent();
             }
@@ -330,7 +330,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
     }
     else {
-      this.toastr.warning('', 'Please attach batch/serials before saving the record', this.baseClassObj.messageConfig);
+      this.toastr.warning('', this.language.attach_batchserial_before_saving, this.baseClassObj.messageConfig);
     }
   }
 
@@ -370,7 +370,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
         if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
           //alert("Serial/Batch already exist");
          // this.toastr.warning('', "Serial/Batch already exist", this.baseClassObj.messageConfig);
-          this.toastr.warning('', "Serial No. already exist", this.baseClassObj.messageConfig);
+          this.toastr.warning('',this.language.serial_already_exist, this.baseClassObj.messageConfig);
           this.psBatchSer = "";
           return true;
         }
@@ -389,7 +389,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
           if (data[0].ItemCheck == "ItemNotExists") {
             //alert("FG Bat/Ser you are entering is not valid");
-            this.toastr.error('', "FG Bat/Ser you are entering is not valid", this.baseClassObj.messageConfig);
+            this.toastr.error('',this.language.fg_not_valid, this.baseClassObj.messageConfig);
             this.psBatchSer = '';
           }
           // if (data[0].ItemCheck == "ItemRejected") {
@@ -400,7 +400,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           //   return;
           // }
           if (data[0].ItemCheck == "ItemMoved") {
-            this.toastr.error('', "FG Bat/Ser you are entering is already moved", this.baseClassObj.messageConfig);
+            this.toastr.error('',this.language.fg_already_moved, this.baseClassObj.messageConfig);
             this.psBatchSer = '';
             this.iQty = 1;
             return;
@@ -410,7 +410,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           }
         }
         else {
-          this.toastr.error('', "There was some error while validating finished good serial batch", this.baseClassObj.messageConfig);
+          this.toastr.error('',this.language.error_while_validate_fg, this.baseClassObj.messageConfig);
           console.log("error-->" + data)
         }
       }
@@ -472,13 +472,11 @@ export class FgrmscanparentinputformComponent implements OnInit {
       data => {
         if (data != null) {
           if (data == "True") {
-            //alert("Data deleted");
             //After the Data Deletion the grid will refreshed by this
             this.GetAllChildByParentId();
           }
           else {
-            //alert("Failed to delete data");
-            this.toastr.error('', "Failed to delete Data", this.baseClassObj.messageConfig);
+            this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
             console.log("error-->" + data);
           }
           this.showLoader = false;

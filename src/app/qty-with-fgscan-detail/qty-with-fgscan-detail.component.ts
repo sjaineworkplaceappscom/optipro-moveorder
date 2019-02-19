@@ -164,16 +164,14 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       this.bIfQtyIsZero = false;
      
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].BalQty){
-        //alert("Quantity can't be greater than balance qty");
-        this.toastr.error('',"Quantity can't be greater than balance qty",this.baseClassObj.messageConfig);    
+        this.toastr.error('',this.language.qty_cant_greater_bal_qty,this.baseClassObj.messageConfig);    
         this.iQty = 1;
         return;
       }
       else{
         //If value is ok then chk produced qty not greater than bal qty
         if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
-         // alert("Quantity can't be greater than produced quantity")
-         this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
+         this.toastr.error('',this.language.qty_cant_greater_pro_qty,this.baseClassObj.messageConfig);    
           this.iQty = 1;
           return;
         }
@@ -226,8 +224,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
               this.messageEvent.emit("true");
             }
             else{
-              //alert("Failed to Save Data");
-              this.toastr.error('',"Failed to Save Data",this.baseClassObj.messageConfig);    
+              this.toastr.error('',this.language.failed_to_save_data,this.baseClassObj.messageConfig);    
               this.rowDataFrmFGWithScan = [];
             }
             this.showLoader = false;
@@ -244,19 +241,19 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
           data=> {
           if(data[0].ItemCheck =="ItemNotExists"){
-            this.toastr.error('',"FG Bat/Ser you are entering is not valid",this.baseClassObj.messageConfig);    
+            this.toastr.error('',this.language.fg_not_valid,this.baseClassObj.messageConfig);    
             this.psBatchSer = '';
             this.iQty = 1;
             return;
           }
           if(data[0].ItemCheck =="ItemRejected"){
-            this.toastr.error('',"FG Bat/Ser you are entering is rejected",this.baseClassObj.messageConfig);   
+            this.toastr.error('',this.language.fg_batchserial_rejected,this.baseClassObj.messageConfig);   
             this.psBatchSer = '';
             this.iQty = 1;
             return;
             }
           if(data[0].ItemCheck =="ItemMoved"){
-            this.toastr.error('',"FG Bat/Ser you are entering is already moved",this.baseClassObj.messageConfig);   
+            this.toastr.error('',this.language.fg_already_moved,this.baseClassObj.messageConfig);   
             this.psBatchSer = '';
             this.iQty = 1;
             return;
@@ -280,14 +277,14 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
       {
         if(this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true){
-              this.toastr.error('',"Item is already rejected. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+              this.toastr.error('',this.language.item_already_rej,this.baseClassObj.messageConfig);    
               this.psBatchSer = "";
               this.bIsRejected = false; this.iQty = 1;
               return false;
         }
 
         else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true){
-            this.toastr.error('',"Item is already present in NC. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.toastr.error('',this.language.item_already_nc,this.baseClassObj.messageConfig);    
             this.psBatchSer = "";
             this.bIsNC = false; this.iQty = 1;
             return false;
@@ -295,7 +292,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           
         else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false){
           if(this.bIsRejected == false && this.bIsNC == false){
-            this.toastr.error('',"Item is already present. You can edit it from the grid.",this.baseClassObj.messageConfig);    
+            this.toastr.error('',this.language.item_already_present,this.baseClassObj.messageConfig);    
             this.psBatchSer = ""; this.iQty = 1;
             return false;
           }
@@ -324,7 +321,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           }
           else{
             //alert("Failed to update Data");
-            this.toastr.error('',"Failed to update Data",this.baseClassObj.messageConfig);  
+            this.toastr.error('',this.language.failed_to_update_data,this.baseClassObj.messageConfig);  
             console.log("DATA save failed-->"+data);  
             this.rowDataFrmFGWithScan = [];
           }
@@ -358,7 +355,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       if(this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer)
       {
           //alert("Serial/Batch already exist");
-          this.toastr.warning('',"Serial/Batch already exist",this.baseClassObj.messageConfig);    
+          this.toastr.warning('',this.language.serialbatch_already_exist,this.baseClassObj.messageConfig);    
           this.psBatchSer = "";
           return true;
       }
@@ -431,7 +428,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       //Check sum of qtys here
       if(totalQty > this.basicDetailsFrmFGWithScan[0].BalQty){
         //alert("Quantity can't be greater than balance qty");
-        this.toastr.error('',"Quantity can't be greater than balance qty",this.baseClassObj.messageConfig);    
+        this.toastr.error('',this.language.qty_cant_greater_bal_qty,this.baseClassObj.messageConfig);    
         this.iQty = 1;
         return;
       }
@@ -439,7 +436,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         //If value is ok then chk produced qty not greater than bal qty
         if(totalQty > this.basicDetailsFrmFGWithScan[0].ProducedQty){
           //alert("Quantity can't be greater than produced quantity")
-          this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
+          this.toastr.error('',this.language.qty_cant_greater_pro_qty,this.baseClassObj.messageConfig);    
           this.iQty = 1;
           return;
         }
@@ -450,7 +447,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
       if(this.iQty > this.basicDetailsFrmFGWithScan[0].ProducedQty)
       {
         //alert("Quantity can't be greater than produced quantity")
-        this.toastr.error('',"Quantity can't be greater than produced qty",this.baseClassObj.messageConfig);    
+        this.toastr.error('',this.language.qty_cant_greater_pro_qty,this.baseClassObj.messageConfig);    
         isValidQtys = false;
       }
     }

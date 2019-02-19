@@ -96,7 +96,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
             //if the item not exists then we will give error 
             if(this.childCompItemCodeDetls[0].isChildComExists == "False"){
               this.disableChildBatSerEmpty = true;
-              this.toastr.error('',"The item code does'nt exists",this.baseClassObj.messageConfig);
+              this.toastr.error('',this.language.item_not_exists,this.baseClassObj.messageConfig);
               this.psChildCompItemCode = '';
             }
             //if all ok then will fill another details of the item code 
@@ -108,7 +108,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
               }
               else{
                 this.disableChildBatSerEmpty = true;
-                this.toastr.warning('',"None tracked items not allowed",this.baseClassObj.messageConfig);
+                this.toastr.warning('',this.language.none_tracked_not_allowed,this.baseClassObj.messageConfig);
                 this.psChildCompItemCode = '';
               }
                 
@@ -142,7 +142,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
                 this.disableQtyField = false;
 
                 if(data[0].TOTALQTY == ""){
-                  this.toastr.error('','No inventory found for '+ this.psChildCompBatchSer,this.baseClassObj.messageConfig);
+                  this.toastr.error('',this.language.no_inventory + this.psChildCompBatchSer,this.baseClassObj.messageConfig);
                 }
                 else{
                   this.iChildInventory = data[0].TOTALQTY;
@@ -156,7 +156,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
               
 
               if(data[0].TOTALQTY == ""){
-                this.toastr.error('','No inventory found for '+ this.psChildCompBatchSer,this.baseClassObj.messageConfig);
+                this.toastr.error('',this.language.no_inventory + this.psChildCompBatchSer,this.baseClassObj.messageConfig);
               }
               else{
                 this.iQty = data[0].TOTALQTY;
@@ -167,7 +167,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
               this.iSysNum = data[0].SYSNUMBER;
             }
             else{
-              this.toastr.error('',"It does'nt belong to this item or it is consumed",this.baseClassObj.messageConfig);  
+              this.toastr.error('',this.language.item_consumed,this.baseClassObj.messageConfig);  
               this.psChildCompBatchSer = '';     
             }
             
@@ -190,7 +190,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
     
     if(this.psChildCompItemCode == undefined || this.psChildCompItemCode == null || this.psChildCompItemCode == ''){
 
-      this.toastr.error('',"Child item code can't be blank",this.baseClassObj.messageConfig); 
+      this.toastr.error('',this.language.child_item_code_blank,this.baseClassObj.messageConfig); 
       return;
     }
        if(this.bIsInEditMode == false){
@@ -233,7 +233,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
     }
     else{
       //alert("Item componenent with this batch/serial already exists");
-      this.toastr.error('',"The item code with this serial/batch already exsits",this.baseClassObj.messageConfig); 
+      this.toastr.error('',this.language.item_code_already_exsits,this.baseClassObj.messageConfig); 
     }
 
     
@@ -263,13 +263,13 @@ export class FgrmscanchildinputformComponent implements OnInit {
         //chk for the managed by
         if(this.sChildManagedBy == "Serial"){
           if(this.iChildInventory < this.iQty){
-            this.toastr.warning('',"Quantity can't be greater than inventory quantity",this.baseClassObj.messageConfig);       
+            this.toastr.warning('',this.language.qty_cant_greater,this.baseClassObj.messageConfig);       
             this.iQty = 1;
           }
         }
         if(this.sChildManagedBy =="Batch"){
           if(this.iChildInventory < this.iQty){
-            this.toastr.warning('',"Quantity can't be greater than inventory quantity",this.baseClassObj.messageConfig);       
+            this.toastr.warning('',this.language.qty_cant_greater,this.baseClassObj.messageConfig);       
             this.iQty = 1;
           }
 

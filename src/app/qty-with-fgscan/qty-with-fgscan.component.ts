@@ -4,6 +4,8 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with-fgscan-detail.component';
 import { UIHelper } from 'src/app/helpers/ui.helpers';
+import { BaseClass } from 'src/app/classes/BaseClass'
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class QtyWithFGScanComponent implements OnInit {
   public view: Observable<GridDataResult>;
   public showLoader: boolean = false;
 
-  constructor(private qtyWithFGScan: QtyWithFGScanService) { this.clearValues();}
+  constructor(private qtyWithFGScan: QtyWithFGScanService,private toastr: ToastrService) { this.clearValues();}
   @Output() messageEvent = new EventEmitter<string>();
   txtFGValue: string = "";
   txtFGSerBatValue: string = "";
@@ -40,6 +42,7 @@ export class QtyWithFGScanComponent implements OnInit {
   qtySummaryValuesFGScan: any = [];
   gridHeight: number;
   public language: any;
+  private baseClassObj = new BaseClass();
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -118,7 +121,8 @@ export class QtyWithFGScanComponent implements OnInit {
             this.fillFGData();
           }
           else {
-            alert("Failed to delete data");
+            this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
+            console.log("error-->" + data);
           }
         }
       }

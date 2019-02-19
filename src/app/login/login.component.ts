@@ -26,10 +26,14 @@ export class LoginComponent implements OnInit {
   public psURL: string = '';
 
   public arrConfigData: any[];
-  public defaultCompnyComboValue: any = [{ OPTM_COMPID: "Select Company" }];
-  public listItems: Array<string> = this.defaultCompnyComboValue;
+  // public defaultCompnyComboValue: any = [{ OPTM_COMPID: this.language.select_company }];
+  // public listItems: Array<string> = this.defaultCompnyComboValue;
+  // public defaultWhseComboValue: any = [{ OPTM_WHSE: this.language.select_warehouse}];
+  // public whseListItems: Array<string> = this.defaultWhseComboValue;
 
-  public defaultWhseComboValue: any = [{ OPTM_WHSE: "Select Warehouse" }];
+  public defaultCompnyComboValue: any = [];
+  public listItems: Array<string> = this.defaultCompnyComboValue;
+  public defaultWhseComboValue: any = [];
   public whseListItems: Array<string> = this.defaultWhseComboValue;
 
   public selectedValue: any;
@@ -64,11 +68,11 @@ export class LoginComponent implements OnInit {
     if (window.localStorage.getItem('loggedInUser') != null || window.localStorage.getItem('loggedInUser') != undefined) {
       this.router.navigateByUrl('/moveorder');
     }
-    this.listItems = this.defaultCompnyComboValue;
-    this.selectedValue = this.listItems[0];
+    // this.listItems = this.defaultCompnyComboValue;
+    // this.selectedValue = this.listItems[0];
 
-    this.whseListItems = this.defaultWhseComboValue;
-    this.selectedWhseValue = this.whseListItems[0];
+    // this.whseListItems = this.defaultWhseComboValue;
+    // this.selectedWhseValue = this.whseListItems[0];
 
 
     const element = document.getElementsByTagName("body")[0];
@@ -123,7 +127,6 @@ export class LoginComponent implements OnInit {
         this.auth.login(this.loginId, this.password, this.psURL).subscribe(
           data => {
             this.modelSource = data;
-
             if (this.modelSource != null && this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {
               this.showLoader = false;
               //If everything is ok then we will navigate the user to main home page
@@ -148,7 +151,7 @@ export class LoginComponent implements OnInit {
             this.showLoader = false;
           },
           error => {
-            this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+            this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
             console.log("getpsURL -->" + error.toString());
             this.showLoader = false;
           }
@@ -300,7 +303,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error('', 'There was some error', this.baseClassObj.messageConfig);
+        this.toastr.error('',this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
     )
@@ -312,12 +315,20 @@ export class LoginComponent implements OnInit {
       data => {
         window.localStorage.setItem('language', JSON.stringify(data));
         this.language = JSON.parse(window.localStorage.getItem('language'));
+        this.defaultCompnyComboValue = [{ OPTM_COMPID: this.language.select_company }];
+        this.listItems = this.defaultCompnyComboValue;
+        this.selectedValue = this.listItems[0];
+
+        this.defaultWhseComboValue = [{ OPTM_WHSE: this.language.select_warehouse}];
+        this.whseListItems = this.defaultWhseComboValue;
+        this.selectedWhseValue = this.whseListItems[0];
+
         //This will get the psURL
         //this.language.username
         this.getPSURL();
       },
       error => {
-        this.toastr.error('', 'There was some error while reading language file', this.baseClassObj.messageConfig);
+        this.toastr.error('', this.language.some_error_lang, this.baseClassObj.messageConfig);
         this.showLoader = false;
       }
     );

@@ -188,7 +188,7 @@ deleteParentFGandRM(rowIndex){
           this.fillFGData();
         }
         else{
-          this.toastr.error('',"Failed to delete Data",this.baseClassObj.messageConfig);    
+          this.toastr.error('',this.language.failed_to_delete_data,this.baseClassObj.messageConfig);    
         }
         this.showLoader = false;
        }

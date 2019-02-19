@@ -43,10 +43,5 @@ export class OperationLookupComponent implements OnInit {
   onRowBtnClick(evt, rowIndex){
     this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"OPER"}); 
     }
-  // onRowClick(evt, rowIndex) {
-  //   this.commonService.ShareData({value:this.fillLookupArray[rowIndex],from:"OPER"}); 
-  // }
-  
-  
 
 }
