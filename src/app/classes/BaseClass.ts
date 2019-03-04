@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 export class BaseClass {
     public href: any = window.location.href;
     public adminDBName: string = "OPTIPROADMIN";
+    public productCode: string = "MMO";
     public messageConfig: any = {
         closeButton: true
         // progressBar:true

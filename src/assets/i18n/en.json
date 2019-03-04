@@ -26,6 +26,7 @@
    "operation_title": "Operation's",
    "qtyproduced": "Qty Produced",
    "quantity": "Quantity",
+   "operationno": "Operation No" ,
    "workorderdetails": "Work Order Details",
    "workorderlookuplist": "Work Order Lookup List",
    "workorderno_title": "WorkOrder No",
@@ -125,5 +126,5 @@
    "fg_raw_materials_scan": "Finished Goods & Raw Materials Scan",
    "not_allowed_batchserial": "Not allowed to attach batch/serial component",
    "fg_batchserial_rejected": "FG Bat/Ser you are entering is rejected"
-   
+     
 }

@@ -212,12 +212,20 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
 
   onIsRejectedCheck() {
-    this.bIsRejected = true;
+    //this.bIsRejected = true;
+    if(this.bIsRejected)
+     this.bIsRejected = true;
+     else 
+     this.bIsRejected = false;
     this.bIsNC = false;
     console.log(this.bIsRejected);
   }
   onIsNCCheck() {
-    this.bIsNC = true;
+    //this.bIsNC = true;
+    if(this.bIsNC)
+     this.bIsNC = true;
+     else 
+     this.bIsNC = false;
     this.bIsRejected = false;
     //document.getElementById("opti_bIsNCID").checked = true;
     //$('#opti_bIsNCID').prop('checked', true);

@@ -13,8 +13,14 @@ export class LookupComponent implements OnInit {
     @Input() width: number = 100;
     @Input() parent: string = "";
 
-    sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];
-    sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
+    public language: any = [];
+
+    //sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];    
+    //sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
+
+    sWorkOrderLookupColumns = [];
+    sOperationLookupColumns = [];    
+
     dataBind: any = [];
     public columns: any = [];
 
@@ -27,6 +33,9 @@ export class LookupComponent implements OnInit {
 
     ngOnInit() {
         
+        this.language = JSON.parse(window.localStorage.getItem('language'));
+        this.sWorkOrderLookupColumns = [this.language.workorderno_title , this.language.productid_title , this.language.startdate, this.language.enddate];
+        this.sOperationLookupColumns = [this.language.enddate, this.language.operationdesc, this.language.balanceqty];
         //show loader
         this.showLoader = true;
 

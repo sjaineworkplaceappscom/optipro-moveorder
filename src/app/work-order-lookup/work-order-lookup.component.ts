@@ -13,7 +13,11 @@ export class WorkOrderLookupComponent implements OnInit {
   @Input() height: number = 400;
   @Input() fillLookupArray: any;  
   @Input() width: number = 100;  
-  sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];
+
+  public language: any;
+  //sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"];
+  sWorkOrderLookupColumns = [];
+   
   dataBind: any = [];
   public showLoader: boolean = false;
   dataGridSelect: any = [];
@@ -24,7 +28,7 @@ export class WorkOrderLookupComponent implements OnInit {
 
   constructor(private commonService:CommonService) { }
 
-  public language: any;
+ 
 
   ngOnInit() {
 
@@ -32,6 +36,8 @@ export class WorkOrderLookupComponent implements OnInit {
     this.dataBind = [];
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
+
+    this.sWorkOrderLookupColumns = [this.language.workorderno_title , this.language.productid_title , this.language.startdate , this.language.enddate];
 
     this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
 

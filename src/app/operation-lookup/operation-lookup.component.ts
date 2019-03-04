@@ -11,7 +11,8 @@ export class OperationLookupComponent implements OnInit {
   @Input() height: number = 400;
   @Input() fillLookupArray: any;  
   @Input() width: number = 100;  
-  sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
+  //sOperationLookupColumns = ["Operation No", "Operation Desc", "Balance Quantity"];
+  sOperationLookupColumns = [];
   dataBind: any = [];
   public showLoader: boolean = false;
   dataGridSelect: any = [];
@@ -23,6 +24,8 @@ export class OperationLookupComponent implements OnInit {
   ngOnInit() {
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
+
+    this.sOperationLookupColumns = [this.language.operationno , this.language.operationdesc , this.language.balanceqty];
 
     this.showLoader = true;
     this.dataBind = [];

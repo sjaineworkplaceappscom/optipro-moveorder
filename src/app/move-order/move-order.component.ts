@@ -239,10 +239,12 @@ export class MoveOrderComponent implements OnInit {
   onWOPress(status) {
 
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
+   
     this.showLoader = true;
     this.columnsToShow = this.sWorkOrderLookupColumns.split(",");
     this.openedLookup = "WOLookup";
     this.isWorkOrderListRightSection = status;
+    this.isQuantityRightSection = false;
 
     //this.openRightSection(status);
 

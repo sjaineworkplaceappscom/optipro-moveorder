@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BaseClass } from "src/app/classes/BaseClass";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  
+  private baseClassObj = new BaseClass();
   constructor(private httpclient:HttpClient) { }
   
   //defining properties for the call 
@@ -29,7 +30,8 @@ export class AuthenticationService {
   //This function will get Company acc. to User
   getCompany(loginId:string,psURL:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ Username: JSON.stringify([{ Username: loginId ,Product: "SFES"}]) };
+    //let jObject:any={ Username: JSON.stringify([{ Username: loginId ,Product: "SFES"}]) };
+    let jObject:any={ Username: JSON.stringify([{ Username: loginId ,Product: this.baseClassObj.productCode}]) };
     //Return the response form the API  
     return this.httpclient.post(psURL+"/api/login/GetCompaniesAndLanguages",jObject,this.httpOptions)
   }
