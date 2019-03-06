@@ -668,7 +668,7 @@ export class MoveOrderComponent implements OnInit {
             this.allWOOpDetails = data;
             if (this.allWOOpDetails.length > 0) {
               // this.lookupData = this.allWOOpDetails;
-              //this.oprLookupData=this.allWODetails;
+              //this.oprLookupData=this.allWOOpDetails;
               this.openedLookup = "OperLookup";
               // this.showLookup = true;
             }
@@ -872,7 +872,7 @@ export class MoveOrderComponent implements OnInit {
             }
           }
 
-
+         if(data.UserDetails != undefined){
           if (data.UserDetails.length > 0) {
             if (data.UserDetails != undefined) {
               this.isUserIsSubcontracter = data.UserDetails[0].isUserIsSubcontracter;
@@ -880,6 +880,7 @@ export class MoveOrderComponent implements OnInit {
             }
             this.showLoader = false;
           }
+         }
           //because of async req.
           this.getAllWorkOrders("init");
         }
