@@ -125,6 +125,11 @@ export class MoveOrderComponent implements OnInit {
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
 
+    if (window.localStorage.getItem('loggedInUser') == null ||
+     window.localStorage.getItem('loggedInUser') == "null") {
+     this.router.navigateByUrl('/login');
+   }
+
     //This will check if login is valid
     this.checkIfLoginIsValid();
 

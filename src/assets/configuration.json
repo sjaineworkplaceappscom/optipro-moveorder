@@ -1,6 +1,6 @@
 [
     {
-        "optiProMoveOrderAPIURL": "http://localhost:57915/api",
+        "optiProMoveOrderAPIURL": "http://139.144.10.220/optiprommo/api",
         "deployedFor": "handheld",
         "version":"",
         "language": "en",

@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   public fileURL = this.baseClassObj.get_current_url() + '/assets';
   //public fileURL = './assets';
 
-  public loginId: string;//= 'shashank';
+  public loginId: string=null;//= 'shashank';
   public password: string;//= 'sha@123';
 
   public modelSource: any;
@@ -65,7 +65,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    if (window.localStorage.getItem('loggedInUser') != null || window.localStorage.getItem('loggedInUser') != undefined) {
+    if (window.localStorage.getItem('loggedInUser') != null &&
+      window.localStorage.getItem('loggedInUser') != "null") {
       this.router.navigateByUrl('/moveorder');
     }
     // this.listItems = this.defaultCompnyComboValue;
@@ -84,7 +85,7 @@ export class LoginComponent implements OnInit {
 
 
     //This will get all config
-    this.httpClientSer.get(this.fileURL + '/configuration.json').subscribe(
+    this.httpClientSer.get('./assets/configuration.json').subscribe(
       data => {
         this.arrConfigData = data as string[];
         window.localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
@@ -311,7 +312,7 @@ export class LoginComponent implements OnInit {
 
   //This will load the lang file
   public loadLanguage(langParam) {
-    this.httpClientSer.get(this.fileURL + '/i18n/' + langParam + '.json').subscribe(
+    this.httpClientSer.get('./assets/i18n/' + langParam + '.json').subscribe(
       data => {
         window.localStorage.setItem('language', JSON.stringify(data));
         this.language = JSON.parse(window.localStorage.getItem('language'));

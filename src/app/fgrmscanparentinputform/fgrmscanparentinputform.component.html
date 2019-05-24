@@ -71,8 +71,13 @@
         </kendo-grid>
         <br/>
         <div class="text-left">
-            <button align="center" type="button" align="middle" class="k-button k-primary" (click)="onFinalSavePress()" >{{language.save}}</button>
-            <button align="center" type="button" align="middle" class="k-button" (click)="showLevelParent()">{{language.cancel}}</button>
+            <button align="center" type="button" align="middle" class="k-button k-primary"
+             (click)="onFinalSavePress()" >{{language.save}}</button>
+            <button align="center" type="button" align="middle" class="k-button"
+             (click)="showLevelParent()">{{language.cancel}}</button>
+             <button type="button" id="hiddenScnBtnFGRM_Scan_Parent_IP_Form" style="visibility:hidden"
+              (click)="onHiddenScanClick()" class="btn btn-light k-button btn-sm btn-transparent btn-icon separate-btn p-0">
+                SB </button>
         </div> 
         
     </div>

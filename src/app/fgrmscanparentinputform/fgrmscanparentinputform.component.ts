@@ -174,6 +174,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
   //Events
   onBatchSerBlur() {
     //alert('Hi');
+    var inputValue = (<HTMLInputElement>document.getElementById('psBatchSerID')).value;
+    if (inputValue.length > 0) {
+      this.psBatchSer = inputValue;
+    }
     if (this.psBatchSer != null) {
       if (this.psBatchSer.length > 0) {
         this.bIfBatSerEmpty = false;
@@ -470,6 +474,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
 
     return true;
+  }
+
+  onHiddenScanClick() {
+    this.onBatchSerBlur();
   }
 
   //to delete the RM
