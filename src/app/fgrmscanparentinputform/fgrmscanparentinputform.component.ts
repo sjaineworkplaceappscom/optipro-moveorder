@@ -348,7 +348,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   //Following will remove the data
   removeHandler({ rowIndex }) {
-    this.deleteRMDataBySeq(rowIndex);
+    //this.deleteRMDataBySeq(rowIndex);
+    this.ChildCompGridData.splice(rowIndex,1);
+
   }
 
   //For edititng child the following fucntion will work
@@ -397,7 +399,10 @@ export class FgrmscanparentinputformComponent implements OnInit {
   validateFGSerBat() {
     this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId, this.psBatchSer, this.basicFGInputForm[0].WorkOrderNo, this.basicFGInputForm[0].ItemCode, this.basicFGInputForm[0].OperNo).subscribe(
       data => {
-        if (data != null || data[0].ItemCheck != "") {
+       // if (data != null || data[0].ItemCheck != "") {
+        if (data != null ) {
+
+          if(data[0].ItemCheck != "") {
 
           if (data[0].ItemCheck == "ItemNotExists") {
             //alert("FG Bat/Ser you are entering is not valid");
@@ -420,6 +425,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
           if (data[0].ItemCheck == "Manual") {
             console.log(this.psBatchSer + " -->This has a maual case");
           }
+        }
         }
         else {
           this.toastr.error('',this.language.error_while_validate_fg, this.baseClassObj.messageConfig);

@@ -38,7 +38,7 @@ import { WorkOrderLookupComponent } from './work-order-lookup/work-order-lookup.
 
 //Ngx Toaster
 import { ToastrModule } from 'ngx-toastr';
-
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
  
 
 
@@ -102,8 +102,19 @@ const myRoots: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  providers: [LookupComponent,QtyWithoutFGScanComponent],
+  providers: [LookupComponent,QtyWithoutFGScanComponent, 
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'es-MX'}],
   bootstrap: [AppComponent]
 })
+
+// export const MY_MOMENT_FORMATS = {
+//   parseInput: 'l LT',
+//   fullPickerInput: 'l LT',
+//   datePickerInput: 'l',
+//   timePickerInput: 'LT',
+//   monthYearLabel: 'MMM YYYY',
+//   dateA11yLabel: 'LL',
+//   monthYearA11yLabel: 'MMMM YYYY',
+// };
 export class AppModule { }
 

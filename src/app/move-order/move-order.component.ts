@@ -788,8 +788,9 @@ export class MoveOrderComponent implements OnInit {
     this.FrmToDateTime = [
       new Date(defDateTime.getFullYear(), defDateTime.getMonth(), defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes()),
       new Date(defDateTime.getFullYear(), defDateTime.getMonth(), defDateTime.getDate(), defDateTime.getHours(), defDateTime.getMinutes())
-    ];
-  }
+    ];    
+    
+   }
 
   //This will get the server date time
   getServerDate(isForcefullSubmission) {
@@ -902,6 +903,8 @@ export class MoveOrderComponent implements OnInit {
   }
 
   submitMoveOrder(forcefullySubmission) {
+
+
 
     //if To Operation no. is empty then put the same
     if (this.psToOperation == "" || this.psToOperation == undefined) {
