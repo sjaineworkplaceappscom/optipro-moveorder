@@ -103,7 +103,7 @@ const myRoots: Routes = [
     OwlNativeDateTimeModule
   ],
   providers: [LookupComponent,QtyWithoutFGScanComponent, 
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'es-MX'}],
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'en-US'}],
   bootstrap: [AppComponent]
 })
 

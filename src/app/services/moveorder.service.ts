@@ -64,8 +64,8 @@ export class MoveorderService {
   //Submit Move Order
   submitMoveOrder(CompanyDBID:string,DocEntry:any,FromOperationNo,ToOperationNo:number,WorkOrderNo:string,ItemCode:string,loggedInUser:string,AcceptedQty,RejectedQty,NCQty,OrderedQty,ProducedQty,FrmToDateTime:any,preOperNo:any,getSettingOnSAP:any,IsMoveOrderTimeMandatory:any,iBalQty:number,isForcefullSubmission):Observable<any>{
     
-   let sFromDateTime = new Date(FrmToDateTime[0]).toLocaleString();
-   let sEndDateTime = new Date(FrmToDateTime[1]).toLocaleString();
+   let sFromDateTime = new Date(FrmToDateTime[0]).toLocaleString("en-US");
+   let sEndDateTime = new Date(FrmToDateTime[1]).toLocaleString("en-US");
 
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
