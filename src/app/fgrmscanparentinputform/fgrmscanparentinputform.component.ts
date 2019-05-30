@@ -36,7 +36,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   showLoader: boolean = false;
   bIsInEditMode: boolean = false;
   bIsRMGridInEditMode: boolean = false;
-  checkBatch:boolean = false;
+  checkBatch: boolean = false;
   public bothSelectionRestrict: boolean = false;
   public bIfBatSerEmpty: boolean = false;
   public bIfQtyIsZero = false;
@@ -53,11 +53,11 @@ export class FgrmscanparentinputformComponent implements OnInit {
   @ViewChild('qtylevelSuperchild') qtylevelSuperchild;
   showLevelSuperChild() {
 
-    if(this.psItemManagedBy == "Batch"){
-      if(this.validateBatchItem() == false)
-      this.checkBatch = true;
+    if (this.psItemManagedBy == "Batch") {
+      if (this.validateBatchItem() == false)
+        this.checkBatch = true;
       else
-      this.checkBatch = false;
+        this.checkBatch = false;
     }
 
     //if fields are empty then restrict user from going to add child
@@ -82,36 +82,36 @@ export class FgrmscanparentinputformComponent implements OnInit {
     }
   }
 
-  validateBatchItem(){
+  validateBatchItem() {
     if (this.FGWithScanGridFrmMaster != null) {
       for (let rowCount in this.FGWithScanGridFrmMaster) {
         if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
-          
-          if(this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true){
-             this.toastr.error('',this.language.item_already_rej,this.baseClassObj.messageConfig);    
-             this.psBatchSer = "";
-             this.bIsRejected = false; this.iQty = 1;
-             return false;
+
+          if (this.FGWithScanGridFrmMaster[rowCount].OPTM_REJECT == true && this.bIsRejected == true) {
+            this.toastr.error('', this.language.item_already_rej, this.baseClassObj.messageConfig);
+            this.psBatchSer = "";
+            this.bIsRejected = false; this.iQty = 1;
+            return false;
           }
 
-          else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true){
-            this.toastr.error('',this.language.item_already_nc,this.baseClassObj.messageConfig);    
+          else if (this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == true && this.bIsNC == true) {
+            this.toastr.error('', this.language.item_already_nc, this.baseClassObj.messageConfig);
             this.psBatchSer = "";
             this.bIsNC = false; this.iQty = 1;
             return false;
-         }
-          
-        else if(this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false){
-          if(this.bIsRejected == false && this.bIsNC == false){
-            this.toastr.error('',this.language.item_already_present,this.baseClassObj.messageConfig);    
-            this.psBatchSer = ""; this.iQty = 1;
-            return false;
-           }
-           }
+          }
+
+          else if (this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false && this.FGWithScanGridFrmMaster[rowCount].OPTM_NC == false) {
+            if (this.bIsRejected == false && this.bIsNC == false) {
+              this.toastr.error('', this.language.item_already_present, this.baseClassObj.messageConfig);
+              this.psBatchSer = ""; this.iQty = 1;
+              return false;
+            }
           }
         }
-        return true;        
-     }
+      }
+      return true;
+    }
   }
 
   showLevelParent() {
@@ -217,19 +217,19 @@ export class FgrmscanparentinputformComponent implements OnInit {
 
   onIsRejectedCheck() {
     //this.bIsRejected = true;
-    if(this.bIsRejected)
-     this.bIsRejected = true;
-     else 
-     this.bIsRejected = false;
+    if (this.bIsRejected)
+      this.bIsRejected = true;
+    else
+      this.bIsRejected = false;
     this.bIsNC = false;
     console.log(this.bIsRejected);
   }
   onIsNCCheck() {
     //this.bIsNC = true;
-    if(this.bIsNC)
-     this.bIsNC = true;
-     else 
-     this.bIsNC = false;
+    if (this.bIsNC)
+      this.bIsNC = true;
+    else
+      this.bIsNC = false;
     this.bIsRejected = false;
     //document.getElementById("opti_bIsNCID").checked = true;
     //$('#opti_bIsNCID').prop('checked', true);
@@ -265,7 +265,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
   //This function will save the final data for a single FG Batch/Serial
   onFinalSavePress() {
     //If child data is not saved then we will restrict user
-    if (this.ChildCompGridData != null && this.ChildCompGridData.length > 0) {
+    //if (this.ChildCompGridData != null && this.ChildCompGridData.length > 0) {
+    if (this.psBatchSer != "" && this.iQty > 0) {
       let sIsRejected;
       let sIsNC;
       //gather the Parent FG Data here
@@ -318,9 +319,9 @@ export class FgrmscanparentinputformComponent implements OnInit {
               this.toastr.error('', this.language.attach_all_child, this.baseClassObj.messageConfig);
               this.showLevelParent();
             }
-            else if (data.search("quantity is required for") != -1) {
+            else if (data.search("quantity of item") != -1) {
               this.toastr.error('', data, this.baseClassObj.messageConfig);
-              this.showLevelParent();
+             // this.showLevelParent();
             }
             else if (data == "True") {
               //alert("Data saved sucessfully");
@@ -331,7 +332,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
             }
             else {
               //alert("There was some error while submitting data"); 
-              this.toastr.error('',this.language.some_error, this.baseClassObj.messageConfig);
+              this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
               //this.GetAllChildByParentId();  
               this.showLevelParent();
             }
@@ -349,7 +350,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   //Following will remove the data
   removeHandler({ rowIndex }) {
     //this.deleteRMDataBySeq(rowIndex);
-    this.ChildCompGridData.splice(rowIndex,1);
+    this.ChildCompGridData.splice(rowIndex, 1);
 
   }
 
@@ -375,7 +376,7 @@ export class FgrmscanparentinputformComponent implements OnInit {
   //this will chk if the data we are adding is duplicate
   chkIfFGBatSerAlreadyExists() {
 
-    if(this.psItemManagedBy == "Batch"){
+    if (this.psItemManagedBy == "Batch") {
       return false;
     }
 
@@ -383,8 +384,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
       for (let rowCount in this.FGWithScanGridFrmMaster) {
         if (this.FGWithScanGridFrmMaster[rowCount].OPTM_BTCHSERNO == this.psBatchSer) {
           //alert("Serial/Batch already exist");
-         // this.toastr.warning('', "Serial/Batch already exist", this.baseClassObj.messageConfig);
-          this.toastr.warning('',this.language.serial_already_exist, this.baseClassObj.messageConfig);
+          // this.toastr.warning('', "Serial/Batch already exist", this.baseClassObj.messageConfig);
+          this.toastr.warning('', this.language.serial_already_exist, this.baseClassObj.messageConfig);
           this.psBatchSer = "";
           return true;
         }
@@ -399,36 +400,36 @@ export class FgrmscanparentinputformComponent implements OnInit {
   validateFGSerBat() {
     this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId, this.psBatchSer, this.basicFGInputForm[0].WorkOrderNo, this.basicFGInputForm[0].ItemCode, this.basicFGInputForm[0].OperNo).subscribe(
       data => {
-       // if (data != null || data[0].ItemCheck != "") {
-        if (data != null ) {
+        // if (data != null || data[0].ItemCheck != "") {
+        if (data != null) {
 
-          if(data[0].ItemCheck != "") {
+          if (data[0].ItemCheck != "") {
 
-          if (data[0].ItemCheck == "ItemNotExists") {
-            //alert("FG Bat/Ser you are entering is not valid");
-            this.toastr.error('',this.language.fg_not_valid, this.baseClassObj.messageConfig);
-            this.psBatchSer = '';
+            if (data[0].ItemCheck == "ItemNotExists") {
+              //alert("FG Bat/Ser you are entering is not valid");
+              this.toastr.error('', this.language.fg_not_valid, this.baseClassObj.messageConfig);
+              this.psBatchSer = '';
+            }
+            // if (data[0].ItemCheck == "ItemRejected") {
+            //   //alert("FG Bat/Ser you are entering is rejected");
+            //   this.toastr.error('', "FG Bat/Ser you are entering is rejected", this.baseClassObj.messageConfig);
+            //   this.psBatchSer = '';
+            //   this.iQty = 1;
+            //   return;
+            // }
+            if (data[0].ItemCheck == "ItemMoved") {
+              this.toastr.error('', this.language.fg_already_moved, this.baseClassObj.messageConfig);
+              this.psBatchSer = '';
+              this.iQty = 1;
+              return;
+            }
+            if (data[0].ItemCheck == "Manual") {
+              console.log(this.psBatchSer + " -->This has a maual case");
+            }
           }
-          // if (data[0].ItemCheck == "ItemRejected") {
-          //   //alert("FG Bat/Ser you are entering is rejected");
-          //   this.toastr.error('', "FG Bat/Ser you are entering is rejected", this.baseClassObj.messageConfig);
-          //   this.psBatchSer = '';
-          //   this.iQty = 1;
-          //   return;
-          // }
-          if (data[0].ItemCheck == "ItemMoved") {
-            this.toastr.error('',this.language.fg_already_moved, this.baseClassObj.messageConfig);
-            this.psBatchSer = '';
-            this.iQty = 1;
-            return;
-          }
-          if (data[0].ItemCheck == "Manual") {
-            console.log(this.psBatchSer + " -->This has a maual case");
-          }
-        }
         }
         else {
-          this.toastr.error('',this.language.error_while_validate_fg, this.baseClassObj.messageConfig);
+          this.toastr.error('', this.language.error_while_validate_fg, this.baseClassObj.messageConfig);
           console.log("error-->" + data)
         }
       }
