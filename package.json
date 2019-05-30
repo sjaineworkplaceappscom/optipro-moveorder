@@ -37,7 +37,7 @@
     "@progress/kendo-theme-default": "latest",
     "angular-webstorage-service": "^1.0.2",
     "angular2-moment": "^1.9.0",
-    "bootstrap": "^4.1.2",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",

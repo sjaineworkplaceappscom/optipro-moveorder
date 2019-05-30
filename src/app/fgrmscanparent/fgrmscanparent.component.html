@@ -22,23 +22,54 @@
         
       </ng-template>  
 
+      <!-- grid for mobile start -->
+      <kendo-grid-column media="(max-width: 767px)" title="{{language.finishedgoodslist}}" class="opti_mobile-grid-td">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <dl class="opti_mobile_grid_dl">
+                <dt>{{language.fgbatchserial}}</dt>
+                <dd class="mb-1">{{ dataItem.OPTM_BTCHSERNO }}</dd>
+
+                <dt style="height:26px" class="d-flex align-items-center">
+                    <span>{{language.reject}}</span>
+                    <input class="ml-2" type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
+                </dt>
+                <dd class="m-0"></dd>
+            </dl>
+            <dl class="opti_mobile_grid_dl">
+                <dt class="d-flex align-items-center">
+                    <span>{{language.fgbatchserial}}</span>
+                    <button kendoGridEditCommand class="k-button k-primary ml-auto mr-1 btn-primary k-primary p-1" *ngIf="showEditBtn"><span class="k-icon k-i-edit text-white"></span></button>
+                    <button kendoGridRemoveCommand class="k-primary btn-sm btn btn-danger p-1"><span class="k-icon k-i-delete text-white"></span></button>
+                </dt>
+                <dd class="mb-1">{{ dataItem.OPTM_QUANTITY }}</dd>
+                
+                <dt class="d-flex align-items-center">
+                    <span>{{language.nc}}</span>
+                    <input type="checkbox" disabled class="ml-2"  [checked]="dataItem.OPTM_NC"/>                    
+                </dt>
+                <dd class="m-0"></dd>
+            </dl>
+        </ng-template>
+    </kendo-grid-column>
+    <!-- grid for mobile end -->
+
       <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
-      <kendo-grid-column field="OPTM_BTCHSERNO" title="{{language.fgbatchserial}}" width="120"></kendo-grid-column>
-      <kendo-grid-column field="OPTM_QUANTITY"  title="{{language.quantity}}"  width="120" class="text-right"></kendo-grid-column>
-      <kendo-grid-column field="OPTM_REJECT" title="{{language.reject}}"  width="80">
+      <kendo-grid-column media="(min-width: 768px)" field="OPTM_BTCHSERNO" title="{{language.fgbatchserial}}" width="120"></kendo-grid-column>
+      <kendo-grid-column media="(min-width: 768px)"field="OPTM_QUANTITY"  title="{{language.quantity}}"  width="120" class="text-right"></kendo-grid-column>
+      <kendo-grid-column media="(min-width: 768px)" field="OPTM_REJECT" title="{{language.reject}}"  width="80">
           <ng-template kendoGridCellTemplate let-dataItem>
               <input type="checkbox" disabled [checked]="dataItem.OPTM_REJECT"/>
           </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="OPTM_NC" title="{{language.nc}}"  width="80">
+      <kendo-grid-column media="(min-width: 768px)" field="OPTM_NC" title="{{language.nc}}"  width="80">
           <ng-template kendoGridCellTemplate let-dataItem>
               <input type="checkbox" disabled  [checked]="dataItem.OPTM_NC"/>
           </ng-template>
       </kendo-grid-column>
-      <kendo-grid-command-column title="{{language.actions}}" width="150">
+      <kendo-grid-command-column media="(min-width: 768px)" title="{{language.actions}}" width="150">
           <ng-template kendoGridCellTemplate>
-            <button kendoGridEditCommand class="k-primary" *ngIf="showEditBtn">{{language.edit}}</button>
-            <button kendoGridRemoveCommand class="k-primary">{{language.delete}}</button>
+            <button kendoGridEditCommand class="k-button k-primary" *ngIf="showEditBtn"><span class="k-icon k-i-edit text-white"></span></button>
+            <button kendoGridRemoveCommand class="btn-sm btn btn-danger"><span class="k-icon k-i-delete text-white"></span></button>
           </ng-template>
       </kendo-grid-command-column>
     </kendo-grid>
