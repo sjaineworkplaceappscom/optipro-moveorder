@@ -93,10 +93,10 @@ td.opti_Balance.Quantity {
 
 
 kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-remove-command {
-  margin: 0 !important;
+  margin: 0;
 }
 kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-edit-command {
-  margin: 0 5px 0 0 !important;
+  margin: 0 5px 0 0;
 }
 /* datepicker css */
 .owl-dt-popup-container{
@@ -129,4 +129,33 @@ kendo-grid tr td button, kendo-grid tr td button.k-button.k-grid-edit-command {
   height: 5em;
   padding: 0px;
   outline: 0;
+}
+
+body .opti_arrow-grid-detail {
+  font-weight: 700;
+  background: rgba(33, 37, 41, 0.15);
+  color: #333;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  line-height: 16px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+dd {
+  margin-bottom: .25rem;
+}
+button.btn-primary.k-button.k-grid-edit-command, .k-button.k-grid-edit-command {
+  background-color: #007bff;
+}
+
+button.btn-danger.k-button.k-grid-remove-command {
+  background: #e80f0f;
+}
+body .opti_form-label, 
+body kendo-grid .k-grid-table, body .k-dateinput-wrap .k-input,
+body kendo-grid .k-grid-header .k-header > .k-link  {
+  font-size: 12px;
 }

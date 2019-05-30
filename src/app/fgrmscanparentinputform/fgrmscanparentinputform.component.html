@@ -53,19 +53,48 @@
         [filterable]="false"
         [groupable]="false" 
         >
-            <ng-template kendoGridToolbarTemplate>
-                <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelSuperChild()" width="20px" height="20px">
-            </ng-template>  
+        <ng-template kendoGridToolbarTemplate>
+            <img src="assets/images/common/add.svg" class="opti_mouse-pointer float-right" (click)="showLevelSuperChild()" width="20px" height="20px">
+        </ng-template> 
+            
+        <!-- grid for mobile start -->
+        <kendo-grid-column media="(max-width: 767px)" title="{{language.finishedgoodslist}}" class="opti_mobile-grid-td">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <dl class="opti_mobile_grid_dl">
+                        <dt>{{language.itemcode}}</dt>
+                        <dd class="mb-1">{{ dataItem.OPTM_ITEMCODE }}</dd>
+        
+                        <dt>{{language.rmbtchser}}</dt>
+                        <dd class="mb-0">{{ dataItem.OPTM_BTCHSERNO }}</dd>
+                    </dl>
+                    <dl class="opti_mobile_grid_dl">
+                        <dt class="d-flex align-items-center">
+                            <span>{{language.managedby}}</span>
+                            <button kendoGridEditCommand class="k-button k-primary ml-auto mr-1 btn-primary k-primary p-1"><span class="k-icon k-i-edit text-white"></span></button>
+                            <button kendoGridRemoveCommand class="k-primary btn-sm btn btn-danger p-1"><span class="k-icon k-i-delete text-white"></span></button>
+                        </dt>
+                        <dd class="mb-0">{{ dataItem.ManagedBy }}</dd>
+                        
+                        <dt class="d-flex align-items-center">
+                            <span>{{language.quantity}}</span>                            
+                        </dt>
+                        <dd class="m-0">
+                            {{ dataItem.OPTM_QUANTITY }}
+                        </dd>
+                    </dl>
+                </ng-template>
+            </kendo-grid-column>
+            <!-- grid for mobile end -->
 
-            <kendo-grid-column field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
-            <kendo-grid-column field="OPTM_ITEMCODE" title="{{language.itemcode}}"  width="100"></kendo-grid-column>
-            <kendo-grid-column field="ManagedBy" title="{{language.managedby}}"  width="100" disabled></kendo-grid-column>
-            <kendo-grid-column field="OPTM_BTCHSERNO" title="{{language.rmbtchser}}" width="120"></kendo-grid-column>
-            <kendo-grid-column field="OPTM_QUANTITY" title="{{language.quantity}}"  width="60"></kendo-grid-column>
-            <kendo-grid-command-column title="{{language.actions}}" width="120">
+            <kendo-grid-column media="(min-width: 768px)"  field="OPTM_SEQ" title="#"  width="100" [hidden]="true"></kendo-grid-column>
+            <kendo-grid-column media="(min-width: 768px)"  field="OPTM_ITEMCODE" title="{{language.itemcode}}"  width="100"></kendo-grid-column>
+            <kendo-grid-column media="(min-width: 768px)"  field="ManagedBy" title="{{language.managedby}}"  width="100" disabled></kendo-grid-column>
+            <kendo-grid-column media="(min-width: 768px)"  field="OPTM_BTCHSERNO" title="{{language.rmbtchser}}" width="120"></kendo-grid-column>
+            <kendo-grid-column media="(min-width: 768px)"  field="OPTM_QUANTITY" title="{{language.quantity}}"  width="60"></kendo-grid-column>
+            <kendo-grid-command-column media="(min-width: 768px)"  title="{{language.actions}}" width="120">
                 <ng-template kendoGridCellTemplate>
-                <button kendoGridEditCommand class="k-primary">{{language.edit}}</button>
-                <button kendoGridRemoveCommand class="k-primary">{{language.delete}}</button>
+                <button kendoGridEditCommand class="btn-primary k-primary"><span class="k-icon k-i-edit text-white"></span></button>
+                <button kendoGridRemoveCommand class="btn-sm btn btn-danger"><span class="k-icon k-i-delete text-white"></span></button>
                 </ng-template>
             </kendo-grid-command-column>
         </kendo-grid>
