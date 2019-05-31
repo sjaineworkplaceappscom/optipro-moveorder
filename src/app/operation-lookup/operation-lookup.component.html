@@ -1,37 +1,51 @@
- <!-- loader start -->
- <div class="opti_loader" *ngIf="showLoader">
+<!-- loader start -->
+<div class="opti_loader" *ngIf="showLoader">
         <div class="opti_spinner"></div>
-    </div>
+</div>
 
-    
-<kendo-grid [data]="dataBind" 
-[scrollable]="'scrollable'"
-[height]="height"
-[selectable]="true"
-[sortable]="{ mode: 'multiple' }"
-[resizable]="false" 
-[pageSize]="1000" 
-[pageable]="true" 
-[filterable]="false"
-[groupable]="false"
-[selectable]="true"  
-(selectionChange)="gridRowSelectionChange($event)"
-[ngStyle]="{ cursor: 'pointer' }">
-        <kendo-grid-column field="Operation No" title="{{language.operationnumber}}" width="100">
+
+<kendo-grid [data]="dataBind" [scrollable]="'scrollable'" [height]="height" [selectable]="true"
+        [sortable]="{ mode: 'multiple' }" [resizable]="false" [pageSize]="1000" [pageable]="true" [filterable]="false"
+        [groupable]="false" [selectable]="true" (selectionChange)="gridRowSelectionChange($event)"
+        [ngStyle]="{ cursor: 'pointer' }">
+
+        <!-- grid for mobile start -->
+        <kendo-grid-column media="(max-width: 767px)" title="items" class="opti_mobile-grid-td">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                        <dl class="opti_mobile_grid_dl">
+                                <dt>{{language.operationnumber}}</dt>
+                                <dd>{{dataItem.OperationNo}}</dd>
+
+                                <dt>{{language.balanceqty}}</dt>
+                                <dd class="mb-0">{{dataItem.BalanceQuantity}}</dd>
+                        </dl>
+                        <dl class="opti_mobile_grid_dl">
+                                <dt class="d-flex align-items-center">{{language.operationdesc}} <span class="opti_arrow-grid-detail float-right text-center opti_vertical-align ml-auto">›</span>
+                                </dt>
+                                <dd>{{ dataItem.OperationDesc }}</dd>
+                        </dl>
+                </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column field="Operation Desc" title="{{language.operationdesc}}" width="100">
+        <!-- grid for mobile end -->
+
+        <kendo-grid-column media="(min-width: 768px)" field="OperationNo" title="{{language.operationnumber}}"
+                width="100">
         </kendo-grid-column>
-        <kendo-grid-column field="Balance Quantity" title="{{language.balanceqty}}" width="100">
+        <kendo-grid-column media="(min-width: 768px)" field="OperationDesc" title="{{language.operationdesc}}"
+                width="100">
         </kendo-grid-column>
-      <!--  <kendo-grid-column width="50"> -->
-           <!-- <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">  -->  
-                   <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
+        <kendo-grid-column media="(min-width: 768px)" field="BalanceQuantity" title="{{language.balanceqty}}"
+                width="100">
+        </kendo-grid-column>
+        <!--  <kendo-grid-column width="50"> -->
+        <!-- <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">  -->
+        <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
                    </button>-->
-                   <!-- <div (click)="onRowClick($event, rowIndex)" class="gridCell">  
+        <!-- <div (click)="onRowClick($event, rowIndex)" class="gridCell">  
                    </div> -->
-           <!--  </ng-template>-->
-      <!--   </kendo-grid-column>-->
-    </kendo-grid>
+        <!--  </ng-template>-->
+        <!--   </kendo-grid-column>-->
+</kendo-grid>
 
 
-    <!-- sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"]; -->
+<!-- sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"]; -->

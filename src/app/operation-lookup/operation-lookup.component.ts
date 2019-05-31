@@ -25,7 +25,9 @@ export class OperationLookupComponent implements OnInit {
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
 
-    this.sOperationLookupColumns = [this.language.operationno , this.language.operationdesc , this.language.balanceqty];
+    // this.sOperationLookupColumns = [this.language.operationno , this.language.operationdesc , this.language.balanceqty];
+
+    this.sOperationLookupColumns = ["OperationNo", "OperationDesc", "BalanceQuantity"];
 
     this.showLoader = true;
     this.dataBind = [];

@@ -1,45 +1,57 @@
- <!-- loader start -->
- <div class="opti_loader" *ngIf="showLoader">
-        <div class="opti_spinner"></div>
-    </div>
-
-    
-<kendo-grid [data]="dataBind" 
-[scrollable]="'scrollable'"
-[height]="height"
-[selectable]="true"
-[sortable]="{ mode: 'multiple' }"
-[resizable]="false" 
-[pageSize]="1000" 
-[pageable]="true" 
-[filterable]="false"
-[groupable]="false"
-[selectable]="selectableSettings"
-(selectionChange)="gridRowSelectionChange($event)"
-[ngStyle]="{ cursor: 'pointer' }">
-
-        <kendo-grid-column field="WorkOrder No" title="{{language.workorderno_title}}" width="130">
-        </kendo-grid-column>
-        <kendo-grid-column field="Product Id" title="{{language.productid_title}}" width="100">
-        </kendo-grid-column>
-        <kendo-grid-column field="Start Date" title="{{language.startdate}}" width="100">
-        </kendo-grid-column>
-        <kendo-grid-column field="End Date" title="{{language.enddate}}"width="100">
-        </kendo-grid-column>
-
-   <!-- <kendo-grid-column  width="60">-->
+<!-- loader start -->
+<div class="opti_loader" *ngIf="showLoader">
+    <div class="opti_spinner"></div>
+</div>
 
 
-       <!--  <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex" > -->    
-             <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
+<kendo-grid [data]="dataBind" [scrollable]="'scrollable'" [height]="height" [selectable]="true"
+    [sortable]="{ mode: 'multiple' }" [resizable]="false" [pageSize]="1000" [pageable]="true" [filterable]="false"
+    [groupable]="false" [selectable]="selectableSettings" (selectionChange)="gridRowSelectionChange($event)"
+    [ngStyle]="{ cursor: 'pointer' }">
+
+    <!-- grid for mobile start -->
+    <kendo-grid-column media="(max-width: 767px)" title="items" class="opti_mobile-grid-td">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <dl class="opti_mobile_grid_dl">
+                <dt>{{language.workorderno_title}}</dt>
+                <dd>{{dataItem.WorkOrderNo}}</dd>
+
+                <dt>{{language.startdate}}</dt>
+                <dd class="mb-0">{{dataItem.StartDate}}</dd>
+            </dl>
+            <dl class="opti_mobile_grid_dl">
+                <dt class="d-flex align-items-center">{{language.productid_title}} <span class="opti_arrow-grid-detail float-right text-center opti_vertical-align ml-auto">›</span></dt>
+                <dd>{{ dataItem.ProductId }}</dd>
+
+                <dt>{{language.enddate}}</dt>
+                <dd class="mb-0">{{dataItem.EndDate}}</dd>
+            </dl>
+        </ng-template>
+    </kendo-grid-column>
+    <!-- grid for mobile end -->
+
+    <kendo-grid-column media="(min-width: 768px)" field="WorkOrderNo" title="{{language.workorderno_title}}" width="130">
+    </kendo-grid-column>
+    <kendo-grid-column media="(min-width: 768px)" field="ProductId" title="{{language.productid_title}}" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column media="(min-width: 768px)" field="StartDate" title="{{language.startdate}}" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column media="(min-width: 768px)" field="EndDate" title="{{language.enddate}}" width="100">
+    </kendo-grid-column>
+
+    <!-- <kendo-grid-column  width="60">-->
+
+
+    <!--  <ng-template  kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex" > -->
+    <!-- <button  (click)="onRowBtnClick($event, rowIndex)" class="gridCell">Select  
                </button> -->
-               
-               <!-- <div (click)="onRowClick($event, rowIndex)" class="gridCell">  
+
+    <!-- <div (click)="onRowClick($event, rowIndex)" class="gridCell">  
                </div> -->
-         <!--  </ng-template> -->
+    <!--  </ng-template> -->
 
-   <!-- </kendo-grid-column>-->
-    </kendo-grid>
+    <!-- </kendo-grid-column>-->
+</kendo-grid>
 
 
-    <!-- sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"]; -->
+<!-- sWorkOrderLookupColumns = ["WorkOrder No", "Product Id", "Start Date", "End Date"]; -->

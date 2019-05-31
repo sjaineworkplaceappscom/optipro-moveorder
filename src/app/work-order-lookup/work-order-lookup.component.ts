@@ -37,7 +37,9 @@ export class WorkOrderLookupComponent implements OnInit {
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
 
-    this.sWorkOrderLookupColumns = [this.language.workorderno_title , this.language.productid_title , this.language.startdate , this.language.enddate];
+    // this.sWorkOrderLookupColumns = [this.language.workorderno_title , this.language.productid_title , this.language.startdate , this.language.enddate];
+
+    this.sWorkOrderLookupColumns = ["WorkOrderNo", "ProductId", "StartDate", "EndDate"];
 
     this.dataBind = JSON.stringify(this.fillLookupArray, this.sWorkOrderLookupColumns);
 
