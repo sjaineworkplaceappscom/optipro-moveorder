@@ -247,7 +247,8 @@ export class FgrmscanparentinputformComponent implements OnInit {
       //if is in edit mode then
       else {
         for (let iRowCount in this.ChildCompGridData) {
-          if ($event.OPTM_SEQ == this.ChildCompGridData[iRowCount].OPTM_SEQ) {
+          if ($event.OPTM_SEQ == this.ChildCompGridData[iRowCount].OPTM_SEQ &&
+            this.ChildCompGridData[iRowCount].OPTM_ITEMCODE == $event.OPTM_ITEMCODE) {
             this.ChildCompGridData[iRowCount].OPTM_ITEMCODE = $event.OPTM_ITEMCODE
             this.ChildCompGridData[iRowCount].OPTM_BTCHSERNO = $event.OPTM_BTCHSERNO
             this.ChildCompGridData[iRowCount].OPTM_QUANTITY = Number($event.OPTM_QUANTITY)
