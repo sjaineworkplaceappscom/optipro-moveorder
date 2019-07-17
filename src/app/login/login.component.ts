@@ -125,6 +125,9 @@ export class LoginComponent implements OnInit {
     else {
       if (this.password != undefined || this.password != null) {
         // Check users authontication 
+
+        this.psURL = 'http://172.16.6.147/OptiProAdmin'
+
         this.auth.login(this.loginId, this.password, this.psURL).subscribe(
           data => {
             this.modelSource = data;
@@ -297,7 +300,8 @@ export class LoginComponent implements OnInit {
     this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
       data => {
         if (data != null) {
-          this.psURL = data;
+         // this.psURL = data;
+         this.psURL = 'http://172.16.6.147/OptiProAdmin'
           //For code analysis remove in live enviorments.
           //this.psURL = "http://localhost:9500/";
           //this.psURL = "http://172.16.6.140/OptiAdmin";
