@@ -18,9 +18,20 @@ export class MoveorderService {
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Accept':'application/json'
+    'Accept':'application/json',
+    'Authorization': localStorage.getItem('accessToken')
       })
     };
+
+    updateHeader(){
+      this.httpOptions = {
+        headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept':'application/json',
+        'Authorization': localStorage.getItem('accessToken')
+        })
+      };
+    }
 
   //GetAllWO function to hit login API
   getAllWorkOrders(CompanyDBID:string,Warehouse:string):Observable<any>{
@@ -29,7 +40,7 @@ export class MoveorderService {
     isCustEnabled:window.localStorage.getItem("isCustEnabled"),
   }]) };
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetAllWorkOrders",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetAllWorkOrders",jObject,this.httpOptions);
   }
 
   //GetAll Oper function to hit login API
@@ -38,16 +49,24 @@ export class MoveorderService {
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, WorkOrderNo: workOrderNo,Username:window.localStorage.getItem('loggedInUser'),isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
     isCustEnabled:window.localStorage.getItem("isCustEnabled")}]) };
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetOperationByWorkOrder",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetOperationByWorkOrder",jObject,this.httpOptions);
   }
 
   //Get Operation Detail By DocEnty
-  getOperDetailByDocEntry(CompanyDBID:string,docenrty:number,operNo):Observable<any>{
+  getOperDetailByDocEntry(CompanyDBID:string,docenrty:number,operNo,workOrderNo:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, OperNo :operNo,isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
-    isCustEnabled:window.localStorage.getItem("isCustEnabled")}]) };
+    isCustEnabled:window.localStorage.getItem("isCustEnabled"),WorkOrderNo: workOrderNo}]) };
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetOperDetailByDocEntry",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetOperDetailByDocEntry",jObject,this.httpOptions);
+  }
+
+  GetNextOperation(CompanyDBID:string,operNo,nxtOprNo,docenrty:number,workOrderNo:string):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify([{ 
+      CompanyDBID: CompanyDBID , FromOperation :operNo, ToOperation :nxtOprNo,DocEnrty :docenrty, WorkOrderNo: workOrderNo}]) };
+  //Return the response form the API  
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetNextOperation",jObject,this.httpOptions);
   }
 
   
@@ -58,7 +77,7 @@ export class MoveorderService {
       CompanyDBID: CompanyDBID
     }])};
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetServerDate",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetServerDate",jObject,this.httpOptions);
   }
 
   //Submit Move Order
@@ -92,7 +111,7 @@ export class MoveorderService {
       isCustEnabled:window.localStorage.getItem("isCustEnabled"),
     }]) };
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);
   }
 
   //Get Setting from DB
@@ -103,7 +122,7 @@ export class MoveorderService {
      UserID:loggedInUser
    }])};
  //Return the response form the API  
- return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetSettingOnSAP",jObject,this.httpOptions);
+ return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetSettingOnSAP",jObject,this.httpOptions);
  }
 
  
@@ -117,7 +136,7 @@ export class MoveorderService {
      operNo:operNo
    }])};
  //Return the response form the API  
- return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetBatchSerialLinking",jObject,this.httpOptions);
+ return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetBatchSerialLinking",jObject,this.httpOptions);
  }
 
  
@@ -130,8 +149,15 @@ export class MoveorderService {
    operNo:operNo
  }])};
 //Return the response form the API  
-return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/checkIfOperRequiresMaterial",jObject,this.httpOptions);
+return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/checkIfOperRequiresMaterial",jObject,this.httpOptions);
 }
 
+//GetAll Oper function to hit login API
+checkGeneologyOnItemExtn(CompanyDBID:string,ItemCode:string):Observable<any>{
+  //JSON Obeject Prepared to be send as a param to API
+  let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , ItemCode :ItemCode}]) };
+//Return the response form the API  
+return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/checkGeneologyOnItemExtn",jObject,this.httpOptions);
+}
  
 }

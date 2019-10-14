@@ -6,7 +6,7 @@ import { QtyWithFGScanDetailComponent } from '../qty-with-fgscan-detail/qty-with
 import { UIHelper } from 'src/app/helpers/ui.helpers';
 import { BaseClass } from 'src/app/classes/BaseClass'
 import { ToastrService } from 'ngx-toastr';
-
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-qty-with-fgscan',
@@ -25,7 +25,7 @@ export class QtyWithFGScanComponent implements OnInit {
   public view: Observable<GridDataResult>;
   public showLoader: boolean = false;
 
-  constructor(private qtyWithFGScan: QtyWithFGScanService,private toastr: ToastrService) { this.clearValues();}
+  constructor(private qtyWithFGScan: QtyWithFGScanService,private toastr: ToastrService,private commonService: CommonService) { this.clearValues();}
   @Output() messageEvent = new EventEmitter<string>();
   txtFGValue: string = "";
   txtFGSerBatValue: string = "";
@@ -43,6 +43,7 @@ export class QtyWithFGScanComponent implements OnInit {
   gridHeight: number;
   public language: any;
   private baseClassObj = new BaseClass();
+  public SaveFGData = {};
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -58,6 +59,8 @@ export class QtyWithFGScanComponent implements OnInit {
 
     this.language = JSON.parse(window.localStorage.getItem('language'));
     this.clearValues();
+
+    this.qtyWithFGScan.updateHeader();
     
     //alert('change init');  
     this.gridHeight = UIHelper.getMainContentHeight();
@@ -69,7 +72,8 @@ export class QtyWithFGScanComponent implements OnInit {
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
     console.log(this.basicDetailsFrmMO);
     //Fill all details from DB in the grid
-    this.fillFGData();
+   // this.fillFGData();
+    this.getFGData();
     this.refreshQtys();
   }
 
@@ -98,35 +102,74 @@ export class QtyWithFGScanComponent implements OnInit {
 
   receiveMessage($event) {
    
-    if ($event == "true") {
-      
- 
-      //This will again refresh the grid again
-     
-      this.fillFGData(); 
-     
-      this.rowDataForEdit = [];
+    // if ($event == "true") {      
+    //   this.fillFGData();      
+    //   this.rowDataForEdit = [];
+    //   this.showFGInputForm = false;
+    // }
 
-       //This will again hide the popup again
-       this.showFGInputForm = false;
+    this.rowDataForEdit = [];
+    this.showFGInputForm = false;
+
+    if($event != undefined && $event != null){
+            
+      let rowExists = false;
+      let temStr = window.localStorage.getItem('SaveFGData');
+
+      if(temStr != '' && temStr != undefined){
+        this.SaveFGData = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      }
+        
+      if(this.FGScanGridData != null && this.FGScanGridData.length > 0){
+          rowExists = this.FGScanGridData.some(e => e.RefId == $event.RefId);  
+      }
+
+      if (!rowExists) {
+        if($event != undefined)
+        this.FGScanGridData.push($event);
+      }
+      else{
+        for (let iRowCount in this.FGScanGridData) {
+          
+          if($event.RefId == this.FGScanGridData[iRowCount].RefId){  
+            this.FGScanGridData[iRowCount].OPTM_BTCHSERNO = $event.OPTM_BTCHSERNO         
+            this.FGScanGridData[iRowCount].OPTM_QUANTITY = Number($event.OPTM_QUANTITY)
+            this.FGScanGridData[iRowCount].OPTM_REJECT = $event.OPTM_REJECT
+            this.FGScanGridData[iRowCount].OPTM_NC = $event.OPTM_NC,
+            this.FGScanGridData[iRowCount].RefId = $event.RefId
+          }         
+        }
+      }
+
+      console.log(this.FGScanGridData);
+      this.refreshQtys();   
+      
     }
   }
   //Kendo inbuilt method handlers
-  removeHandler({ rowIndex }) {
-    this.qtyWithFGScan.deleteBatchSerInfo(this.CompanyDBId, this.FGScanGridData[rowIndex].OPTM_SEQ, this.FGScanGridData[rowIndex].OPTM_WONO, this.FGScanGridData[rowIndex].OPTM_ITEMCODE,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
-      data => {
-        if (data != null) {
-          if (data == "True") {
-            //alert("Data deleted");
-            this.fillFGData();
-          }
-          else {
-            this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
-            console.log("error-->" + data);
-          }
-        }
-      }
-    )
+  removeHandler(evt) {
+    // this.qtyWithFGScan.deleteBatchSerInfo(this.CompanyDBId, this.FGScanGridData[rowIndex].OPTM_SEQ, this.FGScanGridData[rowIndex].OPTM_WONO, this.FGScanGridData[rowIndex].OPTM_ITEMCODE,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
+    //   data => {
+    //     if (data != null) {
+    //       if (data == "True") {
+    //         //alert("Data deleted");
+    //         this.fillFGData();
+    //       }
+    //       else {
+    //         this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
+    //         console.log("error-->" + data);
+    //       }
+    //     }
+    //   }
+    // )
+
+    this.FGScanGridData.splice(evt.rowIndex, 1);
+    let tempArr;
+    tempArr = JSON.parse(window.localStorage.getItem('SaveFGData')); 
+    
+    tempArr.ParentDataToSave = tempArr.ParentDataToSave.filter(val => val.RefId !== evt.dataItem.RefId); 
+    window.localStorage.setItem('SaveFGData', JSON.stringify(tempArr));  
+    this.refreshQtys();
   }
 
   editHandler({ rowIndex }) {
@@ -137,6 +180,12 @@ export class QtyWithFGScanComponent implements OnInit {
 
   //On OK Press the control will back to the main Move Order screen
   onOKPress() {
+
+      if(this.lblProducedQty > this.lblBalQty){
+        this.toastr.error('', this.language.prod_qty_greater_than_bal, this.baseClassObj.messageConfig);
+        return false;
+      }
+
       // this.optirightfixedsection.nativeElement.style.display = 'none';
       document.getElementById('opti_rightfixedsectionID').style.display = 'none';
       document.getElementById('opti_QuantityRightSection').style.display = 'none';
@@ -154,12 +203,33 @@ export class QtyWithFGScanComponent implements OnInit {
    
   }
 
+  getFGData(){
+    this.FGScanGridData = [];
+    let tempArr;
+    let temStr = window.localStorage.getItem('SaveFGData');
+
+    if(temStr != '' && temStr != undefined){
+      tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      let ArrData = tempArr.ParentDataToSave;
+    for(let i=0; i< ArrData.length; i++){
+      ArrData[i].OPTM_SEQ = ArrData[i].SequenceNo;
+      ArrData[i].OPTM_BTCHSERNO = ArrData[i].FGBatchSerial;
+      ArrData[i].OPTM_QUANTITY = Number(ArrData[i].Quantity);
+      ArrData[i].OPTM_REJECT = ArrData[i].Rejected == 'Y' ? true:false ;
+      ArrData[i].OPTM_NC = ArrData[i].NC == 'Y' ? true:false;
+      ArrData[i].RefId = Number(ArrData[i].RefId);
+     }  
+     this.FGScanGridData = ArrData;
+    }     
+  }
+
   //Core Functions
 
   //This func. will fill data into the grid
    fillFGData() {
     
     this.showLoader = true;
+    console.log(this.lblProducedQty);
      this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId, this.basicDetailsFrmMO[0].WorkOrderNo, this.basicDetailsFrmMO[0].ItemCode, this.basicDetailsFrmMO[0].OperNo).subscribe(
       data => {
         if (data != null) {
@@ -188,6 +258,12 @@ export class QtyWithFGScanComponent implements OnInit {
         else {
           this.showLoader = false;
         }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
 
@@ -230,6 +306,6 @@ export class QtyWithFGScanComponent implements OnInit {
     this.lblAcceptedQty = totalProducedQty - iNCCount - iRejectCount;
 
     //put the summary in an array for calculation
-    this.qtySummaryValuesFGScan.push({RejectedQty: this.lblRejectedQty, NcQty:this.lblNCQty, AcceptedQty:this.lblAcceptedQty, BalQty:this.lblBalQty, ProducedQty:this.lblProducedQty});
+  //  this.qtySummaryValuesFGScan.push({RejectedQty: this.lblRejectedQty, NcQty:this.lblNCQty, AcceptedQty:this.lblAcceptedQty, BalQty:this.lblBalQty, ProducedQty:this.lblProducedQty});
   }
 }

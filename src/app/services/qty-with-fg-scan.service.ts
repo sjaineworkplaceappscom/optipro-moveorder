@@ -16,16 +16,27 @@ export class QtyWithFGScanService {
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Accept':'application/json'
+    'Accept':'application/json',
+    'Authorization': localStorage.getItem('accessToken')
       })
     };
 
+    updateHeader(){
+      this.httpOptions = {
+        headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept':'application/json',
+        'Authorization': localStorage.getItem('accessToken')
+        })
+      };
+    }
+
     //Check whether the Finished Good is valid serial/bat no.
-    public checkIfFGSerBatisValid(CompanyDBID:string,FGSerBatValue:string,WONo:string,FGItemCode:string,OpNo:string):Observable<any>{
+    public checkIfFGSerBatisValid(CompanyDBID:string,FGSerBatValue:string,WONo:string,FGItemCode:string,OpNo:string,ItemManagedBy:string):Observable<any>{
       //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGSerBat:FGSerBatValue,WorkOrderNo:WONo,ItemCode:FGItemCode,OperNo:OpNo}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGSerBat:FGSerBatValue,WorkOrderNo:WONo,ItemCode:FGItemCode,FromOperation:OpNo,ItemManagedBy:ItemManagedBy}]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/checkIfFGSerBatisValid",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/checkIfFGSerBatisValid",jObject,this.httpOptions);
     }
 
     //Get all data
@@ -33,7 +44,7 @@ export class QtyWithFGScanService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrderNo:WONo,ItemCode:FGItemCode,FromOperation:OpNo }]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetBatchSerialInfo",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetBatchSerialInfo",jObject,this.httpOptions);
     }
 
     //Save Data
@@ -41,7 +52,7 @@ export class QtyWithFGScanService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,WorkOrderNo: WorkOrderNo,SequenceNo: SeqNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd }]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SaveBatchSerialInfo",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/SaveBatchSerialInfo",jObject,this.httpOptions);
     }
 
     //Delete Data
@@ -50,7 +61,7 @@ export class QtyWithFGScanService {
     //let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo}]) };
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo,WorkOrderNo: WorkOrderNo, FGBatchSerial:FGBatchSer,Item:ItemCode }]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteBatchSerialInfo",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/DeleteBatchSerialInfo",jObject,this.httpOptions);
     } 
 
     //Update Data
@@ -61,7 +72,7 @@ export class QtyWithFGScanService {
       //JSON Obeject Prepared to be send as a param to API
       let jObject:any={ MoveOrder: JSON.stringify([{CompanyDBID: CompanyDBID,WorkOrderNo: WorkOrderNo,FGBatchSerial:FGBatchSer,Rejected: IsRejected,User: loggedInUser,NC:IsNC,Item:ItemCode,Operation:OperationNo,Quantity:QtyProd,SeqNo:iSeqNo}]) };
       //Return the response form the API  
-      return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/UpdateBatchSerialInfo",jObject,this.httpOptions);
+      return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/UpdateBatchSerialInfo",jObject,this.httpOptions);
     } 
   
     //Get Decoded String
@@ -78,6 +89,6 @@ export class QtyWithFGScanService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ Gs1Token: JSON.stringify(dataSCAN)};
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/GS1/GS1Setup",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/GS1/GS1Setup",jObject,this.httpOptions);
     }
 }

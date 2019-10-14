@@ -16,16 +16,29 @@ export class FgrmscanparentinputformService {
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Accept':'application/json'
+    'Accept':'application/json',
+    'Authorization': localStorage.getItem('accessToken')
+    })
+  };
+
+  updateHeader(){
+    this.httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Accept':'application/json',
+      'Authorization': localStorage.getItem('accessToken')
       })
     };
+  }
 
   //save the data for both the grids
-  SubmitDataforFGandRM(oModal:any):Observable<any>{
+  SubmitDataforFGandRM(oModal:any,taskHDId:number):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify(oModal) };
+    
+    let jObject:any={ MoveOrder: JSON.stringify(oModal),
+      GetData: JSON.stringify([{ taskHDId: taskHDId}]) };
   //Return the response form the API  
-  return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/SubmitDataforFGandRM",jObject,this.httpOptions);
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/SubmitDataforFGandRM",jObject,this.httpOptions);
   }
 
   //This will get the child data if exists
@@ -33,7 +46,7 @@ export class FgrmscanparentinputformService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,ParentBatchSerialNo: ParentBatchSerialNo}]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/GetAllChildByParentId",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetAllChildByParentId",jObject,this.httpOptions);
   }  
 
   //This method will delete the data from child RM
@@ -41,6 +54,14 @@ export class FgrmscanparentinputformService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,squence: sequenceNo}]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteChildComponent",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/DeleteChildComponent",jObject,this.httpOptions);
   } 
+
+   //check the data for both the grids
+   CheckDataforFGandRM(oModal:any):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject:any={ MoveOrder: JSON.stringify(oModal) };
+  //Return the response form the API  
+  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/CheckDataforFGandRM",jObject,this.httpOptions);
+  }
 }

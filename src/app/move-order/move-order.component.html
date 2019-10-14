@@ -1,3 +1,10 @@
+<style>
+.disable-img{
+    color: #E6E6E6;
+    cursor: not-allowed;
+}
+</style>
+
 <app-topbar></app-topbar>
 
 <div id="opti_WrapperID">
@@ -66,8 +73,7 @@
                                     </span>
                                 </label>
                                 
-                            
-                                <label class="k-form-field d-flex align-item-center flex-wrap">
+                                <label class="k-form-field d-flex align-item-center flex-wrap" > <!---->
                                     <span class="opti_form-label">{{language.qtyproduced}} *</span>
                                     <span class="float-left opti_qty-produced">
                                         <input type="text" style="text-align: right;"  class="k-textbox" id="QtyProducedID" name = "QtyProducedName" [(ngModel)]="iProducedQty" [disabled]=DisableEnablQuantity (blur)="onProducedQtyBlur()">

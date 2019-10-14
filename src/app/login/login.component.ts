@@ -5,6 +5,7 @@ import { BaseClass } from "src/app/classes/BaseClass";
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-login',
@@ -61,7 +62,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthenticationService,
     private router: Router,
     private httpClientSer: HttpClient,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private commonService: CommonService) { }
 
   ngOnInit() {
 
@@ -91,8 +93,6 @@ export class LoginComponent implements OnInit {
         window.localStorage.setItem('arrConfigData', JSON.stringify(this.arrConfigData[0]));
 
         this.loadLanguage(this.arrConfigData[0].language);
-        //This will get the psURL
-        //this.getPSURL();
       },
       (err: HttpErrorResponse) => {
         console.log(err.message);
@@ -124,16 +124,19 @@ export class LoginComponent implements OnInit {
     }
     else {
       if (this.password != undefined || this.password != null) {
-        // Check users authontication 
-
-        this.psURL = 'http://172.16.6.147/OptiProAdmin'
-
-        this.auth.login(this.loginId, this.password, this.psURL).subscribe(
+        
+        this.auth.login(this.loginId, this.password, this.arrConfigData[0].service_url).subscribe(
           data => {
             this.modelSource = data;
+            
+            if(data != null  && data != undefined){
+              let access_token = data.AuthenticationDetails[0].token_type +" "+data.AuthenticationDetails[0].access_token;            
+              localStorage.setItem('accessToken', access_token);
+              this.auth.updateHeader();
+            }            
+
             if (this.modelSource != null && this.modelSource.Table.length > 0 && this.modelSource.Table[0].OPTM_ACTIVE == 1) {
-              this.showLoader = false;
-              //If everything is ok then we will navigate the user to main home page
+              this.showLoader = false;              
               //this.router.navigateByUrl('/moveorder');
               this.getCompanies();
             }
@@ -155,7 +158,7 @@ export class LoginComponent implements OnInit {
             this.showLoader = false;
           },
           error => {
-            this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
+            //this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
             console.log("getpsURL -->" + error.toString());
             this.showLoader = false;
           }
@@ -206,7 +209,8 @@ export class LoginComponent implements OnInit {
   //Core Functions
   getCompanies() {
     this.showLoader = true;
-    this.auth.getCompany(this.loginId, this.psURL).subscribe(
+    //this.auth.getCompany(this.loginId, this.psURL).subscribe(
+      this.auth.getCompany(this.loginId, this.arrConfigData[0].service_url).subscribe(
       data => {
 
         this.modelSource = data
@@ -236,6 +240,12 @@ export class LoginComponent implements OnInit {
           this.InvalidActiveUser = true;
           this.showLoader = false;
         }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
@@ -243,7 +253,7 @@ export class LoginComponent implements OnInit {
   //This Funciton will get all the whse of this company
   getWarehouse(companyName: string) {
     this.showLoader = true;
-    this.auth.getWarehouse(this.loginId, companyName, this.psURL).subscribe(
+    this.auth.getWarehouse(this.loginId, companyName, this.arrConfigData[0].service_url).subscribe(
       data => {
         if (data != null || data != undefined) {
           this.whseListItems = data.Table
@@ -255,56 +265,62 @@ export class LoginComponent implements OnInit {
         else {
           this.showLoader = false;
         }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
 
   }
 
-  GetLicenseData() {
-    this.auth.getLicenseData(this.loginId, this.arrConfigData[0].optiProMoveOrderAPIURL, this.companyName).subscribe(
-      data => {
-        if (data != null || data != undefined) {
-          if (data.LICData.length > 0) {
-            if (data.LICData[0].ErrMessage == "" || data.LICData[0].ErrMessage == null) {
-              window.localStorage.removeItem("GUID");
-              window.localStorage.removeItem("loggedInUser");
-              //if all set to go then we will set credentials in session
-              this.GUID = data.LICData[0].GUID;
-              window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
-              window.localStorage.setItem('loggedInUser', this.loginId);
-              window.localStorage.setItem('selectedWhse', this.warehouseName);
-              window.localStorage.setItem('GUID', this.GUID);
-              this.router.navigateByUrl('/moveorder');
-              this.showLoader = false;
-            } else {
-              //If error in login then show to user the message
-              alert(data.LICData[0].ErrMessage);
-              this.showLoader = false;
-            }
+  // GetLicenseData() {
+  //   this.auth.getLicenseData(this.loginId, this.arrConfigData[0].optiProMoveOrderAPIURL, this.companyName).subscribe(
+  //     data => {
+  //       if (data != null || data != undefined) {
+  //         if (data.LICData.length > 0) {
+  //           if (data.LICData[0].ErrMessage == "" || data.LICData[0].ErrMessage == null) {
+  //             window.localStorage.removeItem("GUID");
+  //             window.localStorage.removeItem("loggedInUser");
+  //             //if all set to go then we will set credentials in session
+  //             this.GUID = data.LICData[0].GUID;
+  //             window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
+  //             window.localStorage.setItem('loggedInUser', this.loginId);
+  //             window.localStorage.setItem('selectedWhse', this.warehouseName);
+  //             window.localStorage.setItem('GUID', this.GUID);
+  //             this.router.navigateByUrl('/moveorder');
+  //             this.showLoader = false;
+  //           } else {
+  //             //If error in login then show to user the message
+  //             alert(data.LICData[0].ErrMessage);
+  //             this.showLoader = false;
+  //           }
 
-          }
-          else {
-            this.showLoader = false;
-          }
+  //         }
+  //         else {
+  //           this.showLoader = false;
+  //         }
 
-        }
-        else {
-          this.showLoader = false;
-        }
-      }
-    )
+  //       }
+  //       else {
+  //         this.showLoader = false;
+  //       }
+  //     }
+  //   )
 
-  }
+  // }
 
   getPSURL() {
-    this.auth.getPSURL(this.baseClassObj.adminDBName, this.arrConfigData[0].optiProMoveOrderAPIURL).subscribe(
+
+    //this.psURL = window.location.origin + "/OptiProAdmin";
+    this.auth.getPSURL(this.baseClassObj.adminDBName, 
+      this.arrConfigData[0].service_url).subscribe(
       data => {
         if (data != null) {
-         // this.psURL = data;
-         this.psURL = 'http://172.16.6.147/OptiProAdmin'
-          //For code analysis remove in live enviorments.
-          //this.psURL = "http://localhost:9500/";
-          //this.psURL = "http://172.16.6.140/OptiAdmin";
+          this.psURL = data;
+         // this.psURL = "http://172.16.6.140/OptiproAdmin";
         }
       },
       error => {

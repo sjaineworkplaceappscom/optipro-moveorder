@@ -114,9 +114,9 @@
 
 <section #qtylevelChildSuperchild id="opti_QtylevelChildSuperChildID">
     <app-fgrmscanparentinputform *ngIf="showFGInputForm" 
-    [basicFGInputForm]="basicDetailsToFGParentInput" 
+    [basicFGInputForm]="basicDetailsToFGParentInput"  (messageEvent)="receiveMessage($event)"
     [rowDataFrmFGWithScan]="rowDataForEdit" [FGWithScanGridFrmMaster]="FGScanGridData" 
-    (messageEvent)="receiveMessage($event)"></app-fgrmscanparentinputform>
+    ></app-fgrmscanparentinputform>
 </section>
 
 

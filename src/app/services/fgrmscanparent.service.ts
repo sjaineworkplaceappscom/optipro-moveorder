@@ -15,9 +15,20 @@ export class FgrmscanparentService {
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Accept':'application/json'
+    'Accept':'application/json',
+    'Authorization': localStorage.getItem('accessToken')
       })
     };
+
+    updateHeader(){
+      this.httpOptions = {
+        headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept':'application/json',
+        'Authorization': localStorage.getItem('accessToken')
+        })
+      };
+    }
 
   //Delete Data for parent FG and child RM
   public deleteParentFGandRM(CompanyDBID:string,seqNo:number,WONo:string,ParentFGBatchSerNo:string, ItemCode:string,FGBatchSer:string ):Observable<any>{
@@ -25,6 +36,6 @@ export class FgrmscanparentService {
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID,Sequence:seqNo,WorkOrderNo:WONo,ParentBatchSerial: ParentFGBatchSerNo
     , Item:ItemCode, FGBatchSerial:FGBatchSer}]) };
     //Return the response form the API  
-    return this.httpclient.post(this.arrConfigData.optiProMoveOrderAPIURL+"/MoveOrder/DeleteFGandRM",jObject,this.httpOptions);
+    return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/DeleteFGandRM",jObject,this.httpOptions);
     } 
 }

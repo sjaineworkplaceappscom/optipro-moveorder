@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
 import { BaseClass } from 'src/app/classes/BaseClass'
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-qty-with-fgscan-detail',
@@ -38,7 +39,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   public showLoader = false;
   public language: any;
   private baseClassObj = new BaseClass();
-  constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private toastr: ToastrService) { }
+  ParentGridData: any = [];
+  sendFGDatatoParent : any;
+  oSaveData: any = {};
+  public RefId: number = 0;
+  constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private toastr: ToastrService,private commonService: CommonService) { }
 
   @Output() messageEvent = new EventEmitter<string>();
 
@@ -48,6 +53,8 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     this.language = JSON.parse(window.localStorage.getItem('language'));
     this.loggedInUser = window.localStorage.getItem('loggedInUser');
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
+
+    this.qtyWithFGScanDtl.updateHeader();
 
     //taking item managed by
     if(this.basicDetailsFrmFGWithScan !=null){
@@ -67,6 +74,7 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.bIsNC = this.rowDataFrmFGWithScan[0].IsNC;
         this.iSeqNo = this.rowDataFrmFGWithScan[0].SeqNo;
         this.psItemManagedBy = this.rowDataFrmFGWithScan[0].ItemManagedBy;
+        this.RefId = this.rowDataFrmFGWithScan[0].RefId;
       }
       else{
         this.bIsInEditMode = false;
@@ -108,13 +116,15 @@ export class QtyWithFGScanDetailComponent implements OnInit {
      if(this.validateData() == true && this.checkBatch == false){
       //validate sum of qtys
       if(this.validateSumOfQtys()==true){
-          if(this.bIsEdit==true){
-            this.updateBatchSerInfoRow();
-          }
-          else{
-            this.bIsInEditMode = false;
-            this.saveBatchSerInfoRow();
-          }
+          // if(this.bIsEdit==true){
+          //   this.updateBatchSerInfoRow();
+          // }
+          // else{
+          //   this.bIsInEditMode = false;
+          //   this.saveBatchSerInfoRow();
+          //  this.saveBatchSerInfoStorage();
+          // }
+          this.saveBatchSerInfoStorage();
           
           this.ShowParent('add');
       }
@@ -190,6 +200,116 @@ export class QtyWithFGScanDetailComponent implements OnInit {
     console.log(this.bIsNC);
   }
 
+  saveBatchSerInfoStorage(){
+
+        this.showLoader = true;
+        let isRejected;
+        let isNC;
+        if(this.bIsRejected == true){
+          isRejected = 'Y';
+        }
+        else{
+          isRejected = 'N';
+        }
+
+        if(this.bIsNC == true){
+          isNC = 'Y';
+        }
+        else{
+          isNC = 'N';
+        }
+        
+        if(this.iSeqNo == undefined || this.iSeqNo == null){
+            this.iSeqNo = 0;
+        }
+
+      this.ParentGridData = [{
+        'SequenceNo': this.iSeqNo,
+        'WorkOrderNo': this.basicDetailsFrmFGWithScan[0].WorkOrderNo,
+        'FGBatchSerial': this.psBatchSer,
+        'Rejected': isRejected,
+        'User': this.loggedInUser,
+        'NC': isNC,
+        'Item': this.basicDetailsFrmFGWithScan[0].ItemCode,
+        'Operation': this.basicDetailsFrmFGWithScan[0].OperNo,
+        'Quantity': Number(this.iQty),
+        'CompanyDBId': this.CompanyDBId,
+        'RefId': this.RefId
+      }]
+
+      let tempArr;                    
+      let temp = window.localStorage.getItem('SaveFGData');
+
+      if(!this.bIsEdit){
+         this.insertRefId(); 
+          this.bIsInEditMode = false;                  
+          if(temp != undefined && temp != null && temp != ''){                        
+            tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+            if(tempArr.ParentDataToSave != undefined && tempArr.ParentDataToSave != null){
+              for(let i=0; i<this.ParentGridData.length; i++){
+                tempArr.ParentDataToSave.push(this.ParentGridData[i])
+              }
+            }
+          }
+          else {
+            this.oSaveData.ParentDataToSave = this.ParentGridData;
+            this.oSaveData.ChildDataToSave = [];
+            window.localStorage.setItem('SaveFGData', JSON.stringify(this.oSaveData));
+        }
+      }
+
+      else{
+        if(temp != undefined && temp != null && temp != ''){                        
+          tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+          //let index = 0;         
+          // if(this.psItemManagedBy == 'Batch'){
+          //   if(isRejected == 'Y')
+          //     index = tempArr.ParentDataToSave.findIndex(val => val.FGBatchSerial === this.psBatchSer && val.Rejected == isRejected);
+          //   else if(isNC == 'Y')
+          //     index = tempArr.ParentDataToSave.findIndex(val => val.FGBatchSerial === this.psBatchSer && val.NC == isNC);
+          //   else
+          //     index = tempArr.ParentDataToSave.findIndex(val => val.FGBatchSerial === this.psBatchSer && val.Rejected == isRejected && val.NC == isNC);
+          // }
+          // else{
+          //   index = tempArr.ParentDataToSave.findIndex(val => val.FGBatchSerial === this.psBatchSer);           
+          // } 
+
+          const index = tempArr.ParentDataToSave.findIndex(val => val.RefId === this.RefId);
+          tempArr.ParentDataToSave[index] = this.ParentGridData[0]; 
+          tempArr.ChildDataToSave[index] = [];         
+          window.localStorage.setItem('SaveFGData', JSON.stringify(tempArr));
+      }
+    }
+
+      this.sendFGDatatoParent = {
+        OPTM_SEQ: this.ParentGridData[0].SequenceNo,
+        OPTM_BTCHSERNO: this.ParentGridData[0].FGBatchSerial,
+        OPTM_QUANTITY: Number(this.ParentGridData[0].Quantity),
+        OPTM_REJECT: this.ParentGridData[0].Rejected == 'Y' ? true:false,
+        OPTM_NC: this.ParentGridData[0].NC == 'Y' ? true:false,
+        RefId: Number(this.ParentGridData[0].RefId)
+     }  
+
+     this.rowDataFrmFGWithScan = [];
+     this.messageEvent.emit(this.sendFGDatatoParent);
+     this.showLoader = false;
+}
+
+  insertRefId(){    
+    let temStr = window.localStorage.getItem('SaveFGData');
+    let refidno = 0;
+    if(temStr != '' && temStr != undefined){
+      let tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      
+      refidno = tempArr.ParentDataToSave[tempArr.ParentDataToSave.length-1].RefId;
+      refidno += refidno;
+      this.ParentGridData[0].RefId = refidno;         
+    }
+   else{
+      this.ParentGridData[0].RefId = 1;   
+    }
+  }
+
   //Core Functions
   
   //this will save data 
@@ -229,16 +349,21 @@ export class QtyWithFGScanDetailComponent implements OnInit {
             }
             this.showLoader = false;
           }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
-
   }
 
   //This will validate the FG Ser Batch
   validateFGSerBat(){ 
 
         this.CompanyDBId = window.localStorage.getItem('selectedComp');
-        this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo).subscribe(
+        this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.psItemManagedBy).subscribe(
           data=> {
           if(data[0].ItemCheck =="ItemNotExists"){
             this.toastr.error('',this.language.fg_not_valid,this.baseClassObj.messageConfig);    
@@ -261,6 +386,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           if(data[0].ItemCheck =="Manual"){
             console.log(this.psBatchSer+" -->This has a maual case");
           }
+      },
+      error => {
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
@@ -327,6 +457,11 @@ export class QtyWithFGScanDetailComponent implements OnInit {
           }
           this.showLoader = false;
          }
+      },
+      error => {
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
   )
 

@@ -3,6 +3,7 @@ import { FgrmscanchildinputformService } from "src/app/services/fgrmscanchildinp
 import { BaseClass } from 'src/app/classes/BaseClass'
 import { ToastrService } from 'ngx-toastr';
 import { QtyWithFGScanService } from '../services/qty-with-fg-scan.service';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-fgrmscanchildinputform',
@@ -39,7 +40,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   public bIsChildBatSerEmpty = false;
   public language: any;
   private baseClassObj = new BaseClass();
-  constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private FGRMinput:FgrmscanchildinputformService,private toastr: ToastrService) { }
+  constructor(private qtyWithFGScanDtl: QtyWithFGScanService,private FGRMinput:FgrmscanchildinputformService,private toastr: ToastrService,private commonService: CommonService) { }
   
   @Output() messageEvent = new EventEmitter<string>();
   
@@ -47,6 +48,8 @@ export class FgrmscanchildinputformComponent implements OnInit {
     this.language = JSON.parse(window.localStorage.getItem('language'));
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
     this.loggedInUser = window.localStorage.getItem('loggedInUser');
+
+    this.FGRMinput.updateHeader();
     
     this.psChildCompItemCode="";
     this.psChildCompBatchSer="";
@@ -118,6 +121,12 @@ export class FgrmscanchildinputformComponent implements OnInit {
           else{
             this.showLoader = false;
           }
+        },
+        error => {
+          this.showLoader = false;
+          if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+            this.commonService.unauthorizedToken(error);               
+          }               
         }
       )
     }
@@ -131,6 +140,24 @@ export class FgrmscanchildinputformComponent implements OnInit {
   onChildCompBatchSerBlur(){
     this.showLoader = true;
     if(this.psChildCompBatchSer != ""){
+    let tempArr;
+    let temStr = window.localStorage.getItem('SaveFGData');
+    if(temStr != '' && temStr != undefined){
+      tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      if(tempArr.ChildDataToSave.length > 0){
+        for(let i=0; i<tempArr.ChildDataToSave.length; i++){
+          if(tempArr.ChildDataToSave[i].OPTM_ITEMCODE.toUpperCase() == this.psChildCompItemCode.toUpperCase() && tempArr.ChildDataToSave[i].OPTM_BTCHSERNO.toUpperCase() == this.psChildCompBatchSer.toUpperCase() && this.sChildManagedBy != 'Batch'){
+            this.toastr.error('',this.language.child_comp_exist,this.baseClassObj.messageConfig);
+            this.showLoader = false; this.psChildCompBatchSer = ''; 
+            this.bIsChildBatSerEmpty = true;
+            return;
+          }          
+        }
+      }
+    }
+  }
+
+    if(this.psChildCompBatchSer != ""){
       this.FGRMinput.CheckIfValidBatchSerialComponentEntered(this.CompanyDBId,this.sChildWhse,this.sChildBin,this.psChildCompBatchSer,this.psChildCompItemCode).subscribe(
         data=> {
           if(data != null){
@@ -141,8 +168,9 @@ export class FgrmscanchildinputformComponent implements OnInit {
                 //enable qty field if batch 
                 this.disableQtyField = false;
 
-                if(data[0].TOTALQTY == ""){
+                if(data[0].TOTALQTY == "" || data[0].TOTALQTY <= 0){
                   this.toastr.error('',this.language.no_inventory + this.psChildCompBatchSer,this.baseClassObj.messageConfig);
+                  this.psChildCompBatchSer = '';     
                 }
                 else{
                   this.iChildInventory = data[0].TOTALQTY;
@@ -155,8 +183,9 @@ export class FgrmscanchildinputformComponent implements OnInit {
               this.disableQtyField = true;
               
 
-              if(data[0].TOTALQTY == ""){
+              if(data[0].TOTALQTY == "" || data[0].TOTALQTY <= 0){
                 this.toastr.error('',this.language.no_inventory + this.psChildCompBatchSer,this.baseClassObj.messageConfig);
+                this.psChildCompBatchSer = '';     
               }
               else{
                 this.iQty = data[0].TOTALQTY;
@@ -176,6 +205,12 @@ export class FgrmscanchildinputformComponent implements OnInit {
           else{
             this.showLoader = false;
           }
+        },
+        error => {
+          this.showLoader = false;
+          if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+            this.commonService.unauthorizedToken(error);               
+          }               
         }
       )
     }
@@ -202,7 +237,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
           OPTM_SEQ: 0,
           OPTM_ITEMCODE: this.psChildCompItemCode,
           OPTM_BTCHSERNO: this.psChildCompBatchSer,
-          OPTM_QUANTITY:this.iQty,
+          OPTM_QUANTITY: Number(this.iQty),
           OPTM_BINNO: this.sChildBin,
           OPTM_WHSCODE: this.sChildWhse,
           ManagedBy: this.sChildManagedBy,
@@ -211,7 +246,8 @@ export class FgrmscanchildinputformComponent implements OnInit {
           ParentBatchSerial: this.detailsOfParentinputFrm.ParentBatchSer,
           User: this.loggedInUser,
           OperNo: this.detailsOfParentinputFrm.OperNo,
-          SysNumber: this.iSysNum
+          SysNumber: this.iSysNum,
+          RefId: 0
         };
 
     // //check that the entered data is not duplicate before pushing into array
@@ -245,9 +281,10 @@ export class FgrmscanchildinputformComponent implements OnInit {
           OPTM_SEQ: this.seqNo,
           OPTM_ITEMCODE: this.psChildCompItemCode,
           OPTM_BTCHSERNO: this.psChildCompBatchSer,
-          OPTM_QUANTITY: this.iQty,
+          OPTM_QUANTITY: Number(this.iQty),
           ManagedBy: this.sChildManagedBy,
-          LoggedInUser:this.loggedInUser
+          LoggedInUser:this.loggedInUser,
+          status: ''
         }
         //this.messageEvent.emit(this.sendRMRowToParent);
         this.showLevelChild();
@@ -272,9 +309,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
             this.toastr.warning('',this.language.qty_cant_greater,this.baseClassObj.messageConfig);       
             this.iQty = 1;
           }
-
-        }
-        
+        }        
       }
       else{
         this.bIsQtyIsZero = true;
@@ -285,7 +320,7 @@ export class FgrmscanchildinputformComponent implements OnInit {
   checkIfChildComponentsExists(){
     let isCompExists = false;
     if(this.childGridDataArray != null && this.childGridDataArray.length > 0){
-      isCompExists = this.childGridDataArray.some(e => e.OPTM_ITEMCODE == this.psChildCompItemCode && e.OPTM_BTCHSERNO == this.psChildCompBatchSer);  
+      isCompExists = this.childGridDataArray.some(e => e.OPTM_ITEMCODE.toUpperCase() == this.psChildCompItemCode.toUpperCase() && e.OPTM_BTCHSERNO.toUpperCase() == this.psChildCompBatchSer.toUpperCase());  
     }
     return isCompExists;
   }

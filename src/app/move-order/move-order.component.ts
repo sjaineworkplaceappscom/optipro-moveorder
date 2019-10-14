@@ -9,7 +9,7 @@ import { QtyWithoutFGScanComponent } from '../qty-without-fgscan/qty-without-fgs
 import { BaseClass } from 'src/app/classes/BaseClass'
 import { CommonService } from '../common.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { FgrmscanparentinputformService } from 'src/app/services/fgrmscanparentinputform.service';
 
 @Component({
   selector: 'app-move-order',
@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class MoveOrderComponent implements OnInit {
 
-  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService, private lookupData: LookupComponent, private commonService: CommonService, private toastr: ToastrService) { }
+  constructor(private mo: MoveorderService, private router: Router, private modalService: BsModalService, private lookupData: LookupComponent, private commonService: CommonService, private toastr: ToastrService,private fgrmService: FgrmscanparentinputformService) { }
   showWOLookup: boolean = false;
   showOperLookup: boolean = false;
 
@@ -84,6 +84,9 @@ export class MoveOrderComponent implements OnInit {
   public isCustEnabled: any;
   public isUserIsSubcontracter: any = "False";
   public restrictedDate = new Date().getDate();
+  public IsSetupOrTDOper: boolean = false;
+  public SaveFGData = {};
+  //public ApplyGeneology: boolean = false;
 
   private baseClassObj = new BaseClass();
 
@@ -113,6 +116,7 @@ export class MoveOrderComponent implements OnInit {
 
   public oprLookupData: any = [];
   public WoLookupData: any = [];
+  public ItemTrack : any;
 
   gridHeight: number;
 
@@ -130,6 +134,8 @@ export class MoveOrderComponent implements OnInit {
      this.router.navigateByUrl('/login');
    }
 
+   this.mo.updateHeader();
+
     //This will check if login is valid
     this.checkIfLoginIsValid();
 
@@ -139,10 +145,7 @@ export class MoveOrderComponent implements OnInit {
     const element = document.getElementsByTagName("body")[0];
     element.className = "";
     element.classList.add("opti_body-move-order");
-    element.classList.add("opti_account-module");
-
-    
-
+    element.classList.add("opti_account-module");  
 
     this.commonService.commonData$.subscribe(
       data => {
@@ -164,6 +167,8 @@ export class MoveOrderComponent implements OnInit {
           this.docEntry = this.selectedLookUpData.DocEntry;
           this.iOrderedQty = this.selectedLookUpData.U_O_ORDRQTY;
           this.psItemManagedBy = this.selectedLookUpData.ManagedBy;
+          this.ItemTrack = this.selectedLookUpData.ManagedBy;
+          window.localStorage.setItem('ManagedBy',this.psItemManagedBy);
 
           console.log("WO-", this.psWONO);
           //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
@@ -216,9 +221,7 @@ export class MoveOrderComponent implements OnInit {
         //To clear the columns name 
         this.columnsToShow = [];
       }
-
     );
-
 
     //get company name from session
     this.CompanyDBId = window.localStorage.getItem('selectedComp');
@@ -326,6 +329,7 @@ export class MoveOrderComponent implements OnInit {
             this.psProductDesc = this.allWODetails[i].ItemName;
             this.iOrderedQty = this.allWODetails[i].U_O_ORDRQTY;
             this.psItemManagedBy = this.allWODetails[i].ManagedBy;
+            window.localStorage.setItem('ManagedBy',this.psItemManagedBy);
           }
         }
 
@@ -413,7 +417,6 @@ export class MoveOrderComponent implements OnInit {
   }
 
   onQtyProdBtnPress(status) {
-
   //  if (this.settingOnSAP != "1" && this.psItemManagedBy == "None") {
   //    this.toastr.error('', "Not allowed to add/modify attached items for none tracked finished goods", this.baseClassObj.messageConfig);
   //    return;
@@ -421,7 +424,7 @@ export class MoveOrderComponent implements OnInit {
 
     //This function will get to know whthere it is necessary to attach Batch/Serials on current operation
 
-    if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None") {
+    if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None" && !this.IsSetupOrTDOper) {
       //this.checkIfOperRequiresMaterial(status);
       //bug fixed by Ashish
       this.openRespectiveScreen(status);
@@ -431,16 +434,27 @@ export class MoveOrderComponent implements OnInit {
     }
   }
 
+  checkChild(){
+    if(this.settingOnSAP == '3' && !this.IsSetupOrTDOper){
+      let temp = window.localStorage.getItem('SaveFGData');
+      if(temp == undefined || temp == null){
+        this.toastr.warning('',this.language.attach_bat_ser, this.baseClassObj.messageConfig);
+        return;
+      }
+    }
+  }
+
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
     //show Loader
     this.showLoader = true;
-
     if (this.checkMandatoryInpts() == true) {
 
-      if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None") {
+      if ((this.settingOnSAP == "2" || this.settingOnSAP == "3") && this.psItemManagedBy != "None" && !this.IsSetupOrTDOper) {
         //First we will chk whether the user have linked FG serials/batch for option 2 screen
-        this.GetBatchSerialLinking()
+        //this.GetBatchSerialLinking()
+        this.checkChild()
+        this.getServerDate(false);
       }
       else {
         this.getServerDate(false);
@@ -526,20 +540,20 @@ export class MoveOrderComponent implements OnInit {
 
     console.log("FROM CHILD SCREENSSSS--->");
     console.log($event);
-    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None" || this.IsSetupOrTDOper) {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;      
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.AcceptedQty + $event.RejectedQty + $event.NCQty;
     }
-    if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
+   else if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
       this.iProducedQty = $event.ProducedQty;
       this.showQtyWithFGScanScreen = false;
     }
-    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
+    else if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
       this.iAcceptedQty = $event.AcceptedQty;
       this.iRejectedQty = $event.RejectedQty;
       this.iNCQty = $event.NCQty;
@@ -655,14 +669,36 @@ export class MoveOrderComponent implements OnInit {
           //Hide Loader
           this.showLoader = false;
         }
+      },
+      error => {
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
+
+  // checkGeneologyOnItemExtn(){
+
+  //   this.mo.checkGeneologyOnItemExtn(this.CompanyDBId, this.psProductCode).subscribe(
+  //     data => {
+  //       if(data == true){
+  //         this.ApplyGeneology = true;          
+  //       }
+  //       else {
+  //         this.ApplyGeneology = false;
+  //       }
+  //       this.showLoader = false;
+  //     })
+
+  // }
 
   //get Operations by work order no.
   getOperationByWONO() {
     //show Loader
     this.showLoader = true;
+    //this.ApplyGeneology = false;
+    window.localStorage.setItem('SaveFGData','');
     if (this.psWONO != null || this.psWONO != undefined) {
       this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
         data => {
@@ -677,8 +713,13 @@ export class MoveOrderComponent implements OnInit {
               this.openedLookup = "OperLookup";
               // this.showLookup = true;
             }
+
+            // if(this.settingOnSAP == '3'){
+            //   this.checkGeneologyOnItemExtn();
+            // }
+           
             //hide Loader
-            this.showLoader = false;
+            //this.showLoader = false;
           }
           else {
             //hide Loader
@@ -687,24 +728,58 @@ export class MoveOrderComponent implements OnInit {
             this.GetOperationImageStatus = true;
             this.DisableEnablOperation = true;
           }
+        },
+        error => {
+          this.showLoader = false;
+          if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+            this.commonService.unauthorizedToken(error);               
+          }               
         }
       )
     }
   }
 
+  // GetNextOperation(NxtOprNo){
+  //   this.mo.GetNextOperation(this.CompanyDBId,this.psOperNO,NxtOprNo,this.docEntry,this.psWONO).subscribe(
+  //     data => {
+  //       if (data != null) {
+  //        this.psToOperation = data;
+  //        alert(NxtOprNo + data)
+  //       }
+  //       this.showLoader = false;
+  //   })
+  // }
+
   //This will get the selected Operation's
   getSelectedOperationDetail() {
     //show Loader
     this.showLoader = true;
+    window.localStorage.setItem('SaveFGData','');
     //here we will need to call a service which will get the Operation Details on the basis of docEntry & OperNo
-    this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO).subscribe(
+    this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO,this.psWONO).subscribe(
       data => {
         if (data != null) {
+
+          // if(data[0].IsTaskRowPresent != undefined){
+          //   this.toastr.error('', this.language.task_already_created, this.baseClassObj.messageConfig);
+          //   this.DisableEnablQuantity = true;
+          //   return;
+          // }   
+          
+          this.DisableEnablQuantity = false;
           this.selectedWOOperDetail = data;
           this.showOperDtPopup = true;
           this.psToOperation = data[0].NextOperNo;
           this.psPreOperation = data[0].PrevOperNo;
 
+          if(data[0].U_O_OPR_TYPE == '1' || data[0].U_O_OPR_TYPE == '2'){
+            this.IsSetupOrTDOper = true;
+            this.DisableEnablQuantity = true;
+            this.psToOperation = this.psOperNO;
+          }           
+          else{
+            this.IsSetupOrTDOper = false;
+          }
           switch (this.isCustomizedFor) {
             case this.baseClassObj.ellyza_london:
               if (this.isUserIsSubcontracter == "True") {
@@ -723,12 +798,20 @@ export class MoveOrderComponent implements OnInit {
           this.iProducedQty = data[0].U_O_BALQTY;
           this.iAcceptedQty = data[0].U_O_BALQTY;
 
+          //this.GetNextOperation(data[0].NextOperNo);
+
           //hide Loader
-          this.showLoader = false;
+         // this.showLoader = false;
         } else {
           //hide Loader
           this.showLoader = false;
         }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
@@ -813,8 +896,13 @@ export class MoveOrderComponent implements OnInit {
         // this.currentServerDateTime = data[0].DATEANDTIME;
         // this.setDefaultDateTime();
       },
-      error => {
-        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
+      error => {       
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);                  
+        }
+        else{
+          this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
+        }     
         this.showLoader = false;
       }
     )
@@ -875,6 +963,7 @@ export class MoveOrderComponent implements OnInit {
             if (data.SettingTable != undefined) {
               this.IsMoveOrderTimeMandatory = data.SettingTable[0].IsMoveOrderTimeMandatory;
               this.settingOnSAP = data.SettingTable[0].ScreenSetting;
+             // this.settingOnSAP = "3";
             }
           }
 
@@ -895,27 +984,103 @@ export class MoveOrderComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }
+        else{
+          this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
+        }       
+        
       }
     )
 
   }
 
+  submitFGRMData(taskHDId){
+
+    let temp = window.localStorage.getItem('SaveFGData');
+    if(temp != undefined && temp != null){
+      this.SaveFGData = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      this.fgrmService.SubmitDataforFGandRM(this.SaveFGData,taskHDId).subscribe(
+        data => {
+          if (data != null) {
+            if (data == "attach_all_child_item") {
+              this.toastr.error('', this.language.attach_all_child, this.baseClassObj.messageConfig);
+            }
+            else if (data.search("quantity of item") != -1) {
+              this.toastr.error('', data, this.baseClassObj.messageConfig);
+            }
+            else if (data == "True") {
+              //alert
+              window.localStorage.setItem('SaveFGData','');
+            }
+            else {
+              this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);           
+             // alert("Error in saving data in FG Batch Serial Table");
+              return false;
+            }
+          }
+        },
+        error => {
+          if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+            this.commonService.unauthorizedToken(error);               
+          }               
+        }
+      ) 
+    }      
+ }
+
   submitMoveOrder(forcefullySubmission) {
 
+    if (this.iProducedQty > this.iBalQty) {
+      this.toastr.error('', this.language.prod_qty_greater_than_bal, this.baseClassObj.messageConfig);
+      return false;
+    }
 
+    let tempArr;
+    let temStr = window.localStorage.getItem('SaveFGData');
+    if(temStr != '' && temStr != undefined){
+      tempArr = JSON.parse(window.localStorage.getItem('SaveFGData'));
+      
+      if(tempArr.ParentDataToSave != undefined && tempArr.ParentDataToSave != null){
+
+        let qty = 0;
+        for(let i=0; i<tempArr.ParentDataToSave.length; i++){
+          qty = qty+tempArr.ParentDataToSave[i].Quantity;
+        }
+
+        if(this.iProducedQty != qty){
+          this.toastr.error('', 'Quantity mismatch', this.baseClassObj.messageConfig);
+          return false;
+        }
+      }
+    }
 
     //if To Operation no. is empty then put the same
     if (this.psToOperation == "" || this.psToOperation == undefined) {
       this.psToOperation = this.psOperNO;
-    }
+    } 
+
     this.mo.submitMoveOrder(this.CompanyDBId, this.docEntry, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory, this.iBalQty, forcefullySubmission).subscribe(
       data => {
         //Submit Move Order Status
-        // if (data.recordSubmitDetails != undefined) {
+      //  if(data != undefined && data != null){
+      //    if(data.TaskHDRow != undefined){
+      //     if(data.TaskHDRow[0].IsTaskRowPresent != undefined)
+      //     this.toastr.error('', this.language.task_already_created, this.baseClassObj.messageConfig);
+      //     return;
+      //    }          
+      //   }
+       if (data.recordSubmitDetails != undefined) {
         if (data.recordSubmitDetails.length > 0) {
           if (data.recordSubmitDetails[0].isRecordSubmitted == "True") {
+
+            if((this.settingOnSAP == '2' || this.settingOnSAP == '3') && !this.IsSetupOrTDOper && this.psItemManagedBy != "None"){
+              this.submitFGRMData(data.recordSubmitDetails[0].LogId);
+            }
+
+           
             this.toastr.success('', this.language.submit_sucessfull, this.baseClassObj.messageConfig);
             //alert("Record submitted sucessfully");
             this.cleanupScreen();
@@ -927,9 +1092,9 @@ export class MoveOrderComponent implements OnInit {
             this.showLoader = false;
           }
         }
-        // }
+       }
 
-        // else if (data.recordAlreadySubmitDetails != undefined) {
+      if (data.recordAlreadySubmitDetails != undefined) {
         if (data.recordAlreadySubmitDetails.length > 0) {
           if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "N") {
             this.toastr.warning('', this.language.record_under_progress, this.baseClassObj.messageConfig);
@@ -956,8 +1121,8 @@ export class MoveOrderComponent implements OnInit {
             //hide Loader
             this.showLoader = false;
           }
-
         }
+      }
         // if (data == "True") {
         //   this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
         //   //alert("Record submitted sucessfully");
@@ -987,6 +1152,12 @@ export class MoveOrderComponent implements OnInit {
           //show Loader
           this.showLoader = false;
         }
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
@@ -999,16 +1170,21 @@ export class MoveOrderComponent implements OnInit {
     this.iProducedQty = 0;
     this.allWOOpDetails = [];
 
+
     //Hiding forms if uncesry opened forms
-    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None" || this.IsSetupOrTDOper) {
       this.showQtyNoScanScreen = false;
     }
     if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.showQtyWithFGScanScreen = false;
     }
-    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
+    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None" ) //&& this.ApplyGeneology
+     { 
       this.showQtyWithFGRMScanScreen = false;
     }
+    // if(this.settingOnSAP == "3" && this.psItemManagedBy != "None" && !this.ApplyGeneology){
+    //   this.showQtyNoScanScreen = false;
+    // }
   }
 
   //This function will check whether the FG is linked to WO or not 
@@ -1073,8 +1249,12 @@ export class MoveOrderComponent implements OnInit {
             }
           }
         }
-
-
+      },
+      error => {
+        this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }               
       }
     )
   }
@@ -1082,22 +1262,30 @@ export class MoveOrderComponent implements OnInit {
   //THis will deceide which screen have to be opened
   openItemLinkingScreen() {
     this.showItemLinkingScreen = true;
-    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None") {
+   // alert('B' + this.ApplyGeneology)
+    if (this.settingOnSAP == "1" || this.psItemManagedBy == "None" || this.IsSetupOrTDOper) {
       this.ScreenName = this.language.move_order_summary;
       this.showQtyNoScanScreen = true;
       this.showQtyWithFGScanScreen = false;
       this.showQtyWithFGRMScanScreen = false;
     }
-    if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
+    else if (this.settingOnSAP == "2" && this.psItemManagedBy != "None") {
       this.ScreenName = this.language.finished_goods_scan;
       this.showQtyWithFGScanScreen = true;
       this.showQtyNoScanScreen = false;
     }
-    if (this.settingOnSAP == "3" && this.psItemManagedBy != "None") {
+    else if (this.settingOnSAP == "3" && this.psItemManagedBy != "None" ) //&& this.ApplyGeneology
+    {
       this.ScreenName = this.language.fg_raw_materials_scan;
       this.showQtyWithFGRMScanScreen = true;
       this.showQtyNoScanScreen = false;
     }
+    // else if (this.settingOnSAP == "3" && this.psItemManagedBy != "None" && !this.ApplyGeneology) {
+    //   this.ScreenName = this.language.move_order_summary;
+    //   this.showQtyNoScanScreen = true;
+    //   this.showQtyWithFGScanScreen = false;
+    //   this.showQtyWithFGRMScanScreen = false;
+    // }
   }
 
   //Load Rifgt Screen elements
@@ -1135,14 +1323,20 @@ export class MoveOrderComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
         this.showLoader = false;
+        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+          this.commonService.unauthorizedToken(error);               
+        }
+        else{
+          this.toastr.error('', this.language.some_error, this.baseClassObj.messageConfig);
+        }
+       
       }
     )
   }
 
   openRespectiveScreen(status){
-    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.psOperNO == "" || this.psOperNO == undefined || this.psOperNO == null) {
+    if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.psOperNO == "" || this.psOperNO == undefined || this.psOperNO == null || this.DisableEnablQuantity) {
       status = false;
     } else {
       status = true;

@@ -35,11 +35,12 @@ export class TopbarComponent implements OnInit {
   removeCurrentUser(){
     //'http://localhost:57913/api'
     this.arrConfigData = JSON.parse(window.localStorage.getItem('arrConfigData'));
-    this.auth.removeCurrentUser(this.userName,this.selectedCompany,window.localStorage.getItem("GUID"),this.arrConfigData.optiProMoveOrderAPIURL).subscribe(
+    this.auth.removeCurrentUser(this.userName,this.selectedCompany,window.localStorage.getItem("GUID"),this.arrConfigData.service_url).subscribe(
       data => {
         if(data !=null || data != undefined){
           if(data == true){
             window.localStorage.setItem('loggedInUser','');
+            
 
           }
         }

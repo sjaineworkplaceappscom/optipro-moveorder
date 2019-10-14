@@ -101,8 +101,8 @@
    "attach_batchserial_before_saving": "Please attach batch/serials before saving the record",
    "serial_already_exist": "Serial No. already exist",
    "serialbatch_already_exist": "Serial/Batch No. already exist",
-   "fg_not_valid": "FG Bat/Ser you are entering is not valid",
-   "fg_already_moved": "FG Bat/Ser you are entering is already moved",
+   "fg_not_valid": "FG Batch/Serial you are entering is not valid",
+   "fg_already_moved": "FG Batch/Serial you are entering is already moved",
    "error_while_validate_fg": "There was some error while validating finished good serial batch",
    "prod_qty_greater_than_bal": "Produced Qty should not be greater than balance qty",
    "session_expired": "Session expired",
@@ -125,6 +125,10 @@
    "finished_goods_scan": "Finished Goods Scan",
    "fg_raw_materials_scan": "Finished Goods & Raw Materials Scan",
    "not_allowed_batchserial": "Not allowed to attach batch/serial component",
-   "fg_batchserial_rejected": "FG Bat/Ser you are entering is rejected"
+   "fg_batchserial_rejected": "FG Bat/Ser you are entering is rejected",
+   "task_already_created": "Task for this operation is already created from SFES",
+   "child_comp_exist": "Child component's serial already exists",
+   "batch_same_state": "Batch already exists with same state",
+   "attach_bat_ser": "Please attach batch/serial"
      
 }
