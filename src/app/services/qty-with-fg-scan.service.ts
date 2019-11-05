@@ -34,7 +34,7 @@ export class QtyWithFGScanService {
     //Check whether the Finished Good is valid serial/bat no.
     public checkIfFGSerBatisValid(CompanyDBID:string,FGSerBatValue:string,WONo:string,FGItemCode:string,OpNo:string,ItemManagedBy:string):Observable<any>{
       //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGSerBat:FGSerBatValue,WorkOrderNo:WONo,ItemCode:FGItemCode,FromOperation:OpNo,ItemManagedBy:ItemManagedBy}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGSerBat:FGSerBatValue,WorkOrderNo:WONo,ItemCode:FGItemCode,FromOperation:OpNo,ItemManagedBy:ItemManagedBy,Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")}]) };
     //Return the response form the API  
     return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/checkIfFGSerBatisValid",jObject,this.httpOptions);
     }

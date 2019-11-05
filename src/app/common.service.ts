@@ -8,10 +8,10 @@ import { BaseClass } from 'src/app/classes/BaseClass'
   providedIn: 'root'
 })
 export class CommonService {
-  private baseClassObj = new BaseClass();
-  public authTokenstr:string = "The remote server returned an error: (401) Unauthorized.";
+  private baseClassObj = new BaseClass();  
+  public authTokenstr:string = "The remote server returned an error: (401) Unauthorized.";  
 
-  constructor(private toastr: ToastrService, private router: Router,) { }
+  constructor(private toastr: ToastrService, private router: Router) { }
   
   // Declaration
   private commonData = new Subject<any>();
@@ -31,5 +31,14 @@ export class CommonService {
         this.router.navigateByUrl('/login');              
     }
 }
+
+  public RemoveLoggedInUser(toastMsg){   
+     this.toastr.error('',toastMsg,this.baseClassObj.messageConfig); 
+        sessionStorage.clear();
+        localStorage.clear();
+        this.router.navigateByUrl('/login');              
+  }
+
+
 
 }

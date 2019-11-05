@@ -226,55 +226,55 @@ export class QtyWithFGScanComponent implements OnInit {
   //Core Functions
 
   //This func. will fill data into the grid
-   fillFGData() {
+  //  fillFGData() {
     
-    this.showLoader = true;
-    console.log(this.lblProducedQty);
-     this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId, this.basicDetailsFrmMO[0].WorkOrderNo, this.basicDetailsFrmMO[0].ItemCode, this.basicDetailsFrmMO[0].OperNo).subscribe(
-      data => {
-        if (data != null) {
+  //   this.showLoader = true;
+  //   console.log(this.lblProducedQty);
+  //    this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId, this.basicDetailsFrmMO[0].WorkOrderNo, this.basicDetailsFrmMO[0].ItemCode, this.basicDetailsFrmMO[0].OperNo).subscribe(
+  //     data => {
+  //       if (data != null) {
 
-          this.FGScanGridData = data;
-          for (let iCount in this.FGScanGridData) {
-            if (this.FGScanGridData[iCount].OPTM_REJECT == 'Y') {
-              this.FGScanGridData[iCount].OPTM_REJECT = true;
-            }
-            else {
-              this.FGScanGridData[iCount].OPTM_REJECT = false;
-            }
+  //         this.FGScanGridData = data;
+  //         for (let iCount in this.FGScanGridData) {
+  //           if (this.FGScanGridData[iCount].OPTM_REJECT == 'Y') {
+  //             this.FGScanGridData[iCount].OPTM_REJECT = true;
+  //           }
+  //           else {
+  //             this.FGScanGridData[iCount].OPTM_REJECT = false;
+  //           }
 
-            if (this.FGScanGridData[iCount].OPTM_NC == 'Y') {
-              this.FGScanGridData[iCount].OPTM_NC = true;
-            }
-            else {
-              this.FGScanGridData[iCount].OPTM_NC = false;
-            }
+  //           if (this.FGScanGridData[iCount].OPTM_NC == 'Y') {
+  //             this.FGScanGridData[iCount].OPTM_NC = true;
+  //           }
+  //           else {
+  //             this.FGScanGridData[iCount].OPTM_NC = false;
+  //           }
 
-          }
-          // refresh the qtys in the lower table
-          this.refreshQtys();
-          this.showLoader = false;
-        }
-        else {
-          this.showLoader = false;
-        }
-      },
-      error => {
-        this.showLoader = false;
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-    )
+  //         }
+  //         // refresh the qtys in the lower table
+  //         this.refreshQtys();
+  //         this.showLoader = false;
+  //       }
+  //       else {
+  //         this.showLoader = false;
+  //       }
+  //     },
+  //     error => {
+  //       this.showLoader = false;
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  //   )
 
-    if (this.basicDetailsFrmMO[0].ManagedBy == "Serial") {
-      this.showEditBtn = false;
-    }
-    else {
-      this.showEditBtn = true;
-    }
+  //   if (this.basicDetailsFrmMO[0].ManagedBy == "Serial") {
+  //     this.showEditBtn = false;
+  //   }
+  //   else {
+  //     this.showEditBtn = true;
+  //   }
 
-  }
+  // }
 
   //refresh Qtys in the lower table
   refreshQtys() {

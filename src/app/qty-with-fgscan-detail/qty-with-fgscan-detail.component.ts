@@ -313,51 +313,51 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   //Core Functions
   
   //this will save data 
-  saveBatchSerInfoRow(){
-    this.showLoader = true;
-    let isRejected;
-    let isNC;
-    if(this.bIsRejected == true){
-      isRejected = 'Y';
-    }
-    else{
-      isRejected = 'N';
-    }
+  // saveBatchSerInfoRow(){
+  //   this.showLoader = true;
+  //   let isRejected;
+  //   let isNC;
+  //   if(this.bIsRejected == true){
+  //     isRejected = 'Y';
+  //   }
+  //   else{
+  //     isRejected = 'N';
+  //   }
 
-    if(this.bIsNC == true){
-      isNC = 'Y';
-    }
-    else{
-      isNC = 'N';
-    }
+  //   if(this.bIsNC == true){
+  //     isNC = 'Y';
+  //   }
+  //   else{
+  //     isNC = 'N';
+  //   }
     
-    if(this.iSeqNo == undefined || this.iSeqNo == null){
-        this.iSeqNo = 0;
-    }
+  //   if(this.iSeqNo == undefined || this.iSeqNo == null){
+  //       this.iSeqNo = 0;
+  //   }
 
-    this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.iSeqNo,this.psBatchSer,this.iQty,isRejected,isNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
-      data=> {
-           if(data!=null){
-            if(data == "True")  {
-              //alert("Data saved");
-              this.rowDataFrmFGWithScan = [];
-              this.messageEvent.emit("true");
-            }
-            else{
-              this.toastr.error('',this.language.failed_to_save_data,this.baseClassObj.messageConfig);    
-              this.rowDataFrmFGWithScan = [];
-            }
-            this.showLoader = false;
-          }
-      },
-      error => {
-        this.showLoader = false;
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-    )
-  }
+  //   this.qtyWithFGScanDtl.saveBatchSerInfo(this.CompanyDBId,this.iSeqNo,this.psBatchSer,this.iQty,isRejected,isNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.loggedInUser).subscribe(
+  //     data=> {
+  //          if(data!=null){
+  //           if(data == "True")  {
+  //             //alert("Data saved");
+  //             this.rowDataFrmFGWithScan = [];
+  //             this.messageEvent.emit("true");
+  //           }
+  //           else{
+  //             this.toastr.error('',this.language.failed_to_save_data,this.baseClassObj.messageConfig);    
+  //             this.rowDataFrmFGWithScan = [];
+  //           }
+  //           this.showLoader = false;
+  //         }
+  //     },
+  //     error => {
+  //       this.showLoader = false;
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  //   )
+  // }
 
   //This will validate the FG Ser Batch
   validateFGSerBat(){ 
@@ -365,6 +365,16 @@ export class QtyWithFGScanDetailComponent implements OnInit {
         this.CompanyDBId = window.localStorage.getItem('selectedComp');
         this.qtyWithFGScanDtl.checkIfFGSerBatisValid(this.CompanyDBId,this.psBatchSer,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.basicDetailsFrmFGWithScan[0].OperNo,this.psItemManagedBy).subscribe(
           data=> {
+
+        if(data != null && data != undefined){
+            if (data.length > 0) {
+              if (data[0].ErrMessage != undefined) {             
+                this.commonService.RemoveLoggedInUser(this.language.session_expired);
+                return;
+            }
+          }
+        }         
+            
           if(data[0].ItemCheck =="ItemNotExists"){
             this.toastr.error('',this.language.fg_not_valid,this.baseClassObj.messageConfig);    
             this.psBatchSer = '';
@@ -437,35 +447,35 @@ export class QtyWithFGScanDetailComponent implements OnInit {
   }
 
   //This will update FG Ser Batch 
-  updateBatchSerInfoRow(){
-    this.showLoader = true;
+  // updateBatchSerInfoRow(){
+  //   this.showLoader = true;
 
-    this.CompanyDBId = window.localStorage.getItem('selectedComp');
-    this.qtyWithFGScanDtl.updateBatchSerInfoRow(this.CompanyDBId,this.psBatchSer,this.iQty,this.bIsRejected,this.bIsNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].OperNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.loggedInUser,this.iSeqNo).subscribe(
-      data=> {
-        if(data!=null){
-          if(data == "True")  {
-            //alert("Data Updated sucessfully");
-            this.rowDataFrmFGWithScan = [];
-            this.messageEvent.emit("true");
-          }
-          else{
-            //alert("Failed to update Data");
-            this.toastr.error('',this.language.failed_to_update_data,this.baseClassObj.messageConfig);  
-            console.log("DATA save failed-->"+data);  
-            this.rowDataFrmFGWithScan = [];
-          }
-          this.showLoader = false;
-         }
-      },
-      error => {
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-  )
+  //   this.CompanyDBId = window.localStorage.getItem('selectedComp');
+  //   this.qtyWithFGScanDtl.updateBatchSerInfoRow(this.CompanyDBId,this.psBatchSer,this.iQty,this.bIsRejected,this.bIsNC,this.basicDetailsFrmFGWithScan[0].WorkOrderNo,this.basicDetailsFrmFGWithScan[0].OperNo,this.basicDetailsFrmFGWithScan[0].ItemCode,this.loggedInUser,this.iSeqNo).subscribe(
+  //     data=> {
+  //       if(data!=null){
+  //         if(data == "True")  {
+  //           //alert("Data Updated sucessfully");
+  //           this.rowDataFrmFGWithScan = [];
+  //           this.messageEvent.emit("true");
+  //         }
+  //         else{
+  //           //alert("Failed to update Data");
+  //           this.toastr.error('',this.language.failed_to_update_data,this.baseClassObj.messageConfig);  
+  //           console.log("DATA save failed-->"+data);  
+  //           this.rowDataFrmFGWithScan = [];
+  //         }
+  //         this.showLoader = false;
+  //        }
+  //     },
+  //     error => {
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  // )
 
-  }
+  // }
 
   disableEnableControls(){
    if(this.psItemManagedBy == "Serial"){

@@ -196,41 +196,41 @@ export class FgrmscanparentComponent implements OnInit {
   }
   //Core Functions
   //This func. will fill data into the grid
-  fillFGData(){
-    this.showLoader = true;
+  // fillFGData(){
+  //   this.showLoader = true;
     
-    this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId,this.basicDetailsFrmMO[0].WorkOrderNo,this.basicDetailsFrmMO[0].ItemCode,this.basicDetailsFrmMO[0].OperNo).subscribe(
-      data=> {
-        if(data != null){
-          this.FGScanGridData = data;
-          for(let iCount in this.FGScanGridData){
-              if(this.FGScanGridData[iCount].OPTM_REJECT == 'Y'){
-                this.FGScanGridData[iCount].OPTM_REJECT = true;
-              }
-              else{
-                this.FGScanGridData[iCount].OPTM_REJECT = false;
-              }
+  //   this.qtyWithFGScan.getBatchSerialInfo(this.CompanyDBId,this.basicDetailsFrmMO[0].WorkOrderNo,this.basicDetailsFrmMO[0].ItemCode,this.basicDetailsFrmMO[0].OperNo).subscribe(
+  //     data=> {
+  //       if(data != null){
+  //         this.FGScanGridData = data;
+  //         for(let iCount in this.FGScanGridData){
+  //             if(this.FGScanGridData[iCount].OPTM_REJECT == 'Y'){
+  //               this.FGScanGridData[iCount].OPTM_REJECT = true;
+  //             }
+  //             else{
+  //               this.FGScanGridData[iCount].OPTM_REJECT = false;
+  //             }
               
-              if(this.FGScanGridData[iCount].OPTM_NC == 'Y'){
-                this.FGScanGridData[iCount].OPTM_NC = true;
-              }
-              else{
-                this.FGScanGridData[iCount].OPTM_NC = false;
-              }
-          }
-            // refresh the qtys in the lower table
-            this.refreshQtys();
-            this.showLoader = false;
-        }
-      },
-      error => {
-        this.showLoader = false;
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-    )
-  }
+  //             if(this.FGScanGridData[iCount].OPTM_NC == 'Y'){
+  //               this.FGScanGridData[iCount].OPTM_NC = true;
+  //             }
+  //             else{
+  //               this.FGScanGridData[iCount].OPTM_NC = false;
+  //             }
+  //         }
+  //           // refresh the qtys in the lower table
+  //           this.refreshQtys();
+  //           this.showLoader = false;
+  //       }
+  //     },
+  //     error => {
+  //       this.showLoader = false;
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  //   )
+  // }
 
 //refresh Qtys in the lower table
 refreshQtys(){
@@ -265,33 +265,33 @@ refreshQtys(){
 }
 
 //This will Delete the Parent FGs and its corresponding attached Child RMs
-deleteParentFGandRM(rowIndex){
-  this.showLoader = true;
-  this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,
-    this.FGScanGridData[rowIndex].OPTM_ITEMCODE, this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
-    data=> {
-      if(data!=null){
-        if(data == "True")  {
-          this.fillFGData();
-        }
-        else{
-          this.toastr.error('',this.language.failed_to_delete_data,this.baseClassObj.messageConfig);    
-        }
-        this.showLoader = false;
-       }
-       else{
-        this.showLoader = false;
-       }
-    },
-    error => {
-      this.showLoader = false;
-      if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-        this.commonService.unauthorizedToken(error);               
-      }               
-    }
-  )
+// deleteParentFGandRM(rowIndex){
+//   this.showLoader = true;
+//   this.fgrmService.deleteParentFGandRM(this.CompanyDBId,this.FGScanGridData[rowIndex].OPTM_SEQ,this.basicDetailsFrmMO[0].WorkOrderNo,this.FGScanGridData[rowIndex].OPTM_BTCHSERNO,
+//     this.FGScanGridData[rowIndex].OPTM_ITEMCODE, this.FGScanGridData[rowIndex].OPTM_BTCHSERNO).subscribe(
+//     data=> {
+//       if(data!=null){
+//         if(data == "True")  {
+//           this.fillFGData();
+//         }
+//         else{
+//           this.toastr.error('',this.language.failed_to_delete_data,this.baseClassObj.messageConfig);    
+//         }
+//         this.showLoader = false;
+//        }
+//        else{
+//         this.showLoader = false;
+//        }
+//     },
+//     error => {
+//       this.showLoader = false;
+//       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+//         this.commonService.unauthorizedToken(error);               
+//       }               
+//     }
+//   )
 
-} 
+// } 
 
 }
 

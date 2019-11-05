@@ -177,12 +177,12 @@ export class LoginComponent implements OnInit {
     if (this.disableLoginBtn == false) {
       //For License Checking
       //Commented by ashish temperary
-      // this.GetLicenseData();
-      window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
-      window.localStorage.setItem('loggedInUser', this.loginId);
-      window.localStorage.setItem('selectedWhse', this.warehouseName);
-      window.localStorage.setItem('GUID', this.GUID);
-      this.router.navigateByUrl('/moveorder');
+      this.GetLicenseData();
+      // window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
+      // window.localStorage.setItem('loggedInUser', this.loginId);
+      // window.localStorage.setItem('selectedWhse', this.warehouseName);
+      // window.localStorage.setItem('GUID', this.GUID);
+      // this.router.navigateByUrl('/moveorder');    
 
     }
     else {
@@ -276,41 +276,42 @@ export class LoginComponent implements OnInit {
 
   }
 
-  // GetLicenseData() {
-  //   this.auth.getLicenseData(this.loginId, this.arrConfigData[0].optiProMoveOrderAPIURL, this.companyName).subscribe(
-  //     data => {
-  //       if (data != null || data != undefined) {
-  //         if (data.LICData.length > 0) {
-  //           if (data.LICData[0].ErrMessage == "" || data.LICData[0].ErrMessage == null) {
-  //             window.localStorage.removeItem("GUID");
-  //             window.localStorage.removeItem("loggedInUser");
-  //             //if all set to go then we will set credentials in session
-  //             this.GUID = data.LICData[0].GUID;
-  //             window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
-  //             window.localStorage.setItem('loggedInUser', this.loginId);
-  //             window.localStorage.setItem('selectedWhse', this.warehouseName);
-  //             window.localStorage.setItem('GUID', this.GUID);
-  //             this.router.navigateByUrl('/moveorder');
-  //             this.showLoader = false;
-  //           } else {
-  //             //If error in login then show to user the message
-  //             alert(data.LICData[0].ErrMessage);
-  //             this.showLoader = false;
-  //           }
+  GetLicenseData() {
+    this.auth.getLicenseData(this.loginId, this.arrConfigData[0].service_url, this.selectedValue.OPTM_COMPID).subscribe(
+      data => {
+        if (data != null || data != undefined) {
+          if (data.LICData.length > 0) {
+            if (data.LICData[0].ErrMessage == "" || data.LICData[0].ErrMessage == null) {
+              window.localStorage.removeItem("GUID");
+              window.localStorage.removeItem("loggedInUser");
+              //if all set to go then we will set credentials in session
+              this.GUID = data.LICData[0].GUID;
+              window.localStorage.setItem('selectedComp', this.selectedValue.OPTM_COMPID);
+              window.localStorage.setItem('loggedInUser', this.loginId);
+              window.localStorage.setItem('selectedWhse', this.warehouseName);
+              window.localStorage.setItem('GUID', this.GUID);
+              this.router.navigateByUrl('/moveorder');
+              this.showLoader = false;
+            } else {
+              //If error in login then show to user the message
+             // alert(data.LICData[0].ErrMessage);
+              this.toastr.warning('',data.LICData[0].ErrMessage, this.baseClassObj.messageConfig);
+              this.showLoader = false;
+            }
 
-  //         }
-  //         else {
-  //           this.showLoader = false;
-  //         }
+          }
+          else {
+            this.showLoader = false;
+          }
 
-  //       }
-  //       else {
-  //         this.showLoader = false;
-  //       }
-  //     }
-  //   )
+        }
+        else {
+          this.showLoader = false;
+        }
+      }
+    )
 
-  // }
+  }
 
   getPSURL() {
 

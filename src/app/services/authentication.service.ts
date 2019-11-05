@@ -77,12 +77,12 @@ export class AuthenticationService {
   }
 
   //Get License Data
-  // getLicenseData(loginId:string,optiProMoveOrderAPIURL:string,CompanyDBID:any):Observable<any>{
-  //   //JSON Obeject Prepared to be send as a param to API
-  //   let jObject: any = { MoveOrder: JSON.stringify([{ Username: loginId , DataBase: CompanyDBID}]) };
-  //   //Return the response form the API  
-  //   return this.httpclient.post(optiProMoveOrderAPIURL + "/MoveOrder/getLicenseData", jObject, this.httpOptions)
-  // }
+  getLicenseData(loginId:string,optiProMoveOrderAPIURL:string,CompanyDBID:any):Observable<any>{
+    //JSON Obeject Prepared to be send as a param to API
+    let jObject: any = { MoveOrder: JSON.stringify([{ Username: loginId , DataBase: CompanyDBID}]) };
+    //Return the response form the API  
+    return this.httpclient.post(optiProMoveOrderAPIURL + "/MMOLogin/getLicenseData", jObject, this.httpOptions)
+  }
 
    //Get License Data
    removeCurrentUser(loginId:string,CompanyDBID:any,currentGUID:any,optiProMoveOrderAPIURL:string):Observable<any>{

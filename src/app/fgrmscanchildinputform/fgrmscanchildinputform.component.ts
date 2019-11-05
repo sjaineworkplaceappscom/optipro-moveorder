@@ -91,6 +91,14 @@ export class FgrmscanchildinputformComponent implements OnInit {
       this.FGRMinput.CheckIfChildCompExists(this.CompanyDBId,this.basicDetailFrmParentInput[0].ItemCode,this.psChildCompItemCode,this.basicDetailFrmParentInput[0].WorkOrderNo,this.basicDetailFrmParentInput[0].OperNo).subscribe(
         data=> {
           if(data != null){
+
+            if (data.length > 0) {
+              if (data[0].ErrMessage != undefined) {             
+                this.commonService.RemoveLoggedInUser(this.language.session_expired);
+                return;
+              }
+            }
+
             this.bIsChildItemCodeEmpty = false;
             this.disableChildBatSerEmpty = false;
             //The entire details of item will be fetched here
@@ -162,6 +170,12 @@ export class FgrmscanchildinputformComponent implements OnInit {
         data=> {
           if(data != null){
             if(data.length > 0){
+
+              if (data[0].ErrMessage != undefined) {             
+                this.commonService.RemoveLoggedInUser(this.language.session_expired);
+                return;
+              }
+
               this.bIsChildBatSerEmpty = false;
               //If the Child Item code is Batch Tracked
               if(this.sChildManagedBy == "Batch"){

@@ -596,13 +596,12 @@ export class MoveOrderComponent implements OnInit {
     this.showLoader = true;
     this.mo.getAllWorkOrders(this.CompanyDBId, this.warehouseName).subscribe(
       data => {
-        if (data != null) {
+      
+        if (data != undefined && data != null) {
           if (data.length > 0) {
             if (data[0].ErrMessage != undefined) {
-              this.toastr.error('', this.language.session_expired, this.baseClassObj.messageConfig);
-              sessionStorage.clear();
-              window.localStorage.clear();
-              this.router.navigateByUrl('/login');
+             // this.toastr.error('', this.language.session_expired, this.baseClassObj.messageConfig);
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
               return;
             }
             
@@ -703,6 +702,12 @@ export class MoveOrderComponent implements OnInit {
       this.mo.getOperationByWorkOrder(this.CompanyDBId, this.docEntry, this.psWONO).subscribe(
         data => {
           if (data != null && data.length > 0) {
+            
+            if (data[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }         
+
             this.NoOperAvailable = false;
             this.GetOperationImageStatus = false;
             this.DisableEnablOperation = false;
@@ -759,6 +764,13 @@ export class MoveOrderComponent implements OnInit {
     this.mo.getOperDetailByDocEntry(this.CompanyDBId, this.docEntry, this.psOperNO,this.psWONO).subscribe(
       data => {
         if (data != null) {
+
+          if (data.length > 0) {
+            if (data[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+		      }
 
           // if(data[0].IsTaskRowPresent != undefined){
           //   this.toastr.error('', this.language.task_already_created, this.baseClassObj.messageConfig);
@@ -881,6 +893,16 @@ export class MoveOrderComponent implements OnInit {
     this.mo.getServerDate(this.CompanyDBId).subscribe(
       data => {
         this.showLoader = false;
+
+        if (data != undefined && data != null) {
+          if (data.length > 0) {
+            if (data[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+		      }
+	      }
+
         console.log("Server Date Time", data[0].DATEANDTIME);
 
         if (this.FrmToDateTime[1] > new Date(data[0].DATEANDTIME)) {
@@ -949,6 +971,14 @@ export class MoveOrderComponent implements OnInit {
       data => {
         if (data != null || data != undefined) {
           this.showLoader = false;
+
+          if (data.LICDATA != undefined) {
+            if (data.LICDATA[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+		      }
+
           if (data.CustomizationDetails != undefined) {
             if (data.CustomizationDetails.length > 0) {
               this.isCustEnabled = data.CustomizationDetails[0].CustEnabled;
@@ -1005,6 +1035,12 @@ export class MoveOrderComponent implements OnInit {
       this.fgrmService.SubmitDataforFGandRM(this.SaveFGData,taskHDId).subscribe(
         data => {
           if (data != null) {
+
+            if(data == "7001"){
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+
             if (data == "attach_all_child_item") {
               this.toastr.error('', this.language.attach_all_child, this.baseClassObj.messageConfig);
             }
@@ -1064,6 +1100,16 @@ export class MoveOrderComponent implements OnInit {
 
     this.mo.submitMoveOrder(this.CompanyDBId, this.docEntry, this.psOperNO, this.psToOperation, this.psWONO, this.psProductCode, this.loggedInUser, this.iAcceptedQty, this.iRejectedQty, this.iNCQty, this.iOrderedQty, this.iProducedQty, this.FrmToDateTime, this.psPreOperation, this.settingOnSAP, this.IsMoveOrderTimeMandatory, this.iBalQty, forcefullySubmission).subscribe(
       data => {
+
+      if(data != null && data != undefined){
+        if (data.LICDATA != undefined) {
+          if (data.LICDATA[0].ErrMessage != undefined) {             
+            this.commonService.RemoveLoggedInUser(this.language.session_expired);
+            return;
+          }
+        }
+      }
+        
         //Submit Move Order Status
       //  if(data != undefined && data != null){
       //    if(data.TaskHDRow != undefined){
@@ -1192,8 +1238,19 @@ export class MoveOrderComponent implements OnInit {
     this.showLoader = true;
     this.mo.GetBatchSerialLinking(this.CompanyDBId, this.psWONO, this.warehouseName, Number(this.psOperNO)).subscribe(
       data => {
+
+      if(data != null && data != undefined){
+        if (data.LICDATA != undefined) {
+          if (data.LICDATA[0].ErrMessage != undefined) {             
+            this.commonService.RemoveLoggedInUser(this.language.session_expired);
+            return;
+          }
+        }
+      }       
+
         let isAllowed = true;
         if (data != null && data.Table.length > 0) {
+          
           //Putting qtys if there is need to open the fg input screen
           this.basicDetails = [];
           //Setting basic details to share on another screen
@@ -1309,6 +1366,14 @@ export class MoveOrderComponent implements OnInit {
       data => {
         if (data != null || data != undefined) {
           this.showLoader = false;
+
+          if (data.length > 0) {
+            if (data[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+		      }
+
             if (data.length <= 0) {
               this.toastr.error('', this.language.not_allowed_batchserial, this.baseClassObj.messageConfig);
               this.showLoader = false;

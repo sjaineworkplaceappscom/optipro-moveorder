@@ -38,6 +38,7 @@ export class MoveorderService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID, Warehouse: Warehouse, Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID"),isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
     isCustEnabled:window.localStorage.getItem("isCustEnabled"),
+
   }]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetAllWorkOrders",jObject,this.httpOptions);
@@ -46,7 +47,7 @@ export class MoveorderService {
   //GetAll Oper function to hit login API
   getOperationByWorkOrder(CompanyDBID:string,docenrty:number,workOrderNo:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, WorkOrderNo: workOrderNo,Username:window.localStorage.getItem('loggedInUser'),isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, WorkOrderNo: workOrderNo,Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID"),isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
     isCustEnabled:window.localStorage.getItem("isCustEnabled")}]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetOperationByWorkOrder",jObject,this.httpOptions);
@@ -55,7 +56,7 @@ export class MoveorderService {
   //Get Operation Detail By DocEnty
   getOperDetailByDocEntry(CompanyDBID:string,docenrty:number,operNo,workOrderNo:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, OperNo :operNo,isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID , DocEnrty :docenrty, OperNo :operNo,Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID"),isUserIsSubcontracter: window.localStorage.getItem("isUserIsSubcontracter"),
     isCustEnabled:window.localStorage.getItem("isCustEnabled"),WorkOrderNo: workOrderNo}]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetOperDetailByDocEntry",jObject,this.httpOptions);
@@ -74,7 +75,8 @@ export class MoveorderService {
   getServerDate(CompanyDBID:string):Observable<any>{
      //JSON Obeject Prepared to be send as a param to API
      let jObject:any={ MoveOrder: JSON.stringify([{ 
-      CompanyDBID: CompanyDBID
+      CompanyDBID: CompanyDBID,
+      Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")
     }])};
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetServerDate",jObject,this.httpOptions);
@@ -109,6 +111,7 @@ export class MoveorderService {
       DocEntry: DocEntry,
       iBalQty:iBalQty,
       isCustEnabled:window.localStorage.getItem("isCustEnabled"),
+      Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")
     }]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/SubmitMoveOrder",jObject,this.httpOptions);
@@ -119,7 +122,8 @@ export class MoveorderService {
     //JSON Obeject Prepared to be send as a param to API
     let jObject:any={ MoveOrder: JSON.stringify([{ 
      CompanyDBID: CompanyDBID,
-     UserID:loggedInUser
+     UserID:loggedInUser,
+     Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")
    }])};
  //Return the response form the API  
  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetSettingOnSAP",jObject,this.httpOptions);
@@ -133,7 +137,8 @@ export class MoveorderService {
      CompanyDBID: CompanyDBID,
      warehouseName:warehouseName,
      workOrderNo:woNo,
-     operNo:operNo
+     operNo:operNo,
+     Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")
    }])};
  //Return the response form the API  
  return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/GetBatchSerialLinking",jObject,this.httpOptions);
@@ -146,7 +151,8 @@ export class MoveorderService {
   let jObject:any={ MoveOrder: JSON.stringify([{ 
    CompanyDBID: CompanyDBID,
    workOrderNo:woNo,
-   operNo:operNo
+   operNo:operNo,
+   Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")
  }])};
 //Return the response form the API  
 return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/checkIfOperRequiresMaterial",jObject,this.httpOptions);

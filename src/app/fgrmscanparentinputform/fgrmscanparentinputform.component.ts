@@ -452,6 +452,12 @@ export class FgrmscanparentinputformComponent implements OnInit {
           this.fgrmParentForm.CheckDataforFGandRM(this.oModalData).subscribe(
             data => {
               if (data != null) {
+
+                if(data == "7001"){
+                  this.commonService.RemoveLoggedInUser(this.language.session_expired);
+                  return;
+                }
+
                 if (data == "attach_all_child_item") {
                   this.toastr.error('', this.language.attach_all_child, this.baseClassObj.messageConfig);
                   //this.showLevelParent();
@@ -715,6 +721,13 @@ export class FgrmscanparentinputformComponent implements OnInit {
         // if (data != null || data[0].ItemCheck != "") {
         if (data != null) {
 
+          if (data.length > 0) {
+            if (data[0].ErrMessage != undefined) {             
+              this.commonService.RemoveLoggedInUser(this.language.session_expired);
+              return;
+            }
+		      }
+
           if (data[0].ItemCheck != "") {
 
             if (data[0].ItemCheck == "ItemNotExists") {
@@ -755,25 +768,25 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
 
   //This will get all childs of the parent batchserial enterd
-  GetAllChildByParentId() {
-    this.showLoader = true;
-    this.fgrmParentForm.GetAllChildByParentId(this.CompanyDBId, this.psBatchSer).subscribe(
-      data => {
-        if (data != null) {
-          this.ChildCompGridData = data;
-          this.showLoader = false;
-        }
-        else {
-          this.showLoader = false;
-        }
-      },
-      error => {
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-    )
-  }
+  // GetAllChildByParentId() {
+  //   this.showLoader = true;
+  //   this.fgrmParentForm.GetAllChildByParentId(this.CompanyDBId, this.psBatchSer).subscribe(
+  //     data => {
+  //       if (data != null) {
+  //         this.ChildCompGridData = data;
+  //         this.showLoader = false;
+  //       }
+  //       else {
+  //         this.showLoader = false;
+  //       }
+  //     },
+  //     error => {
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  //   )
+  // }
 
   validateData() {
     //Check whether the input is not empty
@@ -811,33 +824,33 @@ export class FgrmscanparentinputformComponent implements OnInit {
   }
 
   //to delete the RM
-  deleteRMDataBySeq(rowIndex) {
-    this.showLoader = true;
-    console.log(this.ChildCompGridData[rowIndex].OPTM_SEQ);
-    this.fgrmParentForm.deleteRMDataBySeq(this.CompanyDBId, this.ChildCompGridData[rowIndex].OPTM_SEQ).subscribe(
-      data => {
-        if (data != null) {
-          if (data == "True") {
-            //After the Data Deletion the grid will refreshed by this
-            this.GetAllChildByParentId();
-          }
-          else {
-            this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
-            console.log("error-->" + data);
-          }
-          this.showLoader = false;
-        }
-        else {
-          this.showLoader = false;
-        }
-      },
-      error => {
-        if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
-          this.commonService.unauthorizedToken(error);               
-        }               
-      }
-    )
+  // deleteRMDataBySeq(rowIndex) {
+  //   this.showLoader = true;
+  //   console.log(this.ChildCompGridData[rowIndex].OPTM_SEQ);
+  //   this.fgrmParentForm.deleteRMDataBySeq(this.CompanyDBId, this.ChildCompGridData[rowIndex].OPTM_SEQ).subscribe(
+  //     data => {
+  //       if (data != null) {
+  //         if (data == "True") {
+  //           //After the Data Deletion the grid will refreshed by this
+  //          //this.GetAllChildByParentId();
+  //         }
+  //         else {
+  //           this.toastr.error('', this.language.failed_to_delete_data, this.baseClassObj.messageConfig);
+  //           console.log("error-->" + data);
+  //         }
+  //         this.showLoader = false;
+  //       }
+  //       else {
+  //         this.showLoader = false;
+  //       }
+  //     },
+  //     error => {
+  //       if(error.error.ExceptionMessage != null && error.error.ExceptionMessage != undefined){
+  //         this.commonService.unauthorizedToken(error);               
+  //       }               
+  //     }
+  //   )
 
-  }
+  // }
 
 }

@@ -33,7 +33,7 @@ export class FgrmscanchildinputformService {
   //Check the Item Code and get its details
   CheckIfChildCompExists(CompanyDBID:string,FGItemCode: string,ChildCompId:string,WONO:string,OperNo:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGItemCode: FGItemCode,ChildComponentId: ChildCompId, WorkOrderNo: WONO, OperationNo: OperNo}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,FGItemCode: FGItemCode,ChildComponentId: ChildCompId, WorkOrderNo: WONO, OperationNo: OperNo,Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")}]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/CheckIfChildCompBatchSerExists",jObject,this.httpOptions);
   }
@@ -41,7 +41,7 @@ export class FgrmscanchildinputformService {
   //This will fetch sysnumber
   CheckIfValidBatchSerialComponentEntered(CompanyDBID:string,WareHouse:string,Bin:string,ChildBtchSerNo:string,ItemCode:string):Observable<any>{
     //JSON Obeject Prepared to be send as a param to API
-    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,WareHouse: WareHouse,Bin:Bin,ChildBtchSerNo:ChildBtchSerNo,ItemCode:ItemCode}]) };
+    let jObject:any={ MoveOrder: JSON.stringify([{ CompanyDBID: CompanyDBID ,WareHouse: WareHouse,Bin:Bin,ChildBtchSerNo:ChildBtchSerNo,ItemCode:ItemCode,Username:window.localStorage.getItem('loggedInUser'),GUID:window.localStorage.getItem("GUID")}]) };
   //Return the response form the API  
   return this.httpclient.post(this.arrConfigData.service_url+"/MoveOrder/CheckIfValidBatchSerialComponentEntered",jObject,this.httpOptions);
   }
