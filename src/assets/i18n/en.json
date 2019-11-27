@@ -129,6 +129,7 @@
    "task_already_created": "Task for this operation is already created from SFES",
    "child_comp_exist": "Child component's serial already exists",
    "batch_same_state": "Batch already exists with same state",
-   "attach_bat_ser": "Please attach batch/serial"
+   "attach_bat_ser": "Please attach batch/serial",
+   "logged_out_successfully": "Logged Out"
      
 }

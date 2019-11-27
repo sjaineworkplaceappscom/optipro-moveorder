@@ -778,6 +778,7 @@ export class MoveOrderComponent implements OnInit {
           //   return;
           // }   
           
+          
           this.DisableEnablQuantity = false;
           this.selectedWOOperDetail = data;
           this.showOperDtPopup = true;

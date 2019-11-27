@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-topbar',
@@ -14,7 +15,7 @@ export class TopbarComponent implements OnInit {
   public arrConfigData: any;
   public showLoader:boolean = false;
   public language: any;
-  constructor(private router:Router, private auth: AuthenticationService) { }
+  constructor(private router:Router, private auth: AuthenticationService, private commonService: CommonService) { }
 
   ngOnInit() {
     this.language = JSON.parse(window.localStorage.getItem('language'));
@@ -27,28 +28,29 @@ export class TopbarComponent implements OnInit {
     //To deallocate license
     //Commeted Temperary
     //this.removeCurrentUser();
-    sessionStorage.clear();
-    localStorage.clear();
-    this.router.navigateByUrl('/login');
+    // sessionStorage.clear();
+    // localStorage.clear();
+    // this.router.navigateByUrl('/login');
+    this.commonService.RemoveLoggedInUser('');
   }
 
-  removeCurrentUser(){
-    //'http://localhost:57913/api'
-    this.arrConfigData = JSON.parse(window.localStorage.getItem('arrConfigData'));
-    this.auth.removeCurrentUser(this.userName,this.selectedCompany,window.localStorage.getItem("GUID"),this.arrConfigData.service_url).subscribe(
-      data => {
-        if(data !=null || data != undefined){
-          if(data == true){
-            window.localStorage.setItem('loggedInUser','');
+  // removeCurrentUser(){
+  //   //'http://localhost:57913/api'
+  //   this.arrConfigData = JSON.parse(window.localStorage.getItem('arrConfigData'));
+  //   this.auth.removeCurrentUser(this.userName,this.selectedCompany,window.localStorage.getItem("GUID"),this.arrConfigData.service_url).subscribe(
+  //     data => {
+  //       if(data !=null || data != undefined){
+  //         if(data == true){
+  //           window.localStorage.setItem('loggedInUser','');
             
 
-          }
-        }
-        else{
-          this.showLoader = false;
-        }
-      }
-    )
-  }
+  //         }
+  //       }
+  //       else{
+  //         this.showLoader = false;
+  //       }
+  //     }
+  //   )
+  // }
 
 }
