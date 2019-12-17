@@ -39,9 +39,6 @@ import { WorkOrderLookupComponent } from './work-order-lookup/work-order-lookup.
 //Ngx Toaster
 import { ToastrModule } from 'ngx-toastr';
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
- 
-
-
 
 const myRoots: Routes = [  
   
@@ -50,15 +47,13 @@ const myRoots: Routes = [
   { path: 'operationaldetail', component: OperationalDetailComponent } ,
   { path: 'workorderdetail', component: WorkOrderDetailComponent } ,
   { path: 'qtywithoutfgscan', component: QtyWithoutFGScanComponent },
-  { path: 'qtywithfgscan', component: QtyWithFGScanComponent }, 
-  
+  { path: 'qtywithfgscan', component: QtyWithFGScanComponent },   
   { path: 'fgrmscanparent', component: FgrmscanparentComponent },
   { path: 'fgrmscanparentinputform', component: FgrmscanparentinputformComponent },
   { path: 'fgrmscanchildinputform', component: FgrmscanchildinputformComponent },
   { path: 'lookup', component: LookupComponent },
   { path: '', component: LoginComponent }  ,
-  { path: '**', component: LoginComponent }  ,
-   
+  { path: '**', component: LoginComponent }  ,   
 ];
 
 @NgModule({
@@ -103,7 +98,8 @@ const myRoots: Routes = [
     OwlNativeDateTimeModule
   ],
   providers: [LookupComponent,QtyWithoutFGScanComponent, 
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'en-US'}],
+  //  {provide: OWL_DATE_TIME_LOCALE, useValue: 'en-US'}], 
+  {provide: OWL_DATE_TIME_LOCALE, useValue: window.navigator.language}],
   bootstrap: [AppComponent]
 })
 

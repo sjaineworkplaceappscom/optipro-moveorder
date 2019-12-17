@@ -201,8 +201,6 @@ export class MoveOrderComponent implements OnInit {
             this.InvalidOperation = true;
           }
         }
-
-
         //To hide the lookup
         //this.showLookup = false;
         this.showWOLookup = false;
@@ -272,9 +270,7 @@ export class MoveOrderComponent implements OnInit {
 
   onOperationPress(status, GetOperationImageStatus) {
     this.openedLookup = "OperLookup";
-    //show loader
     this.showLoader = true;
-
     //this.showQtyNoScanScreen=this.showQtyWithFGScanScreen=this.showQtyWithFGRMScanScreen=false;
     if (this.psWONO == "" || this.psWONO == null || this.psWONO == undefined || this.NoOperAvailable == true) {
 
@@ -283,8 +279,6 @@ export class MoveOrderComponent implements OnInit {
     else {
       this.oprLookupData = this.allWOOpDetails;
       GetOperationImageStatus = true;
-
-
     }
     if (GetOperationImageStatus == true) {
       this.columnsToShow = this.sOperationLookupColumns.split(",");
@@ -294,10 +288,8 @@ export class MoveOrderComponent implements OnInit {
       this.showWOLookup = false;
       this.parent = "opr";
     }
-    //hide loader
     this.showLoader = false;
   }
-
 
   //This function will check, if the user entered WO is in the array
   onWorkOrderBlur() {
@@ -446,7 +438,6 @@ export class MoveOrderComponent implements OnInit {
 
   //Final submission for Move Order will be done by this function
   onSubmitPress() {
-    //show Loader
     this.showLoader = true;
     if (this.checkMandatoryInpts() == true) {
 
@@ -461,8 +452,6 @@ export class MoveOrderComponent implements OnInit {
         //submission service callled
         //this.submitMoveOrder(false);
       }
-
-
     }
     else {
       this.showLoader = false;
@@ -478,14 +467,12 @@ export class MoveOrderComponent implements OnInit {
       //here we will clear values
       this.clearScreenAfterLookup();
 
-
       this.psWONO = $event.U_O_ORDRNO;
       this.psProductCode = $event.U_O_PRODID;
       this.psProductDesc = $event.ItemName;
       this.docEntry = $event.DocEntry;
       this.iOrderedQty = $event.U_O_ORDRQTY;
       this.psItemManagedBy = $event.ManagedBy;
-
 
       //Validation when we want to Disable the Operation and Quantity if he Workorder is Not Selected 
       if (this.psWONO != "" && this.psWONO != null && this.psWONO != undefined) {
@@ -1125,13 +1112,9 @@ export class MoveOrderComponent implements OnInit {
 
             if((this.settingOnSAP == '2' || this.settingOnSAP == '3') && !this.IsSetupOrTDOper && this.psItemManagedBy != "None"){
               this.submitFGRMData(data.recordSubmitDetails[0].LogId);
-            }
-
-           
+            }           
             this.toastr.success('', this.language.submit_sucessfull, this.baseClassObj.messageConfig);
-            //alert("Record submitted sucessfully");
             this.cleanupScreen();
-            //hide Loader
             this.showLoader = false;
           }
           else if (data.recordSubmitDetails[0].isRecordSubmitted == "OperOverlapping") {
@@ -1146,7 +1129,6 @@ export class MoveOrderComponent implements OnInit {
           if (data.recordAlreadySubmitDetails[0].OPTM_STATUS == "N") {
             this.toastr.warning('', this.language.record_under_progress, this.baseClassObj.messageConfig);
             //this.cleanupScreen();
-            //hide Loader
             this.showLoader = false;
             return;
           }
@@ -1160,43 +1142,16 @@ export class MoveOrderComponent implements OnInit {
             }
             else {
               this.cleanupScreen();
-              //hide Loader
               this.showLoader = false;
               return;
             }
-
-            //hide Loader
-            this.showLoader = false;
+           this.showLoader = false;
           }
         }
-      }
-        // if (data == "True") {
-        //   this.toastr.success('', 'Record submitted sucessfully', this.baseClassObj.messageConfig);
-        //   //alert("Record submitted sucessfully");
-        //   this.cleanupScreen();
-        //   //hide Loader
-        //   this.showLoader = false;
-        // }
-        // else if (data == "Error while updating posting status for accepted qtys") {
-        //   console.log(data);
-        //   this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
-        //   this.showLoader = false;
-        // }
-        // else if (data == "OperOverlapping") {
-        //   this.toastr.error('', "Operation's start date & time can't be lesser than previous operation's start date time", this.baseClassObj.messageConfig);
-        //   this.showLoader = false;
-        // }
-        // else {
-        //   console.log(data);
-        //   this.toastr.error('', 'Error while submitting record', this.baseClassObj.messageConfig);
-        //   //show Loader
-        //   this.showLoader = false;
-        // }
-        // }
-        else {
+      }       
+       else {
           console.log(data);
-          this.toastr.error('', this.language.error_on_submitting, this.baseClassObj.messageConfig);
-          //show Loader
+         // this.toastr.error('', this.language.error_on_submitting, this.baseClassObj.messageConfig);
           this.showLoader = false;
         }
       },
@@ -1261,10 +1216,8 @@ export class MoveOrderComponent implements OnInit {
 
               //If data of linked qty is less then zero
               if (Number(data.Table[0].LinkedQuantity) <= 0) {
-                //alert("No serials/batches attached");
                 this.toastr.error('', this.language.no_batchserial_attached, this.baseClassObj.messageConfig);
                 isAllowed = false;
-                //hide Loader
                 this.showLoader = false;
                 //Load screen elements
                 this.loadFGScreenElements();
@@ -1275,10 +1228,8 @@ export class MoveOrderComponent implements OnInit {
               else {
                 //If the number of linked qty is more than produced qty
                 if (Number(data.Table[0].LinkedQuantity) > this.iProducedQty) {
-                  //alert("Number of attached batch/serial quantities can't be greater then produced quantity");
                   this.toastr.error('', this.language.no_attached_batchserial_greater, this.baseClassObj.messageConfig);
                   isAllowed = false;
-                  //hide Loader
                   this.showLoader = false;
                   //Load screen elements
                   this.loadFGScreenElements();
@@ -1288,10 +1239,8 @@ export class MoveOrderComponent implements OnInit {
 
                 //If the number of linked qty is less than produced qty
                 if (Number(data.Table[0].LinkedQuantity) < this.iProducedQty) {
-                  //alert("Batch/Serial not linked");
                   this.toastr.error('', this.language.qty_mismatch, this.baseClassObj.messageConfig);
                   isAllowed = false;
-                  //hide Loader
                   this.showLoader = false;
                   //Load screen elements
                   this.loadFGScreenElements();
@@ -1320,7 +1269,6 @@ export class MoveOrderComponent implements OnInit {
   //THis will deceide which screen have to be opened
   openItemLinkingScreen() {
     this.showItemLinkingScreen = true;
-   // alert('B' + this.ApplyGeneology)
     if (this.settingOnSAP == "1" || this.psItemManagedBy == "None" || this.IsSetupOrTDOper) {
       this.ScreenName = this.language.move_order_summary;
       this.showQtyNoScanScreen = true;

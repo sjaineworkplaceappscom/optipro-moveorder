@@ -238,13 +238,18 @@ export class FgrmscanchildinputformComponent implements OnInit {
   onRMAddRowPress(){
     
     if(this.psChildCompItemCode == undefined || this.psChildCompItemCode == null || this.psChildCompItemCode == ''){
-
       this.toastr.error('',this.language.child_item_code_blank,this.baseClassObj.messageConfig); 
       return;
     }
-       if(this.bIsInEditMode == false){
-    if(this.checkIfChildComponentsExists() == false)
-    {
+
+    if(this.psChildCompBatchSer == undefined || this.psChildCompBatchSer == null || this.psChildCompBatchSer == ''){
+      this.toastr.error('',this.language.itembtchsernotempty,this.baseClassObj.messageConfig); 
+      return;
+    }
+    
+    if(this.bIsInEditMode == false){
+      if(this.checkIfChildComponentsExists() == false)
+      {
     
         //This json row will be added to the grid present in the parent form of this one
         this.sendRMRowToParent = {
